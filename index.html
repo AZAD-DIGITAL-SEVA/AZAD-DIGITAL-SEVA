@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>আজাদ ডিজিটাল সেবা কেন্দ্র</title>
+
+    <meta name="description" content="আজাদ ডিজিটাল সেবা কেন্দ্র - সরকারি ও বেসরকারি অনলাইন পরিষেবা, গুরুত্বপূর্ণ খবর এবং দরকারি অনলাইন টুলস।">
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, "Noto Sans Bengali", sans-serif;
+            background: #f5f7fb;
+            color: #222;
+        }
+
+        header {
+            background: linear-gradient(135deg, #075e54, #128c7e);
+            color: white;
+            padding: 25px 15px;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 28px;
+            margin-bottom: 8px;
+        }
+
+        header p {
+            font-size: 15px;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: auto;
+            padding: 20px 15px;
+        }
+
+        .search-box {
+            background: white;
+            padding: 15px;
+            border-radius: 12px;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.08);
+            margin-bottom: 20px;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 13px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+        }
+
+        .section-title {
+            text-align: center;
+            margin: 25px 0 15px;
+            font-size: 22px;
+        }
+
+        .services {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+        }
+
+        .service-card {
+            background: white;
+            padding: 22px 10px;
+            text-align: center;
+            border-radius: 12px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.07);
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .service-card:hover {
+            transform: translateY(-3px);
+        }
+
+        .service-card .icon {
+            font-size: 32px;
+            margin-bottom: 10px;
+        }
+
+        .service-card h3 {
+            font-size: 16px;
+        }
+
+        .news {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            margin-top: 20px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.07);
+        }
+
+        .news-item {
+            padding: 13px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .news-item:last-child {
+            border-bottom: none;
+        }
+
+        .contact {
+            margin-top: 25px;
+            background: #075e54;
+            color: white;
+            padding: 25px 15px;
+            text-align: center;
+            border-radius: 12px;
+        }
+
+        .contact h2 {
+            margin-bottom: 10px;
+        }
+
+        .whatsapp {
+            display: inline-block;
+            margin-top: 15px;
+            background: #25d366;
+            color: white;
+            text-decoration: none;
+            padding: 12px 22px;
+            border-radius: 8px;
+            font-weight: bold;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px 10px;
+            color: #666;
+            font-size: 14px;
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <h1>আজাদ ডিজিটাল সেবা কেন্দ্র</h1>
+    <p>আপনার প্রয়োজনীয় অনলাইন পরিষেবা এক জায়গায়</p>
+</header>
+
+<div class="container">
+
+    <div class="search-box">
+        <input type="text" id="search" placeholder="পরিষেবা খুঁজুন...">
+    </div>
+
+    <h2 class="section-title">অনলাইন পরিষেবা</h2>
+
+    <div class="services" id="services">
+
+        <div class="service-card">
+            <div class="icon">🏛️</div>
+            <h3>সরকারি পরিষেবা</h3>
+        </div>
+
+        <div class="service-card">
+            <div class="icon">🏢</div>
+            <h3>বেসরকারি পরিষেবা</h3>
+        </div>
+
+        <div class="service-card">
+            <div class="icon">📰</div>
+            <h3>সরকারি খবর</h3>
+        </div>
+
+        <div class="service-card">
+            <div class="icon">🛠️</div>
+            <h3>অনলাইন টুলস</h3>
+        </div>
+
+        <div class="service-card">
+            <div class="icon">📥</div>
+            <h3>ডাউনলোড</h3>
+        </div>
+
+        <div class="service-card">
+            <div class="icon">📢</div>
+            <h3>গুরুত্বপূর্ণ নোটিশ</h3>
+        </div>
+
+    </div>
+
+    <div class="news">
+        <h2>📰 সর্বশেষ আপডেট</h2>
+
+        <div class="news-item">
+            <strong>গুরুত্বপূর্ণ সরকারি খবর ও নতুন আপডেট</strong>
+            <p>খুব শীঘ্রই এখানে নতুন খবর প্রকাশ করা হবে।</p>
+        </div>
+
+        <div class="news-item">
+            <strong>অনলাইন পরিষেবার নতুন লিংক</strong>
+            <p>প্রয়োজনীয় পরিষেবার লিংক এখানে যুক্ত করা হবে।</p>
+        </div>
+    </div>
+
+    <div class="contact">
+        <h2>📞 আজাদ ডিজিটাল সেবা কেন্দ্র</h2>
+
+        <p>সাদিখান দেয়াড়, ষষ্ঠীতলার মোড়</p>
+        <p>জলঙ্গী, মুর্শিদাবাদ</p>
+
+        <a class="whatsapp" href="https://wa.me/917908663012">
+            WhatsApp-এ যোগাযোগ করুন
+        </a>
+    </div>
+
+</div>
+
+<footer>
+    © 2026 আজাদ ডিজিটাল সেবা কেন্দ্র — All Rights Reserved
+</footer>
+
+<script>
+    const search = document.getElementById("search");
+    const cards = document.querySelectorAll(".service-card");
+
+    search.addEventListener("input", function () {
+        const text = this.value.toLowerCase();
+
+        cards.forEach(function(card) {
+            const title = card.innerText.toLowerCase();
+
+            if (title.includes(text)) {
+                card.style.display = "block";
+            } else {
+                card.style.display = "none";
+            }
+        });
+    });
+</script>
+
+</body>
+</html>

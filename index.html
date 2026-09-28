@@ -3,11 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>আজাদ ডিজিটাল সেবা কেন্দ্র</title>
-
     <meta name="description" content="আজাদ ডিজিটাল সেবা কেন্দ্র - সরকারি ও বেসরকারি অনলাইন পরিষেবা, গুরুত্বপূর্ণ খবর এবং দরকারি অনলাইন টুলস।">
-
     <style>
         * {
             box-sizing: border-box;
@@ -16,233 +13,607 @@
         }
 
         body {
-            font-family: Arial, "Noto Sans Bengali", sans-serif;
-            background: 0A15F2;
-            color: F21111;
+            font-family: 'Segoe UI', Arial, 'Noto Sans Bengali', sans-serif;
+            background: #f0f4f8;
+            color: #1e2b3c;
+            line-height: 1.5;
         }
 
+        /* ========== হেডার (অ্যাপ বার) ========== */
         header {
             background: linear-gradient(135deg, #075e54, #128c7e);
             color: white;
-            padding: 25px 15px;
-            text-align: center;
+            padding: 0 24px;
+            border-bottom: 4px solid #f9a826;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            min-height: 70px;
+            box-shadow: 0 4px 16px rgba(7, 94, 84, 0.25);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            gap: 10px;
         }
 
-        header h1 {
-            font-size: 28px;
-            margin-bottom: 8px;
+        /* লোগো (বাম দিকে) */
+        .app-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-shrink: 0;
+            padding: 10px 0;
         }
 
-        header p {
-            font-size: 15px;
+        .app-logo-icon {
+            font-size: 2rem;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.25));
         }
 
-        .container {
-            max-width: 1100px;
-            margin: auto;
-            padding: 20px 15px;
+        .app-logo-text {
+            font-size: 1.35rem;
+            font-weight: 700;
+            letter-spacing: 0.3px;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.25);
+            white-space: nowrap;
         }
 
-        .search-box {
-            background: white;
-            padding: 15px;
-            border-radius: 12px;
-            box-shadow: 0 3px 12px rgba(0,0,0,0.08);
-            margin-bottom: 20px;
+        .app-logo-text span {
+            color: #f9a826;
         }
 
-        .search-box input {
-            width: 100%;
-            padding: 13px;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            font-size: 16px;
+        /* মেনুবার */
+        .menu-bar {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            flex-wrap: wrap;
+            flex-grow: 1;
+            justify-content: flex-start;
+            padding-left: 20px;
         }
 
-        .section-title {
-            text-align: center;
-            margin: 25px 0 15px;
-            font-size: 22px;
+        .menu-bar a {
+            color: #eaf6f4;
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 500;
+            padding: 7px 14px;
+            border-radius: 30px;
+            transition: background 0.2s, color 0.2s;
+            white-space: nowrap;
         }
 
-        .services {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 15px;
+        .menu-bar a:hover {
+            background: rgba(255, 255, 255, 0.18);
+            color: #ffffff;
         }
 
-        .service-card {
-            background: white;
-            padding: 22px 10px;
-            text-align: center;
-            border-radius: 12px;
-            box-shadow: 0 3px 10px rgba(0,0,0,0.07);
+        /* ডান দিকের অ্যাকশন বাটন */
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-shrink: 0;
+            padding: 8px 0;
+        }
+
+        .btn-donate,
+        .btn-subscribe {
+            border: 1.5px solid rgba(255, 255, 255, 0.7);
+            background: transparent;
+            color: #ffffff;
+            font-size: 0.85rem;
+            font-weight: 600;
+            padding: 7px 16px;
+            border-radius: 30px;
             cursor: pointer;
-            transition: 0.2s;
+            transition: all 0.25s ease;
+            font-family: inherit;
+            white-space: nowrap;
         }
 
-        .service-card:hover {
-            transform: translateY(-3px);
+        .btn-donate:hover {
+            background: #f9a826;
+            border-color: #f9a826;
+            color: #1e2b3c;
+            transform: translateY(-1px);
         }
 
-        .service-card .icon {
-            font-size: 32px;
-            margin-bottom: 10px;
+        .btn-subscribe {
+            background: #e74c3c;
+            border-color: #e74c3c;
+            color: #ffffff;
         }
 
-        .service-card h3 {
-            font-size: 16px;
+        .btn-subscribe:hover {
+            background: #c0392b;
+            border-color: #c0392b;
+            transform: translateY(-1px);
         }
 
-        .news {
+        .btn-login {
+            background: #ffffff;
+            color: #075e54;
+            border: none;
+            font-size: 0.9rem;
+            font-weight: 700;
+            padding: 8px 24px;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            font-family: inherit;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            white-space: nowrap;
+        }
+
+        .btn-login:hover {
+            background: #f9a826;
+            color: #1e2b3c;
+            transform: translateY(-1px);
+            box-shadow: 0 6px 16px rgba(0,0,0,0.25);
+        }
+
+        /* ========== মূল কনটেন্ট ========== */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 30px 24px 50px;
+        }
+
+        /* সার্ভিস ক্যাটাগরি বাটন (কালারফুল ও প্রফেশনাল) */
+        .category-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 22px;
+            margin: 25px 0 45px;
+        }
+
+        .cat-card {
+            border-radius: 18px;
+            padding: 26px 20px 24px;
+            text-align: center;
+            color: white;
+            box-shadow: 0 10px 24px -8px rgba(0, 0, 0, 0.2);
+            transition: transform 0.25s ease, box-shadow 0.25s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            border: none;
+            text-decoration: none;
+        }
+
+        .cat-card::after {
+            content: '';
+            position: absolute;
+            top: -30px;
+            right: -30px;
+            width: 100px;
+            height: 100px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            transition: transform 0.4s ease;
+        }
+
+        .cat-card:hover::after {
+            transform: scale(1.8);
+        }
+
+        .cat-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 18px 32px -10px rgba(0, 0, 0, 0.3);
+        }
+
+        .cat-icon {
+            font-size: 2.6rem;
+            margin-bottom: 12px;
+            filter: drop-shadow(0 4px 6px rgba(0,0,0,0.2));
+        }
+
+        .cat-card h3 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 6px;
+            letter-spacing: 0.3px;
+        }
+
+        .cat-card p {
+            font-size: 0.9rem;
+            opacity: 0.92;
+            margin-bottom: 14px;
+            flex-grow: 1;
+        }
+
+        .cat-btn {
+            background: rgba(255, 255, 255, 0.25);
+            backdrop-filter: blur(4px);
+            border: 1.5px solid rgba(255, 255, 255, 0.7);
+            color: white;
+            padding: 7px 22px;
+            border-radius: 30px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            transition: background 0.2s;
+            margin-top: 4px;
+        }
+
+        .cat-card:hover .cat-btn {
+            background: rgba(255, 255, 255, 0.45);
+        }
+
+        /* প্রতিটি ক্যাটাগরির আলাদা রঙ */
+        .cat-gov {
+            background: linear-gradient(135deg, #1a6b5e, #0e8a75);
+        }
+        .cat-pvt {
+            background: linear-gradient(135deg, #2b5e9e, #1e7bc4);
+        }
+        .cat-news {
+            background: linear-gradient(135deg, #b03a2e, #e74c3c);
+        }
+        .cat-tools {
+            background: linear-gradient(135deg, #7d3c98, #a569bd);
+        }
+
+        /* ========== টুলস সেকশন ========== */
+        .section-title {
+            font-size: 1.8rem;
+            color: #075e54;
+            margin: 40px 0 18px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #f9a826;
+            display: inline-block;
+            font-weight: 700;
+        }
+
+        .tools-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+            margin: 20px 0 15px;
+        }
+
+        .tool-item {
             background: white;
-            padding: 20px;
-            border-radius: 12px;
-            margin-top: 20px;
-            box-shadow: 0 3px 10px rgba(0,0,0,0.07);
+            border-radius: 14px;
+            padding: 16px 18px;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.04);
+            border-left: 5px solid #128c7e;
+            transition: background 0.2s, border-color 0.2s, transform 0.2s;
+            cursor: pointer;
         }
 
-        .news-item {
-            padding: 13px 0;
-            border-bottom: 1px solid #eee;
+        .tool-item:hover {
+            background: #f5fbfa;
+            border-left-color: #f9a826;
+            transform: translateX(4px);
         }
 
-        .news-item:last-child {
+        .tool-icon {
+            font-size: 1.9rem;
+        }
+
+        .tool-text {
+            font-weight: 500;
+            color: #1e2b3c;
+            font-size: 1rem;
+        }
+
+        /* ========== নোটিশ বোর্ড ========== */
+        .notice-box {
+            background: #ffffff;
+            border-radius: 20px;
+            padding: 25px 30px;
+            margin: 40px 0 25px;
+            box-shadow: 0 12px 28px -8px rgba(0, 50, 40, 0.12);
+            border-top: 5px solid #f9a826;
+        }
+
+        .notice-box h2 {
+            font-size: 1.6rem;
+            color: #075e54;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .notice-list {
+            list-style: none;
+        }
+
+        .notice-list li {
+            padding: 12px 0 12px 28px;
+            border-bottom: 1px dashed #d0e2df;
+            position: relative;
+            font-size: 1rem;
+            color: #2c3e50;
+        }
+
+        .notice-list li::before {
+            content: "📌";
+            position: absolute;
+            left: 0;
+            top: 12px;
+            font-size: 1.1rem;
+        }
+
+        .notice-list li:last-child {
             border-bottom: none;
         }
 
-        .contact {
-            margin-top: 25px;
-            background: #075e54;
-            color: white;
-            padding: 25px 15px;
-            text-align: center;
-            border-radius: 12px;
+        .notice-date {
+            font-size: 0.8rem;
+            color: #128c7e;
+            font-weight: 600;
+            display: block;
+            margin-top: 3px;
         }
 
-        .contact h2 {
-            margin-bottom: 10px;
-        }
-
-        .whatsapp {
-            display: inline-block;
-            margin-top: 15px;
-            background: #25d366;
-            color: white;
-            text-decoration: none;
-            padding: 12px 22px;
-            border-radius: 8px;
-            font-weight: bold;
-        }
-
+        /* ========== ফুটার ========== */
         footer {
+            background: #0b2e2a;
+            color: #d4e6e3;
             text-align: center;
-            padding: 20px 10px;
-            color: #666;
-            font-size: 14px;
+            padding: 28px 20px;
+            margin-top: 30px;
+            border-top: 4px solid #f9a826;
+        }
+
+        footer p {
+            max-width: 700px;
+            margin: 0 auto 10px;
+            font-size: 0.98rem;
+        }
+
+        .footer-links {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 28px;
+            margin: 16px 0 10px;
+        }
+
+        .footer-links a {
+            color: #c2e5df;
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: color 0.2s;
+        }
+
+        .footer-links a:hover {
+            color: #f9a826;
+        }
+
+        .copyright {
+            font-size: 0.85rem;
+            opacity: 0.75;
+            margin-top: 18px;
+        }
+
+        /* ========== রেসপন্সিভ ========== */
+        @media (max-width: 992px) {
+            header {
+                padding: 0 16px;
+            }
+            .app-logo-text {
+                font-size: 1.1rem;
+            }
+            .menu-bar a {
+                font-size: 0.85rem;
+                padding: 6px 10px;
+            }
+            .btn-donate,
+            .btn-subscribe {
+                font-size: 0.78rem;
+                padding: 6px 12px;
+            }
+            .btn-login {
+                font-size: 0.82rem;
+                padding: 7px 18px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                align-items: stretch;
+                padding: 12px 16px;
+                gap: 8px;
+            }
+
+            .app-logo {
+                justify-content: center;
+                padding: 4px 0;
+            }
+
+            .menu-bar {
+                justify-content: center;
+                padding-left: 0;
+                gap: 2px;
+            }
+
+            .header-actions {
+                justify-content: center;
+                flex-wrap: wrap;
+                padding: 4px 0;
+            }
+
+            .container {
+                padding: 20px 14px 40px;
+            }
+
+            .section-title {
+                font-size: 1.5rem;
+            }
+
+            .notice-box {
+                padding: 18px 18px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .app-logo-text {
+                font-size: 0.95rem;
+            }
+            .app-logo-icon {
+                font-size: 1.5rem;
+            }
+            .menu-bar a {
+                font-size: 0.75rem;
+                padding: 5px 8px;
+            }
+            .btn-donate,
+            .btn-subscribe {
+                font-size: 0.7rem;
+                padding: 5px 10px;
+            }
+            .btn-login {
+                font-size: 0.75rem;
+                padding: 6px 14px;
+            }
         }
     </style>
 </head>
-
 <body>
 
-<header>
-    <h1>আজাদ ডিজিটাল সেবা কেন্দ্র</h1>
-    <p>আপনার প্রয়োজনীয় অনলাইন পরিষেবা এক জায়গায়</p>
-</header>
-
-<div class="container">
-
-    <div class="search-box">
-        <input type="text" id="search" placeholder="পরিষেবা খুঁজুন...">
-    </div>
-
-    <h2 class="section-title">অনলাইন পরিষেবা</h2>
-
-    <div class="services" id="services">
-
-        <a href="government-services.html" class="service-card">
-            <div class="icon">🏛️</div>
-            <h3>সরকারি পরিষেবা</h3>
-        </a>
-
-        <a href="private-services.html" class="service-card">
-            <div class="icon">🏢</div>
-            <h3>বেসরকারি পরিষেবা</h3>
-        </a>
-
-
-        <a href="private-services.html" class="service-card">
-            <div class="icon">📰</div>
-            <h3>সরকারি খবর</h3>
-        </a>
-
-        <div class="service-card">
-            <div class="icon">🛠️</div>
-            <h3>অনলাইন টুলস</h3>
+    <!-- ===== হেডার: অ্যাপ বার ===== -->
+    <header>
+        <!-- বাম দিকে লোগো -->
+        <div class="app-logo">
+            <span class="app-logo-icon">🖥️</span>
+            <span class="app-logo-text">আজাদ <span>ডিজিটাল</span> সেবা কেন্দ্র</span>
         </div>
 
-        <div class="service-card">
-            <div class="icon">📥</div>
-            <h3>ডাউনলোড</h3>
+        <!-- মেনুবার -->
+        <nav class="menu-bar">
+            <a href="#">হোম</a>
+            <a href="#">ব্লগ</a>
+            <a href="#">ইউটিউব</a>
+            <a href="#">ফেসবুক</a>
+            <a href="#">কন্টাক্ট</a>
+            <a href="#">এবাউট</a>
+        </nav>
+
+        <!-- ডান দিকের অ্যাকশন বাটন -->
+        <div class="header-actions">
+            <button class="btn-donate">❤️ ডোনেশন</button>
+            <button class="btn-subscribe">🔔 সাবস্ক্রাইব</button>
+            <button class="btn-login">লগ ইন</button>
+        </div>
+    </header>
+
+    <!-- ===== মূল কনটেন্ট ===== -->
+    <main class="container">
+
+        <!-- সার্ভিস ক্যাটাগরি (কালারফুল) -->
+        <div class="category-grid">
+            <!-- সরকারি পরিষেবা -->
+            <a href="#" class="cat-card cat-gov">
+                <div class="cat-icon">🏛️</div>
+                <h3>সরকারি পরিষেবা</h3>
+                <p>জাতীয় পরিচয়পত্র, জন্ম নিবন্ধন, অনলাইন আবেদন ও ডাউনলোড।</p>
+                <span class="cat-btn">বিস্তারিত →</span>
+            </a>
+
+            <!-- বেসরকারি পরিষেবা -->
+            <a href="#" class="cat-card cat-pvt">
+                <div class="cat-icon">🏢</div>
+                <h3>বেসরকারি পরিষেবা</h3>
+                <p>বিল পেমেন্ট, মোবাইল রিচার্জ, ইন্টারনেট প্যাক ও অন্যান্য।</p>
+                <span class="cat-btn">বিস্তারিত →</span>
+            </a>
+
+            <!-- সরকারি খবর -->
+            <a href="#" class="cat-card cat-news">
+                <div class="cat-icon">📰</div>
+                <h3>সরকারি খবর</h3>
+                <p>সরকারি নোটিশ, নতুন নিয়ম, চাকরির খবর ও গুরুত্বপূর্ণ ঘোষণা।</p>
+                <span class="cat-btn">পড়ুন →</span>
+            </a>
+
+            <!-- অনলাইন টুলস -->
+            <a href="#" class="cat-card cat-tools">
+                <div class="cat-icon">🧰</div>
+                <h3>অনলাইন টুলস</h3>
+                <p>বাংলা টাইপিং, ছবি এডিটর, PDF কনভার্টার, ক্যালকুলেটর।</p>
+                <span class="cat-btn">ব্যবহার করুন →</span>
+            </a>
         </div>
 
-        <div class="service-card">
-            <div class="icon">📢</div>
-            <h3>গুরুত্বপূর্ণ নোটিশ</h3>
+        <!-- টুলস সেকশন -->
+        <h2 class="section-title">🧰 দরকারি অনলাইন টুলস</h2>
+        <div class="tools-container">
+            <div class="tool-item">
+                <span class="tool-icon">🔠</span>
+                <span class="tool-text">বাংলা টাইপিং</span>
+            </div>
+            <div class="tool-item">
+                <span class="tool-icon">🖼️</span>
+                <span class="tool-text">ছবি এডিটর</span>
+            </div>
+            <div class="tool-item">
+                <span class="tool-icon">📊</span>
+                <span class="tool-text">এক্সেল ক্যালকুলেটর</span>
+            </div>
+            <div class="tool-item">
+                <span class="tool-icon">📅</span>
+                <span class="tool-text">বাংলা ক্যালেন্ডার</span>
+            </div>
+            <div class="tool-item">
+                <span class="tool-icon">📁</span>
+                <span class="tool-text">PDF কনভার্টার</span>
+            </div>
+            <div class="tool-item">
+                <span class="tool-icon">🔐</span>
+                <span class="tool-text">পাসওয়ার্ড জেনারেটর</span>
+            </div>
         </div>
 
-    </div>
-
-    <div class="news">
-        <h2>📰 সর্বশেষ আপডেট</h2>
-
-        <div class="news-item">
-            <strong>গুরুত্বপূর্ণ সরকারি খবর ও নতুন আপডেট</strong>
-            <p>খুব শীঘ্রই এখানে নতুন খবর প্রকাশ করা হবে।</p>
+        <!-- নোটিশ বোর্ড -->
+        <div class="notice-box">
+            <h2>📢 গুরুত্বপূর্ণ খবর ও নোটিশ</h2>
+            <ul class="notice-list">
+                <li>
+                    অনলাইন জন্ম নিবন্ধন সনদ ডাউনলোডের নতুন নিয়ম চালু হয়েছে।
+                    <span class="notice-date">১৫ জানুয়ারি, ২০২৫</span>
+                </li>
+                <li>
+                    ডিজিটাল সেবা কেন্দ্রে এখন পাসপোর্টের অনলাইন আবেদন করা যাবে।
+                    <span class="notice-date">১০ জানুয়ারি, ২০২৫</span>
+                </li>
+                <li>
+                    সরকারি সার্ভার রক্ষণাবেক্ষণের কারণে শুক্রবার রাত ১২টা থেকে ৩টা পর্যন্ত কিছু সেবা বন্ধ থাকবে।
+                    <span class="notice-date">৫ জানুয়ারি, ২০২৫</span>
+                </li>
+                <li>
+                    নতুন বছরে সকল গ্রাহকের জন্য ১০% ছাড়! বিস্তারিত জানতে যোগাযোগ করুন।
+                    <span class="notice-date">১ জানুয়ারি, ২০২৫</span>
+                </li>
+            </ul>
         </div>
 
-        <div class="news-item">
-            <strong>অনলাইন পরিষেবার নতুন লিংক</strong>
-            <p>প্রয়োজনীয় পরিষেবার লিংক এখানে যুক্ত করা হবে।</p>
+    </main>
+
+    <!-- ===== ফুটার ===== -->
+    <footer>
+        <p>🏢 আজাদ ডিজিটাল সেবা কেন্দ্র — আপনার বিশ্বস্ত অনলাইন সেবা প্রদানকারী</p>
+        <div class="footer-links">
+            <a href="#">হোম</a>
+            <a href="#">সেবাসমূহ</a>
+            <a href="#">টুলস</a>
+            <a href="#">নোটিশ</a>
+            <a href="#">যোগাযোগ</a>
         </div>
-    </div>
-
-    <div class="contact">
-        <h2>📞 আজাদ ডিজিটাল সেবা কেন্দ্র</h2>
-
-        <p>সাদিখান দেয়াড়, ষষ্ঠীতলার মোড়</p>
-        <p>জলঙ্গী, মুর্শিদাবাদ</p>
-
-        <a class="whatsapp" href="https://wa.me/917908663012">
-            WhatsApp-এ যোগাযোগ করুন
-        </a>
-    </div>
-
-</div>
-
-<footer>
-    © 2026 আজাদ ডিজিটাল সেবা কেন্দ্র — All Rights Reserved
-</footer>
-
-<script>
-    const search = document.getElementById("search");
-    const cards = document.querySelectorAll(".service-card");
-
-    search.addEventListener("input", function () {
-        const text = this.value.toLowerCase();
-
-        cards.forEach(function(card) {
-            const title = card.innerText.toLowerCase();
-
-            if (title.includes(text)) {
-                card.style.display = "block";
-            } else {
-                card.style.display = "none";
-            }
-        });
-    });
-</script>
+        <p class="copyright">© ২০২৫ আজাদ ডিজিটাল সেবা কেন্দ্র | সর্বস্বত্ব সংরক্ষিত</p>
+    </footer>
 
 </body>
 </html>

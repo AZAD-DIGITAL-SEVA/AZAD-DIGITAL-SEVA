@@ -40,7 +40,6 @@
             position: relative;
         }
 
-        /* ৩-ডট মেনু বাটন */
         .menu-toggle {
             width: 42px;
             height: 42px;
@@ -57,27 +56,17 @@
             flex-shrink: 0;
         }
 
-        .menu-toggle:hover {
-            background: rgba(255,255,255,0.28);
-            transform: scale(1.05);
-        }
-
-        .menu-toggle.active {
-            background: #f9a826;
-            border-color: #f9a826;
-        }
+        .menu-toggle:hover { background: rgba(255,255,255,0.28); transform: scale(1.05); }
+        .menu-toggle.active { background: #f9a826; border-color: #f9a826; }
 
         .menu-toggle span {
-            width: 5px;
-            height: 5px;
+            width: 5px; height: 5px;
             border-radius: 50%;
             background: #fff;
             transition: background 0.2s;
         }
 
-        .menu-toggle.active span {
-            background: #1e2b3c;
-        }
+        .menu-toggle.active span { background: #1e2b3c; }
 
         .header-logo {
             display: flex;
@@ -112,7 +101,6 @@
             white-space: nowrap;
         }
 
-        /* ড্রপডাউন মেনু */
         .header-dropdown {
             position: absolute;
             top: calc(100% + 12px);
@@ -151,11 +139,7 @@
             gap: 10px;
         }
 
-        .header-dropdown a:hover {
-            background: #e3f2ef;
-            color: #075e54;
-            padding-left: 22px;
-        }
+        .header-dropdown a:hover { background: #e3f2ef; color: #075e54; padding-left: 22px; }
 
         .header-actions {
             display: flex;
@@ -241,12 +225,7 @@
         .card:hover::after { transform: scale(1.8); }
         .card:hover { transform: translateY(-6px); box-shadow: 0 18px 32px -10px rgba(0,0,0,0.3); }
 
-        .card-icon {
-            font-size: 2.6rem;
-            margin-bottom: 12px;
-            position: relative;
-            z-index: 1;
-        }
+        .card-icon { font-size: 2.6rem; margin-bottom: 12px; position: relative; z-index: 1; }
 
         .card h3 {
             font-size: 1.3rem;
@@ -319,10 +298,7 @@
             flex-direction: column;
         }
 
-        .blog-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 14px 28px -8px rgba(7,94,84,0.25);
-        }
+        .blog-card:hover { transform: translateY(-5px); box-shadow: 0 14px 28px -8px rgba(7,94,84,0.25); }
 
         .blog-thumb {
             width: 100%;
@@ -345,18 +321,9 @@
             line-height: 1.35;
         }
 
-        .blog-body p {
-            font-size: 0.82rem;
-            color: #4a6075;
-            flex-grow: 1;
-            margin-bottom: 10px;
-        }
+        .blog-body p { font-size: 0.82rem; color: #4a6075; flex-grow: 1; margin-bottom: 10px; }
 
-        .blog-date {
-            font-size: 0.72rem;
-            color: #128c7e;
-            font-weight: 600;
-        }
+        .blog-date { font-size: 0.72rem; color: #128c7e; font-weight: 600; }
 
         .view-more-wrap { text-align: center; margin: 25px 0 10px; }
 
@@ -375,7 +342,7 @@
 
         .btn-view-more:hover { background: #075e54; transform: translateY(-2px); }
 
-        /* ================= ফুল-স্ক্রিন স্লাইডার সেকশন ================= */
+        /* ================= ফটো স্লাইডার ================= */
         .hero-slider-section {
             width: 100%;
             background: linear-gradient(135deg, #0b2e2a, #075e54);
@@ -448,16 +415,14 @@
 
         .slider-dots span.active { background: #f9a826; transform: scale(1.2); }
 
-        /* ================= Thank You Slider ================= */
+        /* ================= Thank You / ডোনার সেকশন (সম্পূর্ণ নতুন) ================= */
         .thankyou-section {
             margin: 50px 20px 30px;
             background: #ffffff;
             border-radius: 20px;
-            padding: 25px 0;
             box-shadow: 0 12px 28px -8px rgba(0,50,40,0.12);
             border-top: 5px solid #f9a826;
             overflow: hidden;
-            position: relative;
             max-width: 1200px;
         }
 
@@ -465,7 +430,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 0 25px 15px 25px;
+            padding: 20px 25px 5px 25px;
             flex-wrap: wrap;
             gap: 10px;
         }
@@ -479,30 +444,28 @@
         }
 
         .thankyou-fixed {
-            position: absolute;
-            top: 20px;
-            right: 20px;
             background: #f9a826;
             color: #1e2b3c;
             font-weight: 700;
             font-size: 0.8rem;
-            padding: 6px 14px;
+            padding: 7px 16px;
             border-radius: 30px;
-            z-index: 5;
             box-shadow: 0 4px 12px rgba(249,168,38,0.4);
+            white-space: nowrap;
         }
 
         .thankyou-track-wrap {
             overflow: hidden;
             width: 100%;
-            padding: 0 25px;
+            padding: 15px 0 25px 0;
         }
 
         .thankyou-track {
             display: flex;
             gap: 16px;
             width: max-content;
-            animation: slideRightToLeft 25s linear infinite;
+            padding: 0 25px;
+            animation: slideRightToLeft 30s linear infinite;
         }
 
         .thankyou-track:hover { animation-play-state: paused; }
@@ -522,6 +485,7 @@
             align-items: center;
             gap: 14px;
             box-shadow: 0 4px 14px rgba(0,0,0,0.06);
+            flex-shrink: 0;
         }
 
         .donor-avatar {
@@ -544,12 +508,14 @@
             display: block;
             font-size: 0.95rem;
             color: #075e54;
+            white-space: nowrap;
         }
 
         .donor-info span {
             font-size: 0.8rem;
             color: #128c7e;
             font-weight: 600;
+            white-space: nowrap;
         }
 
         /* ================= ওভারলে ================= */
@@ -563,7 +529,7 @@
 
         .menu-overlay.show { display: block; }
 
-        /* ================= ফুটার (কমপ্যাক্ট) ================= */
+        /* ================= ফুটার ================= */
         footer {
             background: #0b2e2a;
             color: #d4e6e3;
@@ -572,12 +538,7 @@
             border-top: 4px solid #f9a826;
         }
 
-        footer p {
-            max-width: 700px;
-            margin: 0 auto 8px;
-            font-size: 0.9rem;
-            line-height: 1.5;
-        }
+        footer p { max-width: 700px; margin: 0 auto 8px; font-size: 0.9rem; line-height: 1.5; }
 
         .footer-links {
             display: flex;
@@ -596,11 +557,7 @@
 
         .footer-links a:hover { color: #f9a826; }
 
-        .copyright {
-            font-size: 0.75rem;
-            opacity: 0.75;
-            margin-top: 10px;
-        }
+        .copyright { font-size: 0.75rem; opacity: 0.75; margin-top: 10px; }
 
         /* ================= রেসপন্সিভ ================= */
         @media (max-width: 992px) {
@@ -608,44 +565,18 @@
         }
 
         @media (max-width: 768px) {
-            header {
-                padding: 10px 14px;
-                gap: 8px;
-            }
-
+            header { padding: 10px 14px; gap: 8px; }
             .header-left { gap: 8px; flex: 1; }
-
             .header-logo h1 { font-size: 1rem; }
-
             .header-logo-icon { font-size: 1.5rem; }
-
-            /* ✅ হেডার সাবটাইটেল হাইড */
             .header-subtitle { display: none; }
-
             .btn-donate, .btn-subscribe { display: none; }
+            .btn-login { font-size: 0.8rem; padding: 7px 16px; }
 
-            .btn-login {
-                font-size: 0.8rem;
-                padding: 7px 16px;
-            }
-
-            /* ✅ কার্ডের সাবটাইটেল হাইড */
-            .card p {
-                display: none;
-            }
-
-            .card {
-                padding: 22px 14px 20px;
-            }
-
-            .card-link {
-                margin-top: 4px;
-            }
-
-            /* ✅ ব্লগ কার্ডের সাবটাইটেল হাইড */
-            .blog-body p {
-                display: none;
-            }
+            .card p { display: none; }
+            .card { padding: 22px 14px 20px; }
+            .card-link { margin-top: 4px; }
+            .blog-body p { display: none; }
 
             .service-grid { grid-template-columns: 1fr 1fr; gap: 14px; }
             .blog-grid { grid-template-columns: repeat(2, 1fr); }
@@ -653,34 +584,65 @@
             .hero-slider-section { padding: 45px 20px 35px; }
             .hero-fixed-title { font-size: 0.85rem; padding: 6px 20px; }
 
+            /* ✅ ডোনার সেকশন মোবাইলে সম্পূর্ণ ফিক্স */
             .thankyou-section {
-                margin-left: 14px;
-                margin-right: 14px;
+                margin: 35px 12px 25px;
+                border-radius: 16px;
+                border-top-width: 4px;
             }
 
-            /* ✅ ফুটার মোবাইলে কমপ্যাক্ট */
-            footer {
-                padding: 16px 12px;
+            .thankyou-header {
+                padding: 16px 16px 5px 16px;
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+                gap: 10px;
             }
 
-            footer p {
-                font-size: 0.82rem;
-                margin-bottom: 6px;
+            .thankyou-header h2 {
+                font-size: 1.1rem;
+                justify-content: center;
+                gap: 6px;
             }
 
-            .footer-links {
-                gap: 6px 14px;
-                margin: 8px 0 4px;
+            .thankyou-fixed {
+                font-size: 0.7rem;
+                padding: 5px 14px;
             }
 
-            .footer-links a {
-                font-size: 0.78rem;
+            .thankyou-track-wrap {
+                padding: 12px 0 20px 0;
             }
 
-            .copyright {
-                font-size: 0.68rem;
-                margin-top: 8px;
+            .thankyou-track {
+                gap: 12px;
+                padding: 0 12px;
+                animation-duration: 22s;
             }
+
+            .donor-card {
+                padding: 11px 16px;
+                min-width: 195px;
+                gap: 11px;
+                border-radius: 12px;
+                border-left-width: 4px;
+            }
+
+            .donor-avatar {
+                width: 38px;
+                height: 38px;
+                font-size: 0.95rem;
+            }
+
+            .donor-info strong { font-size: 0.84rem; }
+            .donor-info span { font-size: 0.72rem; }
+
+            /* ফুটার মোবাইলে কমপ্যাক্ট */
+            footer { padding: 16px 12px; }
+            footer p { font-size: 0.82rem; margin-bottom: 6px; }
+            .footer-links { gap: 6px 14px; margin: 8px 0 4px; }
+            .footer-links a { font-size: 0.78rem; }
+            .copyright { font-size: 0.68rem; margin-top: 8px; }
         }
 
         @media (max-width: 480px) {
@@ -693,26 +655,44 @@
             .hero-fixed-title { font-size: 0.72rem; padding: 5px 14px; }
             .hero-slider-section { padding: 45px 12px 25px; }
 
-            /* ✅ ছোট মোবাইলে ফুটার আরও কমপ্যাক্ট */
-            footer {
-                padding: 14px 10px;
+            /* ✅ ছোট মোবাইলে ডোনার সেকশন আরও কমপ্যাক্ট */
+            .thankyou-section {
+                margin: 30px 10px 20px;
             }
 
-            footer p {
-                font-size: 0.75rem;
+            .thankyou-header {
+                padding: 14px 12px 5px 12px;
             }
 
-            .footer-links {
-                gap: 5px 10px;
+            .thankyou-header h2 { font-size: 1rem; }
+
+            .thankyou-fixed {
+                font-size: 0.64rem;
+                padding: 4px 12px;
             }
 
-            .footer-links a {
-                font-size: 0.72rem;
+            .thankyou-track { padding: 0 10px; gap: 10px; }
+
+            .donor-card {
+                padding: 10px 14px;
+                min-width: 175px;
+                gap: 9px;
             }
 
-            .copyright {
-                font-size: 0.62rem;
+            .donor-avatar {
+                width: 34px;
+                height: 34px;
+                font-size: 0.85rem;
             }
+
+            .donor-info strong { font-size: 0.78rem; }
+            .donor-info span { font-size: 0.68rem; }
+
+            footer { padding: 14px 10px; }
+            footer p { font-size: 0.75rem; }
+            .footer-links { gap: 5px 10px; }
+            .footer-links a { font-size: 0.72rem; }
+            .copyright { font-size: 0.62rem; }
         }
     </style>
 </head>
@@ -939,14 +919,51 @@
 
     <!-- ================= Thank You / আমাদের ডোনারগণ ================= -->
     <section class="thankyou-section">
-        <div class="thankyou-fixed">💖 Thank You</div>
 
         <div class="thankyou-header">
             <h2>🙏 আমাদের ডোনারগণ</h2>
+            <span class="thankyou-fixed">💖 Thank You</span>
         </div>
 
         <div class="thankyou-track-wrap">
             <div class="thankyou-track" id="donorTrack">
+                <div class="donor-card">
+                    <div class="donor-avatar">র</div>
+                    <div class="donor-info">
+                        <strong>রহিম উদ্দিন</strong>
+                        <span>৳ ১০০০ ডোনেশন</span>
+                    </div>
+                </div>
+                <div class="donor-card">
+                    <div class="donor-avatar">ক</div>
+                    <div class="donor-info">
+                        <strong>করিম শেখ</strong>
+                        <span>৳ ৫০০ ডোনেশন</span>
+                    </div>
+                </div>
+                <div class="donor-card">
+                    <div class="donor-avatar">স</div>
+                    <div class="donor-info">
+                        <strong>সাদিয়া আক্তার</strong>
+                        <span>৳ ২০০০ ডোনেশন</span>
+                    </div>
+                </div>
+                <div class="donor-card">
+                    <div class="donor-avatar">আ</div>
+                    <div class="donor-info">
+                        <strong>আব্দুল্লাহ</strong>
+                        <span>৳ ৭৫০ ডোনেশন</span>
+                    </div>
+                </div>
+                <div class="donor-card">
+                    <div class="donor-avatar">ন</div>
+                    <div class="donor-info">
+                        <strong>নুসরাত জাহান</strong>
+                        <span>৳ ১৫০০ ডোনেশন</span>
+                    </div>
+                </div>
+
+                <!-- ডুপ্লিকেট (স্লাইড কন্টিনিউয়াস রাখার জন্য) -->
                 <div class="donor-card">
                     <div class="donor-avatar">র</div>
                     <div class="donor-info">
@@ -1001,7 +1018,6 @@
 
     <!-- ================= JavaScript ================= -->
     <script>
-        /* ===== ৩-ডট মেনু টগল ===== */
         (function () {
             const toggle = document.getElementById('menuToggle');
             const dropdown = document.getElementById('headerDropdown');
@@ -1012,7 +1028,6 @@
                 toggle.classList.add('active');
                 overlay.classList.add('show');
             }
-
             function closeMenu() {
                 dropdown.classList.remove('open');
                 toggle.classList.remove('active');
@@ -1021,23 +1036,13 @@
 
             toggle.addEventListener('click', (e) => {
                 e.stopPropagation();
-                if (dropdown.classList.contains('open')) {
-                    closeMenu();
-                } else {
-                    openMenu();
-                }
+                dropdown.classList.contains('open') ? closeMenu() : openMenu();
             });
-
             overlay.addEventListener('click', closeMenu);
-
-            document.addEventListener('keydown', (e) => {
-                if (e.key === 'Escape') closeMenu();
-            });
-
+            document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeMenu(); });
             dropdown.addEventListener('click', (e) => e.stopPropagation());
         })();
 
-        /* ===== ফটো স্লাইডার ===== */
         (function () {
             const slides = document.querySelectorAll('.slide');
             const dots = document.querySelectorAll('#sliderDots span');
@@ -1049,13 +1054,9 @@
                 dots.forEach((d, i) => d.classList.toggle('active', i === index));
                 current = index;
             }
-
-            function nextSlide() {
-                goTo((current + 1) % total);
-            }
+            function nextSlide() { goTo((current + 1) % total); }
 
             let interval = setInterval(nextSlide, 4000);
-
             dots.forEach((dot, i) => {
                 dot.addEventListener('click', () => {
                     clearInterval(interval);
@@ -1064,22 +1065,6 @@
                 });
             });
         })();
-
-        /* ===== Firebase Donor Data Load =====
-           Firestore-এ 'donors' কালেকশন তৈরি করুন:
-           donors (collection)
-             ├── doc1 { name: "রহিম", amount: 1000, date: timestamp }
-             └── ...
-
-        // import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-        // import { getFirestore, collection, onSnapshot, query, orderBy } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
-        // const firebaseConfig = { apiKey: "...", authDomain: "...", projectId: "...", ... };
-        // const app = initializeApp(firebaseConfig);
-        // const db = getFirestore(app);
-        // const donorTrack = document.getElementById('donorTrack');
-        // const q = query(collection(db, 'donors'), orderBy('date', 'desc'));
-        // onSnapshot(q, (snapshot) => { ... });
-        */
     </script>
 
 </body>

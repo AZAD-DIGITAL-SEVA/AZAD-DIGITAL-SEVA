@@ -32,6 +32,55 @@
             z-index: 1000;
         }
 
+        /* ===== বাম অংশ: ৩-ডট বাটন + লোগো ===== */
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-shrink: 0;
+            position: relative;
+        }
+
+        /* ৩-ডট মেনু বাটন */
+        .menu-toggle {
+            width: 42px;
+            height: 42px;
+            border-radius: 12px;
+            background: rgba(255,255,255,0.15);
+            border: 1.5px solid rgba(255,255,255,0.35);
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+            transition: background 0.2s, transform 0.2s;
+            flex-shrink: 0;
+        }
+
+        .menu-toggle:hover {
+            background: rgba(255,255,255,0.28);
+            transform: scale(1.05);
+        }
+
+        .menu-toggle.active {
+            background: #f9a826;
+            border-color: #f9a826;
+        }
+
+        .menu-toggle span {
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            background: #fff;
+            transition: background 0.2s;
+        }
+
+        .menu-toggle.active span {
+            background: #1e2b3c;
+        }
+
+        /* লোগো */
         .header-logo {
             display: flex;
             align-items: center;
@@ -40,6 +89,12 @@
         }
 
         .header-logo-icon { font-size: 2rem; }
+
+        .header-logo-text {
+            display: flex;
+            flex-direction: column;
+            line-height: 1.15;
+        }
 
         .header-logo h1 {
             font-size: 1.3rem;
@@ -50,28 +105,62 @@
 
         .header-logo h1 span { color: #f9a826; }
 
-        .header-menu {
-            display: flex;
-            align-items: center;
-            gap: 4px;
-            flex-wrap: wrap;
-            flex-grow: 1;
-            padding-left: 20px;
-        }
-
-        .header-menu a {
-            color: #eaf6f4;
-            text-decoration: none;
-            font-size: 0.95rem;
-            font-weight: 500;
-            padding: 7px 14px;
-            border-radius: 30px;
-            transition: background 0.2s;
+        /* সাবটাইটেল (ডেস্কটপে দেখাবে) */
+        .header-subtitle {
+            font-size: 0.72rem;
+            font-weight: 400;
+            color: #d4ece8;
+            opacity: 0.9;
+            margin-top: 2px;
             white-space: nowrap;
         }
 
-        .header-menu a:hover { background: rgba(255,255,255,0.18); }
+        /* ===== ড্রপডাউন মেনু ===== */
+        .header-dropdown {
+            position: absolute;
+            top: calc(100% + 12px);
+            left: 0;
+            background: #ffffff;
+            border-radius: 14px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.28);
+            padding: 10px;
+            display: none;
+            flex-direction: column;
+            gap: 2px;
+            min-width: 220px;
+            z-index: 1002;
+            border-top: 4px solid #f9a826;
+            animation: dropFade 0.2s ease;
+        }
 
+        @keyframes dropFade {
+            from { opacity: 0; transform: translateY(-8px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        .header-dropdown.open { display: flex; }
+
+        .header-dropdown a {
+            color: #1e2b3c;
+            text-decoration: none;
+            padding: 11px 16px;
+            border-radius: 10px;
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: background 0.15s, color 0.15s, padding-left 0.15s;
+            white-space: nowrap;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .header-dropdown a:hover {
+            background: #e3f2ef;
+            color: #075e54;
+            padding-left: 22px;
+        }
+
+        /* ===== ডান অংশ: অ্যাকশন বাটন ===== */
         .header-actions {
             display: flex;
             align-items: center;
@@ -290,11 +379,11 @@
 
         .btn-view-more:hover { background: #075e54; transform: translateY(-2px); }
 
-        /* ================= ফুল-স্ক্রিন স্লাইডার সেকশন (প্যাডিং সহ) ================= */
+        /* ================= ফুল-স্ক্রিন স্লাইডার সেকশন ================= */
         .hero-slider-section {
             width: 100%;
             background: linear-gradient(135deg, #0b2e2a, #075e54);
-            padding: 45px 40px 50px;   /* চারিদিকে প্যাডিং */
+            padding: 45px 40px 50px;
             position: relative;
             display: flex;
             flex-direction: column;
@@ -363,19 +452,19 @@
 
         .slider-dots span.active { background: #f9a826; transform: scale(1.2); }
 
-        /* ================= Thank You Slider (সবার নিচে) ================= */
+        /* ================= Thank You Slider ================= */
         .thankyou-section {
-            margin: 50px 20px 30px;
+            margin: 50px auto 30px;
             background: #ffffff;
             border-radius: 20px;
-            padding: 25px 0 25px 0;
+            padding: 25px 0;
             box-shadow: 0 12px 28px -8px rgba(0,50,40,0.12);
             border-top: 5px solid #f9a826;
             overflow: hidden;
             position: relative;
             max-width: 1200px;
-            margin-left: auto;
-            margin-right: auto;
+            margin-left: 20px;
+            margin-right: 20px;
         }
 
         .thankyou-header {
@@ -469,6 +558,17 @@
             font-weight: 600;
         }
 
+        /* ================= ওভারলে ================= */
+        .menu-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.4);
+            z-index: 999;
+            display: none;
+        }
+
+        .menu-overlay.show { display: block; }
+
         /* ================= ফুটার ================= */
         footer {
             background: #0b2e2a;
@@ -506,28 +606,43 @@
 
         @media (max-width: 768px) {
             header {
-                flex-direction: column;
-                align-items: stretch;
-                padding: 12px 16px;
+                padding: 10px 14px;
+                gap: 8px;
             }
-            .header-logo { justify-content: center; }
-            .header-menu { justify-content: center; padding-left: 0; }
-            .header-actions { justify-content: center; flex-wrap: wrap; }
+
+            .header-left { gap: 8px; flex: 1; }
+
+            .header-logo h1 { font-size: 1rem; }
+
+            .header-logo-icon { font-size: 1.5rem; }
+
+            /* সাবটাইটেল মোবাইলে হাইড */
+            .header-subtitle { display: none; }
+
+            .btn-donate, .btn-subscribe { display: none; }
+
+            .btn-login {
+                font-size: 0.8rem;
+                padding: 7px 16px;
+            }
+
             .service-grid { grid-template-columns: 1fr 1fr; gap: 14px; }
             .blog-grid { grid-template-columns: repeat(2, 1fr); }
             .container { padding: 20px 14px 40px; }
             .hero-slider-section { padding: 45px 20px 35px; }
-            .hero-slider-inner { width: 100%; }
             .hero-fixed-title { font-size: 0.85rem; padding: 6px 20px; }
-            .thankyou-section { margin-left: 14px; margin-right: 14px; }
+
+            .thankyou-section {
+                margin-left: 14px;
+                margin-right: 14px;
+            }
         }
 
         @media (max-width: 480px) {
-            .header-logo h1 { font-size: 0.9rem; }
-            .header-logo-icon { font-size: 1.5rem; }
-            .header-menu a { font-size: 0.75rem; padding: 5px 8px; }
-            .btn-donate, .btn-subscribe { font-size: 0.7rem; padding: 5px 10px; }
-            .btn-login { font-size: 0.75rem; padding: 6px 14px; }
+            .header-logo h1 { font-size: 0.88rem; }
+            .header-logo-icon { font-size: 1.3rem; }
+            .menu-toggle { width: 38px; height: 38px; }
+            .btn-login { font-size: 0.72rem; padding: 6px 12px; }
             .blog-grid { grid-template-columns: 1fr 1fr; }
             .card h3 { font-size: 1.05rem; }
             .hero-fixed-title { font-size: 0.72rem; padding: 5px 14px; }
@@ -539,26 +654,49 @@
 
     <!-- ================= হেডার ================= -->
     <header>
-        <div class="header-logo">
-            <span class="header-logo-icon">🖥️</span>
-            <h1>Azad <span>Digital Seva</span></h1>
+
+        <!-- ===== বাম অংশ: ৩-ডট বাটন + লোগো ===== -->
+        <div class="header-left">
+
+            <!-- ৩-ডট মেনু বাটন -->
+            <button class="menu-toggle" id="menuToggle" aria-label="Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+
+            <!-- লোগো + সাবটাইটেল -->
+            <div class="header-logo">
+                <span class="header-logo-icon">🖥️</span>
+                <div class="header-logo-text">
+                    <h1>Azad <span>Digital Seva</span></h1>
+                    <p class="header-subtitle">সরকারি ও বেসরকারি অনলাইন পরিষেবা</p>
+                </div>
+            </div>
+
+            <!-- ড্রপডাউন মেনু (৩-ডট ক্লিকে খুলবে) -->
+            <nav class="header-dropdown" id="headerDropdown">
+                <a href="index.html">🏠 Home</a>
+                <a href="blog.html">📝 Blog</a>
+                <a href="youtube.html">📺 YouTube</a>
+                <a href="facebook.html">📘 Facebook</a>
+                <a href="contact.html">📞 Contact</a>
+                <a href="about.html">ℹ️ About</a>
+            </nav>
+
         </div>
 
-        <nav class="header-menu">
-            <a href="index.html">Home</a>
-            <a href="blog.html">Blog</a>
-            <a href="youtube.html">YouTube</a>
-            <a href="facebook.html">Facebook</a>
-            <a href="contact.html">Contact</a>
-            <a href="about.html">About</a>
-        </nav>
-
+        <!-- ===== ডান অংশ: অ্যাকশন বাটন ===== -->
         <div class="header-actions">
             <button class="btn-donate" onclick="location.href='donate.html'">❤️ ডোনেশন</button>
             <button class="btn-subscribe" onclick="location.href='subscribe.html'">🔔 সাবস্ক্রাইব</button>
             <button class="btn-login" onclick="location.href='login.html'">লগ ইন</button>
         </div>
+
     </header>
+
+    <!-- ওভারলে (মেনু ওপেন হলে) -->
+    <div class="menu-overlay" id="menuOverlay"></div>
 
     <!-- ================= মূল কনটেন্ট ================= -->
     <main class="container">
@@ -720,7 +858,7 @@
 
     </main>
 
-    <!-- ================= ফুল-স্ক্রিন ফটো স্লাইডার (ডোনারের উপরে) ================= -->
+    <!-- ================= ফটো স্লাইডার ================= -->
     <section class="hero-slider-section">
 
         <div class="hero-fixed-title">🎉 আজাদ ডিজিটাল সেবা অফার</div>
@@ -743,7 +881,7 @@
 
     </section>
 
-    <!-- ================= Thank You / আমাদের ডোনারগণ (সবার নিচে) ================= -->
+    <!-- ================= Thank You / আমাদের ডোনারগণ ================= -->
     <section class="thankyou-section">
         <div class="thankyou-fixed">💖 Thank You</div>
 
@@ -807,6 +945,45 @@
 
     <!-- ================= JavaScript ================= -->
     <script>
+        /* ===== ৩-ডট মেনু টগল ===== */
+        (function () {
+            const toggle = document.getElementById('menuToggle');
+            const dropdown = document.getElementById('headerDropdown');
+            const overlay = document.getElementById('menuOverlay');
+
+            function openMenu() {
+                dropdown.classList.add('open');
+                toggle.classList.add('active');
+                overlay.classList.add('show');
+            }
+
+            function closeMenu() {
+                dropdown.classList.remove('open');
+                toggle.classList.remove('active');
+                overlay.classList.remove('show');
+            }
+
+            toggle.addEventListener('click', (e) => {
+                e.stopPropagation();
+                if (dropdown.classList.contains('open')) {
+                    closeMenu();
+                } else {
+                    openMenu();
+                }
+            });
+
+            // বাইরে ক্লিক করলে বন্ধ
+            overlay.addEventListener('click', closeMenu);
+
+            // ESC চাপলে বন্ধ
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape') closeMenu();
+            });
+
+            // ড্রপডাউনের ভেতরে ক্লিক করলে বন্ধ হবে না
+            dropdown.addEventListener('click', (e) => e.stopPropagation());
+        })();
+
         /* ===== ফটো স্লাইডার ===== */
         (function () {
             const slides = document.querySelectorAll('.slide');
@@ -839,44 +1016,16 @@
            Firestore-এ 'donors' কালেকশন তৈরি করুন:
            donors (collection)
              ├── doc1 { name: "রহিম", amount: 1000, date: timestamp }
-             ├── doc2 { name: "করিম", amount: 500, date: timestamp }
              └── ...
 
         // import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
         // import { getFirestore, collection, onSnapshot, query, orderBy } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
-
-        // const firebaseConfig = {
-        //     apiKey: "YOUR_API_KEY",
-        //     authDomain: "YOUR_PROJECT.firebaseapp.com",
-        //     projectId: "YOUR_PROJECT_ID",
-        //     storageBucket: "YOUR_PROJECT.appspot.com",
-        //     messagingSenderId: "YOUR_SENDER_ID",
-        //     appId: "YOUR_APP_ID"
-        // };
-
+        // const firebaseConfig = { apiKey: "...", authDomain: "...", projectId: "...", ... };
         // const app = initializeApp(firebaseConfig);
         // const db = getFirestore(app);
         // const donorTrack = document.getElementById('donorTrack');
-
         // const q = query(collection(db, 'donors'), orderBy('date', 'desc'));
-        // onSnapshot(q, (snapshot) => {
-        //     donorTrack.innerHTML = '';
-        //     snapshot.forEach((doc) => {
-        //         const d = doc.data();
-        //         const initial = d.name ? d.name.charAt(0) : '?';
-        //         const card = document.createElement('div');
-        //         card.className = 'donor-card';
-        //         card.innerHTML = `
-        //             <div class="donor-avatar">${initial}</div>
-        //             <div class="donor-info">
-        //                 <strong>${d.name}</strong>
-        //                 <span>৳ ${d.amount} ডোনেশন</span>
-        //             </div>`;
-        //         donorTrack.appendChild(card);
-        //     });
-        //     const cards = donorTrack.innerHTML;
-        //     donorTrack.innerHTML = cards + cards;
-        // });
+        // onSnapshot(q, (snapshot) => { ... });
         */
     </script>
 

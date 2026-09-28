@@ -120,7 +120,7 @@
             padding: 30px 20px 50px;
         }
 
-        /* ================= সার্ভিস গ্রিড (এখন সবার উপরে) ================= */
+        /* ================= সার্ভিস গ্রিড ================= */
         .service-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -290,9 +290,82 @@
 
         .btn-view-more:hover { background: #075e54; transform: translateY(-2px); }
 
-        /* ================= Thank You Slider ================= */
+        /* ================= ফুল-স্ক্রিন স্লাইডার সেকশন (প্যাডিং সহ) ================= */
+        .hero-slider-section {
+            width: 100%;
+            background: linear-gradient(135deg, #0b2e2a, #075e54);
+            padding: 45px 40px 50px;   /* চারিদিকে প্যাডিং */
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 40px;
+        }
+
+        .hero-fixed-title {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #f9a826;
+            color: #1e2b3c;
+            font-size: 1rem;
+            font-weight: 700;
+            padding: 8px 32px;
+            border-radius: 0 0 20px 20px;
+            z-index: 20;
+            box-shadow: 0 6px 18px rgba(249,168,38,0.4);
+            white-space: nowrap;
+            letter-spacing: 0.3px;
+        }
+
+        .hero-slider-inner {
+            width: 100%;
+            max-width: 1100px;
+            aspect-ratio: 16 / 9;
+            border-radius: 18px;
+            overflow: hidden;
+            box-shadow: 0 20px 50px -15px rgba(0,0,0,0.6);
+            background: #0b2e2a;
+            position: relative;
+            margin-top: 25px;
+        }
+
+        .slide {
+            position: absolute;
+            inset: 0;
+            opacity: 0;
+            transition: opacity 0.8s ease-in-out;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .slide.active { opacity: 1; }
+
+        .slider-dots {
+            position: absolute;
+            bottom: 15px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 10px;
+            z-index: 10;
+        }
+
+        .slider-dots span {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.5);
+            cursor: pointer;
+            transition: background 0.2s, transform 0.2s;
+        }
+
+        .slider-dots span.active { background: #f9a826; transform: scale(1.2); }
+
+        /* ================= Thank You Slider (সবার নিচে) ================= */
         .thankyou-section {
-            margin-top: 50px;
+            margin: 50px 20px 30px;
             background: #ffffff;
             border-radius: 20px;
             padding: 25px 0 25px 0;
@@ -300,6 +373,9 @@
             border-top: 5px solid #f9a826;
             overflow: hidden;
             position: relative;
+            max-width: 1200px;
+            margin-left: auto;
+            margin-right: auto;
         }
 
         .thankyou-header {
@@ -393,79 +469,6 @@
             font-weight: 600;
         }
 
-        /* ================= ফুল-স্ক্রিন স্লাইডার সেকশন (এখন সবার নিচে) ================= */
-        .hero-slider-section {
-            width: 100%;
-            background: linear-gradient(135deg, #0b2e2a, #075e54);
-            padding: 30px 0 40px;
-            position: relative;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            margin-top: 40px;
-        }
-
-        .hero-fixed-title {
-            position: absolute;
-            top: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            background: #f9a826;
-            color: #1e2b3c;
-            font-size: 1rem;
-            font-weight: 700;
-            padding: 8px 32px;
-            border-radius: 0 0 20px 20px;
-            z-index: 20;
-            box-shadow: 0 6px 18px rgba(249,168,38,0.4);
-            white-space: nowrap;
-            letter-spacing: 0.3px;
-        }
-
-        .hero-slider-inner {
-            width: 92%;
-            max-width: 1100px;
-            aspect-ratio: 16 / 9;
-            border-radius: 18px;
-            overflow: hidden;
-            box-shadow: 0 20px 50px -15px rgba(0,0,0,0.6);
-            background: #0b2e2a;
-            position: relative;
-            margin-top: 25px;
-        }
-
-        .slide {
-            position: absolute;
-            inset: 0;
-            opacity: 0;
-            transition: opacity 0.8s ease-in-out;
-            background-size: cover;
-            background-position: center;
-        }
-
-        .slide.active { opacity: 1; }
-
-        .slider-dots {
-            position: absolute;
-            bottom: 15px;
-            left: 50%;
-            transform: translateX(-50%);
-            display: flex;
-            gap: 10px;
-            z-index: 10;
-        }
-
-        .slider-dots span {
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            background: rgba(255,255,255,0.5);
-            cursor: pointer;
-            transition: background 0.2s, transform 0.2s;
-        }
-
-        .slider-dots span.active { background: #f9a826; transform: scale(1.2); }
-
         /* ================= ফুটার ================= */
         footer {
             background: #0b2e2a;
@@ -513,8 +516,10 @@
             .service-grid { grid-template-columns: 1fr 1fr; gap: 14px; }
             .blog-grid { grid-template-columns: repeat(2, 1fr); }
             .container { padding: 20px 14px 40px; }
-            .hero-slider-inner { width: 95%; }
+            .hero-slider-section { padding: 45px 20px 35px; }
+            .hero-slider-inner { width: 100%; }
             .hero-fixed-title { font-size: 0.85rem; padding: 6px 20px; }
+            .thankyou-section { margin-left: 14px; margin-right: 14px; }
         }
 
         @media (max-width: 480px) {
@@ -526,6 +531,7 @@
             .blog-grid { grid-template-columns: 1fr 1fr; }
             .card h3 { font-size: 1.05rem; }
             .hero-fixed-title { font-size: 0.72rem; padding: 5px 14px; }
+            .hero-slider-section { padding: 45px 12px 25px; }
         }
     </style>
 </head>
@@ -557,10 +563,9 @@
     <!-- ================= মূল কনটেন্ট ================= -->
     <main class="container">
 
-        <!-- ===== সার্ভিস কার্ড (এখন সবার উপরে — পাশাপাশি ২টি করে) ===== -->
+        <!-- ===== সার্ভিস কার্ড ===== -->
         <div class="service-grid">
 
-            <!-- লাইন ১ -->
             <div class="card card-gov" onclick="location.href='gov-service.html'">
                 <div class="card-icon">🏛️</div>
                 <h3>Government Services</h3>
@@ -575,7 +580,6 @@
                 <span class="card-link">বিস্তারিত</span>
             </div>
 
-            <!-- লাইন ২ -->
             <div class="card card-bill" onclick="location.href='bill-payment.html'">
                 <div class="card-icon">💰</div>
                 <h3>Bill Payment</h3>
@@ -590,7 +594,6 @@
                 <span class="card-link">রিচার্জ</span>
             </div>
 
-            <!-- লাইন ৩ -->
             <div class="card card-insurance" onclick="location.href='insurance.html'">
                 <div class="card-icon">🛡️</div>
                 <h3>Vehicle Insurance</h3>
@@ -607,11 +610,10 @@
 
         </div>
 
-        <!-- ===== Latest Blog (৪টি × ৩ লাইন + View More) ===== -->
+        <!-- ===== Latest Blog ===== -->
         <h2 class="section-title">📝 Latest Blog</h2>
 
         <div class="blog-grid">
-            <!-- লাইন ১ -->
             <div class="blog-card">
                 <div class="blog-thumb">📰</div>
                 <div class="blog-body">
@@ -645,7 +647,6 @@
                 </div>
             </div>
 
-            <!-- লাইন ২ -->
             <div class="blog-card">
                 <div class="blog-thumb">📱</div>
                 <div class="blog-body">
@@ -679,7 +680,6 @@
                 </div>
             </div>
 
-            <!-- লাইন ৩ -->
             <div class="blog-card">
                 <div class="blog-thumb">📊</div>
                 <div class="blog-body">
@@ -718,64 +718,13 @@
             <a href="all-blogs.html" class="btn-view-more">View More →</a>
         </div>
 
-        <!-- ===== Thank You Slider (ডান থেকে বাঁ দিকে) ===== -->
-        <section class="thankyou-section">
-            <div class="thankyou-fixed">💖 Thank You</div>
-
-            <div class="thankyou-header">
-                <h2>🙏 আমাদের ডোনারগণ</h2>
-            </div>
-
-            <div class="thankyou-track-wrap">
-                <div class="thankyou-track" id="donorTrack">
-                    <div class="donor-card">
-                        <div class="donor-avatar">র</div>
-                        <div class="donor-info">
-                            <strong>রহিম উদ্দিন</strong>
-                            <span>৳ ১০০০ ডোনেশন</span>
-                        </div>
-                    </div>
-                    <div class="donor-card">
-                        <div class="donor-avatar">ক</div>
-                        <div class="donor-info">
-                            <strong>করিম শেখ</strong>
-                            <span>৳ ৫০০ ডোনেশন</span>
-                        </div>
-                    </div>
-                    <div class="donor-card">
-                        <div class="donor-avatar">স</div>
-                        <div class="donor-info">
-                            <strong>সাদিয়া আক্তার</strong>
-                            <span>৳ ২০০০ ডোনেশন</span>
-                        </div>
-                    </div>
-                    <div class="donor-card">
-                        <div class="donor-avatar">আ</div>
-                        <div class="donor-info">
-                            <strong>আব্দুল্লাহ</strong>
-                            <span>৳ ৭৫০ ডোনেশন</span>
-                        </div>
-                    </div>
-                    <div class="donor-card">
-                        <div class="donor-avatar">ন</div>
-                        <div class="donor-info">
-                            <strong>নুসরাত জাহান</strong>
-                            <span>৳ ১৫০০ ডোনেশন</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
     </main>
 
-    <!-- ================= ফুল-স্ক্রিন ফটো স্লাইডার (এখন সবার নিচে) ================= -->
+    <!-- ================= ফুল-স্ক্রিন ফটো স্লাইডার (ডোনারের উপরে) ================= -->
     <section class="hero-slider-section">
 
-        <!-- ফিক্সড লেখা (স্লাইডারের উপরে) -->
         <div class="hero-fixed-title">🎉 আজাদ ডিজিটাল সেবা অফার</div>
 
-        <!-- ভেতরের ১৬:৯ স্লাইডার -->
         <div class="hero-slider-inner" id="photoSlider">
             <div class="slide active" style="background-image: url('https://picsum.photos/id/1015/1600/900');"></div>
             <div class="slide" style="background-image: url('https://picsum.photos/id/1018/1600/900');"></div>
@@ -792,6 +741,55 @@
             </div>
         </div>
 
+    </section>
+
+    <!-- ================= Thank You / আমাদের ডোনারগণ (সবার নিচে) ================= -->
+    <section class="thankyou-section">
+        <div class="thankyou-fixed">💖 Thank You</div>
+
+        <div class="thankyou-header">
+            <h2>🙏 আমাদের ডোনারগণ</h2>
+        </div>
+
+        <div class="thankyou-track-wrap">
+            <div class="thankyou-track" id="donorTrack">
+                <div class="donor-card">
+                    <div class="donor-avatar">র</div>
+                    <div class="donor-info">
+                        <strong>রহিম উদ্দিন</strong>
+                        <span>৳ ১০০০ ডোনেশন</span>
+                    </div>
+                </div>
+                <div class="donor-card">
+                    <div class="donor-avatar">ক</div>
+                    <div class="donor-info">
+                        <strong>করিম শেখ</strong>
+                        <span>৳ ৫০০ ডোনেশন</span>
+                    </div>
+                </div>
+                <div class="donor-card">
+                    <div class="donor-avatar">স</div>
+                    <div class="donor-info">
+                        <strong>সাদিয়া আক্তার</strong>
+                        <span>৳ ২০০০ ডোনেশন</span>
+                    </div>
+                </div>
+                <div class="donor-card">
+                    <div class="donor-avatar">আ</div>
+                    <div class="donor-info">
+                        <strong>আব্দুল্লাহ</strong>
+                        <span>৳ ৭৫০ ডোনেশন</span>
+                    </div>
+                </div>
+                <div class="donor-card">
+                    <div class="donor-avatar">ন</div>
+                    <div class="donor-info">
+                        <strong>নুসরাত জাহান</strong>
+                        <span>৳ ১৫০০ ডোনেশন</span>
+                    </div>
+                </div>
+            </div>
+        </div>
     </section>
 
     <!-- ================= ফুটার ================= -->

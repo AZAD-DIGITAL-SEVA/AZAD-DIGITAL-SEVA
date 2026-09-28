@@ -1,1 +1,560 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bill Payment - Azad Digital Seva</title>
+    <meta name="description" content="বিল পেমেন্ট - বিদ্যুৎ, পানি, গ্যাস, ইন্টারনেট ও অন্যান্য ইউটিলিটি বিল পরিশোধ।">
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
 
+        body {
+            font-family: 'Segoe UI', Arial, 'Noto Sans Bengali', sans-serif;
+            background: #f0f4f8;
+            color: #1e2b3c;
+            line-height: 1.5;
+        }
+
+        /* ==================================================
+           হেডার — অতি স্লিম (38px)
+           ================================================== */
+        header {
+            background: linear-gradient(135deg, #075e54, #128c7e);
+            color: #fff;
+            height: 38px;
+            padding: 0 10px;
+            border-bottom: 2px solid #f9a826;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 6px;
+            box-shadow: 0 2px 6px rgba(7, 94, 84, 0.2);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            flex: 1;
+            min-width: 0;
+            position: relative;
+        }
+
+        .menu-toggle {
+            width: 22px;
+            height: 22px;
+            border-radius: 5px;
+            background: rgba(255,255,255,0.15);
+            border: 1px solid rgba(255,255,255,0.35);
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 2px;
+            flex-shrink: 0;
+            padding: 0;
+        }
+        .menu-toggle:hover { background: rgba(255,255,255,0.28); }
+        .menu-toggle.active { background: #f9a826; border-color: #f9a826; }
+        .menu-toggle span { width: 2.5px; height: 2.5px; border-radius: 50%; background: #fff; }
+        .menu-toggle.active span { background: #1e2b3c; }
+
+        .header-brand {
+            display: flex;
+            align-items: baseline;
+            gap: 5px;
+            min-width: 0;
+            overflow: hidden;
+            flex-wrap: nowrap;
+        }
+
+        .header-logo-icon {
+            font-size: 0.95rem;
+            line-height: 1;
+            flex-shrink: 0;
+            align-self: center;
+        }
+
+        .brand-name {
+            font-size: 0.78rem;
+            font-weight: 700;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+
+        .brand-name span { color: #f9a826; }
+
+        .brand-sub {
+            font-size: 0.58rem;
+            font-weight: 400;
+            color: #d4ece8;
+            opacity: 0.85;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            border-left: 1px solid rgba(255,255,255,0.3);
+            margin-left: 2px;
+            padding-left: 6px;
+        }
+
+        .header-dropdown {
+            position: absolute;
+            top: calc(100% + 8px);
+            left: 0;
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 12px 32px rgba(0,0,0,0.25);
+            padding: 6px;
+            display: none;
+            flex-direction: column;
+            gap: 1px;
+            min-width: 180px;
+            z-index: 1002;
+            border-top: 3px solid #f9a826;
+        }
+        .header-dropdown.open { display: flex; }
+        .header-dropdown a {
+            color: #1e2b3c;
+            text-decoration: none;
+            padding: 7px 11px;
+            border-radius: 6px;
+            font-weight: 500;
+            font-size: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            transition: background 0.15s;
+        }
+        .header-dropdown a:hover { background: #e3f2ef; color: #075e54; }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            flex-shrink: 0;
+        }
+
+        .btn-donate, .btn-subscribe {
+            border: 1px solid rgba(255,255,255,0.65);
+            background: transparent;
+            color: #fff;
+            font-size: 0.62rem;
+            font-weight: 600;
+            padding: 3px 8px;
+            border-radius: 14px;
+            cursor: pointer;
+            font-family: inherit;
+            white-space: nowrap;
+            line-height: 1.2;
+        }
+        .btn-donate:hover { background: #f9a826; border-color: #f9a826; color: #1e2b3c; }
+        .btn-subscribe { background: #e74c3c; border-color: #e74c3c; }
+        .btn-subscribe:hover { background: #c0392b; }
+
+        .btn-login {
+            background: #fff;
+            color: #075e54;
+            border: none;
+            font-size: 0.64rem;
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 14px;
+            cursor: pointer;
+            font-family: inherit;
+            white-space: nowrap;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+            line-height: 1.2;
+        }
+        .btn-login:hover { background: #f9a826; color: #1e2b3c; }
+
+        /* ================= পেজ হিরো (লাল থিম) ================= */
+        .page-hero {
+            background: linear-gradient(135deg, #8c1c14, #c0392b);
+            color: white;
+            padding: 30px 18px 40px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .page-hero::before {
+            content: '';
+            position: absolute;
+            top: -70px; right: -70px;
+            width: 200px; height: 200px;
+            background: rgba(255,255,255,0.08);
+            border-radius: 50%;
+        }
+        .page-hero-icon {
+            font-size: 2.5rem;
+            margin-bottom: 8px;
+            position: relative;
+            z-index: 1;
+        }
+        .page-hero h1 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 6px;
+            position: relative;
+            z-index: 1;
+        }
+        .page-hero p {
+            font-size: 0.9rem;
+            opacity: 0.95;
+            max-width: 600px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+        .breadcrumb {
+            position: relative;
+            z-index: 1;
+            margin-top: 10px;
+            font-size: 0.75rem;
+            opacity: 0.9;
+        }
+        .breadcrumb a { color: #f9a826; text-decoration: none; }
+        .breadcrumb a:hover { text-decoration: underline; }
+
+        /* ================= কনটেন্ট ================= */
+        .inner-container {
+            max-width: 1100px;
+            margin: -22px auto 0;
+            padding: 0 18px 45px;
+            position: relative;
+            z-index: 5;
+        }
+
+        .content-card {
+            background: #fff;
+            border-radius: 16px;
+            padding: 24px 22px;
+            box-shadow: 0 15px 40px -15px rgba(192,57,43,0.18);
+            border-top: 4px solid #c0392b;
+        }
+
+        .content-card h2 {
+            font-size: 1.2rem;
+            color: #8c1c14;
+            margin-bottom: 12px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid #fde4e1;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .content-card > p {
+            font-size: 0.9rem;
+            color: #3a4d5e;
+            margin-bottom: 12px;
+        }
+
+        /* ================= সার্ভিস লিস্ট ================= */
+        .service-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+            gap: 14px;
+            margin: 18px 0;
+        }
+
+        .service-item {
+            background: #fef7f6;
+            border-radius: 12px;
+            padding: 15px 17px;
+            border-left: 4px solid #c0392b;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            transition: transform 0.2s, box-shadow 0.2s, background 0.2s;
+            text-decoration: none;
+            color: inherit;
+            cursor: pointer;
+        }
+
+        .service-item:hover {
+            background: #fde4e1;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 18px -8px rgba(192,57,43,0.35);
+        }
+
+        .service-item-icon {
+            font-size: 1.7rem;
+            flex-shrink: 0;
+        }
+
+        .service-item-text strong {
+            display: block;
+            font-size: 0.95rem;
+            color: #8c1c14;
+            margin-bottom: 2px;
+        }
+
+        .service-item-text span {
+            font-size: 0.78rem;
+            color: #4a6075;
+        }
+
+        /* ================= বাটন ================= */
+        .btn-back {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: #c0392b;
+            color: white;
+            text-decoration: none;
+            padding: 8px 22px;
+            border-radius: 30px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            transition: background 0.2s;
+            box-shadow: 0 5px 14px rgba(192,57,43,0.3);
+            margin-top: 10px;
+        }
+        .btn-back:hover { background: #8c1c14; }
+
+        /* ================= ফুটার ================= */
+        footer {
+            background: #0b2e2a;
+            color: #d4e6e3;
+            text-align: center;
+            padding: 18px 14px;
+            border-top: 3px solid #f9a826;
+        }
+        footer p { max-width: 700px; margin: 0 auto 6px; font-size: 0.82rem; }
+        .footer-links {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 8px 16px;
+            margin: 8px 0 5px;
+        }
+        .footer-links a {
+            color: #c2e5df;
+            text-decoration: none;
+            font-size: 0.78rem;
+            transition: color 0.2s;
+        }
+        .footer-links a:hover { color: #f9a826; }
+        .copyright { font-size: 0.68rem; opacity: 0.75; margin-top: 8px; }
+
+        /* ================= ওভারলে ================= */
+        .menu-overlay {
+            position: fixed; inset: 0;
+            background: rgba(0,0,0,0.4);
+            z-index: 999;
+            display: none;
+        }
+        .menu-overlay.show { display: block; }
+
+        /* ================= রেসপন্সিভ ================= */
+        @media (max-width: 768px) {
+            header { height: 36px; padding: 0 8px; }
+            .menu-toggle { width: 20px; height: 20px; }
+            .menu-toggle span { width: 2px; height: 2px; }
+            .header-logo-icon { font-size: 0.85rem; }
+            .brand-name { font-size: 0.72rem; }
+            .brand-sub { display: none; }
+            .btn-donate, .btn-subscribe { display: none; }
+            .btn-login { font-size: 0.58rem; padding: 3px 8px; }
+
+            .page-hero { padding: 22px 14px 30px; }
+            .page-hero-icon { font-size: 2rem; }
+            .page-hero h1 { font-size: 1.15rem; }
+            .page-hero p { display: none; }
+            .breadcrumb { font-size: 0.7rem; margin-top: 6px; }
+
+            .inner-container { padding: 0 12px 35px; }
+            .content-card { padding: 18px 14px; }
+            .content-card h2 { font-size: 1rem; }
+            .content-card > p { display: none; }
+
+            .service-list { grid-template-columns: 1fr; gap: 8px; margin: 12px 0; }
+            .service-item { padding: 11px 13px; gap: 10px; }
+            .service-item-icon { font-size: 1.3rem; }
+            .service-item-text strong { font-size: 0.85rem; }
+            .service-item-text span { display: none; }
+
+            .btn-back { padding: 7px 16px; font-size: 0.75rem; }
+
+            footer { padding: 12px 10px; }
+            footer p { font-size: 0.72rem; }
+            .footer-links { gap: 5px 10px; }
+            .footer-links a { font-size: 0.7rem; }
+            .copyright { font-size: 0.6rem; }
+        }
+
+        @media (max-width: 400px) {
+            header { height: 34px; padding: 0 6px; }
+            .menu-toggle { width: 18px; height: 18px; }
+            .brand-name { font-size: 0.66rem; }
+            .header-logo-icon { font-size: 0.78rem; }
+            .btn-login { font-size: 0.54rem; padding: 2px 7px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ================= হেডার ================= -->
+    <header>
+        <div class="header-left">
+            <button class="menu-toggle" id="menuToggle" aria-label="Menu">
+                <span></span><span></span><span></span>
+            </button>
+
+            <div class="header-brand">
+                <span class="header-logo-icon">🖥️</span>
+                <span class="brand-name">Azad <span>Digital Seva</span></span>
+                <span class="brand-sub">সরকারি ও বেসরকারি অনলাইন পরিষেবা</span>
+            </div>
+
+            <nav class="header-dropdown" id="headerDropdown">
+                <a href="index.html">🏠 Home</a>
+                <a href="blog.html">📝 Blog</a>
+                <a href="youtube.html">📺 YouTube</a>
+                <a href="facebook.html">📘 Facebook</a>
+                <a href="contact.html">📞 Contact</a>
+                <a href="about.html">ℹ️ About</a>
+            </nav>
+        </div>
+
+        <div class="header-actions">
+            <button class="btn-donate" onclick="location.href='donate.html'">❤️ ডোনেশন</button>
+            <button class="btn-subscribe" onclick="location.href='subscribe.html'">🔔 সাবস্ক্রাইব</button>
+            <button class="btn-login" onclick="location.href='login.html'">লগ ইন</button>
+        </div>
+    </header>
+
+    <div class="menu-overlay" id="menuOverlay"></div>
+
+    <!-- ================= পেজ হিরো ================= -->
+    <section class="page-hero">
+        <div class="page-hero-icon">💰</div>
+        <h1>Bill Payment</h1>
+        <p>বিদ্যুৎ, পানি, গ্যাস, ইন্টারনেট সহ সকল ইউটিলিটি বিল পরিশোধ করুন এক জায়গায়।</p>
+        <div class="breadcrumb">
+            <a href="index.html">Home</a> › <span>Bill Payment</span>
+        </div>
+    </section>
+
+    <!-- ================= মূল কনটেন্ট ================= -->
+    <main class="inner-container">
+        <div class="content-card">
+            <h2>📋 উপলব্ধ সেবাসমূহ</h2>
+            <p>নিচের যেকোনো বিলের ওপর ক্লিক করুন — সরাসরি সেই সার্ভিসের পেজে চলে যাবেন।</p>
+
+            <div class="service-list">
+
+                <a href="electricity-bill.html" class="service-item">
+                    <span class="service-item-icon">⚡</span>
+                    <div class="service-item-text">
+                        <strong>বিদ্যুৎ বিল</strong>
+                        <span>DPDC, DESCO, PBS, BREB সহ সকল বিদ্যুৎ বিল</span>
+                    </div>
+                </a>
+
+                <a href="water-bill.html" class="service-item">
+                    <span class="service-item-icon">💧</span>
+                    <div class="service-item-text">
+                        <strong>পানি বিল</strong>
+                        <span>WASA সহ সকল পানি সরবরাহ বিল</span>
+                    </div>
+                </a>
+
+                <a href="gas-bill.html" class="service-item">
+                    <span class="service-item-icon">🔥</span>
+                    <div class="service-item-text">
+                        <strong>গ্যাস বিল</strong>
+                        <span>Titas ও অন্যান্য গ্যাস বিল পরিশোধ</span>
+                    </div>
+                </a>
+
+                <a href="internet-bill.html" class="service-item">
+                    <span class="service-item-icon">🌐</span>
+                    <div class="service-item-text">
+                        <strong>ইন্টারনেট বিল</strong>
+                        <span>ব্রডব্যান্ড ও ISP ইন্টারনেট বিল</span>
+                    </div>
+                </a>
+
+                <a href="mobile-bill.html" class="service-item">
+                    <span class="service-item-icon">📱</span>
+                    <div class="service-item-text">
+                        <strong>মোবাইল পোস্টপেইড বিল</strong>
+                        <span>GP, Robi, Banglalink পোস্টপেইড বিল</span>
+                    </div>
+                </a>
+
+                <a href="cable-bill.html" class="service-item">
+                    <span class="service-item-icon">📺</span>
+                    <div class="service-item-text">
+                        <strong>ক্যাবল টিভি বিল</strong>
+                        <span>সব ক্যাবল অপারেটরের মাসিক বিল</span>
+                    </div>
+                </a>
+
+                <a href="credit-card-bill.html" class="service-item">
+                    <span class="service-item-icon">💳</span>
+                    <div class="service-item-text">
+                        <strong>ক্রেডিট কার্ড বিল</strong>
+                        <span>সব ব্যাংকের ক্রেডিট কার্ড পেমেন্ট</span>
+                    </div>
+                </a>
+
+                <a href="insurance-premium.html" class="service-item">
+                    <span class="service-item-icon">🛡️</span>
+                    <div class="service-item-text">
+                        <strong>ইন্স্যুরেন্স প্রিমিয়াম</strong>
+                        <span>লাইফ ও জেনারেল ইন্স্যুরেন্স বিল</span>
+                    </div>
+                </a>
+
+            </div>
+
+            <a href="index.html" class="btn-back">← Back to Home</a>
+        </div>
+    </main>
+
+    <!-- ================= ফুটার ================= -->
+    <footer>
+        <p>🏢 Azad Digital Seva — আপনার বিশ্বস্ত অনলাইন সেবা প্রদানকারী</p>
+        <div class="footer-links">
+            <a href="index.html">Home</a>
+            <a href="services.html">Services</a>
+            <a href="tools.html">Tools</a>
+            <a href="notice.html">Notice</a>
+            <a href="contact.html">Contact</a>
+        </div>
+        <p class="copyright">© ২০২৫ Azad Digital Seva | সর্বস্বত্ব সংরক্ষিত</p>
+    </footer>
+
+    <script>
+        (function () {
+            const toggle = document.getElementById('menuToggle');
+            const dropdown = document.getElementById('headerDropdown');
+            const overlay = document.getElementById('menuOverlay');
+            function openMenu() {
+                dropdown.classList.add('open');
+                toggle.classList.add('active');
+                overlay.classList.add('show');
+            }
+            function closeMenu() {
+                dropdown.classList.remove('open');
+                toggle.classList.remove('active');
+                overlay.classList.remove('show');
+            }
+            toggle.addEventListener('click', (e) => {
+                e.stopPropagation();
+                dropdown.classList.contains('open') ? closeMenu() : openMenu();
+            });
+            overlay.addEventListener('click', closeMenu);
+            document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeMenu(); });
+            dropdown.addEventListener('click', (e) => e.stopPropagation());
+        })();
+    </script>
+
+</body>
+</html>

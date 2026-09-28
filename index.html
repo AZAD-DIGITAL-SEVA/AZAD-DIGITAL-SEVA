@@ -32,7 +32,6 @@
             z-index: 1000;
         }
 
-        /* ===== বাম অংশ: ৩-ডট বাটন + লোগো ===== */
         .header-left {
             display: flex;
             align-items: center;
@@ -80,7 +79,6 @@
             background: #1e2b3c;
         }
 
-        /* লোগো */
         .header-logo {
             display: flex;
             align-items: center;
@@ -105,7 +103,6 @@
 
         .header-logo h1 span { color: #f9a826; }
 
-        /* সাবটাইটেল (ডেস্কটপে দেখাবে) */
         .header-subtitle {
             font-size: 0.72rem;
             font-weight: 400;
@@ -115,7 +112,7 @@
             white-space: nowrap;
         }
 
-        /* ===== ড্রপডাউন মেনু ===== */
+        /* ড্রপডাউন মেনু */
         .header-dropdown {
             position: absolute;
             top: calc(100% + 12px);
@@ -160,7 +157,6 @@
             padding-left: 22px;
         }
 
-        /* ===== ডান অংশ: অ্যাকশন বাটন ===== */
         .header-actions {
             display: flex;
             align-items: center;
@@ -454,7 +450,7 @@
 
         /* ================= Thank You Slider ================= */
         .thankyou-section {
-            margin: 50px auto 30px;
+            margin: 50px 20px 30px;
             background: #ffffff;
             border-radius: 20px;
             padding: 25px 0;
@@ -463,8 +459,6 @@
             overflow: hidden;
             position: relative;
             max-width: 1200px;
-            margin-left: 20px;
-            margin-right: 20px;
         }
 
         .thankyou-header {
@@ -569,35 +563,44 @@
 
         .menu-overlay.show { display: block; }
 
-        /* ================= ফুটার ================= */
+        /* ================= ফুটার (কমপ্যাক্ট) ================= */
         footer {
             background: #0b2e2a;
             color: #d4e6e3;
             text-align: center;
-            padding: 28px 20px;
+            padding: 20px 16px;
             border-top: 4px solid #f9a826;
         }
 
-        footer p { max-width: 700px; margin: 0 auto 10px; font-size: 0.95rem; }
+        footer p {
+            max-width: 700px;
+            margin: 0 auto 8px;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
 
         .footer-links {
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
-            gap: 28px;
-            margin: 16px 0 10px;
+            gap: 10px 18px;
+            margin: 10px 0 6px;
         }
 
         .footer-links a {
             color: #c2e5df;
             text-decoration: none;
-            font-size: 0.92rem;
+            font-size: 0.85rem;
             transition: color 0.2s;
         }
 
         .footer-links a:hover { color: #f9a826; }
 
-        .copyright { font-size: 0.82rem; opacity: 0.75; margin-top: 18px; }
+        .copyright {
+            font-size: 0.75rem;
+            opacity: 0.75;
+            margin-top: 10px;
+        }
 
         /* ================= রেসপন্সিভ ================= */
         @media (max-width: 992px) {
@@ -616,7 +619,7 @@
 
             .header-logo-icon { font-size: 1.5rem; }
 
-            /* সাবটাইটেল মোবাইলে হাইড */
+            /* ✅ হেডার সাবটাইটেল হাইড */
             .header-subtitle { display: none; }
 
             .btn-donate, .btn-subscribe { display: none; }
@@ -624,6 +627,24 @@
             .btn-login {
                 font-size: 0.8rem;
                 padding: 7px 16px;
+            }
+
+            /* ✅ কার্ডের সাবটাইটেল হাইড */
+            .card p {
+                display: none;
+            }
+
+            .card {
+                padding: 22px 14px 20px;
+            }
+
+            .card-link {
+                margin-top: 4px;
+            }
+
+            /* ✅ ব্লগ কার্ডের সাবটাইটেল হাইড */
+            .blog-body p {
+                display: none;
             }
 
             .service-grid { grid-template-columns: 1fr 1fr; gap: 14px; }
@@ -636,6 +657,30 @@
                 margin-left: 14px;
                 margin-right: 14px;
             }
+
+            /* ✅ ফুটার মোবাইলে কমপ্যাক্ট */
+            footer {
+                padding: 16px 12px;
+            }
+
+            footer p {
+                font-size: 0.82rem;
+                margin-bottom: 6px;
+            }
+
+            .footer-links {
+                gap: 6px 14px;
+                margin: 8px 0 4px;
+            }
+
+            .footer-links a {
+                font-size: 0.78rem;
+            }
+
+            .copyright {
+                font-size: 0.68rem;
+                margin-top: 8px;
+            }
         }
 
         @media (max-width: 480px) {
@@ -647,6 +692,27 @@
             .card h3 { font-size: 1.05rem; }
             .hero-fixed-title { font-size: 0.72rem; padding: 5px 14px; }
             .hero-slider-section { padding: 45px 12px 25px; }
+
+            /* ✅ ছোট মোবাইলে ফুটার আরও কমপ্যাক্ট */
+            footer {
+                padding: 14px 10px;
+            }
+
+            footer p {
+                font-size: 0.75rem;
+            }
+
+            .footer-links {
+                gap: 5px 10px;
+            }
+
+            .footer-links a {
+                font-size: 0.72rem;
+            }
+
+            .copyright {
+                font-size: 0.62rem;
+            }
         }
     </style>
 </head>
@@ -654,18 +720,13 @@
 
     <!-- ================= হেডার ================= -->
     <header>
-
-        <!-- ===== বাম অংশ: ৩-ডট বাটন + লোগো ===== -->
         <div class="header-left">
-
-            <!-- ৩-ডট মেনু বাটন -->
             <button class="menu-toggle" id="menuToggle" aria-label="Menu">
                 <span></span>
                 <span></span>
                 <span></span>
             </button>
 
-            <!-- লোগো + সাবটাইটেল -->
             <div class="header-logo">
                 <span class="header-logo-icon">🖥️</span>
                 <div class="header-logo-text">
@@ -674,7 +735,6 @@
                 </div>
             </div>
 
-            <!-- ড্রপডাউন মেনু (৩-ডট ক্লিকে খুলবে) -->
             <nav class="header-dropdown" id="headerDropdown">
                 <a href="index.html">🏠 Home</a>
                 <a href="blog.html">📝 Blog</a>
@@ -683,19 +743,15 @@
                 <a href="contact.html">📞 Contact</a>
                 <a href="about.html">ℹ️ About</a>
             </nav>
-
         </div>
 
-        <!-- ===== ডান অংশ: অ্যাকশন বাটন ===== -->
         <div class="header-actions">
             <button class="btn-donate" onclick="location.href='donate.html'">❤️ ডোনেশন</button>
             <button class="btn-subscribe" onclick="location.href='subscribe.html'">🔔 সাবস্ক্রাইব</button>
             <button class="btn-login" onclick="location.href='login.html'">লগ ইন</button>
         </div>
-
     </header>
 
-    <!-- ওভারলে (মেনু ওপেন হলে) -->
     <div class="menu-overlay" id="menuOverlay"></div>
 
     <!-- ================= মূল কনটেন্ট ================= -->
@@ -972,15 +1028,12 @@
                 }
             });
 
-            // বাইরে ক্লিক করলে বন্ধ
             overlay.addEventListener('click', closeMenu);
 
-            // ESC চাপলে বন্ধ
             document.addEventListener('keydown', (e) => {
                 if (e.key === 'Escape') closeMenu();
             });
 
-            // ড্রপডাউনের ভেতরে ক্লিক করলে বন্ধ হবে না
             dropdown.addEventListener('click', (e) => e.stopPropagation());
         })();
 

@@ -210,6 +210,7 @@
             flex-direction: column;
             align-items: center;
             cursor: pointer;
+            text-decoration: none;
         }
 
         .card::after {
@@ -415,14 +416,17 @@
 
         .slider-dots span.active { background: #f9a826; transform: scale(1.2); }
 
-        /* ================= Thank You / ডোনার সেকশন (সম্পূর্ণ নতুন) ================= */
+        /* ================= Thank You / ডোনার সেকশন (সংশোধিত) ================= */
         .thankyou-section {
-            margin: 50px 20px 30px;
+            margin: 50px auto 30px;
             background: #ffffff;
             border-radius: 20px;
+            padding: 25px 0;
             box-shadow: 0 12px 28px -8px rgba(0,50,40,0.12);
             border-top: 5px solid #f9a826;
             overflow: hidden;
+            position: relative;
+            width: calc(100% - 40px);
             max-width: 1200px;
         }
 
@@ -584,9 +588,10 @@
             .hero-slider-section { padding: 45px 20px 35px; }
             .hero-fixed-title { font-size: 0.85rem; padding: 6px 20px; }
 
-            /* ✅ ডোনার সেকশন মোবাইলে সম্পূর্ণ ফিক্স */
+            /* ডোনার সেকশন মোবাইলে */
             .thankyou-section {
-                margin: 35px 12px 25px;
+                margin: 35px auto 25px;
+                width: calc(100% - 24px);
                 border-radius: 16px;
                 border-top-width: 4px;
             }
@@ -637,7 +642,6 @@
             .donor-info strong { font-size: 0.84rem; }
             .donor-info span { font-size: 0.72rem; }
 
-            /* ফুটার মোবাইলে কমপ্যাক্ট */
             footer { padding: 16px 12px; }
             footer p { font-size: 0.82rem; margin-bottom: 6px; }
             .footer-links { gap: 6px 14px; margin: 8px 0 4px; }
@@ -655,9 +659,9 @@
             .hero-fixed-title { font-size: 0.72rem; padding: 5px 14px; }
             .hero-slider-section { padding: 45px 12px 25px; }
 
-            /* ✅ ছোট মোবাইলে ডোনার সেকশন আরও কমপ্যাক্ট */
             .thankyou-section {
-                margin: 30px 10px 20px;
+                margin: 30px auto 20px;
+                width: calc(100% - 20px);
             }
 
             .thankyou-header {
@@ -737,50 +741,50 @@
     <!-- ================= মূল কনটেন্ট ================= -->
     <main class="container">
 
-        <!-- ===== সার্ভিস কার্ড ===== -->
+        <!-- ===== সার্ভিস কার্ড (লিংক সহ <a> ট্যাগ) ===== -->
         <div class="service-grid">
 
-            <div class="card card-gov" onclick="location.href='gov-service.html'">
+            <a href="gov-service.html" class="card card-gov">
                 <div class="card-icon">🏛️</div>
                 <h3>Government Services</h3>
                 <p>জাতীয় পরিচয়পত্র, জন্ম নিবন্ধন, অনলাইন আবেদন ও ডাউনলোড।</p>
                 <span class="card-link">বিস্তারিত</span>
-            </div>
+            </a>
 
-            <div class="card card-online" onclick="location.href='online-service.html'">
+            <a href="online-service.html" class="card card-online">
                 <div class="card-icon">🌐</div>
                 <h3>Online Services</h3>
                 <p>অনলাইন ফরম পূরণ, সার্টিফিকেট ভেরিফিকেশন ও ডাউনলোড।</p>
                 <span class="card-link">বিস্তারিত</span>
-            </div>
+            </a>
 
-            <div class="card card-bill" onclick="location.href='bill-payment.html'">
+            <a href="bill-payment.html" class="card card-bill">
                 <div class="card-icon">💰</div>
                 <h3>Bill Payment</h3>
                 <p>বিদ্যুৎ, পানি, গ্যাস, ইন্টারনেট বিল সহ সকল ইউটিলিটি পেমেন্ট।</p>
                 <span class="card-link">পরিশোধ করুন</span>
-            </div>
+            </a>
 
-            <div class="card card-recharge" onclick="location.href='recharge.html'">
+            <a href="recharge.html" class="card card-recharge">
                 <div class="card-icon">📱</div>
                 <h3>Mobile Recharge</h3>
                 <p>সব অপারেটরের রিচার্জ, ডিটেক্টিভ ও ইন্টারনেট প্যাক।</p>
                 <span class="card-link">রিচার্জ</span>
-            </div>
+            </a>
 
-            <div class="card card-insurance" onclick="location.href='insurance.html'">
+            <a href="insurance.html" class="card card-insurance">
                 <div class="card-icon">🛡️</div>
                 <h3>Vehicle Insurance</h3>
                 <p>গাড়ির বীমা, রিনিউ ও নতুন পলিসি সহ সকল ইনস্যুরেন্স সেবা।</p>
                 <span class="card-link">বীমা করুন</span>
-            </div>
+            </a>
 
-            <div class="card card-public" onclick="location.href='public-service.html'">
+            <a href="public-service.html" class="card card-public">
                 <div class="card-icon">🏢</div>
                 <h3>Public Services</h3>
                 <p>সরকারি ও বেসরকারি সকল পাবলিক পরিষেবা এক জায়গায়।</p>
                 <span class="card-link">দেখুন</span>
-            </div>
+            </a>
 
         </div>
 
@@ -1018,6 +1022,7 @@
 
     <!-- ================= JavaScript ================= -->
     <script>
+        /* ===== ৩-ডট মেনু টগল ===== */
         (function () {
             const toggle = document.getElementById('menuToggle');
             const dropdown = document.getElementById('headerDropdown');
@@ -1043,6 +1048,7 @@
             dropdown.addEventListener('click', (e) => e.stopPropagation());
         })();
 
+        /* ===== ফটো স্লাইডার ===== */
         (function () {
             const slides = document.querySelectorAll('.slide');
             const dots = document.querySelectorAll('#sliderDots span');

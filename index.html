@@ -117,55 +117,10 @@
         .container {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 25px 20px 50px;
+            padding: 30px 20px 50px;
         }
 
-        /* ================= ফটো স্লাইডার (১৬:৯) ================= */
-        .photo-slider {
-            position: relative;
-            width: 100%;
-            aspect-ratio: 16 / 9;
-            border-radius: 18px;
-            overflow: hidden;
-            box-shadow: 0 12px 30px -10px rgba(0, 0, 0, 0.3);
-            background: #0b2e2a;
-            margin-bottom: 30px;
-        }
-
-        .slide {
-            position: absolute;
-            inset: 0;
-            opacity: 0;
-            transition: opacity 0.8s ease-in-out;
-            background-size: cover;
-            background-position: center;
-        }
-
-        .slide.active { opacity: 1; }
-
-        /* স্লাইড ইন্ডিকেটর */
-        .slider-dots {
-            position: absolute;
-            bottom: 15px;
-            left: 50%;
-            transform: translateX(-50%);
-            display: flex;
-            gap: 10px;
-            z-index: 10;
-        }
-
-        .slider-dots span {
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            background: rgba(255,255,255,0.5);
-            cursor: pointer;
-            transition: background 0.2s, transform 0.2s;
-        }
-
-        .slider-dots span.active { background: #f9a826; transform: scale(1.2); }
-
-        /* ================= সার্ভিস গ্রিড ================= */
+        /* ================= সার্ভিস গ্রিড (এখন সবার উপরে) ================= */
         .service-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -242,7 +197,6 @@
 
         .card-link:hover { background: rgba(255,255,255,0.45); }
 
-        /* কালার */
         .card-gov { background: linear-gradient(135deg, #1a6b5e, #0e8a75); }
         .card-online { background: linear-gradient(135deg, #2b5e9e, #1e7bc4); }
         .card-bill { background: linear-gradient(135deg, #b03a2e, #e74c3c); }
@@ -319,7 +273,6 @@
             font-weight: 600;
         }
 
-        /* View More বাটন */
         .view-more-wrap { text-align: center; margin: 25px 0 10px; }
 
         .btn-view-more {
@@ -337,7 +290,7 @@
 
         .btn-view-more:hover { background: #075e54; transform: translateY(-2px); }
 
-        /* ================= Thank You Slider (ডান→বাম) ================= */
+        /* ================= Thank You Slider ================= */
         .thankyou-section {
             margin-top: 50px;
             background: #ffffff;
@@ -440,13 +393,85 @@
             font-weight: 600;
         }
 
+        /* ================= ফুল-স্ক্রিন স্লাইডার সেকশন (এখন সবার নিচে) ================= */
+        .hero-slider-section {
+            width: 100%;
+            background: linear-gradient(135deg, #0b2e2a, #075e54);
+            padding: 30px 0 40px;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 40px;
+        }
+
+        .hero-fixed-title {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #f9a826;
+            color: #1e2b3c;
+            font-size: 1rem;
+            font-weight: 700;
+            padding: 8px 32px;
+            border-radius: 0 0 20px 20px;
+            z-index: 20;
+            box-shadow: 0 6px 18px rgba(249,168,38,0.4);
+            white-space: nowrap;
+            letter-spacing: 0.3px;
+        }
+
+        .hero-slider-inner {
+            width: 92%;
+            max-width: 1100px;
+            aspect-ratio: 16 / 9;
+            border-radius: 18px;
+            overflow: hidden;
+            box-shadow: 0 20px 50px -15px rgba(0,0,0,0.6);
+            background: #0b2e2a;
+            position: relative;
+            margin-top: 25px;
+        }
+
+        .slide {
+            position: absolute;
+            inset: 0;
+            opacity: 0;
+            transition: opacity 0.8s ease-in-out;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .slide.active { opacity: 1; }
+
+        .slider-dots {
+            position: absolute;
+            bottom: 15px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 10px;
+            z-index: 10;
+        }
+
+        .slider-dots span {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.5);
+            cursor: pointer;
+            transition: background 0.2s, transform 0.2s;
+        }
+
+        .slider-dots span.active { background: #f9a826; transform: scale(1.2); }
+
         /* ================= ফুটার ================= */
         footer {
             background: #0b2e2a;
             color: #d4e6e3;
             text-align: center;
             padding: 28px 20px;
-            margin-top: 30px;
             border-top: 4px solid #f9a826;
         }
 
@@ -488,6 +513,8 @@
             .service-grid { grid-template-columns: 1fr 1fr; gap: 14px; }
             .blog-grid { grid-template-columns: repeat(2, 1fr); }
             .container { padding: 20px 14px 40px; }
+            .hero-slider-inner { width: 95%; }
+            .hero-fixed-title { font-size: 0.85rem; padding: 6px 20px; }
         }
 
         @media (max-width: 480px) {
@@ -498,6 +525,7 @@
             .btn-login { font-size: 0.75rem; padding: 6px 14px; }
             .blog-grid { grid-template-columns: 1fr 1fr; }
             .card h3 { font-size: 1.05rem; }
+            .hero-fixed-title { font-size: 0.72rem; padding: 5px 14px; }
         }
     </style>
 </head>
@@ -529,25 +557,7 @@
     <!-- ================= মূল কনটেন্ট ================= -->
     <main class="container">
 
-        <!-- ===== ফটো স্লাইডার (১৬:৯) =====
-             এখানে ৫টি ছবির লিংক বসান। আপনি যেকোনো সময় লিংক পরিবর্তন করলেই ছবি চেঞ্জ হবে। -->
-        <div class="photo-slider" id="photoSlider">
-            <div class="slide active" style="background-image: url('https://picsum.photos/id/1015/1600/900');"></div>
-            <div class="slide" style="background-image: url('https://picsum.photos/id/1018/1600/900');"></div>
-            <div class="slide" style="background-image: url('https://picsum.photos/id/1025/1600/900');"></div>
-            <div class="slide" style="background-image: url('https://picsum.photos/id/1035/1600/900');"></div>
-            <div class="slide" style="background-image: url('https://picsum.photos/id/1043/1600/900');"></div>
-
-            <div class="slider-dots" id="sliderDots">
-                <span class="active" data-index="0"></span>
-                <span data-index="1"></span>
-                <span data-index="2"></span>
-                <span data-index="3"></span>
-                <span data-index="4"></span>
-            </div>
-        </div>
-
-        <!-- ===== সার্ভিস কার্ড (পাশাপাশি ২টি করে) ===== -->
+        <!-- ===== সার্ভিস কার্ড (এখন সবার উপরে — পাশাপাশি ২টি করে) ===== -->
         <div class="service-grid">
 
             <!-- লাইন ১ -->
@@ -708,9 +718,7 @@
             <a href="all-blogs.html" class="btn-view-more">View More →</a>
         </div>
 
-        <!-- ===== Thank You Slider (ডান থেকে বাঁ দিকে) =====
-             এখানে Firebase থেকে ডোনারদের ডাটা লোড হবে।
-             আপনার Firebase কনফিগার করে নিচের জাভাস্ক্রিপ্ট অংশে ডাটা রিড করবেন। -->
+        <!-- ===== Thank You Slider (ডান থেকে বাঁ দিকে) ===== -->
         <section class="thankyou-section">
             <div class="thankyou-fixed">💖 Thank You</div>
 
@@ -720,7 +728,6 @@
 
             <div class="thankyou-track-wrap">
                 <div class="thankyou-track" id="donorTrack">
-                    <!-- ডেমো ডোনার কার্ড - Firebase থেকে ডাটা লোড হবে -->
                     <div class="donor-card">
                         <div class="donor-avatar">র</div>
                         <div class="donor-info">
@@ -762,6 +769,31 @@
 
     </main>
 
+    <!-- ================= ফুল-স্ক্রিন ফটো স্লাইডার (এখন সবার নিচে) ================= -->
+    <section class="hero-slider-section">
+
+        <!-- ফিক্সড লেখা (স্লাইডারের উপরে) -->
+        <div class="hero-fixed-title">🎉 আজাদ ডিজিটাল সেবা অফার</div>
+
+        <!-- ভেতরের ১৬:৯ স্লাইডার -->
+        <div class="hero-slider-inner" id="photoSlider">
+            <div class="slide active" style="background-image: url('https://picsum.photos/id/1015/1600/900');"></div>
+            <div class="slide" style="background-image: url('https://picsum.photos/id/1018/1600/900');"></div>
+            <div class="slide" style="background-image: url('https://picsum.photos/id/1025/1600/900');"></div>
+            <div class="slide" style="background-image: url('https://picsum.photos/id/1035/1600/900');"></div>
+            <div class="slide" style="background-image: url('https://picsum.photos/id/1043/1600/900');"></div>
+
+            <div class="slider-dots" id="sliderDots">
+                <span class="active" data-index="0"></span>
+                <span data-index="1"></span>
+                <span data-index="2"></span>
+                <span data-index="3"></span>
+                <span data-index="4"></span>
+            </div>
+        </div>
+
+    </section>
+
     <!-- ================= ফুটার ================= -->
     <footer>
         <p>🏢 Azad Digital Seva — আপনার বিশ্বস্ত অনলাইন সেবা প্রদানকারী</p>
@@ -794,10 +826,8 @@
                 goTo((current + 1) % total);
             }
 
-            // অটো স্লাইড প্রতি ৪ সেকেন্ডে
             let interval = setInterval(nextSlide, 4000);
 
-            // ডট ক্লিক করলে
             dots.forEach((dot, i) => {
                 dot.addEventListener('click', () => {
                     clearInterval(interval);
@@ -808,17 +838,12 @@
         })();
 
         /* ===== Firebase Donor Data Load =====
-           আপনার Firebase কনফিগার করে নিচের কোডটি ব্যবহার করুন।
-           Firestore-এ 'donors' কালেকশন তৈরি করুন যেখানে প্রতিটি ডকুমেন্টে
-           থাকবে: name (string), amount (number), date (timestamp)
-
-           উদাহরণ Firestore স্ট্রাকচার:
+           Firestore-এ 'donors' কালেকশন তৈরি করুন:
            donors (collection)
-             ├── doc1 { name: "রহিম", amount: 1000 }
-             ├── doc2 { name: "করিম", amount: 500 }
+             ├── doc1 { name: "রহিম", amount: 1000, date: timestamp }
+             ├── doc2 { name: "করিম", amount: 500, date: timestamp }
              └── ...
 
-        // === Firebase কনফিগারেশন ===
         // import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
         // import { getFirestore, collection, onSnapshot, query, orderBy } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
@@ -833,7 +858,6 @@
 
         // const app = initializeApp(firebaseConfig);
         // const db = getFirestore(app);
-
         // const donorTrack = document.getElementById('donorTrack');
 
         // const q = query(collection(db, 'donors'), orderBy('date', 'desc'));
@@ -852,8 +876,6 @@
         //             </div>`;
         //         donorTrack.appendChild(card);
         //     });
-
-        //     // ডুপ্লিকেট করে স্লাইড কন্টিনিউয়াস করা
         //     const cards = donorTrack.innerHTML;
         //     donorTrack.innerHTML = cards + cards;
         // });

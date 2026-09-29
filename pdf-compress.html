@@ -413,9 +413,7 @@
             color: #f87171;
         }
 
-        /* ==================================================
-           🎚️ কোয়ালিটি স্লাইডার সেকশন (নতুন)
-           ================================================== */
+        /* ================= কোয়ালিটি সেকশন ================= */
         .quality-section {
             display: none;
             margin: 22px 0;
@@ -443,14 +441,8 @@
             gap: 10px;
         }
 
-        .quality-option {
-            position: relative;
-            cursor: pointer;
-        }
-        .quality-option input {
-            position: absolute;
-            opacity: 0;
-        }
+        .quality-option { position: relative; cursor: pointer; }
+        .quality-option input { position: absolute; opacity: 0; }
         .quality-label {
             display: flex;
             flex-direction: column;
@@ -462,20 +454,13 @@
             transition: all 0.3s;
             text-align: center;
         }
-        .quality-label .q-icon {
-            font-size: 1.6rem;
-            margin-bottom: 6px;
-        }
+        .quality-label .q-icon { font-size: 1.6rem; margin-bottom: 6px; }
         .quality-label .q-name {
-            font-size: 0.9rem;
-            font-weight: 800;
-            color: #fff;
-            margin-bottom: 3px;
+            font-size: 0.9rem; font-weight: 800;
+            color: #fff; margin-bottom: 3px;
         }
         .quality-label .q-desc {
-            font-size: 0.68rem;
-            color: #94a3b8;
-            line-height: 1.4;
+            font-size: 0.68rem; color: #94a3b8; line-height: 1.4;
         }
         .quality-option input:checked + .quality-label {
             border-color: #a78bfa;
@@ -917,7 +902,7 @@
                 <div class="password-status" id="passwordStatus"></div>
             </div>
 
-            <!-- 🎚️ কোয়ালিটি সেকশন (নতুন) -->
+            <!-- কোয়ালিটি -->
             <div class="quality-section" id="qualitySection">
                 <div class="quality-title">🎚️ কোয়ালিটি প্রেফারেন্স</div>
                 <div class="quality-subtitle">
@@ -1252,7 +1237,7 @@
             });
 
             /* ==================================================
-               🎚️ কোয়ালিটি সেটিংস — লেভেল অনুযায়ী
+               কোয়ালিটি সেটিংস
                ================================================== */
             function getQualitySettings() {
                 const level = document.querySelector('input[name="qlevel"]:checked').value;
@@ -1261,25 +1246,18 @@
                     return {
                         preferredQ: 0.92,
                         minQ: 0.75,
-                        maxScale: 2.0,
-                        minScale: 1.0,
                         scaleSteps: [2.0, 1.8, 1.6, 1.4, 1.2, 1.0]
                     };
                 } else if (level === 'small') {
                     return {
                         preferredQ: 0.55,
                         minQ: 0.30,
-                        maxScale: 1.4,
-                        minScale: 0.5,
                         scaleSteps: [1.4, 1.2, 1.0, 0.9, 0.8, 0.7, 0.6, 0.5]
                     };
                 } else {
-                    // balanced (default)
                     return {
                         preferredQ: 0.80,
                         minQ: 0.55,
-                        maxScale: 1.8,
-                        minScale: 0.7,
                         scaleSteps: [1.8, 1.6, 1.4, 1.2, 1.0, 0.9, 0.8, 0.7]
                     };
                 }
@@ -1361,14 +1339,12 @@
                         let localBest = null;
                         let localBestSize = 0;
 
-                        // প্রথমে preferredQ দিয়ে চেষ্টা
                         const first = await buildCompressed(sc, hi);
                         if (first.length <= targetBytes) {
                             localBest = first;
                             localBestSize = first.length;
                         }
 
-                        // Binary search — সর্বোচ্চ quality যেটা target এর নিচে
                         for (let iter = 0; iter < 7; iter++) {
                             const q = (lo + hi) / 2;
                             const bytes = await buildCompressed(sc, q);
@@ -1393,11 +1369,9 @@
                         progressFill.style.width = progress + '%';
                         progressText.textContent = `অপটিমাইজ করা হচ্ছে... ${progress}%`;
 
-                        // ৩% এর মধ্যে পৌঁছে গেলে থামুন
                         if (bestUnder && bestUnderSize >= targetBytes * 0.97) break;
                     }
 
-                    // আরও aggressive pass — যদি কিছু না পাই
                     if (!bestUnder) {
                         progressText.textContent = 'আরও কমপ্রেস করা হচ্ছে...';
                         for (const sc of [0.45, 0.4, 0.35, 0.3]) {
@@ -1450,8 +1424,11 @@
                         resultMsg.textContent = 'ফাইলটি আগেই অপটিমাইজড ছিল।';
                     }
 
+                    // ==================================================
+                    // ✅ ডাউনলোড ফাইলের নাম: ADSpdf দিয়ে শুরু
+                    // ==================================================
                     downloadBtn.href = compressedUrl;
-                    downloadBtn.download = 'compressed-' + currentFile.name;
+                    downloadBtn.download = 'ADSpdf-' + currentFile.name;
 
                     resultBox.classList.add('show');
                     compressBtn.disabled = false;

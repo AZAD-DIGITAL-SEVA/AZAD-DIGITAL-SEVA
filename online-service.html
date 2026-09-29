@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Online Services - Azad Digital Seva</title>
-    <meta name="description" content="অনলাইন সেবা - ফরম পূরণ, সার্টিফিকেট ভেরিফিকেশন, ফলাফল ডাউনলোড ও আরও অনেক কিছু।">
+    <meta name="description" content="অনলাইন সেবা - Useful Tools, PVC Card, Passport Size Photo, PDF Editor, Bio-data Maker।">
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -171,9 +171,9 @@
         }
         .btn-login:hover { background: #f9a826; color: #1e2b3c; }
 
-        /* ================= পেজ হিরো (নীল থিম) ================= */
+        /* ================= পেজ হিরো (মাল্টি-কালার) ================= */
         .page-hero {
-            background: linear-gradient(135deg, #1e4e8c, #2b7cd1);
+            background: linear-gradient(135deg, #1e4e8c 0%, #2b7cd1 50%, #7c3aed 100%);
             color: white;
             padding: 30px 18px 40px;
             text-align: center;
@@ -186,6 +186,14 @@
             top: -70px; right: -70px;
             width: 200px; height: 200px;
             background: rgba(255,255,255,0.08);
+            border-radius: 50%;
+        }
+        .page-hero::after {
+            content: '';
+            position: absolute;
+            bottom: -80px; left: -60px;
+            width: 180px; height: 180px;
+            background: rgba(255,255,255,0.06);
             border-radius: 50%;
         }
         .page-hero-icon {
@@ -262,41 +270,100 @@
         }
 
         .service-item {
-            background: #f5f9fe;
             border-radius: 12px;
             padding: 15px 17px;
-            border-left: 4px solid #2b7cd1;
             display: flex;
             align-items: center;
             gap: 12px;
-            transition: transform 0.2s, box-shadow 0.2s, background 0.2s;
+            transition: transform 0.25s, box-shadow 0.25s;
             text-decoration: none;
             color: inherit;
             cursor: pointer;
+            position: relative;
+            overflow: hidden;
         }
 
+        .service-item::after {
+            content: '';
+            position: absolute;
+            top: -30px; right: -30px;
+            width: 90px; height: 90px;
+            background: rgba(255,255,255,0.12);
+            border-radius: 50%;
+            transition: transform 0.4s;
+        }
+        .service-item:hover::after { transform: scale(1.6); }
+
         .service-item:hover {
-            background: #e0ecf8;
-            transform: translateY(-3px);
-            box-shadow: 0 8px 18px -8px rgba(43,124,209,0.35);
+            transform: translateY(-4px);
         }
 
         .service-item-icon {
             font-size: 1.7rem;
             flex-shrink: 0;
+            position: relative;
+            z-index: 1;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.15));
+        }
+
+        .service-item-text {
+            position: relative;
+            z-index: 1;
         }
 
         .service-item-text strong {
             display: block;
-            font-size: 0.95rem;
-            color: #1e4e8c;
+            font-size: 0.98rem;
             margin-bottom: 2px;
+            font-weight: 700;
         }
 
         .service-item-text span {
             font-size: 0.78rem;
-            color: #4a6075;
+            opacity: 0.92;
         }
+
+        /* ================= ৫টি ইউনিক কালার থিম ================= */
+
+        /* ১. Useful Tools — এমেরাল্ড গ্রিন */
+        .theme-tools {
+            background: linear-gradient(135deg, #059669, #10b981);
+            color: #fff;
+            box-shadow: 0 8px 20px -8px rgba(16, 185, 129, 0.5);
+        }
+        .theme-tools:hover { box-shadow: 0 12px 28px -8px rgba(16, 185, 129, 0.7); }
+
+        /* ২. PVC Card — রয়্যাল পার্পল */
+        .theme-pvc {
+            background: linear-gradient(135deg, #6d28d9, #8b5cf6);
+            color: #fff;
+            box-shadow: 0 8px 20px -8px rgba(139, 92, 246, 0.5);
+        }
+        .theme-pvc:hover { box-shadow: 0 12px 28px -8px rgba(139, 92, 246, 0.7); }
+
+        /* ৩. Passport Photo — সানসেট অরেঞ্জ */
+        .theme-photo {
+            background: linear-gradient(135deg, #ea580c, #f97316);
+            color: #fff;
+            box-shadow: 0 8px 20px -8px rgba(249, 115, 22, 0.5);
+        }
+        .theme-photo:hover { box-shadow: 0 12px 28px -8px rgba(249, 115, 22, 0.7); }
+
+        /* ৪. PDF Editor — ক্রিমসন রেড */
+        .theme-pdf {
+            background: linear-gradient(135deg, #be123c, #e11d48);
+            color: #fff;
+            box-shadow: 0 8px 20px -8px rgba(225, 29, 72, 0.5);
+        }
+        .theme-pdf:hover { box-shadow: 0 12px 28px -8px rgba(225, 29, 72, 0.7); }
+
+        /* ৫. Bio-data Maker — ওশান ব্লু */
+        .theme-bio {
+            background: linear-gradient(135deg, #0369a1, #0284c7);
+            color: #fff;
+            box-shadow: 0 8px 20px -8px rgba(2, 132, 199, 0.5);
+        }
+        .theme-bio:hover { box-shadow: 0 12px 28px -8px rgba(2, 132, 199, 0.7); }
 
         /* ================= বাটন ================= */
         .btn-back {
@@ -372,10 +439,15 @@
             .content-card h2 { font-size: 1rem; }
             .content-card > p { display: none; }
 
-            .service-list { grid-template-columns: 1fr; gap: 8px; margin: 12px 0; }
-            .service-item { padding: 11px 13px; gap: 10px; }
-            .service-item-icon { font-size: 1.3rem; }
-            .service-item-text strong { font-size: 0.85rem; }
+            .service-list { grid-template-columns: 1fr 1fr; gap: 10px; margin: 12px 0; }
+            .service-item {
+                padding: 14px 12px;
+                gap: 10px;
+                flex-direction: column;
+                text-align: center;
+            }
+            .service-item-icon { font-size: 1.8rem; }
+            .service-item-text strong { font-size: 0.82rem; }
             .service-item-text span { display: none; }
 
             .btn-back { padding: 7px 16px; font-size: 0.75rem; }
@@ -393,6 +465,9 @@
             .brand-name { font-size: 0.66rem; }
             .header-logo-icon { font-size: 0.78rem; }
             .btn-login { font-size: 0.54rem; padding: 2px 7px; }
+
+            .service-item-icon { font-size: 1.5rem; }
+            .service-item-text strong { font-size: 0.75rem; }
         }
     </style>
 </head>
@@ -434,7 +509,7 @@
     <section class="page-hero">
         <div class="page-hero-icon">🌐</div>
         <h1>Online Services</h1>
-        <p>অনলাইন ফরম পূরণ, সার্টিফিকেট ভেরিফিকেশন, ফলাফল ডাউনলোড ও আরও অনেক কিছু এক জায়গায়।</p>
+        <p>Useful Tools, PVC Card, Passport Size Photo, PDF Editor ও Bio-data Maker — সব সেবা এক জায়গায়।</p>
         <div class="breadcrumb">
             <a href="index.html">Home</a> › <span>Online Services</span>
         </div>
@@ -443,72 +518,53 @@
     <!-- ================= মূল কনটেন্ট ================= -->
     <main class="inner-container">
         <div class="content-card">
-            <h2>📋 উপলব্ধ সেবাসমূহ</h2>
+            <h2>📋 Available Services</h2>
             <p>নিচের যেকোনো সেবার ওপর ক্লিক করুন — সরাসরি সেই সেবার বিস্তারিত পেজে চলে যাবেন।</p>
 
             <div class="service-list">
 
-                <a href="form-fill.html" class="service-item">
-                    <span class="service-item-icon">📝</span>
+                <!-- ১. Useful Tools — এমেরাল্ড গ্রিন -->
+                <a href="useful-tools.html" class="service-item theme-tools">
+                    <span class="service-item-icon">🧰</span>
                     <div class="service-item-text">
-                        <strong>অনলাইন ফরম পূরণ</strong>
-                        <span>চাকরির আবেদন, ভর্তি ফরম, পাসপোর্ট ফরম</span>
+                        <strong>Useful Tools</strong>
+                        <span>দরকারি সব অনলাইন টুলস এক জায়গায়</span>
                     </div>
                 </a>
 
-                <a href="certificate-verify.html" class="service-item">
-                    <span class="service-item-icon">🎓</span>
+                <!-- ২. PVC Card — রয়্যাল পার্পল -->
+                <a href="pvc-card.html" class="service-item theme-pvc">
+                    <span class="service-item-icon">💳</span>
                     <div class="service-item-text">
-                        <strong>সার্টিফিকেট ভেরিফিকেশন</strong>
-                        <span>শিক্ষা সনদ যাচাই ও অনলাইন ভেরিফিকেশন</span>
+                        <strong>PVC Card</strong>
+                        <span>PVC কার্ড তৈরি ও প্রিন্ট সেবা</span>
                     </div>
                 </a>
 
-                <a href="result-download.html" class="service-item">
-                    <span class="service-item-icon">📥</span>
+                <!-- ৩. Passport Size Photo — সানসেট অরেঞ্জ -->
+                <a href="passport-photo.html" class="service-item theme-photo">
+                    <span class="service-item-icon">📸</span>
                     <div class="service-item-text">
-                        <strong>ফলাফল ডাউনলোড</strong>
-                        <span>SSC, HSC, সমমান পরীক্ষার ফলাফল</span>
+                        <strong>Passport Size Photo</strong>
+                        <span>পাসপোর্ট সাইজ ছবি তৈরি করুন</span>
                     </div>
                 </a>
 
-                <a href="admit-card.html" class="service-item">
-                    <span class="service-item-icon">🎫</span>
-                    <div class="service-item-text">
-                        <strong>এডমিট কার্ড</strong>
-                        <span>পরীক্ষার প্রবেশপত্র ডাউনলোড</span>
-                    </div>
-                </a>
-
-                <a href="job-application.html" class="service-item">
-                    <span class="service-item-icon">💼</span>
-                    <div class="service-item-text">
-                        <strong>চাকরির আবেদন</strong>
-                        <span>সরকারি ও বেসরকারি চাকরির অনলাইন আবেদন</span>
-                    </div>
-                </a>
-
-                <a href="email-service.html" class="service-item">
-                    <span class="service-item-icon">📧</span>
-                    <div class="service-item-text">
-                        <strong>ইমেইল সেবা</strong>
-                        <span>নতুন ইমেইল তৈরি ও রিকভারি</span>
-                    </div>
-                </a>
-
-                <a href="online-form.html" class="service-item">
+                <!-- ৪. PDF Editor — ক্রিমসন রেড -->
+                <a href="pdf-editor.html" class="service-item theme-pdf">
                     <span class="service-item-icon">📄</span>
                     <div class="service-item-text">
-                        <strong>বিভিন্ন অনলাইন ফরম</strong>
-                        <span>সরকারি ও বেসরকারি সব ফরম</span>
+                        <strong>PDF Editor</strong>
+                        <span>PDF এডিট, মার্জ ও কনভার্ট করুন</span>
                     </div>
                 </a>
 
-                <a href="digital-signature.html" class="service-item">
-                    <span class="service-item-icon">✍️</span>
+                <!-- ৫. Bio-data Maker — ওশান ব্লু -->
+                <a href="biodata-maker.html" class="service-item theme-bio">
+                    <span class="service-item-icon">📋</span>
                     <div class="service-item-text">
-                        <strong>ডিজিটাল সিগনেচার</strong>
-                        <span>ডিজিটাল স্বাক্ষর সেবা</span>
+                        <strong>Bio-data Maker</strong>
+                        <span>প্রফেশনাল বায়োডাটা তৈরি করুন</span>
                     </div>
                 </a>
 

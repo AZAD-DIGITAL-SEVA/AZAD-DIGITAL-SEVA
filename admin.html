@@ -1,0 +1,1191 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Panel | Azad Digital Seva</title>
+<link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;500;600;700&family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --primary: #075e54;
+    --accent: #25d366;
+    --gold: #f9a826;
+    --danger: #e74c3c;
+    --warning: #f39c12;
+    --success: #27ae60;
+    --info: #3498db;
+    --dark: #0b2e2a;
+    --light: #f0f4f8;
+    --card: #ffffff;
+  }
+
+  body {
+    font-family: 'Hind Siliguri', 'Poppins', sans-serif;
+    background: var(--light);
+    color: #1e2b3c;
+    min-height: 100vh;
+  }
+
+  /* ================= LOGIN PAGE ================= */
+  .login-wrapper {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #075e54, #128c7e, #0b2e2a);
+    padding: 20px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .login-wrapper::before {
+    content: '';
+    position: absolute;
+    top: -100px; right: -100px;
+    width: 300px; height: 300px;
+    background: rgba(249,168,38,0.15);
+    border-radius: 50%;
+  }
+  .login-wrapper::after {
+    content: '';
+    position: absolute;
+    bottom: -120px; left: -80px;
+    width: 280px; height: 280px;
+    background: rgba(37,211,102,0.12);
+    border-radius: 50%;
+  }
+
+  .login-card {
+    background: #fff;
+    border-radius: 20px;
+    padding: 40px 32px;
+    max-width: 420px;
+    width: 100%;
+    box-shadow: 0 25px 60px rgba(0,0,0,0.3);
+    position: relative;
+    z-index: 1;
+    border-top: 5px solid var(--gold);
+  }
+
+  .login-logo {
+    width: 75px;
+    height: 75px;
+    margin: 0 auto 18px;
+    background: linear-gradient(135deg, var(--primary), var(--accent));
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    box-shadow: 0 10px 30px rgba(7,94,84,0.35);
+  }
+
+  .login-card h1 {
+    text-align: center;
+    font-size: 1.4rem;
+    color: var(--primary);
+    font-weight: 700;
+    margin-bottom: 6px;
+  }
+
+  .login-card .login-sub {
+    text-align: center;
+    font-size: 0.85rem;
+    color: #666;
+    margin-bottom: 25px;
+  }
+
+  .login-group {
+    margin-bottom: 16px;
+  }
+
+  .login-group label {
+    display: block;
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: #374151;
+    margin-bottom: 6px;
+  }
+
+  .login-group input {
+    width: 100%;
+    padding: 12px 15px;
+    border: 2px solid #e5e7eb;
+    border-radius: 10px;
+    font-size: 0.92rem;
+    font-family: inherit;
+    background: #fafbfc;
+    transition: all 0.3s;
+  }
+
+  .login-group input:focus {
+    outline: none;
+    border-color: var(--gold);
+    background: #fff;
+    box-shadow: 0 0 0 4px rgba(249,168,38,0.15);
+  }
+
+  .login-btn {
+    width: 100%;
+    background: linear-gradient(135deg, var(--primary), var(--accent));
+    color: #fff;
+    border: none;
+    padding: 14px;
+    border-radius: 10px;
+    font-size: 0.95rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s;
+    font-family: inherit;
+    margin-top: 8px;
+    box-shadow: 0 6px 20px rgba(7,94,84,0.35);
+  }
+
+  .login-btn:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(7,94,84,0.45);
+  }
+
+  .login-btn:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+  }
+
+  .login-error {
+    background: #fef2f2;
+    color: #dc2626;
+    padding: 10px 14px;
+    border-radius: 8px;
+    font-size: 0.82rem;
+    margin-bottom: 15px;
+    border-left: 4px solid #dc2626;
+    display: none;
+  }
+  .login-error.show { display: block; }
+
+  /* ================= DASHBOARD ================= */
+  .dashboard {
+    display: none;
+    min-height: 100vh;
+  }
+  .dashboard.active { display: block; }
+
+  /* Top Bar */
+  .topbar {
+    background: linear-gradient(135deg, #075e54, #128c7e);
+    color: #fff;
+    padding: 12px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: 0 4px 15px rgba(7,94,84,0.25);
+    border-bottom: 3px solid var(--gold);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .topbar-brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .topbar-brand .brand-icon {
+    width: 38px;
+    height: 38px;
+    background: rgba(255,255,255,0.15);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    border: 1px solid rgba(255,255,255,0.2);
+  }
+
+  .topbar-brand .brand-text h2 {
+    font-size: 1rem;
+    font-weight: 700;
+    line-height: 1.2;
+  }
+  .topbar-brand .brand-text h2 span { color: var(--gold); }
+  .topbar-brand .brand-text p {
+    font-size: 0.68rem;
+    opacity: 0.85;
+  }
+
+  .topbar-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .admin-email {
+    font-size: 0.72rem;
+    background: rgba(255,255,255,0.12);
+    padding: 5px 12px;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+
+  .btn-logout {
+    background: var(--danger);
+    color: #fff;
+    border: none;
+    padding: 7px 16px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: inherit;
+    transition: all 0.3s;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+  }
+  .btn-logout:hover { background: #c0392b; transform: translateY(-1px); }
+
+  /* Container */
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px 15px 40px;
+  }
+
+  /* Stats Grid */
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+    gap: 14px;
+    margin-bottom: 22px;
+  }
+
+  .stat-card {
+    background: #fff;
+    border-radius: 14px;
+    padding: 18px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+    border-left: 4px solid var(--primary);
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    transition: transform 0.3s;
+  }
+  .stat-card:hover { transform: translateY(-3px); }
+
+  .stat-card.pending { border-left-color: var(--warning); }
+  .stat-card.complete { border-left-color: var(--success); }
+  .stat-card.total { border-left-color: var(--info); }
+
+  .stat-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.4rem;
+    flex-shrink: 0;
+  }
+
+  .stat-card.pending .stat-icon { background: #fff3cd; }
+  .stat-card.complete .stat-icon { background: #d4edda; }
+  .stat-card.total .stat-icon { background: #d1ecf1; }
+  .stat-card:not(.pending):not(.complete):not(.total) .stat-icon { background: #d4edda; }
+
+  .stat-info h3 {
+    font-size: 1.6rem;
+    color: var(--dark);
+    font-weight: 800;
+    font-family: 'Poppins', sans-serif;
+    line-height: 1;
+  }
+  .stat-info p {
+    font-size: 0.75rem;
+    color: #666;
+    margin-top: 4px;
+    font-weight: 500;
+  }
+
+  /* Filter Bar */
+  .filter-bar {
+    background: #fff;
+    border-radius: 14px;
+    padding: 15px;
+    margin-bottom: 18px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+
+  .search-box {
+    flex: 1;
+    min-width: 200px;
+    position: relative;
+  }
+
+  .search-box input {
+    width: 100%;
+    padding: 10px 15px 10px 40px;
+    border: 2px solid #e5e7eb;
+    border-radius: 10px;
+    font-size: 0.85rem;
+    font-family: inherit;
+    background: #fafbfc;
+  }
+  .search-box input:focus {
+    outline: none;
+    border-color: var(--gold);
+    background: #fff;
+  }
+  .search-box::before {
+    content: '🔍';
+    position: absolute;
+    left: 13px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 0.9rem;
+  }
+
+  .filter-btn {
+    background: #f0f4f8;
+    border: 2px solid transparent;
+    padding: 9px 18px;
+    border-radius: 10px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: inherit;
+    color: #475569;
+    transition: all 0.3s;
+  }
+
+  .filter-btn:hover, .filter-btn.active {
+    background: var(--primary);
+    color: #fff;
+  }
+
+  .refresh-btn {
+    background: var(--info);
+    color: #fff;
+    border: none;
+    padding: 10px 18px;
+    border-radius: 10px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: inherit;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: all 0.3s;
+  }
+  .refresh-btn:hover { background: #2980b9; }
+
+  /* Orders List */
+  .orders-container {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .order-card {
+    background: #fff;
+    border-radius: 14px;
+    padding: 18px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    border-left: 5px solid var(--warning);
+    transition: all 0.3s;
+    animation: slideUp 0.4s ease;
+  }
+
+  @keyframes slideUp {
+    from { opacity: 0; transform: translateY(15px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .order-card:hover {
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    transform: translateY(-2px);
+  }
+
+  .order-card.completed { border-left-color: var(--success); }
+  .order-card.new { border-left-color: var(--danger); animation: pulseNew 2s infinite; }
+
+  @keyframes pulseNew {
+    0%, 100% { box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
+    50% { box-shadow: 0 4px 25px rgba(231,76,60,0.3); }
+  }
+
+  .order-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 12px;
+    margin-bottom: 14px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #f0f0f0;
+    flex-wrap: wrap;
+  }
+
+  .order-id {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  .order-id .oid {
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.72rem;
+    color: #888;
+    background: #f0f4f8;
+    padding: 3px 9px;
+    border-radius: 6px;
+  }
+
+  .status-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+  }
+
+  .status-badge.new { background: #fee2e2; color: #991b1b; }
+  .status-badge.pending { background: #fef3c7; color: #92400e; }
+  .status-badge.completed { background: #d1fae5; color: #065f46; }
+
+  .order-time {
+    font-size: 0.72rem;
+    color: #888;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .order-body {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 12px;
+    margin-bottom: 14px;
+  }
+
+  .order-field {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+  }
+
+  .order-field .label {
+    font-size: 0.68rem;
+    color: #888;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .order-field .value {
+    font-size: 0.88rem;
+    color: #1e2b3c;
+    font-weight: 600;
+    word-break: break-word;
+  }
+
+  .order-field .value.phone {
+    font-family: 'Poppins', sans-serif;
+    color: var(--primary);
+  }
+
+  .order-card-type {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: linear-gradient(135deg, #fff8e7, #ffe4b5);
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: #8B0000;
+    border: 1px solid #f9a826;
+  }
+
+  .order-actions {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    padding-top: 12px;
+    border-top: 1px solid #f0f0f0;
+  }
+
+  .action-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 8px 15px;
+    border-radius: 8px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: inherit;
+    text-decoration: none;
+    border: none;
+    transition: all 0.3s;
+  }
+
+  .action-btn.pdf {
+    background: #fee2e2;
+    color: #991b1b;
+  }
+  .action-btn.pdf:hover { background: #fecaca; }
+
+  .action-btn.call {
+    background: #d1ecf1;
+    color: #0c5460;
+  }
+  .action-btn.call:hover { background: #bee5eb; }
+
+  .action-btn.whatsapp {
+    background: #d1fae5;
+    color: #065f46;
+  }
+  .action-btn.whatsapp:hover { background: #a7f3d0; }
+
+  .action-btn.complete {
+    background: var(--success);
+    color: #fff;
+  }
+  .action-btn.complete:hover { background: #219150; }
+
+  .action-btn.delete {
+    background: var(--danger);
+    color: #fff;
+  }
+  .action-btn.delete:hover { background: #c0392b; }
+
+  /* Empty State */
+  .empty-state {
+    text-align: center;
+    padding: 60px 20px;
+    background: #fff;
+    border-radius: 14px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+  }
+
+  .empty-state .empty-icon {
+    font-size: 4rem;
+    margin-bottom: 15px;
+    opacity: 0.5;
+  }
+
+  .empty-state h3 {
+    font-size: 1.1rem;
+    color: #374151;
+    margin-bottom: 6px;
+  }
+  .empty-state p {
+    font-size: 0.85rem;
+    color: #888;
+  }
+
+  /* Loading */
+  .loading {
+    text-align: center;
+    padding: 40px 20px;
+  }
+
+  .loading-spinner {
+    border: 4px solid #f0f0f0;
+    border-top: 4px solid var(--primary);
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    animation: spin 1s linear infinite;
+    margin: 0 auto 12px;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  .loading p {
+    color: #888;
+    font-size: 0.85rem;
+  }
+
+  /* Toast */
+  .toast {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: #1e2b3c;
+    color: #fff;
+    padding: 14px 22px;
+    border-radius: 12px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    transform: translateY(100px);
+    opacity: 0;
+    transition: all 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    max-width: 350px;
+  }
+
+  .toast.show {
+    transform: translateY(0);
+    opacity: 1;
+  }
+
+  .toast.success { background: var(--success); }
+  .toast.error { background: var(--danger); }
+  .toast.info { background: var(--info); }
+
+  /* Responsive */
+  @media (max-width: 700px) {
+    .login-card { padding: 30px 22px; }
+    .login-card h1 { font-size: 1.2rem; }
+    .login-logo { width: 60px; height: 60px; font-size: 1.6rem; }
+
+    .topbar { padding: 10px 14px; }
+    .topbar-brand .brand-icon { width: 32px; height: 32px; font-size: 1rem; }
+    .topbar-brand .brand-text h2 { font-size: 0.85rem; }
+    .topbar-brand .brand-text p { display: none; }
+    .admin-email { display: none; }
+    .btn-logout { padding: 6px 12px; font-size: 0.7rem; }
+
+    .container { padding: 15px 10px 30px; }
+    .stats-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+    .stat-card { padding: 12px; gap: 10px; }
+    .stat-icon { width: 40px; height: 40px; font-size: 1.1rem; }
+    .stat-info h3 { font-size: 1.3rem; }
+    .stat-info p { font-size: 0.68rem; }
+
+    .filter-bar { padding: 12px; gap: 8px; }
+    .filter-btn { font-size: 0.72rem; padding: 7px 12px; }
+    .search-box { min-width: 100%; order: -1; }
+
+    .order-card { padding: 14px; }
+    .order-body { grid-template-columns: 1fr; gap: 8px; }
+    .order-field .value { font-size: 0.82rem; }
+    .action-btn { font-size: 0.72rem; padding: 7px 12px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ==================== LOGIN PAGE ==================== -->
+<div class="login-wrapper" id="loginPage">
+  <div class="login-card">
+    <div class="login-logo">🔐</div>
+    <h1>Admin Panel</h1>
+    <p class="login-sub">Azad Digital Seva - অ্যাডমিন লগইন</p>
+
+    <div class="login-error" id="loginError"></div>
+
+    <div class="login-group">
+      <label>📧 ইমেইল</label>
+      <input type="email" id="loginEmail" placeholder="admin@example.com" autocomplete="username">
+    </div>
+
+    <div class="login-group">
+      <label>🔒 পাসওয়ার্ড</label>
+      <input type="password" id="loginPassword" placeholder="••••••••" autocomplete="current-password">
+    </div>
+
+    <button class="login-btn" id="loginBtn" onclick="handleLogin()">
+      🔓 লগইন করুন
+    </button>
+  </div>
+</div>
+
+<!-- ==================== DASHBOARD ==================== -->
+<div class="dashboard" id="dashboard">
+
+  <!-- Topbar -->
+  <div class="topbar">
+    <div class="topbar-brand">
+      <div class="brand-icon">🖥️</div>
+      <div class="brand-text">
+        <h2>Azad <span>Digital</span> Seva</h2>
+        <p>অ্যাডমিন প্যানেল - অর্ডার ম্যানেজমেন্ট</p>
+      </div>
+    </div>
+    <div class="topbar-actions">
+      <span class="admin-email">👤 <span id="adminEmail">-</span></span>
+      <button class="btn-logout" onclick="handleLogout()">
+        🚪 লগআউট
+      </button>
+    </div>
+  </div>
+
+  <!-- Container -->
+  <div class="container">
+
+    <!-- Stats -->
+    <div class="stats-grid">
+      <div class="stat-card total">
+        <div class="stat-icon">📦</div>
+        <div class="stat-info">
+          <h3 id="statTotal">0</h3>
+          <p>মোট অর্ডার</p>
+        </div>
+      </div>
+      <div class="stat-card pending">
+        <div class="stat-icon">⏳</div>
+        <div class="stat-info">
+          <h3 id="statPending">0</h3>
+          <p>পেন্ডিং</p>
+        </div>
+      </div>
+      <div class="stat-card complete">
+        <div class="stat-icon">✅</div>
+        <div class="stat-info">
+          <h3 id="statComplete">0</h3>
+          <p>সম্পন্ন</p>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon">🆕</div>
+        <div class="stat-info">
+          <h3 id="statToday">0</h3>
+          <p>আজকের অর্ডার</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Filter Bar -->
+    <div class="filter-bar">
+      <div class="search-box">
+        <input type="text" id="searchInput" placeholder="নাম, ফোন বা ঠিকানা দিয়ে খুঁজুন..." oninput="renderOrders()">
+      </div>
+      <button class="filter-btn active" data-filter="all" onclick="setFilter('all', this)">সব</button>
+      <button class="filter-btn" data-filter="new" onclick="setFilter('new', this)">🆕 নতুন</button>
+      <button class="filter-btn" data-filter="pending" onclick="setFilter('pending', this)">⏳ পেন্ডিং</button>
+      <button class="filter-btn" data-filter="completed" onclick="setFilter('completed', this)">✅ সম্পন্ন</button>
+      <button class="refresh-btn" onclick="loadOrders()">🔄 রিফ্রেশ</button>
+    </div>
+
+    <!-- Orders -->
+    <div class="orders-container" id="ordersContainer">
+      <div class="loading">
+        <div class="loading-spinner"></div>
+        <p>অর্ডার লোড হচ্ছে...</p>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast"></div>
+
+<!-- Firebase SDK -->
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import { 
+  getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged 
+} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+import { 
+  getFirestore, collection, query, orderBy, onSnapshot, 
+  doc, updateDoc, deleteDoc, getDocs 
+} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+// ============================================================
+// FIREBASE CONFIG - এখানে আপনার নিজের কনফিগ বসান
+// ============================================================
+const firebaseConfig = {
+  apiKey: "YOUR_API_KEY",
+  authDomain: "YOUR_PROJECT.firebaseapp.com",
+  projectId: "YOUR_PROJECT_ID",
+  storageBucket: "YOUR_PROJECT.appspot.com",
+  messagingSenderId: "YOUR_SENDER_ID",
+  appId: "YOUR_APP_ID"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+
+// ============================================================
+// GLOBAL STATE
+// ============================================================
+let allOrders = [];
+let currentFilter = 'all';
+let unsubscribe = null;
+
+// ============================================================
+// AUTH - LOGIN
+// ============================================================
+window.handleLogin = async function() {
+  const email = document.getElementById('loginEmail').value.trim();
+  const password = document.getElementById('loginPassword').value;
+  const btn = document.getElementById('loginBtn');
+  const errBox = document.getElementById('loginError');
+
+  errBox.classList.remove('show');
+
+  if (!email || !password) {
+    showLoginError('ইমেইল ও পাসওয়ার্ড দুটোই দিন');
+    return;
+  }
+
+  btn.disabled = true;
+  btn.innerHTML = '⏳ লগইন হচ্ছে...';
+
+  try {
+    await signInWithEmailAndPassword(auth, email, password);
+    showToast('✅ সফলভাবে লগইন হয়েছে!', 'success');
+  } catch (error) {
+    console.error(error);
+    let msg = 'লগইন ব্যর্থ হয়েছে';
+    if (error.code === 'auth/invalid-credential' || error.code === 'auth/wrong-password') {
+      msg = '❌ ইমেইল বা পাসওয়ার্ড ভুল';
+    } else if (error.code === 'auth/user-not-found') {
+      msg = '❌ এই ইমেইলে কোনো অ্যাকাউন্ট নেই';
+    } else if (error.code === 'auth/too-many-requests') {
+      msg = '⏳ অনেকবার ভুল হয়েছে, কিছুক্ষণ পরে চেষ্টা করুন';
+    } else if (error.code === 'auth/invalid-email') {
+      msg = '❌ ইমেইল ঠিক নেই';
+    }
+    showLoginError(msg);
+  } finally {
+    btn.disabled = false;
+    btn.innerHTML = '🔓 লগইন করুন';
+  }
+};
+
+function showLoginError(msg) {
+  const errBox = document.getElementById('loginError');
+  errBox.textContent = msg;
+  errBox.classList.add('show');
+}
+
+// ============================================================
+// AUTH - LOGOUT
+// ============================================================
+window.handleLogout = async function() {
+  if (!confirm('আপনি কি লগআউট করতে চান?')) return;
+  try {
+    await signOut(auth);
+    showToast('👋 লগআউট হয়েছে', 'info');
+  } catch (error) {
+    showToast('❌ লগআউট ব্যর্থ', 'error');
+  }
+};
+
+// ============================================================
+// AUTH STATE LISTENER
+// ============================================================
+onAuthStateChanged(auth, (user) => {
+  const loginPage = document.getElementById('loginPage');
+  const dashboard = document.getElementById('dashboard');
+
+  if (user) {
+    loginPage.style.display = 'none';
+    dashboard.classList.add('active');
+    document.getElementById('adminEmail').textContent = user.email;
+    startOrdersListener();
+  } else {
+    loginPage.style.display = 'flex';
+    dashboard.classList.remove('active');
+    if (unsubscribe) unsubscribe();
+  }
+});
+
+// Enter key login
+document.getElementById('loginPassword').addEventListener('keypress', (e) => {
+  if (e.key === 'Enter') window.handleLogin();
+});
+document.getElementById('loginEmail').addEventListener('keypress', (e) => {
+  if (e.key === 'Enter') document.getElementById('loginPassword').focus();
+});
+
+// ============================================================
+// ORDERS - REAL-TIME LISTENER
+// ============================================================
+function startOrdersListener() {
+  if (unsubscribe) unsubscribe();
+
+  const q = query(collection(db, 'orders'), orderBy('createdAt', 'desc'));
+
+  unsubscribe = onSnapshot(q, (snapshot) => {
+    allOrders = [];
+    snapshot.forEach((docSnap) => {
+      allOrders.push({ id: docSnap.id, ...docSnap.data() });
+    });
+    updateStats();
+    renderOrders();
+  }, (error) => {
+    console.error('Firestore error:', error);
+    document.getElementById('ordersContainer').innerHTML = `
+      <div class="empty-state">
+        <div class="empty-icon">⚠️</div>
+        <h3>ডেটা লোড করা যায়নি</h3>
+        <p>${error.message}</p>
+      </div>
+    `;
+  });
+}
+
+window.loadOrders = function() {
+  startOrdersListener();
+  showToast('🔄 রিফ্রেশ হয়েছে', 'info');
+};
+
+// ============================================================
+// STATS
+// ============================================================
+function updateStats() {
+  const total = allOrders.length;
+  const pending = allOrders.filter(o => o.status !== 'completed').length;
+  const complete = allOrders.filter(o => o.status === 'completed').length;
+
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  const todayCount = allOrders.filter(o => {
+    if (!o.createdAt) return false;
+    const d = o.createdAt.toDate ? o.createdAt.toDate() : new Date(o.createdAt);
+    return d >= today;
+  }).length;
+
+  document.getElementById('statTotal').textContent = total;
+  document.getElementById('statPending').textContent = pending;
+  document.getElementById('statComplete').textContent = complete;
+  document.getElementById('statToday').textContent = todayCount;
+}
+
+// ============================================================
+// FILTER
+// ============================================================
+window.setFilter = function(filter, btn) {
+  currentFilter = filter;
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderOrders();
+};
+
+// ============================================================
+// RENDER ORDERS
+// ============================================================
+window.renderOrders = function() {
+  const container = document.getElementById('ordersContainer');
+  const searchTerm = (document.getElementById('searchInput')?.value || '').toLowerCase().trim();
+
+  let filtered = allOrders;
+
+  // Filter
+  if (currentFilter === 'new') {
+    filtered = filtered.filter(o => o.status === 'new' || !o.status);
+  } else if (currentFilter === 'pending') {
+    filtered = filtered.filter(o => o.status === 'pending');
+  } else if (currentFilter === 'completed') {
+    filtered = filtered.filter(o => o.status === 'completed');
+  }
+
+  // Search
+  if (searchTerm) {
+    filtered = filtered.filter(o => {
+      const haystack = [
+        o.customerName, o.phone, o.address, o.district,
+        o.cardType, o.email
+      ].filter(Boolean).join(' ').toLowerCase();
+      return haystack.includes(searchTerm);
+    });
+  }
+
+  // Empty
+  if (filtered.length === 0) {
+    container.innerHTML = `
+      <div class="empty-state">
+        <div class="empty-icon">📭</div>
+        <h3>${searchTerm ? 'কোনো ফলাফল পাওয়া যায়নি' : 'এখনো কোনো অর্ডার আসেনি'}</h3>
+        <p>${searchTerm ? 'অন্য কিছু দিয়ে খুঁজে দেখুন' : 'কাস্টমার অর্ডার করলে এখানে দেখা যাবে'}</p>
+      </div>
+    `;
+    return;
+  }
+
+  // Render
+  container.innerHTML = filtered.map(order => renderOrderCard(order)).join('');
+};
+
+function renderOrderCard(order) {
+  const status = order.status || 'new';
+  const statusLabel = {
+    new: '🆕 নতুন',
+    pending: '⏳ পেন্ডিং',
+    completed: '✅ সম্পন্ন'
+  }[status] || '🆕 নতুন';
+
+  const statusClass = status === 'completed' ? 'completed' : (status === 'new' ? 'new' : '');
+
+  // Time
+  let timeStr = '-';
+  if (order.createdAt) {
+    const d = order.createdAt.toDate ? order.createdAt.toDate() : new Date(order.createdAt);
+    timeStr = d.toLocaleString('bn-IN', {
+      day: '2-digit', month: 'short', year: 'numeric',
+      hour: '2-digit', minute: '2-digit'
+    });
+  }
+
+  // Order ID short
+  const shortId = order.id ? order.id.slice(0, 8).toUpperCase() : 'N/A';
+
+  // Phone (clean for wa.me)
+  const cleanPhone = (order.phone || '').replace(/\D/g, '');
+  const waPhone = cleanPhone.startsWith('91') ? cleanPhone : '91' + cleanPhone;
+
+  return `
+    <div class="order-card ${statusClass}">
+      <div class="order-header">
+        <div class="order-id">
+          <span class="status-badge ${status}">${statusLabel}</span>
+          <span class="oid">#${shortId}</span>
+          ${order.cardType ? `<span class="order-card-type">💳 ${escapeHtml(order.cardType)}</span>` : ''}
+        </div>
+        <span class="order-time">🕐 ${timeStr}</span>
+      </div>
+
+      <div class="order-body">
+        <div class="order-field">
+          <span class="label">👤 নাম</span>
+          <span class="value">${escapeHtml(order.customerName || '-')}</span>
+        </div>
+        <div class="order-field">
+          <span class="label">📞 মোবাইল</span>
+          <span class="value phone">${escapeHtml(order.phone || '-')}</span>
+        </div>
+        <div class="order-field">
+          <span class="label">📍 জেলা</span>
+          <span class="value">${escapeHtml(order.district || '-')}</span>
+        </div>
+        ${order.email ? `
+        <div class="order-field">
+          <span class="label">📧 ইমেইল</span>
+          <span class="value">${escapeHtml(order.email)}</span>
+        </div>` : ''}
+        <div class="order-field" style="grid-column: 1 / -1;">
+          <span class="label">🏠 সম্পূর্ণ ঠিকানা</span>
+          <span class="value">${escapeHtml(order.address || '-')}</span>
+        </div>
+        ${order.fileName ? `
+        <div class="order-field" style="grid-column: 1 / -1;">
+          <span class="label">📄 ফাইল</span>
+          <span class="value">${escapeHtml(order.fileName)}</span>
+        </div>` : ''}
+      </div>
+
+      <div class="order-actions">
+        ${order.pdfUrl ? `
+          <a href="${order.pdfUrl}" target="_blank" class="action-btn pdf">
+            📄 PDF দেখুন
+          </a>
+        ` : ''}
+        ${cleanPhone ? `
+          <a href="tel:+${waPhone}" class="action-btn call">
+            📞 কল করুন
+          </a>
+          <a href="https://wa.me/${waPhone}?text=${encodeURIComponent('নমস্কার ' + (order.customerName || '') + ', আপনার PVC কার্ড অর্ডার সম্পর্কে যোগাযোগ করছি।')}" 
+             target="_blank" class="action-btn whatsapp">
+            💬 WhatsApp
+          </a>
+        ` : ''}
+        ${status !== 'completed' ? `
+          <button class="action-btn complete" onclick="markComplete('${order.id}')">
+            ✅ সম্পন্ন করুন
+          </button>
+        ` : `
+          <button class="action-btn complete" onclick="markPending('${order.id}')">
+            ⏳ পেন্ডিং করুন
+          </button>
+        `}
+        <button class="action-btn delete" onclick="deleteOrder('${order.id}')">
+          🗑️ ডিলিট
+        </button>
+      </div>
+    </div>
+  `;
+}
+
+function escapeHtml(str) {
+  return String(str || '')
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#039;');
+}
+
+// ============================================================
+// MARK COMPLETE / PENDING
+// ============================================================
+window.markComplete = async function(orderId) {
+  try {
+    await updateDoc(doc(db, 'orders', orderId), { status: 'completed' });
+    showToast('✅ অর্ডার সম্পন্ন হিসেবে চিহ্নিত', 'success');
+  } catch (error) {
+    console.error(error);
+    showToast('❌ স্ট্যাটাস আপডেট ব্যর্থ', 'error');
+  }
+};
+
+window.markPending = async function(orderId) {
+  try {
+    await updateDoc(doc(db, 'orders', orderId), { status: 'pending' });
+    showToast('⏳ পেন্ডিং হিসেবে চিহ্নিত', 'info');
+  } catch (error) {
+    console.error(error);
+    showToast('❌ স্ট্যাটাস আপডেট ব্যর্থ', 'error');
+  }
+};
+
+// ============================================================
+// DELETE ORDER
+// ============================================================
+window.deleteOrder = async function(orderId) {
+  if (!confirm('আপনি কি সত্যিই এই অর্ডারটি ডিলিট করতে চান?')) return;
+  try {
+    await deleteDoc(doc(db, 'orders', orderId));
+    showToast('🗑️ অর্ডার ডিলিট হয়েছে', 'success');
+  } catch (error) {
+    console.error(error);
+    showToast('❌ ডিলিট ব্যর্থ', 'error');
+  }
+};
+
+// ============================================================
+// TOAST
+// ============================================================
+let toastTimer = null;
+function showToast(msg, type = 'info') {
+  const toast = document.getElementById('toast');
+  toast.textContent = msg;
+  toast.className = 'toast ' + type;
+  clearTimeout(toastTimer);
+  requestAnimationFrame(() => toast.classList.add('show'));
+  toastTimer = setTimeout(() => toast.classList.remove('show'), 3000);
+}
+
+window.showToast = showToast;
+</script>
+
+</body>
+</html>

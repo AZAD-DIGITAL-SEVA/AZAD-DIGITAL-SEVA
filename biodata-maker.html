@@ -1113,114 +1113,100 @@
                 previewSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
             });
 
-            /* ===== DOWNLOAD PDF (html2pdf - NO HEADER/FOOTER) ===== */
-            downloadBtn.addEventListener('click', async () => {
-                const data = getFormData();
-                if (!data.fullName) {
-                    alert('⚠️ Please enter your Full Name.');
-                    return;
-                }
-                if (data.maritalStatus === 'Married' && !data.wifeName) {
-                    alert("⚠️ Please enter your Wife's Name (Marital Status is Married).");
-                    return;
-                }
+          /* ===== DOWNLOAD PDF (html2pdf - NO HEADER/FOOTER) ===== */
+downloadBtn.addEventListener('click', async () => {
+    const data = getFormData();
+    if (!data.fullName) {
+        alert('⚠️ Please enter your Full Name.');
+        return;
+    }
+    if (data.maritalStatus === 'Married' && !data.wifeName) {
+        alert("⚠️ Please enter your Wife's Name (Marital Status is Married).");
+        return;
+    }
 
-                biodataDoc.innerHTML = buildBiodataHTML(data);
-                previewSection.classList.add('show');
+    biodataDoc.innerHTML = buildBiodataHTML(data);
+    previewSection.classList.add('show');
 
-                downloadBtn.disabled = true;
-                downloadBtn.innerHTML = '<span>⏳</span> Creating PDF...';
-                progressWrap.classList.add('show');
-                progressFill.style.width = '20%';
-                progressText.textContent = 'Creating PDF... 20%';
+    downloadBtn.disabled = true;
+    downloadBtn.innerHTML = '<span>⏳</span> Creating PDF...';
+    progressWrap.classList.add('show');
+    progressFill.style.width = '20%';
+    progressText.textContent = 'Creating PDF... 20%';
 
-                try {
-                    // Off-screen wrapper তৈরি করি (PDF render এর জন্য)
-                    const wrapper = document.createElement('div');
-                    wrapper.style.cssText = 'position:fixed;left:-99999px;top:0;background:#ffffff;width:794px;padding:0;margin:0;';
-                    wrapper.innerHTML = buildBiodataHTML(data);
+    try {
+        // ⭐ Screen এ থাকবে কিন্তু invisible — html2canvas এটা ক্যাপচার করতে পারবে
+        const wrapper = document.createElement('div');
+        wrapper.style.cssText = 'position:absolute;top:0;left:0;background:#ffffff;width:794px;padding:20px;margin:0;opacity:0.01;pointer-events:none;z-index:-1;overflow:visible;';
+        wrapper.innerHTML = buildBiodataHTML(data);
 
-                    document.body.appendChild(wrapper);
+        document.body.appendChild(wrapper);
 
-                    // ছবি লোড হওয়ার জন্য অপেক্ষা
-                    const images = wrapper.querySelectorAll('img');
-                    await Promise.all(Array.from(images).map(img => {
-                        if (img.complete) return Promise.resolve();
-                        return new Promise((resolve) => {
-                            img.onload = resolve;
-                            img.onerror = resolve;
-                            setTimeout(resolve, 2000);
-                        });
-                    }));
-
-                    await new Promise(r => setTimeout(r, 300));
-
-                    progressFill.style.width = '50%';
-                    progressText.textContent = 'Creating PDF... 50%';
-
-                    const opt = {
-                        margin: [8, 8, 8, 8],
-                        filename: 'ADSpdf-biodata.pdf',
-                        image: { type: 'jpeg', quality: 0.98 },
-                        html2canvas: {
-                            scale: 2,
-                            useCORS: true,
-                            allowTaint: true,
-                            backgroundColor: '#ffffff',
-                            logging: false,
-                            scrollX: 0,
-                            scrollY: 0,
-                            windowWidth: 794
-                        },
-                        jsPDF: {
-                            unit: 'mm',
-                            format: 'a4',
-                            orientation: 'portrait',
-                            compress: true
-                        },
-                        pagebreak: { mode: ['css', 'legacy'] }
-                    };
-
-                    await html2pdf().set(opt).from(wrapper).save();
-
-                    // Clean up
-                    document.body.removeChild(wrapper);
-
-                    progressFill.style.width = '100%';
-                    progressText.textContent = 'Complete ✓';
-                    await new Promise(r => setTimeout(r, 400));
-                    progressWrap.classList.remove('show');
-
-                    downloadBtn.disabled = false;
-                    downloadBtn.innerHTML = '<span>✅</span> Downloaded!';
-                    setTimeout(() => {
-                        downloadBtn.innerHTML = '<span>📥</span> Download PDF';
-                    }, 2500);
-
-                } catch (err) {
-                    console.error(err);
-                    progressWrap.classList.remove('show');
-                    alert('⚠️ Failed to create PDF. Please try again.');
-                    downloadBtn.disabled = false;
-                    downloadBtn.innerHTML = '<span>📥</span> Download PDF';
-                }
+        // ছবি লোড হওয়ার জন্য অপেক্ষা
+        const images = wrapper.querySelectorAll('img');
+        await Promise.all(Array.from(images).map(img => {
+            if (img.complete) return Promise.resolve();
+            return new Promise((resolve) => {
+                img.onload = resolve;
+                img.onerror = resolve;
+                setTimeout(resolve, 2000);
             });
+        }));
 
-            /* ===== RESET ===== */
-            resetBtn.addEventListener('click', () => {
-                if (!confirm('Clear all data?')) return;
-                document.getElementById('biodataForm').reset();
-                document.getElementById('nationality').value = 'INDIA';
-                wifeNameField.classList.remove('show');
-                photoDataUrl = null;
-                photoPreview.innerHTML = '<span id="photoPlaceholder">📷</span>';
-                photoRemoveBtn.classList.remove('show');
-                previewSection.classList.remove('show');
-                downloadBtn.disabled = true;
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-            });
+        await new Promise(r => setTimeout(r, 500));
 
-        })();
+        progressFill.style.width = '50%';
+        progressText.textContent = 'Creating PDF... 50%';
+
+        const opt = {
+            margin: [0, 0, 0, 0],
+            filename: 'ADSpdf-biodata.pdf',
+            image: { type: 'jpeg', quality: 0.98 },
+            html2canvas: {
+                scale: 2,
+                useCORS: true,
+                allowTaint: true,
+                backgroundColor: '#ffffff',
+                logging: false,
+                scrollX: 0,
+                scrollY: 0,
+                windowWidth: 794,
+                width: 794,
+                height: wrapper.scrollHeight
+            },
+            jsPDF: {
+                unit: 'mm',
+                format: 'a4',
+                orientation: 'portrait',
+                compress: true
+            },
+            pagebreak: { mode: ['css', 'legacy'] }
+        };
+
+        await html2pdf().set(opt).from(wrapper).save();
+
+        // Clean up
+        document.body.removeChild(wrapper);
+
+        progressFill.style.width = '100%';
+        progressText.textContent = 'Complete ✓';
+        await new Promise(r => setTimeout(r, 400));
+        progressWrap.classList.remove('show');
+
+        downloadBtn.disabled = false;
+        downloadBtn.innerHTML = '<span>✅</span> Downloaded!';
+        setTimeout(() => {
+            downloadBtn.innerHTML = '<span>📥</span> Download PDF';
+        }, 2500);
+
+    } catch (err) {
+        console.error(err);
+        progressWrap.classList.remove('show');
+        alert('⚠️ Failed to create PDF. Please try again.');
+        downloadBtn.disabled = false;
+        downloadBtn.innerHTML = '<span>📥</span> Download PDF';
+    }
+});
     </script>
 
 </body>

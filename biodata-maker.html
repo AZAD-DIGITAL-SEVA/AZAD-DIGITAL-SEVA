@@ -1,1224 +1,937 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bio-data Maker - Azad Digital Seva</title>
-    <meta name="description" content="Bio-data Maker - Create professional bio-data instantly, free PDF download.">
-    <style>
-        * { box-sizing: border-box; margin: 0; padding: 0; }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bio-data Maker - Azad Digital Seva</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Segoe UI',Arial,sans-serif;background:#f0fdf4;color:#1e2b3c;line-height:1.5;}
 
-        body {
-            font-family: 'Segoe UI', Arial, sans-serif;
-            background: #f0fdf4;
-            color: #1e2b3c;
-            line-height: 1.5;
-        }
+/* HEADER */
+header{background:linear-gradient(135deg,#075e54,#128c7e);color:#fff;height:38px;padding:0 10px;border-bottom:2px solid #f9a826;display:flex;align-items:center;justify-content:space-between;gap:6px;position:sticky;top:0;z-index:1000;}
+.header-left{display:flex;align-items:center;gap:6px;flex:1;min-width:0;position:relative;}
+.menu-toggle{width:22px;height:22px;border-radius:5px;background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.35);cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;flex-shrink:0;padding:0;}
+.menu-toggle.active{background:#f9a826;border-color:#f9a826;}
+.menu-toggle span{width:2.5px;height:2.5px;border-radius:50%;background:#fff;}
+.menu-toggle.active span{background:#1e2b3c;}
+.header-brand{display:flex;align-items:baseline;gap:5px;min-width:0;overflow:hidden;flex-wrap:nowrap;}
+.header-logo-icon{font-size:0.95rem;flex-shrink:0;align-self:center;}
+.brand-name{font-size:0.78rem;font-weight:700;white-space:nowrap;flex-shrink:0;}
+.brand-name span{color:#f9a826;}
+.brand-sub{font-size:0.58rem;color:#d4ece8;opacity:0.85;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;border-left:1px solid rgba(255,255,255,0.3);margin-left:2px;padding-left:6px;}
+.header-dropdown{position:absolute;top:calc(100% + 8px);left:0;background:#fff;border-radius:10px;box-shadow:0 12px 32px rgba(0,0,0,0.25);padding:6px;display:none;flex-direction:column;min-width:180px;z-index:1002;border-top:3px solid #f9a826;}
+.header-dropdown.open{display:flex;}
+.header-dropdown a{color:#1e2b3c;text-decoration:none;padding:7px 11px;border-radius:6px;font-size:0.8rem;display:flex;align-items:center;gap:7px;}
+.header-dropdown a:hover{background:#e3f2ef;color:#075e54;}
+.header-actions{display:flex;align-items:center;gap:4px;flex-shrink:0;}
+.btn-donate,.btn-subscribe{border:1px solid rgba(255,255,255,0.65);background:transparent;color:#fff;font-size:0.62rem;font-weight:600;padding:3px 8px;border-radius:14px;cursor:pointer;font-family:inherit;}
+.btn-subscribe{background:#e74c3c;border-color:#e74c3c;}
+.btn-login{background:#fff;color:#075e54;border:none;font-size:0.64rem;font-weight:700;padding:4px 10px;border-radius:14px;cursor:pointer;font-family:inherit;}
 
-        /* ================= HEADER ================= */
-        header {
-            background: linear-gradient(135deg, #075e54, #128c7e);
-            color: #fff;
-            height: 38px;
-            padding: 0 10px;
-            border-bottom: 2px solid #f9a826;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 6px;
-            box-shadow: 0 2px 6px rgba(7, 94, 84, 0.2);
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-        }
+/* HERO */
+.page-hero{background:linear-gradient(135deg,#065f46 0%,#059669 45%,#34d399 100%);color:white;padding:35px 18px 50px;text-align:center;position:relative;overflow:hidden;}
+.page-hero-icon{font-size:3rem;margin-bottom:10px;display:inline-block;animation:floatIcon 3s ease-in-out infinite;}
+@keyframes floatIcon{0%,100%{transform:translateY(0);}50%{transform:translateY(-10px);}}
+.page-hero h1{font-size:1.9rem;font-weight:800;margin-bottom:14px;letter-spacing:1px;}
+.page-hero h1 em{font-style:normal;color:#fef08a;}
+.breadcrumb{font-size:0.78rem;opacity:0.9;}
+.breadcrumb a{color:#fef08a;text-decoration:none;}
 
-        .header-left {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            flex: 1;
-            min-width: 0;
-            position: relative;
-        }
+/* CONTENT */
+.inner-container{max-width:1100px;margin:-30px auto 0;padding:0 18px 45px;position:relative;z-index:5;}
+.content-card{background:#fff;border-radius:20px;padding:28px 26px;box-shadow:0 20px 50px -20px rgba(6,95,70,0.25);border-top:5px solid #059669;}
+.content-card h2{font-size:1.25rem;color:#065f46;margin-bottom:14px;padding-bottom:10px;border-bottom:2px dashed #a7f3d0;}
 
-        .menu-toggle {
-            width: 22px;
-            height: 22px;
-            border-radius: 5px;
-            background: rgba(255,255,255,0.15);
-            border: 1px solid rgba(255,255,255,0.35);
-            cursor: pointer;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            gap: 2px;
-            flex-shrink: 0;
-            padding: 0;
-        }
-        .menu-toggle:hover { background: rgba(255,255,255,0.28); }
-        .menu-toggle.active { background: #f9a826; border-color: #f9a826; }
-        .menu-toggle span { width: 2.5px; height: 2.5px; border-radius: 50%; background: #fff; }
-        .menu-toggle.active span { background: #1e2b3c; }
+/* PHOTO */
+.photo-upload{display:flex;align-items:center;gap:20px;padding:18px 20px;background:linear-gradient(135deg,#ecfdf5,#d1fae5);border-radius:16px;border:1.5px solid #a7f3d0;margin-bottom:22px;flex-wrap:wrap;}
+.photo-preview{width:100px;height:120px;border-radius:10px;background:#fff;border:2px dashed #34d399;display:flex;align-items:center;justify-content:center;font-size:2rem;color:#059669;cursor:pointer;overflow:hidden;flex-shrink:0;}
+.photo-preview img{width:100%;height:100%;object-fit:cover;display:block;}
+.photo-info{flex:1;min-width:200px;}
+.photo-info h3{font-size:0.95rem;color:#065f46;margin-bottom:6px;}
+.photo-info p{font-size:0.78rem;color:#047857;margin-bottom:10px;}
+.photo-btn{display:inline-flex;align-items:center;gap:6px;background:linear-gradient(135deg,#059669,#34d399);color:#fff;border:none;padding:8px 18px;border-radius:20px;font-size:0.82rem;font-weight:700;cursor:pointer;font-family:inherit;}
+.photo-remove-btn{background:#fee2e2;color:#dc2626;border:none;padding:8px 14px;border-radius:20px;font-size:0.78rem;font-weight:700;cursor:pointer;font-family:inherit;margin-left:8px;display:none;}
+.photo-remove-btn.show{display:inline-block;}
+.photo-recropt-btn{background:#e0f2fe;color:#0369a1;border:none;padding:8px 14px;border-radius:20px;font-size:0.78rem;font-weight:700;cursor:pointer;font-family:inherit;margin-left:8px;display:none;}
+.photo-recropt-btn.show{display:inline-block;}
 
-        .header-brand { display: flex; align-items: baseline; gap: 5px; min-width: 0; overflow: hidden; flex-wrap: nowrap; }
-        .header-logo-icon { font-size: 0.95rem; flex-shrink: 0; align-self: center; }
-        .brand-name { font-size: 0.78rem; font-weight: 700; white-space: nowrap; flex-shrink: 0; }
-        .brand-name span { color: #f9a826; }
-        .brand-sub {
-            font-size: 0.58rem; color: #d4ece8; opacity: 0.85;
-            white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
-            border-left: 1px solid rgba(255,255,255,0.3);
-            margin-left: 2px; padding-left: 6px;
-        }
+/* FORM */
+.form-section{margin-bottom:20px;padding:18px 20px;background:#f0fdf4;border-radius:16px;border:1.5px solid #a7f3d0;}
+.form-section-title{font-size:0.95rem;font-weight:800;color:#065f46;margin-bottom:14px;padding-bottom:8px;border-bottom:1px solid #a7f3d0;}
+.form-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;}
+.form-field{display:flex;flex-direction:column;}
+.form-field.full{grid-column:1/-1;}
+.form-field.hidden-field{display:none;}
+.form-field.hidden-field.show{display:flex;}
+.form-field label{font-size:0.78rem;font-weight:700;color:#047857;margin-bottom:5px;}
+.form-field label .req{color:#dc2626;}
+.form-input,.form-select,.form-textarea{width:100%;border:1.5px solid #a7f3d0;border-radius:10px;padding:10px 14px;font-size:0.9rem;font-weight:600;color:#065f46;background:#fff;font-family:inherit;outline:none;}
+.form-input:focus,.form-select:focus,.form-textarea:focus{border-color:#059669;box-shadow:0 0 0 3px rgba(5,150,105,0.12);}
+.form-textarea{resize:vertical;min-height:70px;}
 
-        .header-dropdown {
-            position: absolute; top: calc(100% + 8px); left: 0;
-            background: #fff; border-radius: 10px;
-            box-shadow: 0 12px 32px rgba(0,0,0,0.25);
-            padding: 6px; display: none; flex-direction: column;
-            gap: 1px; min-width: 180px; z-index: 1002;
-            border-top: 3px solid #f9a826;
-        }
-        .header-dropdown.open { display: flex; }
-        .header-dropdown a {
-            color: #1e2b3c; text-decoration: none;
-            padding: 7px 11px; border-radius: 6px;
-            font-weight: 500; font-size: 0.8rem;
-            display: flex; align-items: center; gap: 7px;
-        }
-        .header-dropdown a:hover { background: #e3f2ef; color: #075e54; }
+/* ACTION */
+.action-section{display:flex;gap:12px;margin-top:22px;flex-wrap:wrap;}
+.btn-preview,.btn-download,.btn-reset{flex:1;min-width:180px;display:inline-flex;align-items:center;justify-content:center;gap:10px;border:none;padding:15px 30px;border-radius:30px;font-size:1rem;font-weight:800;cursor:pointer;font-family:inherit;}
+.btn-preview{background:linear-gradient(135deg,#0891b2,#22d3ee);color:#fff;}
+.btn-download{background:linear-gradient(135deg,#059669,#34d399);color:#fff;}
+.btn-download:disabled{opacity:0.6;cursor:not-allowed;}
+.btn-reset{background:#fff;color:#047857;border:2px solid #a7f3d0;flex:0 0 auto;min-width:120px;}
 
-        .header-actions { display: flex; align-items: center; gap: 4px; flex-shrink: 0; }
+/* PREVIEW */
+.preview-section{display:none;margin-top:24px;padding:20px;background:#f0fdf4;border-radius:16px;border:2px solid #059669;}
+.preview-section.show{display:block;}
+.preview-title{font-size:1rem;font-weight:800;color:#065f46;margin-bottom:18px;padding-bottom:10px;border-bottom:2px dashed #a7f3d0;}
 
-        .btn-donate, .btn-subscribe {
-            border: 1px solid rgba(255,255,255,0.65);
-            background: transparent; color: #fff;
-            font-size: 0.62rem; font-weight: 600;
-            padding: 3px 8px; border-radius: 14px;
-            cursor: pointer; font-family: inherit;
-            white-space: nowrap; line-height: 1.2;
-        }
-        .btn-donate:hover { background: #f9a826; border-color: #f9a826; color: #1e2b3c; }
-        .btn-subscribe { background: #e74c3c; border-color: #e74c3c; }
-        .btn-subscribe:hover { background: #c0392b; }
-        .btn-login {
-            background: #fff; color: #075e54; border: none;
-            font-size: 0.64rem; font-weight: 700;
-            padding: 4px 10px; border-radius: 14px;
-            cursor: pointer; font-family: inherit;
-            white-space: nowrap; line-height: 1.2;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.15);
-        }
-        .btn-login:hover { background: #f9a826; color: #1e2b3c; }
+/* BIODATA DOC */
+#biodataDoc{background:#fff;padding:20px;}
 
-        /* ================= HERO ================= */
-        .page-hero {
-            background:
-                radial-gradient(circle at 85% 20%, rgba(255,255,255,.15), transparent 35%),
-                linear-gradient(135deg, #065f46 0%, #059669 45%, #34d399 100%);
-            color: white;
-            padding: 35px 18px 50px;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
-        .page-hero::before {
-            content: '';
-            position: absolute;
-            top: -80px; right: -80px;
-            width: 240px; height: 240px;
-            background: rgba(255,255,255,0.1);
-            border-radius: 50%;
-        }
-        .page-hero::after {
-            content: '';
-            position: absolute;
-            bottom: -90px; left: -70px;
-            width: 220px; height: 220px;
-            background: rgba(255,255,255,0.07);
-            border-radius: 50%;
-        }
-        .page-hero-icon {
-            font-size: 3rem;
-            margin-bottom: 10px;
-            position: relative;
-            z-index: 1;
-            display: inline-block;
-            filter: drop-shadow(0 6px 20px rgba(0,0,0,0.3));
-            animation: floatIcon 3s ease-in-out infinite;
-        }
-        @keyframes floatIcon {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
-        }
-        .page-hero h1 {
-            font-size: 1.9rem;
-            font-weight: 800;
-            margin-bottom: 14px;
-            position: relative;
-            z-index: 1;
-            letter-spacing: 1px;
-            text-shadow: 0 4px 20px rgba(0,0,0,0.25);
-        }
-        .page-hero h1 em {
-            font-style: normal;
-            color: #fef08a;
-        }
-        .breadcrumb {
-            position: relative; z-index: 1;
-            font-size: 0.78rem; opacity: 0.9;
-        }
-        .breadcrumb a { color: #fef08a; text-decoration: none; }
-        .breadcrumb a:hover { text-decoration: underline; }
+/* BACK */
+.btn-back{display:inline-flex;align-items:center;gap:6px;background:linear-gradient(135deg,#065f46,#059669);color:white;text-decoration:none;padding:10px 24px;border-radius:30px;font-weight:600;font-size:0.85rem;margin-top:12px;}
 
-        /* ================= CONTENT ================= */
-        .inner-container {
-            max-width: 1100px;
-            margin: -30px auto 0;
-            padding: 0 18px 45px;
-            position: relative; z-index: 5;
-        }
+/* FOOTER */
+footer{background:#0b2e2a;color:#d4e6e3;text-align:center;padding:18px 14px;border-top:3px solid #f9a826;}
+footer p{max-width:700px;margin:0 auto 6px;font-size:0.82rem;}
+.footer-links{display:flex;flex-wrap:wrap;justify-content:center;gap:8px 16px;margin:8px 0 5px;}
+.footer-links a{color:#c2e5df;text-decoration:none;font-size:0.78rem;}
+.copyright{font-size:0.68rem;opacity:0.75;margin-top:8px;}
 
-        .content-card {
-            background: #fff;
-            border-radius: 20px;
-            padding: 28px 26px;
-            box-shadow: 0 20px 50px -20px rgba(6, 95, 70, 0.25);
-            border-top: 5px solid #059669;
-        }
+.menu-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.4);z-index:999;display:none;}
+.menu-overlay.show{display:block;}
 
-        .content-card h2 {
-            font-size: 1.25rem;
-            color: #065f46;
-            margin-bottom: 14px;
-            padding-bottom: 10px;
-            border-bottom: 2px dashed #a7f3d0;
-            display: flex; align-items: center; gap: 10px;
-            font-weight: 700;
-        }
+/* ============ CROP MODAL ============ */
+.crop-modal{position:fixed;inset:0;background:rgba(0,0,0,0.85);z-index:9999;display:none;align-items:center;justify-content:center;padding:15px;}
+.crop-modal.show{display:flex;}
+.crop-box{background:#fff;border-radius:16px;width:100%;max-width:500px;overflow:hidden;display:flex;flex-direction:column;max-height:95vh;}
+.crop-header{padding:14px 18px;background:linear-gradient(135deg,#065f46,#059669);color:#fff;display:flex;align-items:center;justify-content:space-between;}
+.crop-header h3{font-size:0.95rem;font-weight:800;}
+.crop-close-btn{background:rgba(255,255,255,0.2);border:none;color:#fff;width:28px;height:28px;border-radius:50%;font-size:1rem;cursor:pointer;font-weight:700;}
+.crop-close-btn:hover{background:rgba(255,255,255,0.35);}
+.crop-body{padding:18px;display:flex;flex-direction:column;gap:14px;overflow-y:auto;align-items:center;}
+.crop-canvas-wrap{position:relative;background:#000;border-radius:12px;overflow:hidden;touch-action:none;user-select:none;-webkit-user-select:none;}
+.crop-canvas-wrap canvas{display:block;cursor:grab;touch-action:none;}
+.crop-canvas-wrap canvas:active{cursor:grabbing;}
+.crop-controls{width:100%;display:flex;flex-direction:column;gap:10px;}
+.crop-control-item{display:flex;align-items:center;gap:12px;}
+.crop-control-item label{font-size:0.8rem;font-weight:700;color:#047857;min-width:60px;}
+.crop-control-item input[type="range"]{flex:1;accent-color:#059669;cursor:pointer;}
+.crop-hint{font-size:0.72rem;color:#047857;text-align:center;background:#f0fdf4;padding:8px 12px;border-radius:8px;border:1px dashed #a7f3d0;width:100%;}
+.crop-actions{display:flex;gap:10px;padding:14px 18px;background:#f9fafb;border-top:1px solid #e5e7eb;}
+.crop-btn{flex:1;padding:12px 20px;border:none;border-radius:10px;font-weight:800;font-size:0.9rem;cursor:pointer;font-family:inherit;}
+.crop-btn.cancel{background:#f3f4f6;color:#374151;}
+.crop-btn.apply{background:linear-gradient(135deg,#059669,#34d399);color:#fff;}
 
-        /* ================= PHOTO UPLOAD ================= */
-        .photo-upload {
-            display: flex;
-            align-items: center;
-            gap: 20px;
-            padding: 18px 20px;
-            background: linear-gradient(135deg, #ecfdf5, #d1fae5);
-            border-radius: 16px;
-            border: 1.5px solid #a7f3d0;
-            margin-bottom: 22px;
-            flex-wrap: wrap;
-        }
-
-        .photo-preview {
-            width: 100px;
-            height: 120px;
-            border-radius: 10px;
-            background: #fff;
-            border: 2px dashed #34d399;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 2rem;
-            color: #059669;
-            cursor: pointer;
-            overflow: hidden;
-            flex-shrink: 0;
-            transition: all 0.25s;
-        }
-        .photo-preview:hover {
-            border-color: #059669;
-            background: #ecfdf5;
-        }
-        .photo-preview img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .photo-info { flex: 1; min-width: 200px; }
-        .photo-info h3 {
-            font-size: 0.95rem;
-            color: #065f46;
-            margin-bottom: 6px;
-            font-weight: 700;
-        }
-        .photo-info p {
-            font-size: 0.78rem;
-            color: #047857;
-            margin-bottom: 10px;
-            line-height: 1.5;
-        }
-        .photo-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            background: linear-gradient(135deg, #059669, #34d399);
-            color: #fff;
-            border: none;
-            padding: 8px 18px;
-            border-radius: 20px;
-            font-size: 0.82rem;
-            font-weight: 700;
-            cursor: pointer;
-            font-family: inherit;
-            box-shadow: 0 6px 16px -4px rgba(5, 150, 105, 0.5);
-            transition: all 0.25s;
-        }
-        .photo-btn:hover { transform: translateY(-2px); }
-        .photo-remove-btn {
-            background: #fee2e2;
-            color: #dc2626;
-            border: none;
-            padding: 8px 14px;
-            border-radius: 20px;
-            font-size: 0.78rem;
-            font-weight: 700;
-            cursor: pointer;
-            font-family: inherit;
-            margin-left: 8px;
-            display: none;
-        }
-        .photo-remove-btn.show { display: inline-block; }
-
-        /* ================= FORM ================= */
-        .form-section {
-            margin-bottom: 20px;
-            padding: 18px 20px;
-            background: #f0fdf4;
-            border-radius: 16px;
-            border: 1.5px solid #a7f3d0;
-        }
-
-        .form-section-title {
-            font-size: 0.95rem;
-            font-weight: 800;
-            color: #065f46;
-            margin-bottom: 14px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            padding-bottom: 8px;
-            border-bottom: 1px solid #a7f3d0;
-        }
-
-        .form-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 12px;
-        }
-
-        .form-field { display: flex; flex-direction: column; }
-        .form-field.full { grid-column: 1 / -1; }
-
-        .form-field.hidden-field {
-            display: none;
-        }
-        .form-field.hidden-field.show {
-            display: flex;
-            animation: slideIn 0.35s ease;
-        }
-        @keyframes slideIn {
-            from { opacity: 0; transform: translateY(-8px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .form-field label {
-            font-size: 0.78rem;
-            font-weight: 700;
-            color: #047857;
-            margin-bottom: 5px;
-        }
-
-        .form-field label .req { color: #dc2626; }
-
-        .form-input,
-        .form-select,
-        .form-textarea {
-            width: 100%;
-            border: 1.5px solid #a7f3d0;
-            border-radius: 10px;
-            padding: 10px 14px;
-            font-size: 0.9rem;
-            font-weight: 600;
-            color: #065f46;
-            background: #fff;
-            font-family: inherit;
-            outline: none;
-            transition: all 0.2s;
-        }
-
-        .form-input:focus,
-        .form-select:focus,
-        .form-textarea:focus {
-            border-color: #059669;
-            box-shadow: 0 0 0 3px rgba(5, 150, 105, 0.12);
-        }
-
-        .form-textarea {
-            resize: vertical;
-            min-height: 70px;
-        }
-
-        /* ================= PREVIEW ================= */
-        .preview-section {
-            display: none;
-            margin-top: 24px;
-            padding: 24px;
-            background: #fff;
-            border-radius: 16px;
-            border: 2px solid #059669;
-            box-shadow: 0 12px 30px -10px rgba(5, 150, 105, 0.2);
-        }
-        .preview-section.show { display: block; }
-
-        .preview-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 12px;
-            margin-bottom: 18px;
-            padding-bottom: 10px;
-            border-bottom: 2px dashed #a7f3d0;
-            flex-wrap: wrap;
-        }
-
-        .preview-title {
-            font-size: 1rem;
-            font-weight: 800;
-            color: #065f46;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        /* ================= BIODATA DOC — PDF এ Render হওয়ার এলিমেন্ট ================= */
-        #biodataDoc {
-            background: #ffffff;
-            padding: 30px 28px;
-            border: 1px solid #d1fae5;
-            border-radius: 10px;
-        }
-
-        /* ================= ACTION ================= */
-        .action-section {
-            display: none;
-            gap: 12px;
-            margin-top: 22px;
-            flex-wrap: wrap;
-        }
-        .action-section.show { display: flex; }
-
-        .btn-preview {
-            flex: 1;
-            min-width: 180px;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            background: linear-gradient(135deg, #0891b2, #22d3ee);
-            color: #fff;
-            border: none;
-            padding: 15px 30px;
-            border-radius: 30px;
-            font-size: 1rem;
-            font-weight: 800;
-            cursor: pointer;
-            font-family: inherit;
-            box-shadow: 0 10px 28px -6px rgba(8, 145, 178, 0.6);
-            transition: all 0.25s;
-        }
-        .btn-preview:hover { transform: translateY(-3px); }
-
-        .btn-download {
-            flex: 1;
-            min-width: 180px;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            background: linear-gradient(135deg, #059669, #34d399);
-            color: #fff;
-            border: none;
-            padding: 15px 30px;
-            border-radius: 30px;
-            font-size: 1rem;
-            font-weight: 800;
-            cursor: pointer;
-            font-family: inherit;
-            box-shadow: 0 10px 28px -6px rgba(5, 150, 105, 0.6);
-            transition: all 0.25s;
-        }
-        .btn-download:hover { transform: translateY(-3px); }
-        .btn-download:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
-
-        .btn-reset {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            background: #fff;
-            color: #047857;
-            border: 2px solid #a7f3d0;
-            padding: 15px 24px;
-            border-radius: 30px;
-            font-size: 0.9rem;
-            font-weight: 700;
-            cursor: pointer;
-            font-family: inherit;
-            transition: all 0.25s;
-        }
-        .btn-reset:hover {
-            border-color: #059669;
-            color: #065f46;
-            background: #f0fdf4;
-        }
-
-        /* ================= PROGRESS ================= */
-        .progress-wrap {
-            display: none;
-            margin: 20px 0;
-        }
-        .progress-wrap.show { display: block; }
-        .progress-bar {
-            height: 12px;
-            background: #a7f3d0;
-            border-radius: 10px;
-            overflow: hidden;
-        }
-        .progress-fill {
-            height: 100%;
-            width: 0%;
-            background: linear-gradient(90deg, #059669, #34d399);
-            border-radius: 10px;
-            transition: width 0.3s ease;
-            box-shadow: 0 0 12px rgba(5, 150, 105, 0.5);
-        }
-        .progress-text {
-            text-align: center;
-            font-size: 0.85rem;
-            color: #047857;
-            margin-top: 10px;
-            font-weight: 700;
-        }
-
-        /* ================= BACK BUTTON ================= */
-        .btn-back {
-            display: inline-flex; align-items: center; gap: 6px;
-            background: linear-gradient(135deg, #065f46, #059669);
-            color: white; text-decoration: none;
-            padding: 10px 24px; border-radius: 30px;
-            font-weight: 600; font-size: 0.85rem;
-            transition: all 0.25s;
-            box-shadow: 0 8px 20px -5px rgba(5, 150, 105, 0.5);
-            margin-top: 12px;
-        }
-        .btn-back:hover { transform: translateY(-2px); }
-
-        /* ================= FOOTER ================= */
-        footer {
-            background: #0b2e2a; color: #d4e6e3;
-            text-align: center; padding: 18px 14px;
-            border-top: 3px solid #f9a826;
-        }
-        footer p { max-width: 700px; margin: 0 auto 6px; font-size: 0.82rem; }
-        .footer-links {
-            display: flex; flex-wrap: wrap;
-            justify-content: center; gap: 8px 16px;
-            margin: 8px 0 5px;
-        }
-        .footer-links a {
-            color: #c2e5df; text-decoration: none;
-            font-size: 0.78rem; transition: color 0.2s;
-        }
-        .footer-links a:hover { color: #f9a826; }
-        .copyright { font-size: 0.68rem; opacity: 0.75; margin-top: 8px; }
-
-        .menu-overlay {
-            position: fixed; inset: 0;
-            background: rgba(0,0,0,0.4);
-            z-index: 999; display: none;
-        }
-        .menu-overlay.show { display: block; }
-
-        /* ================= RESPONSIVE ================= */
-        @media (max-width: 768px) {
-            header { height: 36px; padding: 0 8px; }
-            .menu-toggle { width: 20px; height: 20px; }
-            .menu-toggle span { width: 2px; height: 2px; }
-            .header-logo-icon { font-size: 0.85rem; }
-            .brand-name { font-size: 0.72rem; }
-            .brand-sub { display: none; }
-            .btn-donate, .btn-subscribe { display: none; }
-            .btn-login { font-size: 0.58rem; padding: 3px 8px; }
-
-            .page-hero { padding: 28px 14px 42px; }
-            .page-hero-icon { font-size: 2.4rem; }
-            .page-hero h1 { font-size: 1.4rem; }
-            .breadcrumb { font-size: 0.7rem; }
-
-            .inner-container { padding: 0 12px 35px; margin-top: -28px; }
-            .content-card { padding: 20px 16px; border-radius: 16px; }
-            .content-card h2 { font-size: 1.1rem; }
-
-            .photo-upload { flex-direction: column; align-items: stretch; padding: 14px; }
-            .photo-preview { align-self: center; }
-
-            .form-section { padding: 14px; }
-            .form-grid { grid-template-columns: 1fr; }
-
-            .preview-section { padding: 16px; }
-            #biodataDoc { padding: 16px; }
-
-            .action-section { flex-direction: column; }
-            .btn-preview, .btn-download, .btn-reset { width: 100%; min-width: unset; }
-
-            .btn-back { padding: 8px 18px; font-size: 0.78rem; }
-
-            footer { padding: 12px 10px; }
-            footer p { font-size: 0.72rem; }
-            .footer-links { gap: 5px 10px; }
-            .footer-links a { font-size: 0.7rem; }
-            .copyright { font-size: 0.6rem; }
-        }
-
-        @media (max-width: 400px) {
-            header { height: 34px; padding: 0 6px; }
-            .menu-toggle { width: 18px; height: 18px; }
-            .brand-name { font-size: 0.66rem; }
-            .header-logo-icon { font-size: 0.78rem; }
-            .btn-login { font-size: 0.54rem; padding: 2px 7px; }
-            .page-hero h1 { font-size: 1.15rem; }
-        }
-    </style>
+@media(max-width:768px){
+  header{height:36px;padding:0 8px;}
+  .brand-name{font-size:0.72rem;}
+  .brand-sub{display:none;}
+  .btn-donate,.btn-subscribe{display:none;}
+  .btn-login{font-size:0.58rem;padding:3px 8px;}
+  .page-hero{padding:28px 14px 42px;}
+  .page-hero h1{font-size:1.4rem;}
+  .inner-container{padding:0 12px 35px;margin-top:-28px;}
+  .content-card{padding:20px 16px;border-radius:16px;}
+  .form-grid{grid-template-columns:1fr;}
+  .photo-upload{flex-direction:column;padding:14px;}
+  .action-section{flex-direction:column;}
+  .btn-preview,.btn-download,.btn-reset{width:100%;}
+  .crop-control-item label{min-width:55px;font-size:0.75rem;}
+}
+</style>
 </head>
 <body>
 
-    <!-- HEADER -->
-    <header>
-        <div class="header-left">
-            <button class="menu-toggle" id="menuToggle" aria-label="Menu">
-                <span></span><span></span><span></span>
-            </button>
-            <div class="header-brand">
-                <span class="header-logo-icon">🖥️</span>
-                <span class="brand-name">Azad <span>Digital Seva</span></span>
-                <span class="brand-sub">Government & Private Online Services</span>
-            </div>
-            <nav class="header-dropdown" id="headerDropdown">
-                <a href="index.html">🏠 Home</a>
-                <a href="blog.html">📝 Blog</a>
-                <a href="youtube.html">📺 YouTube</a>
-                <a href="facebook.html">📘 Facebook</a>
-                <a href="contact.html">📞 Contact</a>
-                <a href="about.html">ℹ️ About</a>
-            </nav>
+<!-- HEADER -->
+<header>
+    <div class="header-left">
+        <button class="menu-toggle" id="menuToggle" aria-label="Menu">
+            <span></span><span></span><span></span>
+        </button>
+        <div class="header-brand">
+            <span class="header-logo-icon">🖥️</span>
+            <span class="brand-name">Azad <span>Digital Seva</span></span>
+            <span class="brand-sub">Government & Private Online Services</span>
         </div>
-        <div class="header-actions">
-            <button class="btn-donate" onclick="location.href='donate.html'">❤️ Donate</button>
-            <button class="btn-subscribe" onclick="location.href='subscribe.html'">🔔 Subscribe</button>
-            <button class="btn-login" onclick="location.href='login.html'">Login</button>
+        <nav class="header-dropdown" id="headerDropdown">
+            <a href="index.html">🏠 Home</a>
+            <a href="blog.html">📝 Blog</a>
+            <a href="youtube.html">📺 YouTube</a>
+            <a href="facebook.html">📘 Facebook</a>
+            <a href="contact.html">📞 Contact</a>
+            <a href="about.html">ℹ️ About</a>
+        </nav>
+    </div>
+    <div class="header-actions">
+        <button class="btn-donate" onclick="location.href='donate.html'">❤️ Donate</button>
+        <button class="btn-subscribe" onclick="location.href='subscribe.html'">🔔 Subscribe</button>
+        <button class="btn-login" onclick="location.href='login.html'">Login</button>
+    </div>
+</header>
+
+<div class="menu-overlay" id="menuOverlay"></div>
+
+<!-- HERO -->
+<section class="page-hero">
+    <div class="page-hero-icon">📋</div>
+    <h1>Bio-data <em>Maker</em></h1>
+    <div class="breadcrumb">
+        <a href="index.html">Home</a> › <a href="online-service.html">Online Services</a> › <a href="pdf-editor.html">PDF Editor</a> › <span>Bio-data Maker</span>
+    </div>
+</section>
+
+<!-- CONTENT -->
+<main class="inner-container">
+    <div class="content-card">
+        <h2>📋 Create Your Professional Bio-data</h2>
+
+        <!-- PHOTO -->
+        <div class="photo-upload">
+            <div class="photo-preview" id="photoPreview">
+                <span>📷</span>
+            </div>
+            <div class="photo-info">
+                <h3>📸 Profile Photo (Optional)</h3>
+                <p>Upload & crop your passport size photo (JPG / PNG)</p>
+                <button class="photo-btn" type="button" id="photoBtn">📁 Browse Photo</button>
+                <button class="photo-recropt-btn" type="button" id="photoRecropBtn">✂️ Crop Again</button>
+                <button class="photo-remove-btn" type="button" id="photoRemoveBtn">✕ Remove</button>
+                <input type="file" id="photoInput" accept="image/*" style="display:none;">
+            </div>
         </div>
-    </header>
 
-    <div class="menu-overlay" id="menuOverlay"></div>
+        <!-- FORM -->
+        <form id="biodataForm" onsubmit="return false;">
 
-    <!-- HERO -->
-    <section class="page-hero">
-        <div class="page-hero-icon">📋</div>
-        <h1>Bio-data <em>Maker</em></h1>
-        <div class="breadcrumb">
-            <a href="index.html">Home</a> › <a href="online-service.html">Online Services</a> › <a href="pdf-editor.html">PDF Editor</a> › <span>Bio-data Maker</span>
-        </div>
-    </section>
-
-    <!-- CONTENT -->
-    <main class="inner-container">
-        <div class="content-card">
-            <h2>📋 Create Your Professional Bio-data</h2>
-
-            <!-- PHOTO UPLOAD -->
-            <div class="photo-upload">
-                <div class="photo-preview" id="photoPreview" title="Click to upload photo">
-                    <span id="photoPlaceholder">📷</span>
-                </div>
-                <div class="photo-info">
-                    <h3>📸 Profile Photo (Optional)</h3>
-                    <p>Upload your passport size photo (JPG / PNG)</p>
-                    <button class="photo-btn" type="button" id="photoBtn">
-                        <span>📁</span> Browse Photo
-                    </button>
-                    <button class="photo-remove-btn" type="button" id="photoRemoveBtn">✕ Remove</button>
-                    <input type="file" id="photoInput" accept="image/*" style="display:none;">
-                </div>
-            </div>
-
-            <!-- FORM -->
-            <form id="biodataForm" onsubmit="return false;">
-
-                <!-- PERSONAL INFO -->
-                <div class="form-section">
-                    <div class="form-section-title">👤 Personal Information</div>
-                    <div class="form-grid">
-                        <div class="form-field">
-                            <label>Full Name <span class="req">*</span></label>
-                            <input type="text" class="form-input" id="fullName" placeholder="e.g. John Doe" required>
-                        </div>
-                        <div class="form-field">
-                            <label>Father's Name</label>
-                            <input type="text" class="form-input" id="fatherName" placeholder="Father's name">
-                        </div>
-                        <div class="form-field">
-                            <label>Mother's Name</label>
-                            <input type="text" class="form-input" id="motherName" placeholder="Mother's name">
-                        </div>
-                        <div class="form-field">
-                            <label>Date of Birth</label>
-                            <input type="date" class="form-input" id="dob">
-                        </div>
-                        <div class="form-field">
-                            <label>Religion</label>
-                            <input type="text" class="form-input" id="religion" placeholder="e.g. Hindu">
-                        </div>
-                        <div class="form-field">
-                            <label>Nationality</label>
-                            <input type="text" class="form-input" id="nationality" placeholder="e.g. Indian" value="INDIA">
-                        </div>
-                        <div class="form-field">
-                            <label>Aadhar Number</label>
-                            <input type="text" class="form-input" id="aadharNumber" placeholder="e.g. 1234 5678 9012" maxlength="14">
-                        </div>
-                        <div class="form-field">
-                            <label>Blood Group</label>
-                            <select class="form-select" id="bloodGroup">
-                                <option value="">-- Select --</option>
-                                <option>A+</option>
-                                <option>A-</option>
-                                <option>B+</option>
-                                <option>B-</option>
-                                <option>O+</option>
-                                <option>O-</option>
-                                <option>AB+</option>
-                                <option>AB-</option>
-                            </select>
-                        </div>
-                        <div class="form-field">
-                            <label>Marital Status</label>
-                            <select class="form-select" id="maritalStatus">
-                                <option value="">-- Select --</option>
-                                <option value="Single">Single</option>
-                                <option value="Married">Married</option>
-                                <option value="Divorced">Divorced</option>
-                                <option value="Widowed">Widowed</option>
-                            </select>
-                        </div>
-
-                        <!-- WIFE NAME (শুধু Married হলে দেখাবে) -->
-                        <div class="form-field hidden-field" id="wifeNameField">
-                            <label>Wife's Name <span class="req">*</span></label>
-                            <input type="text" class="form-input" id="wifeName" placeholder="Wife's full name">
-                        </div>
+            <div class="form-section">
+                <div class="form-section-title">👤 Personal Information</div>
+                <div class="form-grid">
+                    <div class="form-field">
+                        <label>Full Name <span class="req">*</span></label>
+                        <input type="text" class="form-input" id="fullName" placeholder="e.g. John Doe">
                     </div>
-                </div>
-
-                <!-- CONTACT -->
-                <div class="form-section">
-                    <div class="form-section-title">📞 Contact Information</div>
-                    <div class="form-grid">
-                        <div class="form-field">
-                            <label>Mobile Number</label>
-                            <input type="tel" class="form-input" id="phone" placeholder="e.g. +91 XXXXXXXXXX">
-                        </div>
-                        <div class="form-field">
-                            <label>Email</label>
-                            <input type="email" class="form-input" id="email" placeholder="example@email.com">
-                        </div>
-                        <div class="form-field full">
-                            <label>Address</label>
-                            <textarea class="form-textarea" id="address" placeholder="Village / City, District, State"></textarea>
-                        </div>
+                    <div class="form-field">
+                        <label>Father's Name</label>
+                        <input type="text" class="form-input" id="fatherName" placeholder="Father's name">
                     </div>
-                </div>
-
-                <!-- EDUCATION -->
-                <div class="form-section">
-                    <div class="form-section-title">🎓 Educational Qualification</div>
-                    <div class="form-grid">
-                        <div class="form-field full">
-                            <label>Education Details</label>
-                            <textarea class="form-textarea" id="education" placeholder="e.g.&#10;SSC - XXX School - 2015 - GPA 5.00&#10;HSC - YYY College - 2017 - GPA 4.80&#10;B.Sc - ZZZ University - 2021 - CGPA 3.50" style="min-height:100px;"></textarea>
-                        </div>
+                    <div class="form-field">
+                        <label>Mother's Name</label>
+                        <input type="text" class="form-input" id="motherName" placeholder="Mother's name">
                     </div>
-                </div>
-
-                <!-- EXPERIENCE -->
-                <div class="form-section">
-                    <div class="form-section-title">💼 Work Experience (Optional)</div>
-                    <div class="form-grid">
-                        <div class="form-field full">
-                            <label>Experience Details</label>
-                            <textarea class="form-textarea" id="experience" placeholder="e.g.&#10;Company: ABC Ltd&#10;Position: Software Engineer&#10;Duration: 2022 - Present"></textarea>
-                        </div>
+                    <div class="form-field">
+                        <label>Date of Birth</label>
+                        <input type="date" class="form-input" id="dob">
                     </div>
-                </div>
-
-                <!-- SKILLS -->
-                <div class="form-section">
-                    <div class="form-section-title">⭐ Skills (Optional)</div>
-                    <div class="form-grid">
-                        <div class="form-field full">
-                            <label>Skills</label>
-                            <textarea class="form-textarea" id="skills" placeholder="e.g. Computer, Driving, English Speaking, MS Office"></textarea>
-                        </div>
+                    <div class="form-field">
+                        <label>Religion</label>
+                        <input type="text" class="form-input" id="religion" placeholder="e.g. Hindu">
                     </div>
-                </div>
-
-                <!-- OTHER -->
-                <div class="form-section">
-                    <div class="form-section-title">📝 Other Information (Optional)</div>
-                    <div class="form-grid">
-                        <div class="form-field full">
-                            <label>Additional Information</label>
-                            <textarea class="form-textarea" id="otherInfo" placeholder="Write something extra about yourself..."></textarea>
-                        </div>
+                    <div class="form-field">
+                        <label>Nationality</label>
+                        <input type="text" class="form-input" id="nationality" value="INDIA">
                     </div>
-                </div>
-
-            </form>
-
-            <!-- PROGRESS -->
-            <div class="progress-wrap" id="progressWrap">
-                <div class="progress-bar">
-                    <div class="progress-fill" id="progressFill"></div>
-                </div>
-                <div class="progress-text" id="progressText">Creating PDF...</div>
-            </div>
-
-            <!-- ACTION -->
-            <div class="action-section show" id="actionSection">
-                <button class="btn-preview" id="previewBtn" type="button">
-                    <span>👁️</span> Preview Bio-data
-                </button>
-                <button class="btn-download" id="downloadBtn" type="button" disabled>
-                    <span>📥</span> Download PDF
-                </button>
-                <button class="btn-reset" id="resetBtn" type="button">
-                    <span>🔄</span> Reset
-                </button>
-            </div>
-
-            <!-- PREVIEW SECTION -->
-            <div class="preview-section" id="previewSection">
-                <div class="preview-header">
-                    <div class="preview-title">📄 Bio-data Preview</div>
-                </div>
-
-                <div id="biodataDoc">
-                    <!-- Filled by JavaScript -->
+                    <div class="form-field">
+                        <label>Aadhar Number</label>
+                        <input type="text" class="form-input" id="aadharNumber" placeholder="1234 5678 9012" maxlength="14">
+                    </div>
+                    <div class="form-field">
+                        <label>Blood Group</label>
+                        <select class="form-select" id="bloodGroup">
+                            <option value="">-- Select --</option>
+                            <option>A+</option><option>A-</option>
+                            <option>B+</option><option>B-</option>
+                            <option>O+</option><option>O-</option>
+                            <option>AB+</option><option>AB-</option>
+                        </select>
+                    </div>
+                    <div class="form-field">
+                        <label>Marital Status</label>
+                        <select class="form-select" id="maritalStatus">
+                            <option value="">-- Select --</option>
+                            <option value="Single">Single</option>
+                            <option value="Married">Married</option>
+                            <option value="Divorced">Divorced</option>
+                            <option value="Widowed">Widowed</option>
+                        </select>
+                    </div>
+                    <div class="form-field hidden-field" id="wifeNameField">
+                        <label>Wife's Name <span class="req">*</span></label>
+                        <input type="text" class="form-input" id="wifeName" placeholder="Wife's full name">
+                    </div>
                 </div>
             </div>
 
-            <a href="pdf-editor.html" class="btn-back">← Back to PDF Editor</a>
+            <div class="form-section">
+                <div class="form-section-title">📞 Contact Information</div>
+                <div class="form-grid">
+                    <div class="form-field">
+                        <label>Mobile Number</label>
+                        <input type="tel" class="form-input" id="phone" placeholder="+91 XXXXXXXXXX">
+                    </div>
+                    <div class="form-field">
+                        <label>Email</label>
+                        <input type="email" class="form-input" id="email" placeholder="example@email.com">
+                    </div>
+                    <div class="form-field full">
+                        <label>Address</label>
+                        <textarea class="form-textarea" id="address" placeholder="Village / City, District, State"></textarea>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-section">
+                <div class="form-section-title">🎓 Educational Qualification</div>
+                <div class="form-grid">
+                    <div class="form-field full">
+                        <label>Education Details</label>
+                        <textarea class="form-textarea" id="education" placeholder="SSC - XXX School - 2015 - GPA 5.00&#10;HSC - YYY College - 2017 - GPA 4.80"></textarea>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-section">
+                <div class="form-section-title">💼 Work Experience</div>
+                <div class="form-grid">
+                    <div class="form-field full">
+                        <label>Experience Details</label>
+                        <textarea class="form-textarea" id="experience" placeholder="Company / Position / Duration"></textarea>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-section">
+                <div class="form-section-title">⭐ Skills</div>
+                <div class="form-grid">
+                    <div class="form-field full">
+                        <label>Skills</label>
+                        <textarea class="form-textarea" id="skills" placeholder="Computer, Driving, MS Office..."></textarea>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-section">
+                <div class="form-section-title">📝 Other Information</div>
+                <div class="form-grid">
+                    <div class="form-field full">
+                        <label>Additional Information</label>
+                        <textarea class="form-textarea" id="otherInfo" placeholder="Write something extra..."></textarea>
+                    </div>
+                </div>
+            </div>
+
+        </form>
+
+        <!-- ACTION -->
+        <div class="action-section">
+            <button class="btn-preview" id="previewBtn" type="button">👁️ Preview Bio-data</button>
+            <button class="btn-download" id="downloadBtn" type="button" disabled>📥 Download PDF</button>
+            <button class="btn-reset" id="resetBtn" type="button">🔄 Reset</button>
         </div>
-    </main>
 
-    <!-- FOOTER -->
-    <footer>
-        <p>🏢 Azad Digital Seva — Your Trusted Online Service Provider</p>
-        <div class="footer-links">
-            <a href="index.html">Home</a>
-            <a href="services.html">Services</a>
-            <a href="tools.html">Tools</a>
-            <a href="notice.html">Notice</a>
-            <a href="contact.html">Contact</a>
+        <!-- PREVIEW -->
+        <div class="preview-section" id="previewSection">
+            <div class="preview-title">📄 Bio-data Preview</div>
+            <div id="biodataDoc"></div>
         </div>
-        <p class="copyright">© 2025 Azad Digital Seva | All Rights Reserved</p>
-    </footer>
 
-    <!-- html2pdf library -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+        <a href="pdf-editor.html" class="btn-back">← Back to PDF Editor</a>
+    </div>
+</main>
 
-    <script>
-        (function () {
-            /* ===== MENU ===== */
-            const toggle = document.getElementById('menuToggle');
-            const dropdown = document.getElementById('headerDropdown');
-            const overlay = document.getElementById('menuOverlay');
-            function openMenu() {
-                dropdown.classList.add('open');
-                toggle.classList.add('active');
-                overlay.classList.add('show');
-            }
-            function closeMenu() {
-                dropdown.classList.remove('open');
-                toggle.classList.remove('active');
-                overlay.classList.remove('show');
-            }
-            toggle.addEventListener('click', (e) => {
-                e.stopPropagation();
-                dropdown.classList.contains('open') ? closeMenu() : openMenu();
+<!-- FOOTER -->
+<footer>
+    <p>🏢 Azad Digital Seva — Your Trusted Online Service Provider</p>
+    <div class="footer-links">
+        <a href="index.html">Home</a>
+        <a href="services.html">Services</a>
+        <a href="tools.html">Tools</a>
+        <a href="notice.html">Notice</a>
+        <a href="contact.html">Contact</a>
+    </div>
+    <p class="copyright">© 2025 Azad Digital Seva | All Rights Reserved</p>
+</footer>
+
+<!-- ============ CROP MODAL ============ -->
+<div class="crop-modal" id="cropModal">
+    <div class="crop-box">
+        <div class="crop-header">
+            <h3>✂️ Crop Your Photo</h3>
+            <button class="crop-close-btn" id="cropCloseBtn" type="button">✕</button>
+        </div>
+        <div class="crop-body">
+            <div class="crop-canvas-wrap" id="cropWrap">
+                <canvas id="cropCanvas"></canvas>
+            </div>
+            <div class="crop-controls">
+                <div class="crop-control-item">
+                    <label>Zoom</label>
+                    <input type="range" id="zoomRange" min="100" max="300" value="100">
+                </div>
+                <div class="crop-hint">
+                    🖱️ Drag photo to adjust position<br>
+                    📱 Mobile: touch & drag
+                </div>
+            </div>
+        </div>
+        <div class="crop-actions">
+            <button class="crop-btn cancel" id="cropCancelBtn" type="button">Cancel</button>
+            <button class="crop-btn apply" id="cropApplyBtn" type="button">✅ Apply Crop</button>
+        </div>
+    </div>
+</div>
+
+<script>
+(function () {
+    'use strict';
+
+    /* ===== MENU ===== */
+    const toggle = document.getElementById('menuToggle');
+    const dropdown = document.getElementById('headerDropdown');
+    const overlay = document.getElementById('menuOverlay');
+    if (toggle && dropdown && overlay) {
+        toggle.addEventListener('click', function (e) {
+            e.stopPropagation();
+            dropdown.classList.toggle('open');
+            toggle.classList.toggle('active');
+            overlay.classList.toggle('show');
+        });
+        overlay.addEventListener('click', function () {
+            dropdown.classList.remove('open');
+            toggle.classList.remove('active');
+            overlay.classList.remove('show');
+        });
+    }
+
+    /* ===== ELEMENTS ===== */
+    const photoPreview = document.getElementById('photoPreview');
+    const photoBtn = document.getElementById('photoBtn');
+    const photoRemoveBtn = document.getElementById('photoRemoveBtn');
+    const photoRecropBtn = document.getElementById('photoRecropBtn');
+    const photoInput = document.getElementById('photoInput');
+    const previewBtn = document.getElementById('previewBtn');
+    const downloadBtn = document.getElementById('downloadBtn');
+    const resetBtn = document.getElementById('resetBtn');
+    const previewSection = document.getElementById('previewSection');
+    const biodataDoc = document.getElementById('biodataDoc');
+    const maritalStatus = document.getElementById('maritalStatus');
+    const wifeNameField = document.getElementById('wifeNameField');
+    const wifeName = document.getElementById('wifeName');
+    const aadharInput = document.getElementById('aadharNumber');
+
+    /* Crop Modal */
+    const cropModal = document.getElementById('cropModal');
+    const cropCanvas = document.getElementById('cropCanvas');
+    const zoomRange = document.getElementById('zoomRange');
+    const cropCloseBtn = document.getElementById('cropCloseBtn');
+    const cropCancelBtn = document.getElementById('cropCancelBtn');
+    const cropApplyBtn = document.getElementById('cropApplyBtn');
+
+    let photoDataUrl = null;
+    let originalPhotoSrc = null;
+
+    /* ===== CROP STATE ===== */
+    const CROP_W = 300;
+    const CROP_H = 360;
+    let cropImg = null;
+    let imgX = 0;
+    let imgY = 0;
+    let imgScale = 1;
+    let isDragging = false;
+    let dragStartX = 0;
+    let dragStartY = 0;
+    let imgStartX = 0;
+    let imgStartY = 0;
+
+    /* ===== MARITAL STATUS TOGGLE ===== */
+    maritalStatus.addEventListener('change', function () {
+        if (maritalStatus.value === 'Married') {
+            wifeNameField.classList.add('show');
+        } else {
+            wifeNameField.classList.remove('show');
+            wifeName.value = '';
+        }
+    });
+
+    /* ===== AADHAR FORMAT ===== */
+    aadharInput.addEventListener('input', function (e) {
+        let value = e.target.value.replace(/\D/g, '');
+        if (value.length > 12) value = value.substring(0, 12);
+        const formatted = value.replace(/(\d{4})(\d{4})(\d{4})/, '$1 $2 $3').trim();
+        e.target.value = formatted;
+    });
+
+    /* ===== PHOTO UPLOAD ===== */
+    photoBtn.addEventListener('click', function (e) {
+        e.stopPropagation();
+        photoInput.click();
+    });
+
+    photoPreview.addEventListener('click', function () {
+        photoInput.click();
+    });
+
+    photoInput.addEventListener('change', function (e) {
+        const file = e.target.files[0];
+        if (!file) return;
+        if (!file.type.startsWith('image/')) {
+            alert('⚠️ Please upload an image file.');
+            return;
+        }
+        if (file.size > 5 * 1024 * 1024) {
+            alert('⚠️ Photo size must be less than 5 MB.');
+            return;
+        }
+        const reader = new FileReader();
+        reader.onload = function (ev) {
+            originalPhotoSrc = ev.target.result;
+            openCropModal(originalPhotoSrc);
+        };
+        reader.readAsDataURL(file);
+        photoInput.value = '';
+    });
+
+    photoRecropBtn.addEventListener('click', function (e) {
+        e.stopPropagation();
+        if (originalPhotoSrc) {
+            openCropModal(originalPhotoSrc);
+        }
+    });
+
+    photoRemoveBtn.addEventListener('click', function (e) {
+        e.stopPropagation();
+        photoDataUrl = null;
+        originalPhotoSrc = null;
+        photoPreview.innerHTML = '<span>📷</span>';
+        photoRemoveBtn.classList.remove('show');
+        photoRecropBtn.classList.remove('show');
+    });
+
+    /* ===== CROP MODAL OPEN ===== */
+    function openCropModal(src) {
+        cropModal.classList.add('show');
+
+        // Set canvas size
+        cropCanvas.width = CROP_W;
+        cropCanvas.height = CROP_H;
+
+        // Load image
+        cropImg = new Image();
+        cropImg.onload = function () {
+            imgX = 0;
+            imgY = 0;
+            imgScale = 1;
+            zoomRange.value = 100;
+            drawCrop();
+        };
+        cropImg.onerror = function () {
+            alert('⚠️ Failed to load image.');
+            closeCropModal();
+        };
+        cropImg.src = src;
+    }
+
+    function closeCropModal() {
+        cropModal.classList.remove('show');
+        cropImg = null;
+        isDragging = false;
+    }
+
+    cropCloseBtn.addEventListener('click', closeCropModal);
+    cropCancelBtn.addEventListener('click', closeCropModal);
+
+    /* ===== DRAW CROP ===== */
+    function drawCrop() {
+        if (!cropImg) return;
+
+        const ctx = cropCanvas.getContext('2d');
+        ctx.clearRect(0, 0, CROP_W, CROP_H);
+
+        // Dark background
+        ctx.fillStyle = '#000';
+        ctx.fillRect(0, 0, CROP_W, CROP_H);
+
+        // Calculate base scale to cover the crop area
+        const baseScale = Math.max(CROP_W / cropImg.width, CROP_H / cropImg.height);
+        const finalScale = baseScale * imgScale;
+        const drawW = cropImg.width * finalScale;
+        const drawH = cropImg.height * finalScale;
+
+        // Center + user offsets
+        const drawX = (CROP_W - drawW) / 2 + imgX;
+        const drawY = (CROP_H - drawH) / 2 + imgY;
+
+        ctx.drawImage(cropImg, drawX, drawY, drawW, drawH);
+
+        // Grid lines
+        ctx.strokeStyle = 'rgba(255,255,255,0.35)';
+        ctx.lineWidth = 1;
+        for (let i = 1; i < 3; i++) {
+            ctx.beginPath();
+            ctx.moveTo((CROP_W / 3) * i, 0);
+            ctx.lineTo((CROP_W / 3) * i, CROP_H);
+            ctx.stroke();
+            ctx.beginPath();
+            ctx.moveTo(0, (CROP_H / 3) * i);
+            ctx.lineTo(CROP_W, (CROP_H / 3) * i);
+            ctx.stroke();
+        }
+
+        // Border
+        ctx.strokeStyle = 'rgba(255,255,255,0.9)';
+        ctx.lineWidth = 2;
+        ctx.strokeRect(1, 1, CROP_W - 2, CROP_H - 2);
+    }
+
+    /* ===== DRAG HANDLING ===== */
+    function getPointer(e) {
+        if (e.touches && e.touches.length) {
+            return { x: e.touches[0].clientX, y: e.touches[0].clientY };
+        }
+        return { x: e.clientX, y: e.clientY };
+    }
+
+    cropCanvas.addEventListener('mousedown', function (e) {
+        if (!cropImg) return;
+        e.preventDefault();
+        isDragging = true;
+        dragStartX = e.clientX;
+        dragStartY = e.clientY;
+        imgStartX = imgX;
+        imgStartY = imgY;
+    });
+
+    cropCanvas.addEventListener('touchstart', function (e) {
+        if (!cropImg) return;
+        if (e.touches.length !== 1) return;
+        e.preventDefault();
+        isDragging = true;
+        dragStartX = e.touches[0].clientX;
+        dragStartY = e.touches[0].clientY;
+        imgStartX = imgX;
+        imgStartY = imgY;
+    }, { passive: false });
+
+    document.addEventListener('mousemove', function (e) {
+        if (!isDragging || !cropImg) return;
+        imgX = imgStartX + (e.clientX - dragStartX);
+        imgY = imgStartY + (e.clientY - dragStartY);
+        drawCrop();
+    });
+
+    document.addEventListener('touchmove', function (e) {
+        if (!isDragging || !cropImg) return;
+        if (e.touches.length !== 1) return;
+        e.preventDefault();
+        imgX = imgStartX + (e.touches[0].clientX - dragStartX);
+        imgY = imgStartY + (e.touches[0].clientY - dragStartY);
+        drawCrop();
+    }, { passive: false });
+
+    document.addEventListener('mouseup', function () {
+        isDragging = false;
+    });
+
+    document.addEventListener('touchend', function () {
+        isDragging = false;
+    });
+
+    /* ===== ZOOM ===== */
+    zoomRange.addEventListener('input', function () {
+        imgScale = parseInt(zoomRange.value, 10) / 100;
+        drawCrop();
+    });
+
+    /* ===== APPLY CROP ===== */
+    cropApplyBtn.addEventListener('click', function () {
+        if (!cropImg) return;
+
+        try {
+            // Final output canvas
+            const finalW = 500;
+            const finalH = Math.round(finalW * (CROP_H / CROP_W));
+
+            const finalCanvas = document.createElement('canvas');
+            finalCanvas.width = finalW;
+            finalCanvas.height = finalH;
+            const ctx = finalCanvas.getContext('2d');
+
+            // White background
+            ctx.fillStyle = '#ffffff';
+            ctx.fillRect(0, 0, finalW, finalH);
+
+            // Scale from display canvas to final
+            const ratio = finalW / CROP_W;
+
+            const baseScale = Math.max(CROP_W / cropImg.width, CROP_H / cropImg.height);
+            const finalScale = baseScale * imgScale;
+
+            const drawW = cropImg.width * finalScale * ratio;
+            const drawH = cropImg.height * finalScale * ratio;
+
+            const drawX = ((CROP_W - (cropImg.width * finalScale)) / 2 + imgX) * ratio;
+            const drawY = ((CROP_H - (cropImg.height * finalScale)) / 2 + imgY) * ratio;
+
+            ctx.drawImage(cropImg, drawX, drawY, drawW, drawH);
+
+            photoDataUrl = finalCanvas.toDataURL('image/jpeg', 0.95);
+
+            // Update preview
+            photoPreview.innerHTML = '<img src="' + photoDataUrl + '" alt="Photo">';
+            photoRemoveBtn.classList.add('show');
+            photoRecropBtn.classList.add('show');
+
+            closeCropModal();
+        } catch (err) {
+            console.error('Crop error:', err);
+            alert('⚠️ Failed to crop image. Please try again.');
+        }
+    });
+
+    /* ===== GET DATA ===== */
+    function getFormData() {
+        return {
+            fullName: document.getElementById('fullName').value.trim(),
+            fatherName: document.getElementById('fatherName').value.trim(),
+            motherName: document.getElementById('motherName').value.trim(),
+            dob: document.getElementById('dob').value,
+            religion: document.getElementById('religion').value.trim(),
+            nationality: document.getElementById('nationality').value.trim(),
+            aadharNumber: document.getElementById('aadharNumber').value.trim(),
+            bloodGroup: document.getElementById('bloodGroup').value,
+            maritalStatus: document.getElementById('maritalStatus').value,
+            wifeName: document.getElementById('wifeName').value.trim(),
+            phone: document.getElementById('phone').value.trim(),
+            email: document.getElementById('email').value.trim(),
+            address: document.getElementById('address').value.trim(),
+            education: document.getElementById('education').value.trim(),
+            experience: document.getElementById('experience').value.trim(),
+            skills: document.getElementById('skills').value.trim(),
+            otherInfo: document.getElementById('otherInfo').value.trim()
+        };
+    }
+
+    function formatDate(dateStr) {
+        if (!dateStr) return '';
+        const d = new Date(dateStr);
+        if (isNaN(d)) return dateStr;
+        const months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+        return d.getDate() + ' ' + months[d.getMonth()] + ' ' + d.getFullYear();
+    }
+
+    function escapeHtml(str) {
+        if (!str) return '';
+        const div = document.createElement('div');
+        div.textContent = str;
+        return div.innerHTML;
+    }
+
+    /* ===== BUILD BIODATA HTML ===== */
+    function buildBiodataHTML(data) {
+        let html = '';
+
+        html += '<div style="text-align:center;margin-bottom:24px;padding-bottom:16px;border-bottom:3px double #059669;">';
+        html += '<div style="display:inline-block;background:#065f46;color:#ffffff;font-size:26px;font-weight:900;letter-spacing:6px;padding:12px 40px;border-radius:50px;">BIO-DATA</div>';
+        html += '<div style="margin-top:10px;font-size:12px;color:#047857;letter-spacing:2px;font-weight:600;">PERSONAL INFORMATION</div>';
+        html += '</div>';
+
+        html += '<div style="display:flex;align-items:center;gap:20px;padding-bottom:16px;margin-bottom:18px;border-bottom:2px solid #059669;">';
+        if (photoDataUrl) {
+            html += '<div style="width:100px;height:120px;border-radius:8px;background:#ecfdf5;border:2px solid #059669;overflow:hidden;flex-shrink:0;"><img src="' + photoDataUrl + '" style="width:100%;height:100%;object-fit:cover;display:block;"></div>';
+        } else {
+            html += '<div style="width:100px;height:120px;border-radius:8px;background:#ecfdf5;border:2px solid #059669;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:32px;color:#059669;">&#128100;</div>';
+        }
+        html += '<div style="flex:1;">';
+        html += '<div style="font-size:26px;font-weight:800;color:#065f46;margin-bottom:6px;">' + (data.fullName || 'Your Name') + '</div>';
+        if (data.phone || data.email) {
+            html += '<div style="font-size:13px;color:#047857;font-weight:600;">';
+            if (data.phone) html += '📞 ' + escapeHtml(data.phone) + ' ';
+            if (data.email) html += '✉️ ' + escapeHtml(data.email);
+            html += '</div>';
+        }
+        html += '</div></div>';
+
+        const personalRows = [];
+        if (data.fullName) personalRows.push(['Full Name', data.fullName]);
+        if (data.fatherName) personalRows.push(["Father's Name", data.fatherName]);
+        if (data.motherName) personalRows.push(["Mother's Name", data.motherName]);
+        if (data.dob) personalRows.push(['Date of Birth', formatDate(data.dob)]);
+        if (data.religion) personalRows.push(['Religion', data.religion]);
+        if (data.nationality) personalRows.push(['Nationality', data.nationality]);
+        if (data.aadharNumber) personalRows.push(['Aadhar Number', data.aadharNumber]);
+        if (data.bloodGroup) personalRows.push(['Blood Group', data.bloodGroup]);
+        if (data.maritalStatus) personalRows.push(['Marital Status', data.maritalStatus]);
+        if (data.maritalStatus === 'Married' && data.wifeName) {
+            personalRows.push(["Wife's Name", data.wifeName]);
+        }
+        if (personalRows.length) {
+            html += '<div style="margin-bottom:18px;">';
+            html += '<div style="display:inline-block;background:#059669;color:#ffffff;font-size:13px;font-weight:800;padding:5px 14px;border-radius:20px;margin-bottom:10px;">👤 Personal Information</div>';
+            html += '<table style="width:100%;border-collapse:collapse;">';
+            personalRows.forEach(function (row) {
+                html += '<tr style="border-bottom:1px dashed #d1fae5;">';
+                html += '<td style="padding:8px 6px;font-size:14px;color:#047857;font-weight:700;width:180px;vertical-align:top;">' + escapeHtml(row[0]) + '</td>';
+                html += '<td style="padding:8px 6px;font-size:14px;color:#1e2b3c;font-weight:600;vertical-align:top;">' + escapeHtml(row[1]).replace(/\n/g, '<br>') + '</td>';
+                html += '</tr>';
             });
-            overlay.addEventListener('click', closeMenu);
-            document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeMenu(); });
-            dropdown.addEventListener('click', (e) => e.stopPropagation());
+            html += '</table></div>';
+        }
 
-            /* ===== ELEMENTS ===== */
-            const photoPreview = document.getElementById('photoPreview');
-            const photoPlaceholder = document.getElementById('photoPlaceholder');
-            const photoBtn = document.getElementById('photoBtn');
-            const photoRemoveBtn = document.getElementById('photoRemoveBtn');
-            const photoInput = document.getElementById('photoInput');
-            const previewBtn = document.getElementById('previewBtn');
-            const downloadBtn = document.getElementById('downloadBtn');
-            const resetBtn = document.getElementById('resetBtn');
-            const previewSection = document.getElementById('previewSection');
-            const biodataDoc = document.getElementById('biodataDoc');
-            const progressWrap = document.getElementById('progressWrap');
-            const progressFill = document.getElementById('progressFill');
-            const progressText = document.getElementById('progressText');
-
-            const maritalStatus = document.getElementById('maritalStatus');
-            const wifeNameField = document.getElementById('wifeNameField');
-            const wifeName = document.getElementById('wifeName');
-            const aadharInput = document.getElementById('aadharNumber');
-
-            let photoDataUrl = null;
-
-            /* ===== MARITAL STATUS → WIFE NAME TOGGLE ===== */
-            maritalStatus.addEventListener('change', () => {
-                if (maritalStatus.value === 'Married') {
-                    wifeNameField.classList.add('show');
-                } else {
-                    wifeNameField.classList.remove('show');
-                    wifeName.value = '';
-                }
+        const contactRows = [];
+        if (data.phone) contactRows.push(['Mobile', data.phone]);
+        if (data.email) contactRows.push(['Email', data.email]);
+        if (data.address) contactRows.push(['Address', data.address]);
+        if (contactRows.length) {
+            html += '<div style="margin-bottom:18px;">';
+            html += '<div style="display:inline-block;background:#059669;color:#ffffff;font-size:13px;font-weight:800;padding:5px 14px;border-radius:20px;margin-bottom:10px;">📞 Contact Information</div>';
+            html += '<table style="width:100%;border-collapse:collapse;">';
+            contactRows.forEach(function (row) {
+                html += '<tr style="border-bottom:1px dashed #d1fae5;">';
+                html += '<td style="padding:8px 6px;font-size:14px;color:#047857;font-weight:700;width:180px;vertical-align:top;">' + escapeHtml(row[0]) + '</td>';
+                html += '<td style="padding:8px 6px;font-size:14px;color:#1e2b3c;font-weight:600;vertical-align:top;">' + escapeHtml(row[1]).replace(/\n/g, '<br>') + '</td>';
+                html += '</tr>';
             });
+            html += '</table></div>';
+        }
 
-            /* ===== AADHAR NUMBER AUTO FORMAT ===== */
-            aadharInput.addEventListener('input', (e) => {
-                let value = e.target.value.replace(/\D/g, '');
-                if (value.length > 12) value = value.substring(0, 12);
-                const formatted = value.replace(/(\d{4})(\d{4})(\d{4})/, '$1 $2 $3').trim();
-                e.target.value = formatted;
+        if (data.education) {
+            html += '<div style="margin-bottom:18px;">';
+            html += '<div style="display:inline-block;background:#059669;color:#ffffff;font-size:13px;font-weight:800;padding:5px 14px;border-radius:20px;margin-bottom:10px;">🎓 Educational Qualification</div>';
+            html += '<div style="font-size:14px;line-height:1.7;color:#1e2b3c;">' + escapeHtml(data.education).replace(/\n/g, '<br>') + '</div>';
+            html += '</div>';
+        }
+
+        if (data.experience) {
+            html += '<div style="margin-bottom:18px;">';
+            html += '<div style="display:inline-block;background:#059669;color:#ffffff;font-size:13px;font-weight:800;padding:5px 14px;border-radius:20px;margin-bottom:10px;">💼 Work Experience</div>';
+            html += '<div style="font-size:14px;line-height:1.7;color:#1e2b3c;">' + escapeHtml(data.experience).replace(/\n/g, '<br>') + '</div>';
+            html += '</div>';
+        }
+
+        if (data.skills) {
+            html += '<div style="margin-bottom:18px;">';
+            html += '<div style="display:inline-block;background:#059669;color:#ffffff;font-size:13px;font-weight:800;padding:5px 14px;border-radius:20px;margin-bottom:10px;">⭐ Skills</div>';
+            html += '<div style="font-size:14px;line-height:1.7;color:#1e2b3c;">' + escapeHtml(data.skills).replace(/\n/g, '<br>') + '</div>';
+            html += '</div>';
+        }
+
+        if (data.otherInfo) {
+            html += '<div style="margin-bottom:18px;">';
+            html += '<div style="display:inline-block;background:#059669;color:#ffffff;font-size:13px;font-weight:800;padding:5px 14px;border-radius:20px;margin-bottom:10px;">📝 Other Information</div>';
+            html += '<div style="font-size:14px;line-height:1.7;color:#1e2b3c;">' + escapeHtml(data.otherInfo).replace(/\n/g, '<br>') + '</div>';
+            html += '</div>';
+        }
+
+        html += '<div style="margin-top:30px;padding-top:14px;border-top:1px dashed #a7f3d0;text-align:right;font-size:13px;color:#065f46;">';
+        html += '<div style="display:inline-block;text-align:center;">';
+        html += '<div style="border-bottom:1px solid #059669;min-width:150px;height:35px;"></div>';
+        html += '<div style="font-weight:700;margin-top:4px;">Signature & Date</div>';
+        html += '</div></div>';
+
+        return html;
+    }
+
+    /* ===== PREVIEW ===== */
+    previewBtn.addEventListener('click', function () {
+        const data = getFormData();
+        if (!data.fullName) {
+            alert('⚠️ Please enter your Full Name.');
+            document.getElementById('fullName').focus();
+            return;
+        }
+        if (data.maritalStatus === 'Married' && !data.wifeName) {
+            alert("⚠️ Please enter your Wife's Name.");
+            document.getElementById('wifeName').focus();
+            return;
+        }
+        biodataDoc.innerHTML = buildBiodataHTML(data);
+        previewSection.classList.add('show');
+        downloadBtn.disabled = false;
+        previewSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+
+    /* ===== DOWNLOAD PDF ===== */
+    downloadBtn.addEventListener('click', async function () {
+        const data = getFormData();
+        if (!data.fullName) {
+            alert('⚠️ Please enter your Full Name.');
+            return;
+        }
+        if (data.maritalStatus === 'Married' && !data.wifeName) {
+            alert("⚠️ Please enter your Wife's Name.");
+            return;
+        }
+
+        biodataDoc.innerHTML = buildBiodataHTML(data);
+        previewSection.classList.add('show');
+
+        downloadBtn.disabled = true;
+        downloadBtn.innerHTML = '⏳ Creating PDF...';
+
+        const imgs = biodataDoc.querySelectorAll('img');
+        await Promise.all(Array.from(imgs).map(function (img) {
+            if (img.complete) return Promise.resolve();
+            return new Promise(function (resolve) {
+                img.onload = resolve;
+                img.onerror = resolve;
+                setTimeout(resolve, 2000);
             });
+        }));
+        await new Promise(function (r) { setTimeout(r, 400); });
 
-            /* ===== PHOTO UPLOAD ===== */
-            photoBtn.addEventListener('click', (e) => { e.stopPropagation(); photoInput.click(); });
-            photoPreview.addEventListener('click', () => photoInput.click());
+        const opt = {
+            margin: 0,
+            filename: 'ADSpdf-biodata.pdf',
+            image: { type: 'jpeg', quality: 0.98 },
+            html2canvas: {
+                scale: 2,
+                useCORS: true,
+                allowTaint: true,
+                backgroundColor: '#ffffff',
+                logging: false,
+                scrollX: 0,
+                scrollY: 0,
+                windowWidth: 800
+            },
+            jsPDF: {
+                unit: 'mm',
+                format: 'a4',
+                orientation: 'portrait'
+            },
+            pagebreak: { mode: ['css', 'legacy'] }
+        };
 
-            photoInput.addEventListener('change', (e) => {
-                const file = e.target.files[0];
-                if (!file) return;
-                if (!file.type.startsWith('image/')) {
-                    alert('⚠️ Please upload an image file.');
-                    return;
-                }
-                if (file.size > 5 * 1024 * 1024) {
-                    alert('⚠️ Photo size must be less than 5 MB.');
-                    return;
-                }
+        html2pdf().set(opt).from(biodataDoc).save().then(function () {
+            downloadBtn.disabled = false;
+            downloadBtn.innerHTML = '✅ Downloaded!';
+            setTimeout(function () {
+                downloadBtn.innerHTML = '📥 Download PDF';
+            }, 2500);
+        }).catch(function (err) {
+            console.error(err);
+            alert('⚠️ Failed to create PDF.');
+            downloadBtn.disabled = false;
+            downloadBtn.innerHTML = '📥 Download PDF';
+        });
+    });
 
-                const reader = new FileReader();
-                reader.onload = (ev) => {
-                    photoDataUrl = ev.target.result;
-                    photoPreview.innerHTML = '<img src="' + photoDataUrl + '" alt="Photo">';
-                    photoRemoveBtn.classList.add('show');
-                };
-                reader.readAsDataURL(file);
-                photoInput.value = '';
-            });
+    /* ===== RESET ===== */
+    resetBtn.addEventListener('click', function () {
+        if (!confirm('Clear all data?')) return;
+        document.getElementById('biodataForm').reset();
+        document.getElementById('nationality').value = 'INDIA';
+        wifeNameField.classList.remove('show');
+        photoDataUrl = null;
+        originalPhotoSrc = null;
+        photoPreview.innerHTML = '<span>📷</span>';
+        photoRemoveBtn.classList.remove('show');
+        photoRecropBtn.classList.remove('show');
+        previewSection.classList.remove('show');
+        downloadBtn.disabled = true;
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
 
-            photoRemoveBtn.addEventListener('click', (e) => {
-                e.stopPropagation();
-                photoDataUrl = null;
-                photoPreview.innerHTML = '<span id="photoPlaceholder">📷</span>';
-                photoRemoveBtn.classList.remove('show');
-            });
-
-            /* ===== GET FORM DATA ===== */
-            function getFormData() {
-                return {
-                    fullName: document.getElementById('fullName').value.trim(),
-                    fatherName: document.getElementById('fatherName').value.trim(),
-                    motherName: document.getElementById('motherName').value.trim(),
-                    dob: document.getElementById('dob').value,
-                    religion: document.getElementById('religion').value.trim(),
-                    nationality: document.getElementById('nationality').value.trim(),
-                    aadharNumber: document.getElementById('aadharNumber').value.trim(),
-                    bloodGroup: document.getElementById('bloodGroup').value,
-                    maritalStatus: document.getElementById('maritalStatus').value,
-                    wifeName: document.getElementById('wifeName').value.trim(),
-                    phone: document.getElementById('phone').value.trim(),
-                    email: document.getElementById('email').value.trim(),
-                    address: document.getElementById('address').value.trim(),
-                    education: document.getElementById('education').value.trim(),
-                    experience: document.getElementById('experience').value.trim(),
-                    skills: document.getElementById('skills').value.trim(),
-                    otherInfo: document.getElementById('otherInfo').value.trim()
-                };
-            }
-
-            /* ===== FORMAT DATE ===== */
-            function formatDate(dateStr) {
-                if (!dateStr) return '';
-                const d = new Date(dateStr);
-                if (isNaN(d)) return dateStr;
-                const months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
-                return `${d.getDate()} ${months[d.getMonth()]} ${d.getFullYear()}`;
-            }
-
-            /* ===== BUILD BIODATA HTML ===== */
-            function buildBiodataHTML(data) {
-                let html = '';
-
-                html += '<div style="font-family:Arial,Helvetica,sans-serif;color:#1e2b3c;background:#fff;line-height:1.5;font-size:14px;">';
-
-                /* ===== BIO-DATA TITLE ===== */
-                html += '<div style="text-align:center;margin-bottom:24px;padding-bottom:16px;border-bottom:3px double #059669;">';
-                html += '<div style="display:inline-block;background:linear-gradient(135deg,#065f46,#059669);color:#ffffff;font-size:1.6rem;font-weight:900;letter-spacing:6px;padding:12px 40px;border-radius:50px;box-shadow:0 4px 12px rgba(5,150,105,0.3);">BIO-DATA</div>';
-                html += '<div style="margin-top:10px;font-size:0.78rem;color:#047857;letter-spacing:2px;font-weight:600;">PERSONAL INFORMATION</div>';
-                html += '</div>';
-
-                /* ===== HEADER (Photo + Name) ===== */
-                html += '<div style="display:flex;align-items:center;gap:20px;padding-bottom:16px;margin-bottom:18px;border-bottom:2px solid #059669;">';
-
-                if (photoDataUrl) {
-                    html += '<div style="width:100px;height:120px;border-radius:8px;background:#ecfdf5;border:2px solid #059669;overflow:hidden;flex-shrink:0;display:flex;align-items:center;justify-content:center;"><img src="' + photoDataUrl + '" style="width:100%;height:100%;object-fit:cover;" alt="Photo"></div>';
-                } else {
-                    html += '<div style="width:100px;height:120px;border-radius:8px;background:#ecfdf5;border:2px solid #059669;overflow:hidden;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:2rem;color:#059669;">&#128100;</div>';
-                }
-
-                html += '<div style="flex:1;">';
-                html += '<div style="font-size:1.6rem;font-weight:800;color:#065f46;margin-bottom:6px;">' + (data.fullName || 'Your Name') + '</div>';
-                if (data.phone || data.email) {
-                    html += '<div style="font-size:0.85rem;color:#047857;font-weight:600;">';
-                    if (data.phone) html += '&#128222; ' + escapeHtml(data.phone) + ' ';
-                    if (data.email) html += '&#9993; ' + escapeHtml(data.email);
-                    html += '</div>';
-                }
-                html += '</div>';
-                html += '</div>';
-
-                /* ===== PERSONAL INFO ===== */
-                const personalRows = [];
-                if (data.fullName) personalRows.push(['Full Name', data.fullName]);
-                if (data.fatherName) personalRows.push(["Father's Name", data.fatherName]);
-                if (data.motherName) personalRows.push(["Mother's Name", data.motherName]);
-                if (data.dob) personalRows.push(['Date of Birth', formatDate(data.dob)]);
-                if (data.religion) personalRows.push(['Religion', data.religion]);
-                if (data.nationality) personalRows.push(['Nationality', data.nationality]);
-                if (data.aadharNumber) personalRows.push(['Aadhar Number', data.aadharNumber]);
-                if (data.bloodGroup) personalRows.push(['Blood Group', data.bloodGroup]);
-                if (data.maritalStatus) personalRows.push(['Marital Status', data.maritalStatus]);
-
-                if (data.maritalStatus === 'Married' && data.wifeName) {
-                    personalRows.push(["Wife's Name", data.wifeName]);
-                }
-
-                if (personalRows.length) {
-                    html += '<div style="margin-bottom:18px;">';
-                    html += '<div style="display:inline-block;background:#059669;color:#ffffff;font-size:0.82rem;font-weight:800;padding:5px 14px;border-radius:20px;margin-bottom:10px;">&#128100; Personal Information</div>';
-                    html += '<table style="width:100%;border-collapse:collapse;">';
-                    personalRows.forEach(([l, v]) => {
-                        html += '<tr style="border-bottom:1px dashed #d1fae5;">';
-                        html += '<td style="padding:8px 6px;font-size:0.88rem;color:#047857;font-weight:700;width:180px;vertical-align:top;">' + escapeHtml(l) + '</td>';
-                        html += '<td style="padding:8px 6px;font-size:0.88rem;color:#1e2b3c;font-weight:600;vertical-align:top;">' + escapeHtml(v).replace(/\n/g, '<br>') + '</td>';
-                        html += '</tr>';
-                    });
-                    html += '</table>';
-                    html += '</div>';
-                }
-
-                /* ===== CONTACT ===== */
-                const contactRows = [];
-                if (data.phone) contactRows.push(['Mobile', data.phone]);
-                if (data.email) contactRows.push(['Email', data.email]);
-                if (data.address) contactRows.push(['Address', data.address]);
-
-                if (contactRows.length) {
-                    html += '<div style="margin-bottom:18px;">';
-                    html += '<div style="display:inline-block;background:#059669;color:#ffffff;font-size:0.82rem;font-weight:800;padding:5px 14px;border-radius:20px;margin-bottom:10px;">&#128222; Contact Information</div>';
-                    html += '<table style="width:100%;border-collapse:collapse;">';
-                    contactRows.forEach(([l, v]) => {
-                        html += '<tr style="border-bottom:1px dashed #d1fae5;">';
-                        html += '<td style="padding:8px 6px;font-size:0.88rem;color:#047857;font-weight:700;width:180px;vertical-align:top;">' + escapeHtml(l) + '</td>';
-                        html += '<td style="padding:8px 6px;font-size:0.88rem;color:#1e2b3c;font-weight:600;vertical-align:top;">' + escapeHtml(v).replace(/\n/g, '<br>') + '</td>';
-                        html += '</tr>';
-                    });
-                    html += '</table>';
-                    html += '</div>';
-                }
-
-                /* ===== EDUCATION ===== */
-                if (data.education) {
-                    html += '<div style="margin-bottom:18px;">';
-                    html += '<div style="display:inline-block;background:#059669;color:#ffffff;font-size:0.82rem;font-weight:800;padding:5px 14px;border-radius:20px;margin-bottom:10px;">&#127891; Educational Qualification</div>';
-                    html += '<div style="font-size:0.88rem;line-height:1.7;color:#1e2b3c;">' + escapeHtml(data.education).replace(/\n/g, '<br>') + '</div>';
-                    html += '</div>';
-                }
-
-                /* ===== EXPERIENCE ===== */
-                if (data.experience) {
-                    html += '<div style="margin-bottom:18px;">';
-                    html += '<div style="display:inline-block;background:#059669;color:#ffffff;font-size:0.82rem;font-weight:800;padding:5px 14px;border-radius:20px;margin-bottom:10px;">&#128188; Work Experience</div>';
-                    html += '<div style="font-size:0.88rem;line-height:1.7;color:#1e2b3c;">' + escapeHtml(data.experience).replace(/\n/g, '<br>') + '</div>';
-                    html += '</div>';
-                }
-
-                /* ===== SKILLS ===== */
-                if (data.skills) {
-                    html += '<div style="margin-bottom:18px;">';
-                    html += '<div style="display:inline-block;background:#059669;color:#ffffff;font-size:0.82rem;font-weight:800;padding:5px 14px;border-radius:20px;margin-bottom:10px;">&#11088; Skills</div>';
-                    html += '<div style="font-size:0.88rem;line-height:1.7;color:#1e2b3c;">' + escapeHtml(data.skills).replace(/\n/g, '<br>') + '</div>';
-                    html += '</div>';
-                }
-
-                /* ===== OTHER ===== */
-                if (data.otherInfo) {
-                    html += '<div style="margin-bottom:18px;">';
-                    html += '<div style="display:inline-block;background:#059669;color:#ffffff;font-size:0.82rem;font-weight:800;padding:5px 14px;border-radius:20px;margin-bottom:10px;">&#128221; Other Information</div>';
-                    html += '<div style="font-size:0.88rem;line-height:1.7;color:#1e2b3c;">' + escapeHtml(data.otherInfo).replace(/\n/g, '<br>') + '</div>';
-                    html += '</div>';
-                }
-
-                /* ===== SIGNATURE ===== */
-                html += '<div style="margin-top:30px;padding-top:14px;border-top:1px dashed #a7f3d0;text-align:right;font-size:0.85rem;color:#065f46;">';
-                html += '<div style="display:inline-block;text-align:center;">';
-                html += '<div style="border-bottom:1px solid #059669;min-width:150px;height:35px;"></div>';
-                html += '<div style="font-weight:700;margin-top:4px;">Signature & Date</div>';
-                html += '</div>';
-                html += '</div>';
-
-                html += '</div>';
-
-                return html;
-            }
-
-            function escapeHtml(str) {
-                if (!str) return '';
-                const div = document.createElement('div');
-                div.textContent = str;
-                return div.innerHTML;
-            }
-
-            /* ===== PREVIEW ===== */
-            previewBtn.addEventListener('click', () => {
-                const data = getFormData();
-                if (!data.fullName) {
-                    alert('⚠️ Please enter your Full Name.');
-                    document.getElementById('fullName').focus();
-                    return;
-                }
-                if (data.maritalStatus === 'Married' && !data.wifeName) {
-                    alert("⚠️ Please enter your Wife's Name (Marital Status is Married).");
-                    document.getElementById('wifeName').focus();
-                    return;
-                }
-
-                biodataDoc.innerHTML = buildBiodataHTML(data);
-                previewSection.classList.add('show');
-                downloadBtn.disabled = false;
-                previewSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            });
-
-            /* ===== DOWNLOAD PDF (Preview Section থেকে সরাসরি) ===== */
-            downloadBtn.addEventListener('click', async () => {
-                const data = getFormData();
-                if (!data.fullName) {
-                    alert('⚠️ Please enter your Full Name.');
-                    return;
-                }
-                if (data.maritalStatus === 'Married' && !data.wifeName) {
-                    alert("⚠️ Please enter your Wife's Name (Marital Status is Married).");
-                    return;
-                }
-
-                // Preview তৈরি ও দেখাই
-                biodataDoc.innerHTML = buildBiodataHTML(data);
-                previewSection.classList.add('show');
-
-                // Preview Section এ scroll
-                previewSection.scrollIntoView({ behavior: 'instant', block: 'start' });
-
-                downloadBtn.disabled = true;
-                downloadBtn.innerHTML = '<span>⏳</span> Creating PDF...';
-                progressWrap.classList.add('show');
-                progressFill.style.width = '30%';
-                progressText.textContent = 'Creating PDF... 30%';
-
-                // ইমেজ লোড হওয়ার জন্য অপেক্ষা
-                await new Promise(r => setTimeout(r, 600));
-
-                try {
-                    // Preview Section এর ভেতরের biodataDoc ই target — এটা screen এ দৃশ্যমান
-                    const element = document.getElementById('biodataDoc');
-
-                    progressFill.style.width = '60%';
-                    progressText.textContent = 'Creating PDF... 60%';
-
-                    const opt = {
-                        margin: [8, 8, 8, 8],
-                        filename: 'ADSpdf-biodata.pdf',
-                        image: { type: 'jpeg', quality: 0.98 },
-                        html2canvas: {
-                            scale: 2,
-                            useCORS: true,
-                            allowTaint: true,
-                            backgroundColor: '#ffffff',
-                            logging: false,
-                            scrollX: 0,
-                            scrollY: 0,
-                            windowWidth: 794,
-                            width: 794
-                        },
-                        jsPDF: {
-                            unit: 'mm',
-                            format: 'a4',
-                            orientation: 'portrait',
-                            compress: true
-                        },
-                        pagebreak: { mode: ['css', 'legacy'] }
-                    };
-
-                    await html2pdf().set(opt).from(element).save();
-
-                    progressFill.style.width = '100%';
-                    progressText.textContent = 'Complete ✓';
-                    await new Promise(r => setTimeout(r, 400));
-                    progressWrap.classList.remove('show');
-
-                    downloadBtn.disabled = false;
-                    downloadBtn.innerHTML = '<span>✅</span> Downloaded!';
-                    setTimeout(() => {
-                        downloadBtn.innerHTML = '<span>📥</span> Download PDF';
-                    }, 2500);
-
-                } catch (err) {
-                    console.error(err);
-                    progressWrap.classList.remove('show');
-                    alert('⚠️ Failed to create PDF. Please try again.');
-                    downloadBtn.disabled = false;
-                    downloadBtn.innerHTML = '<span>📥</span> Download PDF';
-                }
-            });
-
-            /* ===== RESET ===== */
-            resetBtn.addEventListener('click', () => {
-                if (!confirm('Clear all data?')) return;
-                document.getElementById('biodataForm').reset();
-                document.getElementById('nationality').value = 'INDIA';
-                wifeNameField.classList.remove('show');
-                photoDataUrl = null;
-                photoPreview.innerHTML = '<span id="photoPlaceholder">📷</span>';
-                photoRemoveBtn.classList.remove('show');
-                previewSection.classList.remove('show');
-                downloadBtn.disabled = true;
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-            });
-
-        })();
-    </script>
+})();
+</script>
 
 </body>
 </html>

@@ -72,11 +72,14 @@ header{background:linear-gradient(135deg,#075e54,#128c7e);color:#fff;height:38px
 
 /* ACTION */
 .action-section{display:flex;gap:12px;margin-top:22px;flex-wrap:wrap;}
-.btn-preview,.btn-download,.btn-reset{flex:1;min-width:180px;display:inline-flex;align-items:center;justify-content:center;gap:10px;border:none;padding:15px 30px;border-radius:30px;font-size:1rem;font-weight:800;cursor:pointer;font-family:inherit;}
+.btn-preview,.btn-reset{flex:1;min-width:180px;display:inline-flex;align-items:center;justify-content:center;gap:10px;border:none;padding:15px 30px;border-radius:30px;font-size:1rem;font-weight:800;cursor:pointer;font-family:inherit;}
 .btn-preview{background:linear-gradient(135deg,#0891b2,#22d3ee);color:#fff;}
-.btn-download{background:linear-gradient(135deg,#059669,#34d399);color:#fff;}
-.btn-download:disabled{opacity:0.6;cursor:not-allowed;}
 .btn-reset{background:#fff;color:#047857;border:2px solid #a7f3d0;flex:0 0 auto;min-width:120px;}
+
+/* DOWNLOAD BUTTON (inside preview) */
+.btn-download{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:none;padding:14px 30px;border-radius:30px;font-size:0.95rem;font-weight:800;cursor:pointer;font-family:inherit;background:linear-gradient(135deg,#059669,#34d399);color:#fff;box-shadow:0 10px 25px -5px rgba(5,150,105,0.5);transition:all 0.25s;}
+.btn-download:hover:not(:disabled){transform:translateY(-2px);box-shadow:0 15px 30px -5px rgba(5,150,105,0.7);}
+.btn-download:disabled{opacity:0.5;cursor:not-allowed;transform:none;}
 
 /* PREVIEW */
 .preview-section{display:none;margin-top:24px;padding:20px;background:#f0fdf4;border-radius:16px;border:2px solid #059669;overflow-x:auto;}
@@ -119,6 +122,20 @@ footer p{max-width:700px;margin:0 auto 6px;font-size:0.82rem;}
 .crop-btn.cancel{background:#f3f4f6;color:#374151;}
 .crop-btn.apply{background:linear-gradient(135deg,#059669,#34d399);color:#fff;}
 
+/* ============ PRINT STYLES — ONE A4 PAGE ============ */
+@media print {
+    html, body { margin: 0 !important; padding: 0 !important; background: #fff !important; width: 100% !important; height: auto !important; overflow: visible !important; }
+    body * { visibility: hidden !important; box-shadow: none !important; }
+    #previewSection, #previewSection * { visibility: visible !important; }
+    #previewSection { position: absolute !important; left: 0 !important; top: 0 !important; width: 100% !important; max-width: 100% !important; padding: 0 !important; margin: 0 !important; border: none !important; background: #fff !important; border-radius: 0 !important; box-shadow: none !important; overflow: visible !important; display: block !important; }
+    .preview-title { display: none !important; }
+    #previewSection > div:last-child { display: none !important; } /* Download button hide in print */
+    #biodataDoc { width: 100% !important; max-width: 100% !important; padding: 0 !important; margin: 0 !important; border: none !important; border-radius: 0 !important; background: #fff !important; page-break-after: avoid !important; page-break-inside: avoid !important; }
+    * { page-break-inside: avoid !important; break-inside: avoid !important; }
+    img { max-width: 100% !important; }
+    @page { size: A4 portrait; margin: 8mm; }
+}
+
 @media(max-width:768px){
   header{height:36px;padding:0 8px;}
   .brand-name{font-size:0.72rem;}
@@ -132,7 +149,8 @@ footer p{max-width:700px;margin:0 auto 6px;font-size:0.82rem;}
   .form-grid{grid-template-columns:1fr;}
   .photo-upload{flex-direction:column;padding:14px;}
   .action-section{flex-direction:column;}
-  .btn-preview,.btn-download,.btn-reset{width:100%;}
+  .btn-preview,.btn-reset{width:100%;}
+  .preview-section .btn-download{width:100%;max-width:none !important;}
 }
 </style>
 </head>
@@ -317,17 +335,20 @@ footer p{max-width:700px;margin:0 auto 6px;font-size:0.82rem;}
 
         </form>
 
-        <!-- ACTION -->
+        <!-- ACTION (শুধু Preview এবং Reset) -->
         <div class="action-section">
             <button class="btn-preview" id="previewBtn" type="button">👁️ Preview Bio-data</button>
-            <button class="btn-download" id="downloadBtn" type="button" disabled>📥 Download PDF</button>
             <button class="btn-reset" id="resetBtn" type="button">🔄 Reset</button>
         </div>
 
-        <!-- PREVIEW -->
+        <!-- PREVIEW (Download বাটন নিচে) -->
         <div class="preview-section" id="previewSection">
             <div class="preview-title">📄 Bio-data Preview</div>
             <div id="biodataDoc"></div>
+            
+            <div style="margin-top:16px;display:flex;justify-content:center;gap:10px;flex-wrap:wrap;">
+                <button class="btn-download" id="downloadBtn" type="button" disabled>📥 Download PDF</button>
+            </div>
         </div>
 
         <a href="pdf-editor.html" class="btn-back">← Back to PDF Editor</a>
@@ -783,7 +804,7 @@ footer p{max-width:700px;margin:0 auto 6px;font-size:0.82rem;}
         previewSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
     });
 
-    /* ============ DOWNLOAD PDF — IFRAME PRINT ============ */
+    /* ============ DOWNLOAD PDF — DIRECT PRINT (THIS PAGE) ============ */
     downloadBtn.addEventListener('click', function () {
         var data = getFormData();
         if (!data.fullName) {
@@ -795,58 +816,13 @@ footer p{max-width:700px;margin:0 auto 6px;font-size:0.82rem;}
             return;
         }
 
-        /* Preview দেখাই */
         biodataDoc.innerHTML = buildBiodataHTML(data);
         previewSection.classList.add('show');
+        previewSection.scrollIntoView({ behavior: 'instant', block: 'start' });
 
-        var content = buildBiodataHTML(data);
-
-        /* সম্পূর্ণ HTML ডকুমেন্ট */
-        var fullHTML = '<!DOCTYPE html>' +
-            '<html><head>' +
-            '<meta charset="UTF-8">' +
-            '<title>Bio-Data</title>' +
-            '<style>' +
-            '@page { size: A4 portrait; margin: 8mm; }' +
-            '* { box-sizing: border-box; margin: 0; padding: 0; }' +
-            'html, body { font-family: Arial, Helvetica, sans-serif; background: #fff; color: #1e2b3c; }' +
-            '.wrap { width: 100%; padding: 0; margin: 0 auto; }' +
-            '@media print { .wrap { width: 100%; padding: 0; } }' +
-            '</style>' +
-            '</head><body>' +
-            '<div class="wrap">' +
-            content +
-            '</div>' +
-            '</body></html>';
-
-        /* Hidden iframe তৈরি */
-        var iframe = document.createElement('iframe');
-        iframe.style.cssText = 'position:fixed;left:0;top:0;width:210mm;height:297mm;border:0;opacity:0;pointer-events:none;z-index:-1;';
-        document.body.appendChild(iframe);
-
-        /* iframe এ HTML লিখি */
-        var doc = iframe.contentDocument || iframe.contentWindow.document;
-        doc.open();
-        doc.write(fullHTML);
-        doc.close();
-
-        /* ইমেজ লোড হওয়ার জন্য অপেক্ষা */
         setTimeout(function () {
-            try {
-                iframe.contentWindow.focus();
-                iframe.contentWindow.print();
-            } catch (e) {
-                console.error(e);
-                alert('⚠️ Print failed. Please try again.');
-            }
-
-            /* Cleanup */
-            setTimeout(function () {
-                if (iframe.parentNode) {
-                    document.body.removeChild(iframe);
-                }
-            }, 3000);
-        }, 1000);
+            window.print();
+        }, 300);
     });
 
     /* ============ RESET ============ */

@@ -467,6 +467,34 @@
             background: #f0fdf4;
         }
 
+        /* ================= PROGRESS ================= */
+        .progress-wrap {
+            display: none;
+            margin: 20px 0;
+        }
+        .progress-wrap.show { display: block; }
+        .progress-bar {
+            height: 12px;
+            background: #a7f3d0;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        .progress-fill {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, #059669, #34d399);
+            border-radius: 10px;
+            transition: width 0.3s ease;
+            box-shadow: 0 0 12px rgba(5, 150, 105, 0.5);
+        }
+        .progress-text {
+            text-align: center;
+            font-size: 0.85rem;
+            color: #047857;
+            margin-top: 10px;
+            font-weight: 700;
+        }
+
         /* ================= BACK BUTTON ================= */
         .btn-back {
             display: inline-flex; align-items: center; gap: 6px;
@@ -750,6 +778,14 @@
 
             </form>
 
+            <!-- PROGRESS -->
+            <div class="progress-wrap" id="progressWrap">
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+                <div class="progress-text" id="progressText">Creating PDF...</div>
+            </div>
+
             <!-- ACTION -->
             <div class="action-section show" id="actionSection">
                 <button class="btn-preview" id="previewBtn" type="button">
@@ -791,6 +827,9 @@
         <p class="copyright">© 2025 Azad Digital Seva | All Rights Reserved</p>
     </footer>
 
+    <!-- html2pdf library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+
     <script>
         (function () {
             /* ===== MENU ===== */
@@ -826,6 +865,9 @@
             const resetBtn = document.getElementById('resetBtn');
             const previewSection = document.getElementById('previewSection');
             const biodataDoc = document.getElementById('biodataDoc');
+            const progressWrap = document.getElementById('progressWrap');
+            const progressFill = document.getElementById('progressFill');
+            const progressText = document.getElementById('progressText');
 
             const maritalStatus = document.getElementById('maritalStatus');
             const wifeNameField = document.getElementById('wifeNameField');
@@ -923,16 +965,13 @@
 
                 html += '<div style="font-family:Arial,Helvetica,sans-serif;color:#1e2b3c;background:#fff;line-height:1.5;font-size:14px;">';
 
-                /* ============================================
-                   ⭐ BIO-DATA TITLE (সুন্দর ডিজাইন)
-                   ============================================ */
+                /* ===== BIO-DATA TITLE ===== */
                 html += '<div style="text-align:center;margin-bottom:24px;padding-bottom:16px;border-bottom:3px double #059669;">';
                 html += '<div style="display:inline-block;background:linear-gradient(135deg,#065f46,#059669);color:#ffffff;font-size:1.6rem;font-weight:900;letter-spacing:6px;padding:12px 40px;border-radius:50px;box-shadow:0 4px 12px rgba(5,150,105,0.3);">BIO-DATA</div>';
                 html += '<div style="margin-top:10px;font-size:0.78rem;color:#047857;letter-spacing:2px;font-weight:600;">PERSONAL INFORMATION</div>';
                 html += '</div>';
-                /* ============================================ */
 
-                /* HEADER (Photo + Name) */
+                /* ===== HEADER (Photo + Name) ===== */
                 html += '<div style="display:flex;align-items:center;gap:20px;padding-bottom:16px;margin-bottom:18px;border-bottom:2px solid #059669;">';
 
                 if (photoDataUrl) {
@@ -952,7 +991,7 @@
                 html += '</div>';
                 html += '</div>';
 
-                /* PERSONAL INFO */
+                /* ===== PERSONAL INFO ===== */
                 const personalRows = [];
                 if (data.fullName) personalRows.push(['Full Name', data.fullName]);
                 if (data.fatherName) personalRows.push(["Father's Name", data.fatherName]);
@@ -982,7 +1021,7 @@
                     html += '</div>';
                 }
 
-                /* CONTACT */
+                /* ===== CONTACT ===== */
                 const contactRows = [];
                 if (data.phone) contactRows.push(['Mobile', data.phone]);
                 if (data.email) contactRows.push(['Email', data.email]);
@@ -1002,7 +1041,7 @@
                     html += '</div>';
                 }
 
-                /* EDUCATION */
+                /* ===== EDUCATION ===== */
                 if (data.education) {
                     html += '<div style="margin-bottom:18px;">';
                     html += '<div style="display:inline-block;background:#059669;color:#ffffff;font-size:0.82rem;font-weight:800;padding:5px 14px;border-radius:20px;margin-bottom:10px;">&#127891; Educational Qualification</div>';
@@ -1010,7 +1049,7 @@
                     html += '</div>';
                 }
 
-                /* EXPERIENCE */
+                /* ===== EXPERIENCE ===== */
                 if (data.experience) {
                     html += '<div style="margin-bottom:18px;">';
                     html += '<div style="display:inline-block;background:#059669;color:#ffffff;font-size:0.82rem;font-weight:800;padding:5px 14px;border-radius:20px;margin-bottom:10px;">&#128188; Work Experience</div>';
@@ -1018,7 +1057,7 @@
                     html += '</div>';
                 }
 
-                /* SKILLS */
+                /* ===== SKILLS ===== */
                 if (data.skills) {
                     html += '<div style="margin-bottom:18px;">';
                     html += '<div style="display:inline-block;background:#059669;color:#ffffff;font-size:0.82rem;font-weight:800;padding:5px 14px;border-radius:20px;margin-bottom:10px;">&#11088; Skills</div>';
@@ -1026,7 +1065,7 @@
                     html += '</div>';
                 }
 
-                /* OTHER */
+                /* ===== OTHER ===== */
                 if (data.otherInfo) {
                     html += '<div style="margin-bottom:18px;">';
                     html += '<div style="display:inline-block;background:#059669;color:#ffffff;font-size:0.82rem;font-weight:800;padding:5px 14px;border-radius:20px;margin-bottom:10px;">&#128221; Other Information</div>';
@@ -1034,7 +1073,7 @@
                     html += '</div>';
                 }
 
-                /* SIGNATURE */
+                /* ===== SIGNATURE ===== */
                 html += '<div style="margin-top:30px;padding-top:14px;border-top:1px dashed #a7f3d0;text-align:right;font-size:0.85rem;color:#065f46;">';
                 html += '<div style="display:inline-block;text-align:center;">';
                 html += '<div style="border-bottom:1px solid #059669;min-width:150px;height:35px;"></div>';
@@ -1074,8 +1113,8 @@
                 previewSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
             });
 
-            /* ===== DOWNLOAD PDF (PRINT METHOD) ===== */
-            downloadBtn.addEventListener('click', () => {
+            /* ===== DOWNLOAD PDF (html2pdf - NO HEADER/FOOTER) ===== */
+            downloadBtn.addEventListener('click', async () => {
                 const data = getFormData();
                 if (!data.fullName) {
                     alert('⚠️ Please enter your Full Name.');
@@ -1089,32 +1128,82 @@
                 biodataDoc.innerHTML = buildBiodataHTML(data);
                 previewSection.classList.add('show');
 
-                const printWindow = window.open('', '_blank', 'width=900,height=700');
-                if (!printWindow) {
-                    alert('⚠️ Please allow pop-ups to download PDF.');
-                    return;
+                downloadBtn.disabled = true;
+                downloadBtn.innerHTML = '<span>⏳</span> Creating PDF...';
+                progressWrap.classList.add('show');
+                progressFill.style.width = '20%';
+                progressText.textContent = 'Creating PDF... 20%';
+
+                try {
+                    // Off-screen wrapper তৈরি করি (PDF render এর জন্য)
+                    const wrapper = document.createElement('div');
+                    wrapper.style.cssText = 'position:fixed;left:-99999px;top:0;background:#ffffff;width:794px;padding:0;margin:0;';
+                    wrapper.innerHTML = buildBiodataHTML(data);
+
+                    document.body.appendChild(wrapper);
+
+                    // ছবি লোড হওয়ার জন্য অপেক্ষা
+                    const images = wrapper.querySelectorAll('img');
+                    await Promise.all(Array.from(images).map(img => {
+                        if (img.complete) return Promise.resolve();
+                        return new Promise((resolve) => {
+                            img.onload = resolve;
+                            img.onerror = resolve;
+                            setTimeout(resolve, 2000);
+                        });
+                    }));
+
+                    await new Promise(r => setTimeout(r, 300));
+
+                    progressFill.style.width = '50%';
+                    progressText.textContent = 'Creating PDF... 50%';
+
+                    const opt = {
+                        margin: [8, 8, 8, 8],
+                        filename: 'ADSpdf-biodata.pdf',
+                        image: { type: 'jpeg', quality: 0.98 },
+                        html2canvas: {
+                            scale: 2,
+                            useCORS: true,
+                            allowTaint: true,
+                            backgroundColor: '#ffffff',
+                            logging: false,
+                            scrollX: 0,
+                            scrollY: 0,
+                            windowWidth: 794
+                        },
+                        jsPDF: {
+                            unit: 'mm',
+                            format: 'a4',
+                            orientation: 'portrait',
+                            compress: true
+                        },
+                        pagebreak: { mode: ['css', 'legacy'] }
+                    };
+
+                    await html2pdf().set(opt).from(wrapper).save();
+
+                    // Clean up
+                    document.body.removeChild(wrapper);
+
+                    progressFill.style.width = '100%';
+                    progressText.textContent = 'Complete ✓';
+                    await new Promise(r => setTimeout(r, 400));
+                    progressWrap.classList.remove('show');
+
+                    downloadBtn.disabled = false;
+                    downloadBtn.innerHTML = '<span>✅</span> Downloaded!';
+                    setTimeout(() => {
+                        downloadBtn.innerHTML = '<span>📥</span> Download PDF';
+                    }, 2500);
+
+                } catch (err) {
+                    console.error(err);
+                    progressWrap.classList.remove('show');
+                    alert('⚠️ Failed to create PDF. Please try again.');
+                    downloadBtn.disabled = false;
+                    downloadBtn.innerHTML = '<span>📥</span> Download PDF';
                 }
-
-                const content = buildBiodataHTML(data);
-
-                printWindow.document.open();
-                printWindow.document.write('<!DOCTYPE html><html><head><meta charset="UTF-8"><title>ADSpdf-biodata</title>');
-                printWindow.document.write('<style>');
-                printWindow.document.write('*{box-sizing:border-box;margin:0;padding:0;}');
-                printWindow.document.write('body{font-family:Arial,Helvetica,sans-serif;padding:20px;background:#fff;color:#1e2b3c;line-height:1.5;}');
-                printWindow.document.write('.bio-wrap{padding:20px;background:#fff;width:794px;margin:0 auto;}');
-                printWindow.document.write('@media print{ body{padding:0;} .bio-wrap{padding:0;} @page{size:A4;margin:10mm;} }');
-                printWindow.document.write('</style></head><body>');
-                printWindow.document.write('<div class="bio-wrap">');
-                printWindow.document.write(content);
-                printWindow.document.write('</div>');
-                printWindow.document.write('</body></html>');
-                printWindow.document.close();
-
-                setTimeout(() => {
-                    printWindow.focus();
-                    printWindow.print();
-                }, 800);
             });
 
             /* ===== RESET ===== */

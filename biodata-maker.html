@@ -467,34 +467,6 @@
             background: #f0fdf4;
         }
 
-        /* ================= PROGRESS ================= */
-        .progress-wrap {
-            display: none;
-            margin: 20px 0;
-        }
-        .progress-wrap.show { display: block; }
-        .progress-bar {
-            height: 12px;
-            background: #a7f3d0;
-            border-radius: 10px;
-            overflow: hidden;
-        }
-        .progress-fill {
-            height: 100%;
-            width: 0%;
-            background: linear-gradient(90deg, #059669, #34d399);
-            border-radius: 10px;
-            transition: width 0.3s ease;
-            box-shadow: 0 0 12px rgba(5, 150, 105, 0.5);
-        }
-        .progress-text {
-            text-align: center;
-            font-size: 0.85rem;
-            color: #047857;
-            margin-top: 10px;
-            font-weight: 700;
-        }
-
         /* ================= BACK BUTTON ================= */
         .btn-back {
             display: inline-flex; align-items: center; gap: 6px;
@@ -778,14 +750,6 @@
 
             </form>
 
-            <!-- PROGRESS -->
-            <div class="progress-wrap" id="progressWrap">
-                <div class="progress-bar">
-                    <div class="progress-fill" id="progressFill"></div>
-                </div>
-                <div class="progress-text" id="progressText">Creating PDF...</div>
-            </div>
-
             <!-- ACTION -->
             <div class="action-section show" id="actionSection">
                 <button class="btn-preview" id="previewBtn" type="button">
@@ -953,13 +917,22 @@
                 return `${d.getDate()} ${months[d.getMonth()]} ${d.getFullYear()}`;
             }
 
-            /* ===== BUILD BIODATA HTML (Inline Styles for PDF) ===== */
+            /* ===== BUILD BIODATA HTML ===== */
             function buildBiodataHTML(data) {
                 let html = '';
 
                 html += '<div style="font-family:Arial,Helvetica,sans-serif;color:#1e2b3c;background:#fff;line-height:1.5;font-size:14px;">';
 
-                /* HEADER */
+                /* ============================================
+                   ⭐ BIO-DATA TITLE (সুন্দর ডিজাইন)
+                   ============================================ */
+                html += '<div style="text-align:center;margin-bottom:24px;padding-bottom:16px;border-bottom:3px double #059669;">';
+                html += '<div style="display:inline-block;background:linear-gradient(135deg,#065f46,#059669);color:#ffffff;font-size:1.6rem;font-weight:900;letter-spacing:6px;padding:12px 40px;border-radius:50px;box-shadow:0 4px 12px rgba(5,150,105,0.3);">BIO-DATA</div>';
+                html += '<div style="margin-top:10px;font-size:0.78rem;color:#047857;letter-spacing:2px;font-weight:600;">PERSONAL INFORMATION</div>';
+                html += '</div>';
+                /* ============================================ */
+
+                /* HEADER (Photo + Name) */
                 html += '<div style="display:flex;align-items:center;gap:20px;padding-bottom:16px;margin-bottom:18px;border-bottom:2px solid #059669;">';
 
                 if (photoDataUrl) {
@@ -1113,11 +1086,9 @@
                     return;
                 }
 
-                // Preview দেখাই
                 biodataDoc.innerHTML = buildBiodataHTML(data);
                 previewSection.classList.add('show');
 
-                // Print window খুলি
                 const printWindow = window.open('', '_blank', 'width=900,height=700');
                 if (!printWindow) {
                     alert('⚠️ Please allow pop-ups to download PDF.');
@@ -1140,7 +1111,6 @@
                 printWindow.document.write('</body></html>');
                 printWindow.document.close();
 
-                // ইমেজ লোড হওয়ার জন্য অপেক্ষা
                 setTimeout(() => {
                     printWindow.focus();
                     printWindow.print();

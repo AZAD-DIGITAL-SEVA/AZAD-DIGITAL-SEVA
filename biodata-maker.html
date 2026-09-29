@@ -4,7 +4,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Bio-data Maker - Azad Digital Seva</title>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 <style>
 *{box-sizing:border-box;margin:0;padding:0;}
 body{font-family:'Segoe UI',Arial,sans-serif;background:#f0fdf4;color:#1e2b3c;line-height:1.5;}
@@ -84,16 +83,8 @@ header{background:linear-gradient(135deg,#075e54,#128c7e);color:#fff;height:38px
 .preview-section.show{display:block;}
 .preview-title{font-size:1rem;font-weight:800;color:#065f46;margin-bottom:18px;padding-bottom:10px;border-bottom:2px dashed #a7f3d0;}
 
-/* BIODATA DOC — A4 (794px = 210mm at 96 DPI) */
-#biodataDoc{
-    background:#ffffff;
-    padding:20px 24px;
-    width:794px;
-    max-width:794px;
-    box-sizing:border-box;
-    margin:0 auto;
-    font-family:Arial,Helvetica,sans-serif;
-}
+/* BIODATA DOC */
+#biodataDoc{background:#ffffff;padding:20px 24px;width:794px;max-width:794px;box-sizing:border-box;margin:0 auto;}
 
 /* BACK */
 .btn-back{display:inline-flex;align-items:center;gap:6px;background:linear-gradient(135deg,#065f46,#059669);color:white;text-decoration:none;padding:10px 24px;border-radius:30px;font-weight:600;font-size:0.85rem;margin-top:12px;}
@@ -108,18 +99,16 @@ footer p{max-width:700px;margin:0 auto 6px;font-size:0.82rem;}
 .menu-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.4);z-index:999;display:none;}
 .menu-overlay.show{display:block;}
 
-/* ============ CROP MODAL ============ */
+/* CROP MODAL */
 .crop-modal{position:fixed;inset:0;background:rgba(0,0,0,0.85);z-index:9999;display:none;align-items:center;justify-content:center;padding:15px;}
 .crop-modal.show{display:flex;}
 .crop-box{background:#fff;border-radius:16px;width:100%;max-width:500px;overflow:hidden;display:flex;flex-direction:column;max-height:95vh;}
 .crop-header{padding:14px 18px;background:linear-gradient(135deg,#065f46,#059669);color:#fff;display:flex;align-items:center;justify-content:space-between;}
 .crop-header h3{font-size:0.95rem;font-weight:800;}
 .crop-close-btn{background:rgba(255,255,255,0.2);border:none;color:#fff;width:28px;height:28px;border-radius:50%;font-size:1rem;cursor:pointer;font-weight:700;}
-.crop-close-btn:hover{background:rgba(255,255,255,0.35);}
 .crop-body{padding:18px;display:flex;flex-direction:column;gap:14px;overflow-y:auto;align-items:center;}
 .crop-canvas-wrap{position:relative;background:#000;border-radius:12px;overflow:hidden;touch-action:none;user-select:none;-webkit-user-select:none;}
 .crop-canvas-wrap canvas{display:block;cursor:grab;touch-action:none;}
-.crop-canvas-wrap canvas:active{cursor:grabbing;}
 .crop-controls{width:100%;display:flex;flex-direction:column;gap:10px;}
 .crop-control-item{display:flex;align-items:center;gap:12px;}
 .crop-control-item label{font-size:0.8rem;font-weight:700;color:#047857;min-width:60px;}
@@ -144,7 +133,6 @@ footer p{max-width:700px;margin:0 auto 6px;font-size:0.82rem;}
   .photo-upload{flex-direction:column;padding:14px;}
   .action-section{flex-direction:column;}
   .btn-preview,.btn-download,.btn-reset{width:100%;}
-  .crop-control-item label{min-width:55px;font-size:0.75rem;}
 }
 </style>
 </head>
@@ -359,7 +347,7 @@ footer p{max-width:700px;margin:0 auto 6px;font-size:0.82rem;}
     <p class="copyright">© 2025 Azad Digital Seva | All Rights Reserved</p>
 </footer>
 
-<!-- ============ CROP MODAL ============ -->
+<!-- CROP MODAL -->
 <div class="crop-modal" id="cropModal">
     <div class="crop-box">
         <div class="crop-header">
@@ -367,7 +355,7 @@ footer p{max-width:700px;margin:0 auto 6px;font-size:0.82rem;}
             <button class="crop-close-btn" id="cropCloseBtn" type="button">✕</button>
         </div>
         <div class="crop-body">
-            <div class="crop-canvas-wrap" id="cropWrap">
+            <div class="crop-canvas-wrap">
                 <canvas id="cropCanvas"></canvas>
             </div>
             <div class="crop-controls">
@@ -392,7 +380,7 @@ footer p{max-width:700px;margin:0 auto 6px;font-size:0.82rem;}
 (function () {
     'use strict';
 
-    /* ===== MENU ===== */
+    /* MENU */
     const toggle = document.getElementById('menuToggle');
     const dropdown = document.getElementById('headerDropdown');
     const overlay = document.getElementById('menuOverlay');
@@ -410,7 +398,7 @@ footer p{max-width:700px;margin:0 auto 6px;font-size:0.82rem;}
         });
     }
 
-    /* ===== ELEMENTS ===== */
+    /* ELEMENTS */
     const photoPreview = document.getElementById('photoPreview');
     const photoBtn = document.getElementById('photoBtn');
     const photoRemoveBtn = document.getElementById('photoRemoveBtn');
@@ -426,7 +414,7 @@ footer p{max-width:700px;margin:0 auto 6px;font-size:0.82rem;}
     const wifeName = document.getElementById('wifeName');
     const aadharInput = document.getElementById('aadharNumber');
 
-    /* Crop Modal */
+    /* CROP MODAL */
     const cropModal = document.getElementById('cropModal');
     const cropCanvas = document.getElementById('cropCanvas');
     const zoomRange = document.getElementById('zoomRange');
@@ -437,20 +425,16 @@ footer p{max-width:700px;margin:0 auto 6px;font-size:0.82rem;}
     let photoDataUrl = null;
     let originalPhotoSrc = null;
 
-    /* ===== CROP STATE ===== */
+    /* CROP STATE */
     const CROP_W = 300;
     const CROP_H = 360;
     let cropImg = null;
-    let imgX = 0;
-    let imgY = 0;
-    let imgScale = 1;
+    let imgX = 0, imgY = 0, imgScale = 1;
     let isDragging = false;
-    let dragStartX = 0;
-    let dragStartY = 0;
-    let imgStartX = 0;
-    let imgStartY = 0;
+    let dragStartX = 0, dragStartY = 0;
+    let imgStartX = 0, imgStartY = 0;
 
-    /* ===== MARITAL STATUS TOGGLE ===== */
+    /* MARITAL TOGGLE */
     maritalStatus.addEventListener('change', function () {
         if (maritalStatus.value === 'Married') {
             wifeNameField.classList.add('show');
@@ -460,7 +444,7 @@ footer p{max-width:700px;margin:0 auto 6px;font-size:0.82rem;}
         }
     });
 
-    /* ===== AADHAR FORMAT ===== */
+    /* AADHAR FORMAT */
     aadharInput.addEventListener('input', function (e) {
         let value = e.target.value.replace(/\D/g, '');
         if (value.length > 12) value = value.substring(0, 12);
@@ -468,7 +452,7 @@ footer p{max-width:700px;margin:0 auto 6px;font-size:0.82rem;}
         e.target.value = formatted;
     });
 
-    /* ===== PHOTO UPLOAD ===== */
+    /* PHOTO UPLOAD */
     photoBtn.addEventListener('click', function (e) { e.stopPropagation(); photoInput.click(); });
     photoPreview.addEventListener('click', function () { photoInput.click(); });
 
@@ -506,16 +490,14 @@ footer p{max-width:700px;margin:0 auto 6px;font-size:0.82rem;}
         photoRecropBtn.classList.remove('show');
     });
 
-    /* ===== CROP MODAL ===== */
+    /* CROP MODAL */
     function openCropModal(src) {
         cropModal.classList.add('show');
         cropCanvas.width = CROP_W;
         cropCanvas.height = CROP_H;
         cropImg = new Image();
         cropImg.onload = function () {
-            imgX = 0;
-            imgY = 0;
-            imgScale = 1;
+            imgX = 0; imgY = 0; imgScale = 1;
             zoomRange.value = 100;
             drawCrop();
         };
@@ -638,12 +620,12 @@ footer p{max-width:700px;margin:0 auto 6px;font-size:0.82rem;}
             photoRecropBtn.classList.add('show');
             closeCropModal();
         } catch (err) {
-            console.error('Crop error:', err);
+            console.error(err);
             alert('⚠️ Failed to crop image.');
         }
     });
 
-    /* ===== GET DATA ===== */
+    /* GET DATA */
     function getFormData() {
         return {
             fullName: document.getElementById('fullName').value.trim(),
@@ -681,25 +663,23 @@ footer p{max-width:700px;margin:0 auto 6px;font-size:0.82rem;}
         return div.innerHTML;
     }
 
-    /* ===== BUILD BIODATA HTML ===== */
+    /* BUILD BIODATA HTML */
     function buildBiodataHTML(data) {
         let html = '';
 
-        /* BIO-DATA TITLE */
-        html += '<div style="text-align:center;margin-bottom:18px;padding-bottom:12px;border-bottom:3px double #059669;">';
-        html += '<div style="display:inline-block;background:#065f46;color:#ffffff;font-size:22px;font-weight:900;letter-spacing:5px;padding:9px 32px;border-radius:50px;">BIO-DATA</div>';
-        html += '<div style="margin-top:6px;font-size:10px;color:#047857;letter-spacing:2px;font-weight:600;">PERSONAL INFORMATION</div>';
+        html += '<div style="text-align:center;margin-bottom:20px;padding-bottom:14px;border-bottom:3px double #059669;">';
+        html += '<div style="display:inline-block;background:#065f46;color:#ffffff;font-size:24px;font-weight:900;letter-spacing:6px;padding:10px 36px;border-radius:50px;">BIO-DATA</div>';
+        html += '<div style="margin-top:8px;font-size:11px;color:#047857;letter-spacing:2px;font-weight:600;">PERSONAL INFORMATION</div>';
         html += '</div>';
 
-        /* HEADER */
-        html += '<div style="display:flex;align-items:center;gap:16px;padding-bottom:12px;margin-bottom:14px;border-bottom:2px solid #059669;">';
+        html += '<div style="display:flex;align-items:center;gap:18px;padding-bottom:14px;margin-bottom:16px;border-bottom:2px solid #059669;">';
         if (photoDataUrl) {
-            html += '<div style="width:90px;height:110px;border-radius:8px;background:#ecfdf5;border:2px solid #059669;overflow:hidden;flex-shrink:0;"><img src="' + photoDataUrl + '" style="width:100%;height:100%;object-fit:cover;display:block;"></div>';
+            html += '<div style="width:95px;height:115px;border-radius:8px;background:#ecfdf5;border:2px solid #059669;overflow:hidden;flex-shrink:0;"><img src="' + photoDataUrl + '" style="width:100%;height:100%;object-fit:cover;display:block;"></div>';
         } else {
-            html += '<div style="width:90px;height:110px;border-radius:8px;background:#ecfdf5;border:2px solid #059669;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:26px;color:#059669;">&#128100;</div>';
+            html += '<div style="width:95px;height:115px;border-radius:8px;background:#ecfdf5;border:2px solid #059669;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:28px;color:#059669;">&#128100;</div>';
         }
         html += '<div style="flex:1;min-width:0;">';
-        html += '<div style="font-size:22px;font-weight:800;color:#065f46;margin-bottom:4px;word-break:break-word;">' + (data.fullName || 'Your Name') + '</div>';
+        html += '<div style="font-size:24px;font-weight:800;color:#065f46;margin-bottom:5px;word-break:break-word;">' + (data.fullName || 'Your Name') + '</div>';
         if (data.phone || data.email) {
             html += '<div style="font-size:12px;color:#047857;font-weight:600;word-break:break-word;">';
             if (data.phone) html += '📞 ' + escapeHtml(data.phone) + ' ';
@@ -708,7 +688,6 @@ footer p{max-width:700px;margin:0 auto 6px;font-size:0.82rem;}
         }
         html += '</div></div>';
 
-        /* PERSONAL INFO */
         const personalRows = [];
         if (data.fullName) personalRows.push(['Full Name', data.fullName]);
         if (data.fatherName) personalRows.push(["Father's Name", data.fatherName]);
@@ -723,8 +702,8 @@ footer p{max-width:700px;margin:0 auto 6px;font-size:0.82rem;}
             personalRows.push(["Wife's Name", data.wifeName]);
         }
         if (personalRows.length) {
-            html += '<div style="margin-bottom:14px;">';
-            html += '<div style="display:inline-block;background:#059669;color:#ffffff;font-size:12px;font-weight:800;padding:4px 12px;border-radius:18px;margin-bottom:7px;">👤 Personal Information</div>';
+            html += '<div style="margin-bottom:16px;">';
+            html += '<div style="display:inline-block;background:#059669;color:#ffffff;font-size:12px;font-weight:800;padding:4px 12px;border-radius:18px;margin-bottom:8px;">👤 Personal Information</div>';
             html += '<table style="width:100%;border-collapse:collapse;table-layout:fixed;">';
             personalRows.forEach(function (row) {
                 html += '<tr style="border-bottom:1px dashed #d1fae5;">';
@@ -735,14 +714,13 @@ footer p{max-width:700px;margin:0 auto 6px;font-size:0.82rem;}
             html += '</table></div>';
         }
 
-        /* CONTACT */
         const contactRows = [];
         if (data.phone) contactRows.push(['Mobile', data.phone]);
         if (data.email) contactRows.push(['Email', data.email]);
         if (data.address) contactRows.push(['Address', data.address]);
         if (contactRows.length) {
-            html += '<div style="margin-bottom:14px;">';
-            html += '<div style="display:inline-block;background:#059669;color:#ffffff;font-size:12px;font-weight:800;padding:4px 12px;border-radius:18px;margin-bottom:7px;">📞 Contact Information</div>';
+            html += '<div style="margin-bottom:16px;">';
+            html += '<div style="display:inline-block;background:#059669;color:#ffffff;font-size:12px;font-weight:800;padding:4px 12px;border-radius:18px;margin-bottom:8px;">📞 Contact Information</div>';
             html += '<table style="width:100%;border-collapse:collapse;table-layout:fixed;">';
             contactRows.forEach(function (row) {
                 html += '<tr style="border-bottom:1px dashed #d1fae5;">';
@@ -753,49 +731,44 @@ footer p{max-width:700px;margin:0 auto 6px;font-size:0.82rem;}
             html += '</table></div>';
         }
 
-        /* EDUCATION */
         if (data.education) {
-            html += '<div style="margin-bottom:14px;">';
-            html += '<div style="display:inline-block;background:#059669;color:#ffffff;font-size:12px;font-weight:800;padding:4px 12px;border-radius:18px;margin-bottom:7px;">🎓 Educational Qualification</div>';
+            html += '<div style="margin-bottom:16px;">';
+            html += '<div style="display:inline-block;background:#059669;color:#ffffff;font-size:12px;font-weight:800;padding:4px 12px;border-radius:18px;margin-bottom:8px;">🎓 Educational Qualification</div>';
             html += '<div style="font-size:13px;line-height:1.6;color:#1e2b3c;word-break:break-word;">' + escapeHtml(data.education).replace(/\n/g, '<br>') + '</div>';
             html += '</div>';
         }
 
-        /* EXPERIENCE */
         if (data.experience) {
-            html += '<div style="margin-bottom:14px;">';
-            html += '<div style="display:inline-block;background:#059669;color:#ffffff;font-size:12px;font-weight:800;padding:4px 12px;border-radius:18px;margin-bottom:7px;">💼 Work Experience</div>';
+            html += '<div style="margin-bottom:16px;">';
+            html += '<div style="display:inline-block;background:#059669;color:#ffffff;font-size:12px;font-weight:800;padding:4px 12px;border-radius:18px;margin-bottom:8px;">💼 Work Experience</div>';
             html += '<div style="font-size:13px;line-height:1.6;color:#1e2b3c;word-break:break-word;">' + escapeHtml(data.experience).replace(/\n/g, '<br>') + '</div>';
             html += '</div>';
         }
 
-        /* SKILLS */
         if (data.skills) {
-            html += '<div style="margin-bottom:14px;">';
-            html += '<div style="display:inline-block;background:#059669;color:#ffffff;font-size:12px;font-weight:800;padding:4px 12px;border-radius:18px;margin-bottom:7px;">⭐ Skills</div>';
+            html += '<div style="margin-bottom:16px;">';
+            html += '<div style="display:inline-block;background:#059669;color:#ffffff;font-size:12px;font-weight:800;padding:4px 12px;border-radius:18px;margin-bottom:8px;">⭐ Skills</div>';
             html += '<div style="font-size:13px;line-height:1.6;color:#1e2b3c;word-break:break-word;">' + escapeHtml(data.skills).replace(/\n/g, '<br>') + '</div>';
             html += '</div>';
         }
 
-        /* OTHER */
         if (data.otherInfo) {
-            html += '<div style="margin-bottom:14px;">';
-            html += '<div style="display:inline-block;background:#059669;color:#ffffff;font-size:12px;font-weight:800;padding:4px 12px;border-radius:18px;margin-bottom:7px;">📝 Other Information</div>';
+            html += '<div style="margin-bottom:16px;">';
+            html += '<div style="display:inline-block;background:#059669;color:#ffffff;font-size:12px;font-weight:800;padding:4px 12px;border-radius:18px;margin-bottom:8px;">📝 Other Information</div>';
             html += '<div style="font-size:13px;line-height:1.6;color:#1e2b3c;word-break:break-word;">' + escapeHtml(data.otherInfo).replace(/\n/g, '<br>') + '</div>';
             html += '</div>';
         }
 
-        /* SIGNATURE */
-        html += '<div style="margin-top:24px;padding-top:10px;border-top:1px dashed #a7f3d0;text-align:right;font-size:12px;color:#065f46;">';
+        html += '<div style="margin-top:26px;padding-top:12px;border-top:1px dashed #a7f3d0;text-align:right;font-size:12px;color:#065f46;">';
         html += '<div style="display:inline-block;text-align:center;">';
-        html += '<div style="border-bottom:1px solid #059669;min-width:140px;height:30px;"></div>';
+        html += '<div style="border-bottom:1px solid #059669;min-width:140px;height:32px;"></div>';
         html += '<div style="font-weight:700;margin-top:4px;">Signature & Date</div>';
         html += '</div></div>';
 
         return html;
     }
 
-    /* ===== PREVIEW ===== */
+    /* PREVIEW */
     previewBtn.addEventListener('click', function () {
         const data = getFormData();
         if (!data.fullName) {
@@ -814,8 +787,8 @@ footer p{max-width:700px;margin:0 auto 6px;font-size:0.82rem;}
         previewSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
     });
 
-    /* ============ DOWNLOAD PDF (FINAL) ============ */
-    downloadBtn.addEventListener('click', async function () {
+    /* ============ DOWNLOAD PDF (PRINT METHOD) ============ */
+    downloadBtn.addEventListener('click', function () {
         const data = getFormData();
         if (!data.fullName) {
             alert('⚠️ Please enter your Full Name.');
@@ -826,59 +799,45 @@ footer p{max-width:700px;margin:0 auto 6px;font-size:0.82rem;}
             return;
         }
 
-        /* Preview দেখাই */
+        /* Preview তৈরি ও দেখাই */
         biodataDoc.innerHTML = buildBiodataHTML(data);
         previewSection.classList.add('show');
 
-        downloadBtn.disabled = true;
-        downloadBtn.innerHTML = '⏳ Creating PDF...';
+        /* নতুন উইন্ডোতে Print */
+        const printWindow = window.open('', '_blank');
+        if (!printWindow) {
+            alert('⚠️ Please allow pop-ups to download PDF.');
+            return;
+        }
 
-        /* ছবি লোড হওয়ার জন্য অপেক্ষা */
-        const imgs = biodataDoc.querySelectorAll('img');
-        await Promise.all(Array.from(imgs).map(function (img) {
-            if (img.complete) return Promise.resolve();
-            return new Promise(function (resolve) {
-                img.onload = resolve;
-                img.onerror = resolve;
-                setTimeout(resolve, 2000);
-            });
-        }));
-        await new Promise(function (r) { setTimeout(r, 500); });
+        const content = buildBiodataHTML(data);
 
-        /* ✅ সঠিক A4 সাইজের জন্য html2pdf */
-        const opt = {
-            margin: [5, 5, 5, 5],
-            filename: 'ADSpdf-biodata.pdf',
-            image: { type: 'jpeg', quality: 0.95 },
-            html2canvas: {
-                scale: 2,
-                useCORS: true,
-                backgroundColor: '#ffffff',
-                logging: false
-            },
-            jsPDF: {
-                unit: 'mm',
-                format: 'a4',
-                orientation: 'portrait'
-            },
-            pagebreak: { mode: ['css'] }
-        };
+        printWindow.document.open();
+        printWindow.document.write('<!DOCTYPE html><html><head>');
+        printWindow.document.write('<meta charset="UTF-8">');
+        printWindow.document.write('<title>Bio-Data</title>');
+        printWindow.document.write('<style>');
+        printWindow.document.write('@page { size: A4 portrait; margin: 8mm; }');
+        printWindow.document.write('* { box-sizing: border-box; margin: 0; padding: 0; }');
+        printWindow.document.write('body { font-family: Arial, Helvetica, sans-serif; background: #fff; color: #1e2b3c; padding: 0; }');
+        printWindow.document.write('.wrap { width: 100%; max-width: 194mm; margin: 0 auto; padding: 0; }');
+        printWindow.document.write('@media print { body { padding: 0; } .wrap { width: 100%; padding: 0; } }');
+        printWindow.document.write('</style>');
+        printWindow.document.write('</head><body>');
+        printWindow.document.write('<div class="wrap">');
+        printWindow.document.write(content);
+        printWindow.document.write('</div>');
+        printWindow.document.write('</body></html>');
+        printWindow.document.close();
 
-        html2pdf().set(opt).from(biodataDoc).save().then(function () {
-            downloadBtn.disabled = false;
-            downloadBtn.innerHTML = '✅ Downloaded!';
-            setTimeout(function () {
-                downloadBtn.innerHTML = '📥 Download PDF';
-            }, 2500);
-        }).catch(function (err) {
-            console.error(err);
-            alert('⚠️ Failed to create PDF.');
-            downloadBtn.disabled = false;
-            downloadBtn.innerHTML = '📥 Download PDF';
-        });
+        /* Print Dialog খুলি */
+        setTimeout(function () {
+            printWindow.focus();
+            printWindow.print();
+        }, 1000);
     });
 
-    /* ===== RESET ===== */
+    /* RESET */
     resetBtn.addEventListener('click', function () {
         if (!confirm('Clear all data?')) return;
         document.getElementById('biodataForm').reset();

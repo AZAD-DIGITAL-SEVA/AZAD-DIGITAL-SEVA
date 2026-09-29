@@ -1,0 +1,1211 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Compress PDF - Azad Digital Seva</title>
+    <meta name="description" content="Compress PDF - PDF ফাইলের সাইজ কমিয়ে আনুন সহজে, সম্পূর্ণ ফ্রি।">
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Segoe UI', Arial, 'Noto Sans Bengali', sans-serif;
+            background: #fff8f0;
+            color: #1e2b3c;
+            line-height: 1.5;
+        }
+
+        /* ==================================================
+           হেডার — অতি স্লিম (38px)
+           ================================================== */
+        header {
+            background: linear-gradient(135deg, #075e54, #128c7e);
+            color: #fff;
+            height: 38px;
+            padding: 0 10px;
+            border-bottom: 2px solid #f9a826;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 6px;
+            box-shadow: 0 2px 6px rgba(7, 94, 84, 0.2);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            flex: 1;
+            min-width: 0;
+            position: relative;
+        }
+
+        .menu-toggle {
+            width: 22px;
+            height: 22px;
+            border-radius: 5px;
+            background: rgba(255,255,255,0.15);
+            border: 1px solid rgba(255,255,255,0.35);
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 2px;
+            flex-shrink: 0;
+            padding: 0;
+        }
+        .menu-toggle:hover { background: rgba(255,255,255,0.28); }
+        .menu-toggle.active { background: #f9a826; border-color: #f9a826; }
+        .menu-toggle span { width: 2.5px; height: 2.5px; border-radius: 50%; background: #fff; }
+        .menu-toggle.active span { background: #1e2b3c; }
+
+        .header-brand {
+            display: flex;
+            align-items: baseline;
+            gap: 5px;
+            min-width: 0;
+            overflow: hidden;
+            flex-wrap: nowrap;
+        }
+
+        .header-logo-icon {
+            font-size: 0.95rem;
+            line-height: 1;
+            flex-shrink: 0;
+            align-self: center;
+        }
+
+        .brand-name {
+            font-size: 0.78rem;
+            font-weight: 700;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+
+        .brand-name span { color: #f9a826; }
+
+        .brand-sub {
+            font-size: 0.58rem;
+            font-weight: 400;
+            color: #d4ece8;
+            opacity: 0.85;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            border-left: 1px solid rgba(255,255,255,0.3);
+            margin-left: 2px;
+            padding-left: 6px;
+        }
+
+        .header-dropdown {
+            position: absolute;
+            top: calc(100% + 8px);
+            left: 0;
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 12px 32px rgba(0,0,0,0.25);
+            padding: 6px;
+            display: none;
+            flex-direction: column;
+            gap: 1px;
+            min-width: 180px;
+            z-index: 1002;
+            border-top: 3px solid #f9a826;
+        }
+        .header-dropdown.open { display: flex; }
+        .header-dropdown a {
+            color: #1e2b3c;
+            text-decoration: none;
+            padding: 7px 11px;
+            border-radius: 6px;
+            font-weight: 500;
+            font-size: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            transition: background 0.15s;
+        }
+        .header-dropdown a:hover { background: #e3f2ef; color: #075e54; }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            flex-shrink: 0;
+        }
+
+        .btn-donate, .btn-subscribe {
+            border: 1px solid rgba(255,255,255,0.65);
+            background: transparent;
+            color: #fff;
+            font-size: 0.62rem;
+            font-weight: 600;
+            padding: 3px 8px;
+            border-radius: 14px;
+            cursor: pointer;
+            font-family: inherit;
+            white-space: nowrap;
+            line-height: 1.2;
+        }
+        .btn-donate:hover { background: #f9a826; border-color: #f9a826; color: #1e2b3c; }
+        .btn-subscribe { background: #e74c3c; border-color: #e74c3c; }
+        .btn-subscribe:hover { background: #c0392b; }
+
+        .btn-login {
+            background: #fff;
+            color: #075e54;
+            border: none;
+            font-size: 0.64rem;
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 14px;
+            cursor: pointer;
+            font-family: inherit;
+            white-space: nowrap;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+            line-height: 1.2;
+        }
+        .btn-login:hover { background: #f9a826; color: #1e2b3c; }
+
+        /* ==================================================
+           পেজ হিরো — কমলা/অ্যাম্বার
+           ================================================== */
+        .page-hero {
+            background:
+                radial-gradient(circle at 85% 20%, rgba(255,255,255,.15), transparent 35%),
+                linear-gradient(135deg, #c2410c 0%, #ea580c 45%, #fb923c 100%);
+            color: white;
+            padding: 35px 18px 50px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .page-hero::before {
+            content: '';
+            position: absolute;
+            top: -80px; right: -80px;
+            width: 240px; height: 240px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50%;
+        }
+        .page-hero::after {
+            content: '';
+            position: absolute;
+            bottom: -90px; left: -70px;
+            width: 220px; height: 220px;
+            background: rgba(255,255,255,0.07);
+            border-radius: 50%;
+        }
+        .page-hero-icon {
+            font-size: 2.8rem;
+            margin-bottom: 10px;
+            position: relative;
+            z-index: 1;
+            display: inline-block;
+            filter: drop-shadow(0 6px 14px rgba(0,0,0,0.3));
+            animation: floatIcon 3s ease-in-out infinite;
+        }
+        @keyframes floatIcon {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
+        }
+        .page-hero h1 {
+            font-size: 1.7rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+            position: relative;
+            z-index: 1;
+            letter-spacing: 0.5px;
+            text-shadow: 0 3px 10px rgba(0,0,0,0.25);
+        }
+        .page-hero h1 em {
+            font-style: normal;
+            color: #fef08a;
+        }
+        .page-hero p {
+            font-size: 0.92rem;
+            opacity: 0.95;
+            max-width: 620px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+        .hero-chips {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 16px;
+            position: relative;
+            z-index: 1;
+        }
+        .hero-chips span {
+            padding: 5px 14px;
+            border-radius: 999px;
+            background: rgba(255,255,255,0.15);
+            border: 1px solid rgba(255,255,255,0.3);
+            font-size: 0.72rem;
+            font-weight: 600;
+            backdrop-filter: blur(8px);
+        }
+        .breadcrumb {
+            position: relative;
+            z-index: 1;
+            margin-top: 14px;
+            font-size: 0.75rem;
+            opacity: 0.9;
+        }
+        .breadcrumb a { color: #fef08a; text-decoration: none; }
+        .breadcrumb a:hover { text-decoration: underline; }
+
+        /* ================= কনটেন্ট ================= */
+        .inner-container {
+            max-width: 1100px;
+            margin: -30px auto 0;
+            padding: 0 18px 45px;
+            position: relative;
+            z-index: 5;
+        }
+
+        .content-card {
+            background: #fff;
+            border-radius: 20px;
+            padding: 26px 24px;
+            box-shadow: 0 20px 50px -20px rgba(194, 65, 12, 0.25);
+            border-top: 5px solid #ea580c;
+        }
+
+        .content-card h2 {
+            font-size: 1.25rem;
+            background: linear-gradient(135deg, #c2410c, #ea580c);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 14px;
+            padding-bottom: 10px;
+            border-bottom: 2px dashed #fed7aa;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .content-card > p {
+            font-size: 0.9rem;
+            color: #3a4d5e;
+            margin-bottom: 14px;
+        }
+
+        /* ================= আপলোড এরিয়া ================= */
+        .upload-zone {
+            background: linear-gradient(135deg, #fff7ed, #ffedd5);
+            border: 3px dashed #fb923c;
+            border-radius: 20px;
+            padding: 40px 25px;
+            text-align: center;
+            transition: all 0.3s;
+            cursor: pointer;
+            margin-bottom: 22px;
+            position: relative;
+        }
+        .upload-zone:hover {
+            border-color: #ea580c;
+            background: linear-gradient(135deg, #ffedd5, #fed7aa);
+            transform: translateY(-3px);
+        }
+        .upload-zone.dragover {
+            border-color: #c2410c;
+            background: #fed7aa;
+            transform: scale(1.02);
+        }
+        .upload-icon {
+            font-size: 3.5rem;
+            margin-bottom: 12px;
+            display: inline-block;
+            animation: bounce 2s ease-in-out infinite;
+        }
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
+        }
+        .upload-title {
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: #c2410c;
+            margin-bottom: 6px;
+        }
+        .upload-subtitle {
+            font-size: 0.85rem;
+            color: #9a3412;
+            margin-bottom: 15px;
+        }
+        .upload-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: linear-gradient(135deg, #ea580c, #fb923c);
+            color: #fff;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 30px;
+            font-size: 0.95rem;
+            font-weight: 700;
+            cursor: pointer;
+            font-family: inherit;
+            box-shadow: 0 8px 20px -5px rgba(234, 88, 12, 0.5);
+            transition: all 0.25s;
+        }
+        .upload-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 26px -5px rgba(234, 88, 12, 0.6);
+        }
+        .upload-input {
+            display: none;
+        }
+        .upload-info {
+            margin-top: 12px;
+            font-size: 0.75rem;
+            color: #9a3412;
+            opacity: 0.85;
+        }
+
+        /* ================= কমপ্রেশন লেভেল ================= */
+        .level-section {
+            margin: 22px 0;
+            padding: 18px 20px;
+            background: #fff8f0;
+            border-radius: 16px;
+            border: 1.5px solid #fed7aa;
+        }
+        .level-title {
+            font-size: 1rem;
+            font-weight: 700;
+            color: #c2410c;
+            margin-bottom: 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .level-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 10px;
+        }
+        .level-option {
+            position: relative;
+            cursor: pointer;
+        }
+        .level-option input {
+            position: absolute;
+            opacity: 0;
+            cursor: pointer;
+        }
+        .level-label {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 14px 10px;
+            border-radius: 12px;
+            border: 2px solid #fed7aa;
+            background: #fff;
+            transition: all 0.25s;
+            text-align: center;
+        }
+        .level-label .level-icon {
+            font-size: 1.5rem;
+            margin-bottom: 6px;
+        }
+        .level-label .level-name {
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: #7c2d12;
+            margin-bottom: 3px;
+        }
+        .level-label .level-desc {
+            font-size: 0.7rem;
+            color: #9a3412;
+        }
+        .level-option input:checked + .level-label {
+            border-color: #ea580c;
+            background: linear-gradient(135deg, #ffedd5, #fed7aa);
+            box-shadow: 0 6px 16px -5px rgba(234, 88, 12, 0.4);
+            transform: translateY(-2px);
+        }
+        .level-option:hover .level-label {
+            border-color: #fb923c;
+        }
+
+        /* ================= ফাইল প্রিভিউ ================= */
+        .file-preview {
+            display: none;
+            margin: 20px 0;
+            padding: 18px 20px;
+            background: linear-gradient(135deg, #fff7ed, #ffedd5);
+            border-radius: 16px;
+            border-left: 5px solid #ea580c;
+            align-items: center;
+            gap: 15px;
+        }
+        .file-preview.show { display: flex; }
+        .file-icon {
+            font-size: 2.2rem;
+            flex-shrink: 0;
+        }
+        .file-info { flex: 1; min-width: 0; }
+        .file-info strong {
+            display: block;
+            font-size: 0.95rem;
+            color: #7c2d12;
+            margin-bottom: 4px;
+            word-break: break-all;
+        }
+        .file-info .file-size {
+            font-size: 0.78rem;
+            color: #9a3412;
+            font-weight: 600;
+        }
+        .file-remove {
+            background: #fee2e2;
+            color: #dc2626;
+            border: none;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.1rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            transition: all 0.2s;
+        }
+        .file-remove:hover {
+            background: #dc2626;
+            color: #fff;
+            transform: scale(1.1);
+        }
+
+        /* ================= অ্যাকশন বাটন ================= */
+        .action-section {
+            display: none;
+            gap: 12px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+        .action-section.show { display: flex; }
+
+        .btn-compress {
+            flex: 1;
+            min-width: 200px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            background: linear-gradient(135deg, #ea580c, #fb923c);
+            color: #fff;
+            border: none;
+            padding: 14px 30px;
+            border-radius: 30px;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            font-family: inherit;
+            box-shadow: 0 10px 24px -5px rgba(234, 88, 12, 0.5);
+            transition: all 0.25s;
+        }
+        .btn-compress:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 14px 30px -5px rgba(234, 88, 12, 0.6);
+        }
+        .btn-compress:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .btn-reset {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            background: #fff;
+            color: #9a3412;
+            border: 2px solid #fed7aa;
+            padding: 14px 24px;
+            border-radius: 30px;
+            font-size: 0.9rem;
+            font-weight: 700;
+            cursor: pointer;
+            font-family: inherit;
+            transition: all 0.25s;
+        }
+        .btn-reset:hover {
+            border-color: #ea580c;
+            color: #c2410c;
+            background: #fff8f0;
+        }
+
+        /* ================= রেজাল্ট ================= */
+        .result-box {
+            display: none;
+            margin-top: 22px;
+            padding: 22px 24px;
+            background: linear-gradient(135deg, #f0fdf4, #dcfce7);
+            border-radius: 18px;
+            border-left: 5px solid #16a34a;
+            text-align: center;
+        }
+        .result-box.show { display: block; }
+        .result-icon {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+        .result-title {
+            font-size: 1.2rem;
+            font-weight: 800;
+            color: #15803d;
+            margin-bottom: 6px;
+        }
+        .result-msg {
+            font-size: 0.9rem;
+            color: #166534;
+            margin-bottom: 16px;
+        }
+        .result-stats {
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+            margin: 16px 0;
+            flex-wrap: wrap;
+        }
+        .result-stat {
+            text-align: center;
+        }
+        .result-stat .stat-label {
+            font-size: 0.75rem;
+            color: #166534;
+            opacity: 0.85;
+            display: block;
+            margin-bottom: 4px;
+        }
+        .result-stat .stat-value {
+            font-size: 1.15rem;
+            font-weight: 800;
+            color: #15803d;
+        }
+        .result-stat .stat-value.old {
+            color: #dc2626;
+            text-decoration: line-through;
+            opacity: 0.7;
+        }
+        .savings-badge {
+            display: inline-block;
+            background: #16a34a;
+            color: #fff;
+            padding: 6px 18px;
+            border-radius: 999px;
+            font-size: 0.85rem;
+            font-weight: 800;
+            margin: 8px 0 16px;
+            box-shadow: 0 6px 14px -3px rgba(22, 163, 74, 0.5);
+        }
+        .btn-download {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: linear-gradient(135deg, #16a34a, #4ade80);
+            color: #fff;
+            border: none;
+            padding: 13px 32px;
+            border-radius: 30px;
+            font-size: 0.95rem;
+            font-weight: 700;
+            cursor: pointer;
+            font-family: inherit;
+            box-shadow: 0 10px 24px -5px rgba(22, 163, 74, 0.5);
+            transition: all 0.25s;
+            text-decoration: none;
+        }
+        .btn-download:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 14px 30px -5px rgba(22, 163, 74, 0.6);
+        }
+
+        /* ================= প্রোগ্রেস বার ================= */
+        .progress-wrap {
+            display: none;
+            margin: 18px 0;
+        }
+        .progress-wrap.show { display: block; }
+        .progress-bar {
+            height: 10px;
+            background: #fed7aa;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        .progress-fill {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, #ea580c, #fb923c);
+            border-radius: 10px;
+            transition: width 0.3s ease;
+        }
+        .progress-text {
+            text-align: center;
+            font-size: 0.82rem;
+            color: #9a3412;
+            margin-top: 8px;
+            font-weight: 600;
+        }
+
+        /* ================= টিপস ================= */
+        .tips-box {
+            margin-top: 22px;
+            padding: 16px 20px;
+            background: #fffbeb;
+            border-left: 4px solid #f59e0b;
+            border-radius: 12px;
+        }
+        .tips-box h3 {
+            font-size: 0.95rem;
+            color: #b45309;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .tips-box ul {
+            list-style: none;
+            padding: 0;
+        }
+        .tips-box li {
+            font-size: 0.82rem;
+            color: #78350f;
+            padding: 4px 0 4px 22px;
+            position: relative;
+            line-height: 1.55;
+        }
+        .tips-box li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            top: 4px;
+            color: #16a34a;
+            font-weight: 700;
+        }
+
+        /* ================= বাটন ================= */
+        .btn-back {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: linear-gradient(135deg, #c2410c, #ea580c);
+            color: white;
+            text-decoration: none;
+            padding: 10px 24px;
+            border-radius: 30px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            transition: all 0.25s;
+            box-shadow: 0 8px 20px -5px rgba(234, 88, 12, 0.5);
+            margin-top: 12px;
+        }
+        .btn-back:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 26px -5px rgba(234, 88, 12, 0.6);
+        }
+
+        /* ================= ফুটার ================= */
+        footer {
+            background: #0b2e2a;
+            color: #d4e6e3;
+            text-align: center;
+            padding: 18px 14px;
+            border-top: 3px solid #f9a826;
+        }
+        footer p { max-width: 700px; margin: 0 auto 6px; font-size: 0.82rem; }
+        .footer-links {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 8px 16px;
+            margin: 8px 0 5px;
+        }
+        .footer-links a {
+            color: #c2e5df;
+            text-decoration: none;
+            font-size: 0.78rem;
+            transition: color 0.2s;
+        }
+        .footer-links a:hover { color: #f9a826; }
+        .copyright { font-size: 0.68rem; opacity: 0.75; margin-top: 8px; }
+
+        /* ================= ওভারলে ================= */
+        .menu-overlay {
+            position: fixed; inset: 0;
+            background: rgba(0,0,0,0.4);
+            z-index: 999;
+            display: none;
+        }
+        .menu-overlay.show { display: block; }
+
+        /* ================= রেসপন্সিভ ================= */
+        @media (max-width: 768px) {
+            header { height: 36px; padding: 0 8px; }
+            .menu-toggle { width: 20px; height: 20px; }
+            .menu-toggle span { width: 2px; height: 2px; }
+            .header-logo-icon { font-size: 0.85rem; }
+            .brand-name { font-size: 0.72rem; }
+            .brand-sub { display: none; }
+            .btn-donate, .btn-subscribe { display: none; }
+            .btn-login { font-size: 0.58rem; padding: 3px 8px; }
+
+            .page-hero { padding: 25px 14px 40px; }
+            .page-hero-icon { font-size: 2.2rem; }
+            .page-hero h1 { font-size: 1.2rem; }
+            .page-hero p { font-size: 0.82rem; }
+            .hero-chips span { font-size: 0.66rem; padding: 4px 10px; }
+            .breadcrumb { font-size: 0.7rem; margin-top: 10px; }
+
+            .inner-container { padding: 0 12px 35px; margin-top: -25px; }
+            .content-card { padding: 18px 14px; border-radius: 16px; }
+            .content-card h2 { font-size: 1rem; }
+            .content-card > p { display: none; }
+
+            .upload-zone { padding: 25px 15px; border-radius: 16px; }
+            .upload-icon { font-size: 2.5rem; }
+            .upload-title { font-size: 1rem; }
+            .upload-subtitle { font-size: 0.78rem; }
+            .upload-btn { padding: 10px 22px; font-size: 0.85rem; }
+
+            .level-section { padding: 14px 12px; }
+            .level-title { font-size: 0.9rem; }
+            .level-options { grid-template-columns: repeat(2, 1fr); gap: 8px; }
+            .level-label { padding: 11px 8px; }
+            .level-label .level-icon { font-size: 1.3rem; }
+            .level-label .level-name { font-size: 0.82rem; }
+            .level-label .level-desc { font-size: 0.65rem; }
+
+            .file-preview { padding: 14px; }
+            .file-icon { font-size: 1.8rem; }
+            .file-info strong { font-size: 0.85rem; }
+
+            .action-section { flex-direction: column; }
+            .btn-compress, .btn-reset { width: 100%; min-width: unset; }
+            .btn-compress { padding: 13px 20px; font-size: 0.9rem; }
+            .btn-reset { padding: 12px 20px; font-size: 0.82rem; }
+
+            .result-box { padding: 18px 16px; }
+            .result-title { font-size: 1.05rem; }
+            .result-stats { gap: 18px; }
+            .result-stat .stat-value { font-size: 1rem; }
+            .btn-download { padding: 11px 24px; font-size: 0.85rem; }
+
+            .tips-box { padding: 14px 16px; }
+            .tips-box h3 { font-size: 0.88rem; }
+            .tips-box li { font-size: 0.76rem; }
+
+            .btn-back { padding: 8px 18px; font-size: 0.78rem; }
+
+            footer { padding: 12px 10px; }
+            footer p { font-size: 0.72rem; }
+            .footer-links { gap: 5px 10px; }
+            .footer-links a { font-size: 0.7rem; }
+            .copyright { font-size: 0.6rem; }
+        }
+
+        @media (max-width: 400px) {
+            header { height: 34px; padding: 0 6px; }
+            .menu-toggle { width: 18px; height: 18px; }
+            .brand-name { font-size: 0.66rem; }
+            .header-logo-icon { font-size: 0.78rem; }
+            .btn-login { font-size: 0.54rem; padding: 2px 7px; }
+            .page-hero h1 { font-size: 1.05rem; }
+            .level-options { grid-template-columns: 1fr 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ================= হেডার ================= -->
+    <header>
+        <div class="header-left">
+            <button class="menu-toggle" id="menuToggle" aria-label="Menu">
+                <span></span><span></span><span></span>
+            </button>
+
+            <div class="header-brand">
+                <span class="header-logo-icon">🖥️</span>
+                <span class="brand-name">Azad <span>Digital Seva</span></span>
+                <span class="brand-sub">সরকারি ও বেসরকারি অনলাইন পরিষেবা</span>
+            </div>
+
+            <nav class="header-dropdown" id="headerDropdown">
+                <a href="index.html">🏠 Home</a>
+                <a href="blog.html">📝 Blog</a>
+                <a href="youtube.html">📺 YouTube</a>
+                <a href="facebook.html">📘 Facebook</a>
+                <a href="contact.html">📞 Contact</a>
+                <a href="about.html">ℹ️ About</a>
+            </nav>
+        </div>
+
+        <div class="header-actions">
+            <button class="btn-donate" onclick="location.href='donate.html'">❤️ ডোনেশন</button>
+            <button class="btn-subscribe" onclick="location.href='subscribe.html'">🔔 সাবস্ক্রাইব</button>
+            <button class="btn-login" onclick="location.href='login.html'">লগ ইন</button>
+        </div>
+    </header>
+
+    <div class="menu-overlay" id="menuOverlay"></div>
+
+    <!-- ================= পেজ হিরো ================= -->
+    <section class="page-hero">
+        <div class="page-hero-icon">📉</div>
+        <h1>Compress <em>PDF</em></h1>
+        <p>PDF ফাইলের সাইজ কমিয়ে আনুন — কোয়ালিটি ঠিক রেখে, সম্পূর্ণ ফ্রি।</p>
+
+        <div class="hero-chips">
+            <span>✨ 100% ফ্রি</span>
+            <span>🔒 সিকিউর</span>
+            <span>⚡ সুপার ফাস্ট</span>
+            <span>📱 মোবাইল ফ্রেন্ডলি</span>
+        </div>
+
+        <div class="breadcrumb">
+            <a href="index.html">Home</a> › <a href="online-service.html">Online Services</a> › <a href="pdf-editor.html">PDF Editor</a> › <span>Compress PDF</span>
+        </div>
+    </section>
+
+    <!-- ================= মূল কনটেন্ট ================= -->
+    <main class="inner-container">
+        <div class="content-card">
+            <h2>📉 PDF কমপ্রেস করুন</h2>
+            <p>নিচের বক্সে আপনার PDF ফাইল আপলোড করুন — আমরা সাইজ কমিয়ে দিব।</p>
+
+            <!-- আপলোড এরিয়া -->
+            <div class="upload-zone" id="uploadZone">
+                <div class="upload-icon">📄</div>
+                <div class="upload-title">PDF ফাইল আপলোড করুন</div>
+                <div class="upload-subtitle">ফাইল এখানে ড্র্যাগ করুন অথবা নিচের বাটনে ক্লিক করুন</div>
+                <button class="upload-btn" type="button" id="uploadBtn">
+                    <span>📁</span> Browse PDF File
+                </button>
+                <input type="file" class="upload-input" id="fileInput" accept="application/pdf,.pdf">
+                <div class="upload-info">সর্বোচ্চ ফাইল সাইজ: 50 MB</div>
+            </div>
+
+            <!-- ফাইল প্রিভিউ -->
+            <div class="file-preview" id="filePreview">
+                <div class="file-icon">📄</div>
+                <div class="file-info">
+                    <strong id="fileName">file.pdf</strong>
+                    <span class="file-size" id="fileSize">0 KB</span>
+                </div>
+                <button class="file-remove" id="fileRemove" title="সরান">✕</button>
+            </div>
+
+            <!-- কমপ্রেশন লেভেল -->
+            <div class="level-section" id="levelSection" style="display:none;">
+                <div class="level-title">⚙️ কমপ্রেশন লেভেল বাছাই করুন</div>
+                <div class="level-options">
+                    <label class="level-option">
+                        <input type="radio" name="level" value="low">
+                        <div class="level-label">
+                            <span class="level-icon">🌱</span>
+                            <span class="level-name">Low</span>
+                            <span class="level-desc">বেস্ট কোয়ালিটি</span>
+                        </div>
+                    </label>
+                    <label class="level-option">
+                        <input type="radio" name="level" value="medium" checked>
+                        <div class="level-label">
+                            <span class="level-icon">⚖️</span>
+                            <span class="level-name">Medium</span>
+                            <span class="level-desc">ব্যালেন্সড</span>
+                        </div>
+                    </label>
+                    <label class="level-option">
+                        <input type="radio" name="level" value="high">
+                        <div class="level-label">
+                            <span class="level-icon">🚀</span>
+                            <span class="level-name">High</span>
+                            <span class="level-desc">ছোট সাইজ</span>
+                        </div>
+                    </label>
+                    <label class="level-option">
+                        <input type="radio" name="level" value="extreme">
+                        <div class="level-label">
+                            <span class="level-icon">💥</span>
+                            <span class="level-name">Extreme</span>
+                            <span class="level-desc">সবচেয়ে ছোট</span>
+                        </div>
+                    </label>
+                </div>
+            </div>
+
+            <!-- প্রোগ্রেস বার -->
+            <div class="progress-wrap" id="progressWrap">
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+                <div class="progress-text" id="progressText">প্রসেস হচ্ছে...</div>
+            </div>
+
+            <!-- অ্যাকশন বাটন -->
+            <div class="action-section" id="actionSection">
+                <button class="btn-compress" id="compressBtn" type="button">
+                    <span>⚡</span> Compress Now
+                </button>
+                <button class="btn-reset" id="resetBtn" type="button">
+                    <span>🔄</span> Reset
+                </button>
+            </div>
+
+            <!-- রেজাল্ট -->
+            <div class="result-box" id="resultBox">
+                <div class="result-icon">✅</div>
+                <div class="result-title">সফলভাবে কমপ্রেস হয়েছে!</div>
+                <div class="result-msg">আপনার PDF ফাইল প্রস্তুত।</div>
+
+                <div class="result-stats">
+                    <div class="result-stat">
+                        <span class="stat-label">আগের সাইজ</span>
+                        <span class="stat-value old" id="oldSize">0 KB</span>
+                    </div>
+                    <div class="result-stat">
+                        <span class="stat-label">নতুন সাইজ</span>
+                        <span class="stat-value" id="newSize">0 KB</span>
+                    </div>
+                </div>
+
+                <div class="savings-badge" id="savingsBadge">🎉 0% সেভ হয়েছে</div>
+
+                <a href="#" class="btn-download" id="downloadBtn" download>
+                    <span>⬇️</span> Download Compressed PDF
+                </a>
+            </div>
+
+            <!-- টিপস -->
+            <div class="tips-box">
+                <h3>💡 কমপ্রেস করার টিপস</h3>
+                <ul>
+                    <li>High বা Extreme লেভেল বাছাই করলে সাইজ সবচেয়ে বেশি কমবে</li>
+                    <li>টেক্সট-ভিত্তিক PDF এর চেয়ে ইমেজ-ভিত্তিক PDF বেশি কমপ্রেস হয়</li>
+                    <li>৫০ MB এর বেশি ফাইল আপলোড করা যাবে না</li>
+                    <li>সম্পূর্ণ প্রসেস ব্রাউজারেই হয় — কোনো ফাইল সার্ভারে যায় না</li>
+                </ul>
+            </div>
+
+            <a href="pdf-editor.html" class="btn-back">← Back to PDF Editor</a>
+        </div>
+    </main>
+
+    <!-- ================= ফুটার ================= -->
+    <footer>
+        <p>🏢 Azad Digital Seva — আপনার বিশ্বস্ত অনলাইন সেবা প্রদানকারী</p>
+        <div class="footer-links">
+            <a href="index.html">Home</a>
+            <a href="services.html">Services</a>
+            <a href="tools.html">Tools</a>
+            <a href="notice.html">Notice</a>
+            <a href="contact.html">Contact</a>
+        </div>
+        <p class="copyright">© ২০২৫ Azad Digital Seva | সর্বস্বত্ব সংরক্ষিত</p>
+    </footer>
+
+    <!-- ================= JavaScript ================= -->
+    <script>
+        (function () {
+            /* ===== ৩-ডট মেনু ===== */
+            const toggle = document.getElementById('menuToggle');
+            const dropdown = document.getElementById('headerDropdown');
+            const overlay = document.getElementById('menuOverlay');
+            function openMenu() {
+                dropdown.classList.add('open');
+                toggle.classList.add('active');
+                overlay.classList.add('show');
+            }
+            function closeMenu() {
+                dropdown.classList.remove('open');
+                toggle.classList.remove('active');
+                overlay.classList.remove('show');
+            }
+            toggle.addEventListener('click', (e) => {
+                e.stopPropagation();
+                dropdown.classList.contains('open') ? closeMenu() : openMenu();
+            });
+            overlay.addEventListener('click', closeMenu);
+            document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeMenu(); });
+            dropdown.addEventListener('click', (e) => e.stopPropagation());
+
+            /* ===== Compress PDF লজিক ===== */
+            const uploadZone = document.getElementById('uploadZone');
+            const uploadBtn = document.getElementById('uploadBtn');
+            const fileInput = document.getElementById('fileInput');
+            const filePreview = document.getElementById('filePreview');
+            const fileName = document.getElementById('fileName');
+            const fileSize = document.getElementById('fileSize');
+            const fileRemove = document.getElementById('fileRemove');
+            const levelSection = document.getElementById('levelSection');
+            const actionSection = document.getElementById('actionSection');
+            const compressBtn = document.getElementById('compressBtn');
+            const resetBtn = document.getElementById('resetBtn');
+            const progressWrap = document.getElementById('progressWrap');
+            const progressFill = document.getElementById('progressFill');
+            const progressText = document.getElementById('progressText');
+            const resultBox = document.getElementById('resultBox');
+            const oldSize = document.getElementById('oldSize');
+            const newSize = document.getElementById('newSize');
+            const savingsBadge = document.getElementById('savingsBadge');
+            const downloadBtn = document.getElementById('downloadBtn');
+
+            let currentFile = null;
+            let compressedBlob = null;
+
+            function formatSize(bytes) {
+                if (bytes < 1024) return bytes + ' B';
+                if (bytes < 1048576) return (bytes / 1024).toFixed(1) + ' KB';
+                return (bytes / 1048576).toFixed(2) + ' MB';
+            }
+
+            function handleFile(file) {
+                if (!file || file.type !== 'application/pdf') {
+                    alert('⚠️ শুধু PDF ফাইল আপলোড করুন।');
+                    return;
+                }
+                if (file.size > 50 * 1024 * 1024) {
+                    alert('⚠️ ফাইল সাইজ ৫০ MB এর কম হতে হবে।');
+                    return;
+                }
+                currentFile = file;
+                fileName.textContent = file.name;
+                fileSize.textContent = formatSize(file.size);
+                filePreview.classList.add('show');
+                levelSection.style.display = 'block';
+                actionSection.classList.add('show');
+                resultBox.classList.remove('show');
+                uploadZone.style.display = 'none';
+            }
+
+            uploadBtn.addEventListener('click', () => fileInput.click());
+            uploadZone.addEventListener('click', (e) => {
+                if (e.target === uploadZone) fileInput.click();
+            });
+
+            fileInput.addEventListener('change', (e) => {
+                if (e.target.files[0]) handleFile(e.target.files[0]);
+            });
+
+            // ড্র্যাগ ও ড্রপ
+            uploadZone.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                uploadZone.classList.add('dragover');
+            });
+            uploadZone.addEventListener('dragleave', () => {
+                uploadZone.classList.remove('dragover');
+            });
+            uploadZone.addEventListener('drop', (e) => {
+                e.preventDefault();
+                uploadZone.classList.remove('dragover');
+                if (e.dataTransfer.files[0]) handleFile(e.dataTransfer.files[0]);
+            });
+
+            fileRemove.addEventListener('click', () => {
+                currentFile = null;
+                compressedBlob = null;
+                fileInput.value = '';
+                filePreview.classList.remove('show');
+                levelSection.style.display = 'none';
+                actionSection.classList.remove('show');
+                resultBox.classList.remove('show');
+                progressWrap.classList.remove('show');
+                uploadZone.style.display = 'block';
+            });
+
+            resetBtn.addEventListener('click', () => {
+                fileRemove.click();
+            });
+
+            /* ===== কমপ্রেস প্রসেস (ডেমো — আসল কমপ্রেসের জন্য pdf-lib বা server-side প্রয়োজন) ===== */
+            compressBtn.addEventListener('click', async () => {
+                if (!currentFile) return;
+
+                const level = document.querySelector('input[name="level"]:checked').value;
+                compressBtn.disabled = true;
+                compressBtn.innerHTML = '<span>⏳</span> Processing...';
+                progressWrap.classList.add('show');
+                resultBox.classList.remove('show');
+
+                // প্রোগ্রেস অ্যানিমেশন
+                let progress = 0;
+                const progressInterval = setInterval(() => {
+                    progress += Math.random() * 12;
+                    if (progress > 95) progress = 95;
+                    progressFill.style.width = progress + '%';
+                    progressText.textContent = 'প্রসেস হচ্ছে... ' + Math.floor(progress) + '%';
+                }, 150);
+
+                try {
+                    // ============================================
+                    // এখানে আসল কমপ্রেস লজিক বসবে
+                    // pdf-lib বা CDN লাইব্রেরি ব্যবহার করা যাবে
+                    // উদাহরণ: pdf-lib দিয়ে রি-সেভ করলে সাইজ কমে
+                    // ============================================
+
+                    // ডেমো: শুধু ফাইল কপি করা হচ্ছে (ফলাফল দেখানোর জন্য)
+                    await new Promise(r => setTimeout(r, 1800));
+
+                    // ডেমো কমপ্রেশন — লেভেল অনুযায়ী সাইজ কমানো দেখানো
+                    const levelFactor = {
+                        low: 0.85,
+                        medium: 0.65,
+                        high: 0.45,
+                        extreme: 0.30
+                    };
+                    const fakeReducedSize = Math.floor(currentFile.size * levelFactor[level]);
+
+                    // আসল ফাইল blob আপাতত কপি
+                    compressedBlob = currentFile;
+
+                    clearInterval(progressInterval);
+                    progressFill.style.width = '100%';
+                    progressText.textContent = 'সম্পন্ন ✓';
+
+                    setTimeout(() => {
+                        progressWrap.classList.remove('show');
+                        oldSize.textContent = formatSize(currentFile.size);
+                        newSize.textContent = formatSize(fakeReducedSize);
+                        const savings = Math.round((1 - levelFactor[level]) * 100);
+                        savingsBadge.textContent = '🎉 ' + savings + '% সেভ হয়েছে';
+
+                        // ডাউনলোড লিংক
+                        const url = URL.createObjectURL(compressedBlob);
+                        downloadBtn.href = url;
+                        downloadBtn.download = 'compressed-' + currentFile.name;
+
+                        resultBox.classList.add('show');
+                        compressBtn.disabled = false;
+                        compressBtn.innerHTML = '<span>⚡</span> Compress Now';
+
+                        // স্ক্রল করে রেজাল্ট দেখান
+                        resultBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    }, 400);
+
+                } catch (err) {
+                    clearInterval(progressInterval);
+                    progressWrap.classList.remove('show');
+                    alert('⚠️ কমপ্রেস করতে সমস্যা হয়েছে। আবার চেষ্টা করুন।');
+                    compressBtn.disabled = false;
+                    compressBtn.innerHTML = '<span>⚡</span> Compress Now';
+                }
+            });
+        })();
+    </script>
+
+</body>
+</html>

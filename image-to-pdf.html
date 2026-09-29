@@ -1,0 +1,1104 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Photo to PDF - Azad Digital Seva</title>
+    <meta name="description" content="Photo to PDF - একাধিক ছবি একটি PDF ফাইলে রূপান্তর করুন।">
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Segoe UI', Arial, 'Noto Sans Bengali', sans-serif;
+            background: #eff6ff;
+            color: #1e2b3c;
+            line-height: 1.5;
+        }
+
+        /* ================= হেডার ================= */
+        header {
+            background: linear-gradient(135deg, #075e54, #128c7e);
+            color: #fff;
+            height: 38px;
+            padding: 0 10px;
+            border-bottom: 2px solid #f9a826;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 6px;
+            box-shadow: 0 2px 6px rgba(7, 94, 84, 0.2);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            flex: 1;
+            min-width: 0;
+            position: relative;
+        }
+
+        .menu-toggle {
+            width: 22px;
+            height: 22px;
+            border-radius: 5px;
+            background: rgba(255,255,255,0.15);
+            border: 1px solid rgba(255,255,255,0.35);
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 2px;
+            flex-shrink: 0;
+            padding: 0;
+        }
+        .menu-toggle:hover { background: rgba(255,255,255,0.28); }
+        .menu-toggle.active { background: #f9a826; border-color: #f9a826; }
+        .menu-toggle span { width: 2.5px; height: 2.5px; border-radius: 50%; background: #fff; }
+        .menu-toggle.active span { background: #1e2b3c; }
+
+        .header-brand { display: flex; align-items: baseline; gap: 5px; min-width: 0; overflow: hidden; flex-wrap: nowrap; }
+        .header-logo-icon { font-size: 0.95rem; flex-shrink: 0; align-self: center; }
+        .brand-name { font-size: 0.78rem; font-weight: 700; white-space: nowrap; flex-shrink: 0; }
+        .brand-name span { color: #f9a826; }
+        .brand-sub {
+            font-size: 0.58rem; color: #d4ece8; opacity: 0.85;
+            white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+            border-left: 1px solid rgba(255,255,255,0.3);
+            margin-left: 2px; padding-left: 6px;
+        }
+
+        .header-dropdown {
+            position: absolute; top: calc(100% + 8px); left: 0;
+            background: #fff; border-radius: 10px;
+            box-shadow: 0 12px 32px rgba(0,0,0,0.25);
+            padding: 6px; display: none; flex-direction: column;
+            gap: 1px; min-width: 180px; z-index: 1002;
+            border-top: 3px solid #f9a826;
+        }
+        .header-dropdown.open { display: flex; }
+        .header-dropdown a {
+            color: #1e2b3c; text-decoration: none;
+            padding: 7px 11px; border-radius: 6px;
+            font-weight: 500; font-size: 0.8rem;
+            display: flex; align-items: center; gap: 7px;
+        }
+        .header-dropdown a:hover { background: #e3f2ef; color: #075e54; }
+
+        .header-actions { display: flex; align-items: center; gap: 4px; flex-shrink: 0; }
+
+        .btn-donate, .btn-subscribe {
+            border: 1px solid rgba(255,255,255,0.65);
+            background: transparent; color: #fff;
+            font-size: 0.62rem; font-weight: 600;
+            padding: 3px 8px; border-radius: 14px;
+            cursor: pointer; font-family: inherit;
+            white-space: nowrap; line-height: 1.2;
+        }
+        .btn-donate:hover { background: #f9a826; border-color: #f9a826; color: #1e2b3c; }
+        .btn-subscribe { background: #e74c3c; border-color: #e74c3c; }
+        .btn-subscribe:hover { background: #c0392b; }
+        .btn-login {
+            background: #fff; color: #075e54; border: none;
+            font-size: 0.64rem; font-weight: 700;
+            padding: 4px 10px; border-radius: 14px;
+            cursor: pointer; font-family: inherit;
+            white-space: nowrap; line-height: 1.2;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+        }
+        .btn-login:hover { background: #f9a826; color: #1e2b3c; }
+
+        /* ================= হিরো ================= */
+        .page-hero {
+            background:
+                radial-gradient(circle at 85% 20%, rgba(255,255,255,.15), transparent 35%),
+                linear-gradient(135deg, #1e3a8a 0%, #2563eb 45%, #60a5fa 100%);
+            color: white;
+            padding: 35px 18px 50px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .page-hero::before {
+            content: '';
+            position: absolute;
+            top: -80px; right: -80px;
+            width: 240px; height: 240px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50%;
+        }
+        .page-hero::after {
+            content: '';
+            position: absolute;
+            bottom: -90px; left: -70px;
+            width: 220px; height: 220px;
+            background: rgba(255,255,255,0.07);
+            border-radius: 50%;
+        }
+        .page-hero-icon {
+            font-size: 3rem;
+            margin-bottom: 10px;
+            position: relative;
+            z-index: 1;
+            display: inline-block;
+            filter: drop-shadow(0 6px 20px rgba(0,0,0,0.3));
+            animation: floatIcon 3s ease-in-out infinite;
+        }
+        @keyframes floatIcon {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        .page-hero h1 {
+            font-size: 1.9rem;
+            font-weight: 800;
+            margin-bottom: 14px;
+            position: relative;
+            z-index: 1;
+            letter-spacing: 1px;
+            text-shadow: 0 4px 20px rgba(0,0,0,0.25);
+        }
+        .page-hero h1 em {
+            font-style: normal;
+            color: #fef08a;
+        }
+        .breadcrumb {
+            position: relative; z-index: 1;
+            font-size: 0.78rem; opacity: 0.9;
+        }
+        .breadcrumb a { color: #fef08a; text-decoration: none; }
+        .breadcrumb a:hover { text-decoration: underline; }
+
+        /* ================= কনটেন্ট ================= */
+        .inner-container {
+            max-width: 1100px;
+            margin: -30px auto 0;
+            padding: 0 18px 45px;
+            position: relative; z-index: 5;
+        }
+
+        .content-card {
+            background: #fff;
+            border-radius: 20px;
+            padding: 28px 26px;
+            box-shadow: 0 20px 50px -20px rgba(30, 58, 138, 0.25);
+            border-top: 5px solid #2563eb;
+        }
+
+        .content-card h2 {
+            font-size: 1.25rem;
+            color: #1e3a8a;
+            margin-bottom: 14px;
+            padding-bottom: 10px;
+            border-bottom: 2px dashed #bfdbfe;
+            display: flex; align-items: center; gap: 10px;
+            font-weight: 700;
+        }
+
+        /* ================= আপলোড জোন ================= */
+        .upload-zone {
+            background: linear-gradient(135deg, #eff6ff, #dbeafe);
+            border: 3px dashed #60a5fa;
+            border-radius: 20px;
+            padding: 40px 25px;
+            text-align: center;
+            cursor: pointer;
+            margin-bottom: 22px;
+            transition: all 0.3s;
+        }
+        .upload-zone:hover {
+            border-color: #2563eb;
+            background: linear-gradient(135deg, #dbeafe, #bfdbfe);
+            transform: translateY(-3px);
+        }
+        .upload-zone.dragover {
+            border-color: #1e3a8a;
+            background: #bfdbfe;
+            transform: scale(1.02);
+        }
+        .upload-icon {
+            font-size: 3.5rem; margin-bottom: 12px;
+            display: inline-block;
+            animation: bounce 2s ease-in-out infinite;
+        }
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
+        }
+        .upload-title {
+            font-size: 1.15rem; font-weight: 700;
+            color: #1e3a8a; margin-bottom: 6px;
+        }
+        .upload-subtitle {
+            font-size: 0.85rem; color: #1e40af; margin-bottom: 15px;
+        }
+        .upload-btn {
+            display: inline-flex; align-items: center; gap: 8px;
+            background: linear-gradient(135deg, #2563eb, #60a5fa);
+            color: #fff; border: none;
+            padding: 12px 30px; border-radius: 30px;
+            font-size: 0.95rem; font-weight: 700;
+            cursor: pointer; font-family: inherit;
+            box-shadow: 0 8px 20px -5px rgba(37, 99, 235, 0.5);
+            transition: all 0.25s;
+        }
+        .upload-btn:hover { transform: translateY(-2px); }
+        .upload-input { display: none; }
+        .upload-info {
+            margin-top: 12px; font-size: 0.75rem;
+            color: #1e40af; opacity: 0.85;
+        }
+
+        /* ================= ইমেজ গ্রিড ================= */
+        .image-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+            gap: 12px;
+            margin: 20px 0;
+            padding: 18px;
+            background: #f8fafc;
+            border-radius: 16px;
+            border: 1.5px solid #dbeafe;
+        }
+
+        .image-item {
+            position: relative;
+            border-radius: 12px;
+            overflow: hidden;
+            background: #fff;
+            border: 2px solid #bfdbfe;
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.08);
+            transition: all 0.25s;
+            cursor: grab;
+        }
+        .image-item:active { cursor: grabbing; }
+        .image-item:hover {
+            transform: translateY(-3px);
+            border-color: #2563eb;
+            box-shadow: 0 8px 20px -5px rgba(37, 99, 235, 0.3);
+        }
+        .image-item.dragging {
+            opacity: 0.4;
+            transform: scale(0.95);
+        }
+        .image-item.drag-over {
+            border-color: #1e3a8a;
+            transform: scale(1.05);
+            box-shadow: 0 0 0 3px #60a5fa;
+        }
+        .image-item img {
+            width: 100%;
+            height: 120px;
+            object-fit: cover;
+            display: block;
+            background: #f0f9ff;
+            pointer-events: none;
+        }
+        .image-item-badge {
+            position: absolute;
+            top: 6px; left: 6px;
+            background: rgba(30, 58, 138, 0.92);
+            color: #fff;
+            font-size: 0.68rem;
+            font-weight: 800;
+            padding: 3px 9px;
+            border-radius: 999px;
+            z-index: 2;
+        }
+        .image-item-remove {
+            position: absolute;
+            top: 6px; right: 6px;
+            background: rgba(220, 38, 38, 0.9);
+            color: #fff;
+            border: none;
+            width: 26px; height: 26px;
+            border-radius: 50%;
+            font-size: 0.9rem;
+            font-weight: 800;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2;
+            transition: all 0.2s;
+        }
+        .image-item-remove:hover {
+            background: #dc2626;
+            transform: scale(1.15);
+        }
+        .image-item-name {
+            padding: 6px 8px;
+            font-size: 0.68rem;
+            color: #1e40af;
+            font-weight: 600;
+            text-align: center;
+            background: #eff6ff;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        /* ================= অপশন সেকশন ================= */
+        .options-section {
+            display: none;
+            margin: 22px 0;
+            padding: 22px;
+            background: #eff6ff;
+            border-radius: 18px;
+            border: 1.5px solid #bfdbfe;
+        }
+        .options-section.show { display: block; }
+
+        .options-title {
+            font-size: 1.05rem; font-weight: 700;
+            color: #1e3a8a; margin-bottom: 16px;
+            display: flex; align-items: center; gap: 8px;
+        }
+
+        .options-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 14px;
+        }
+
+        .option-box {
+            padding: 14px 16px;
+            background: #fff;
+            border-radius: 12px;
+            border: 1.5px solid #bfdbfe;
+        }
+
+        .option-label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 0.82rem;
+            font-weight: 700;
+            color: #1e3a8a;
+        }
+
+        .option-select {
+            width: 100%;
+            border: 1.5px solid #bfdbfe;
+            border-radius: 10px;
+            padding: 11px 14px;
+            font-size: 0.92rem;
+            font-weight: 700;
+            color: #1e3a8a;
+            background: #fff;
+            font-family: inherit;
+            outline: none;
+            transition: all 0.2s;
+            cursor: pointer;
+        }
+        .option-select:focus {
+            border-color: #2563eb;
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
+        }
+
+        .option-help {
+            font-size: 0.7rem;
+            color: #1e40af;
+            opacity: 0.85;
+            margin-top: 5px;
+            line-height: 1.4;
+        }
+
+        /* অ্যাকশন বাটন */
+        .action-section {
+            display: none;
+            gap: 12px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+        .action-section.show { display: flex; }
+
+        .btn-convert {
+            flex: 1;
+            min-width: 200px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            background: linear-gradient(135deg, #2563eb, #60a5fa);
+            color: #fff;
+            border: none;
+            padding: 15px 32px;
+            border-radius: 30px;
+            font-size: 1rem;
+            font-weight: 800;
+            cursor: pointer;
+            font-family: inherit;
+            box-shadow: 0 10px 28px -6px rgba(37, 99, 235, 0.6);
+            transition: all 0.25s;
+        }
+        .btn-convert:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 16px 40px -6px rgba(37, 99, 235, 0.75);
+        }
+        .btn-convert:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .btn-reset {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            background: #fff;
+            color: #1e40af;
+            border: 2px solid #bfdbfe;
+            padding: 15px 26px;
+            border-radius: 30px;
+            font-size: 0.9rem;
+            font-weight: 700;
+            cursor: pointer;
+            font-family: inherit;
+            transition: all 0.25s;
+        }
+        .btn-reset:hover {
+            border-color: #2563eb;
+            color: #1e3a8a;
+            background: #eff6ff;
+        }
+
+        /* ================= রেজাল্ট ================= */
+        .result-box {
+            display: none;
+            margin-top: 24px;
+            padding: 26px 24px;
+            background: linear-gradient(135deg, #f0fdf4, #dcfce7);
+            border-radius: 18px;
+            border-left: 5px solid #16a34a;
+            text-align: center;
+        }
+        .result-box.show { display: block; }
+        .result-icon {
+            font-size: 3rem;
+            margin-bottom: 10px;
+            animation: pulseResult 2s ease-in-out infinite;
+        }
+        @keyframes pulseResult {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+        .result-title {
+            font-size: 1.25rem;
+            font-weight: 800;
+            color: #15803d;
+            margin-bottom: 6px;
+        }
+        .result-msg {
+            font-size: 0.9rem;
+            color: #166534;
+            margin-bottom: 20px;
+        }
+        .btn-download {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            background: linear-gradient(135deg, #16a34a, #4ade80);
+            color: #fff;
+            border: none;
+            padding: 16px 40px;
+            border-radius: 30px;
+            font-size: 1.05rem;
+            font-weight: 800;
+            cursor: pointer;
+            font-family: inherit;
+            box-shadow: 0 12px 30px -5px rgba(22, 163, 74, 0.6);
+            transition: all 0.25s;
+        }
+        .btn-download:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 18px 40px -5px rgba(22, 163, 74, 0.8);
+        }
+
+        /* ================= Back বাটন ================= */
+        .btn-back {
+            display: inline-flex; align-items: center; gap: 6px;
+            background: linear-gradient(135deg, #1e3a8a, #2563eb);
+            color: white; text-decoration: none;
+            padding: 10px 24px; border-radius: 30px;
+            font-weight: 600; font-size: 0.85rem;
+            transition: all 0.25s;
+            box-shadow: 0 8px 20px -5px rgba(37, 99, 235, 0.5);
+            margin-top: 12px;
+        }
+        .btn-back:hover { transform: translateY(-2px); }
+
+        /* ================= ফুটার ================= */
+        footer {
+            background: #0b2e2a; color: #d4e6e3;
+            text-align: center; padding: 18px 14px;
+            border-top: 3px solid #f9a826;
+        }
+        footer p { max-width: 700px; margin: 0 auto 6px; font-size: 0.82rem; }
+        .footer-links {
+            display: flex; flex-wrap: wrap;
+            justify-content: center; gap: 8px 16px;
+            margin: 8px 0 5px;
+        }
+        .footer-links a {
+            color: #c2e5df; text-decoration: none;
+            font-size: 0.78rem; transition: color 0.2s;
+        }
+        .footer-links a:hover { color: #f9a826; }
+        .copyright { font-size: 0.68rem; opacity: 0.75; margin-top: 8px; }
+
+        .menu-overlay {
+            position: fixed; inset: 0;
+            background: rgba(0,0,0,0.4);
+            z-index: 999; display: none;
+        }
+        .menu-overlay.show { display: block; }
+
+        /* ================= রেসপন্সিভ ================= */
+        @media (max-width: 768px) {
+            header { height: 36px; padding: 0 8px; }
+            .menu-toggle { width: 20px; height: 20px; }
+            .menu-toggle span { width: 2px; height: 2px; }
+            .header-logo-icon { font-size: 0.85rem; }
+            .brand-name { font-size: 0.72rem; }
+            .brand-sub { display: none; }
+            .btn-donate, .btn-subscribe { display: none; }
+            .btn-login { font-size: 0.58rem; padding: 3px 8px; }
+
+            .page-hero { padding: 28px 14px 42px; }
+            .page-hero-icon { font-size: 2.4rem; }
+            .page-hero h1 { font-size: 1.4rem; }
+            .breadcrumb { font-size: 0.7rem; }
+
+            .inner-container { padding: 0 12px 35px; margin-top: -28px; }
+            .content-card { padding: 20px 16px; border-radius: 16px; }
+            .content-card h2 { font-size: 1.1rem; }
+
+            .upload-zone { padding: 28px 16px; border-radius: 16px; }
+            .upload-icon { font-size: 2.8rem; }
+            .upload-title { font-size: 1rem; }
+            .upload-subtitle { font-size: 0.78rem; }
+            .upload-btn { padding: 11px 24px; font-size: 0.85rem; }
+
+            .image-grid { grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); gap: 9px; padding: 12px; }
+            .image-item img { height: 90px; }
+
+            .options-section { padding: 16px 14px; }
+            .options-grid { grid-template-columns: 1fr; gap: 10px; }
+
+            .action-section { flex-direction: column; }
+            .btn-convert, .btn-reset { width: 100%; min-width: unset; }
+            .btn-convert { padding: 13px 20px; font-size: 0.92rem; }
+            .btn-reset { padding: 12px 20px; font-size: 0.82rem; }
+
+            .result-box { padding: 22px 16px; }
+            .result-icon { font-size: 2.5rem; }
+            .result-title { font-size: 1.1rem; }
+            .result-msg { font-size: 0.82rem; }
+            .btn-download { padding: 14px 28px; font-size: 0.92rem; width: 100%; }
+
+            .btn-back { padding: 8px 18px; font-size: 0.78rem; }
+
+            footer { padding: 12px 10px; }
+            footer p { font-size: 0.72rem; }
+            .footer-links { gap: 5px 10px; }
+            .footer-links a { font-size: 0.7rem; }
+            .copyright { font-size: 0.6rem; }
+        }
+
+        @media (max-width: 400px) {
+            header { height: 34px; padding: 0 6px; }
+            .menu-toggle { width: 18px; height: 18px; }
+            .brand-name { font-size: 0.66rem; }
+            .header-logo-icon { font-size: 0.78rem; }
+            .btn-login { font-size: 0.54rem; padding: 2px 7px; }
+            .page-hero h1 { font-size: 1.15rem; }
+            .image-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- হেডার -->
+    <header>
+        <div class="header-left">
+            <button class="menu-toggle" id="menuToggle" aria-label="Menu">
+                <span></span><span></span><span></span>
+            </button>
+            <div class="header-brand">
+                <span class="header-logo-icon">🖥️</span>
+                <span class="brand-name">Azad <span>Digital Seva</span></span>
+                <span class="brand-sub">সরকারি ও বেসরকারি অনলাইন পরিষেবা</span>
+            </div>
+            <nav class="header-dropdown" id="headerDropdown">
+                <a href="index.html">🏠 Home</a>
+                <a href="blog.html">📝 Blog</a>
+                <a href="youtube.html">📺 YouTube</a>
+                <a href="facebook.html">📘 Facebook</a>
+                <a href="contact.html">📞 Contact</a>
+                <a href="about.html">ℹ️ About</a>
+            </nav>
+        </div>
+        <div class="header-actions">
+            <button class="btn-donate" onclick="location.href='donate.html'">❤️ ডোনেশন</button>
+            <button class="btn-subscribe" onclick="location.href='subscribe.html'">🔔 সাবস্ক্রাইব</button>
+            <button class="btn-login" onclick="location.href='login.html'">লগ ইন</button>
+        </div>
+    </header>
+
+    <div class="menu-overlay" id="menuOverlay"></div>
+
+    <!-- হিরো -->
+    <section class="page-hero">
+        <div class="page-hero-icon">🖼️</div>
+        <h1>Photo to <em>PDF</em></h1>
+        <div class="breadcrumb">
+            <a href="index.html">Home</a> › <a href="online-service.html">Online Services</a> › <a href="pdf-editor.html">PDF Editor</a> › <span>Photo to PDF</span>
+        </div>
+    </section>
+
+    <!-- কনটেন্ট -->
+    <main class="inner-container">
+        <div class="content-card">
+            <h2>🖼️ একাধিক ছবি একটি PDF ফাইলে রূপান্তর করুন</h2>
+
+            <!-- আপলোড জোন -->
+            <div class="upload-zone" id="uploadZone">
+                <div class="upload-icon">🖼️</div>
+                <div class="upload-title">ছবি আপলোড করুন</div>
+                <div class="upload-subtitle">একাধিক ছবি সিলেক্ট করতে পারেন (JPG / PNG)</div>
+                <button class="upload-btn" type="button" id="uploadBtn">
+                    <span>📁</span> Browse Images
+                </button>
+                <input type="file" class="upload-input" id="fileInput" accept="image/jpeg,image/png,image/jpg,image/webp" multiple>
+                <div class="upload-info">সর্বোচ্চ ২০টি ছবি • প্রতিটি ২০ MB পর্যন্ত</div>
+            </div>
+
+            <!-- ইমেজ গ্রিড -->
+            <div class="image-grid" id="imageGrid" style="display:none;"></div>
+
+            <!-- অপশন সেকশন (শুধু পেজ সাইজ) -->
+            <div class="options-section" id="optionsSection">
+                <div class="options-title">⚙️ PDF অপশন</div>
+
+                <div class="options-grid">
+                    <div class="option-box">
+                        <label class="option-label">📄 পেজ সাইজ</label>
+                        <select class="option-select" id="pageSize">
+                            <option value="auto" selected>Auto (ছবির সাইজ অনুযায়ী)</option>
+                            <option value="a4">A4 (210 × 297 mm)</option>
+                            <option value="a4-landscape">A4 Landscape</option>
+                            <option value="letter">Letter (8.5 × 11 in)</option>
+                        </select>
+                        <div class="option-help">Auto রাখলে ছবির সাইজেই PDF পেজ হবে</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- প্রোগ্রেস -->
+            <div class="progress-wrap" id="progressWrap" style="display:none;">
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+                <div class="progress-text" id="progressText">Processing...</div>
+            </div>
+
+            <!-- অ্যাকশন -->
+            <div class="action-section" id="actionSection">
+                <button class="btn-convert" id="convertBtn" type="button">
+                    <span>📄</span> Convert to PDF
+                </button>
+                <button class="btn-reset" id="resetBtn" type="button">
+                    <span>🔄</span> Reset
+                </button>
+            </div>
+
+            <!-- রেজাল্ট -->
+            <div class="result-box" id="resultBox">
+                <div class="result-icon">✅</div>
+                <div class="result-title">PDF Created Successfully!</div>
+                <div class="result-msg" id="resultMsg">Your PDF is ready for download.</div>
+
+                <button class="btn-download" id="downloadBtn" type="button">
+                    <span>⬇️</span> Download PDF
+                </button>
+            </div>
+
+            <a href="pdf-editor.html" class="btn-back">← Back to PDF Editor</a>
+        </div>
+    </main>
+
+    <!-- ফুটার -->
+    <footer>
+        <p>🏢 Azad Digital Seva — আপনার বিশ্বস্ত অনলাইন সেবা প্রদানকারী</p>
+        <div class="footer-links">
+            <a href="index.html">Home</a>
+            <a href="services.html">Services</a>
+            <a href="tools.html">Tools</a>
+            <a href="notice.html">Notice</a>
+            <a href="contact.html">Contact</a>
+        </div>
+        <p class="copyright">© ২০২৫ Azad Digital Seva | সর্বস্বত্ব সংরক্ষিত</p>
+    </footer>
+
+    <!-- লাইব্রেরি -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
+
+    <script>
+        (function () {
+            /* ===== মেনু ===== */
+            const toggle = document.getElementById('menuToggle');
+            const dropdown = document.getElementById('headerDropdown');
+            const overlay = document.getElementById('menuOverlay');
+            function openMenu() {
+                dropdown.classList.add('open');
+                toggle.classList.add('active');
+                overlay.classList.add('show');
+            }
+            function closeMenu() {
+                dropdown.classList.remove('open');
+                toggle.classList.remove('active');
+                overlay.classList.remove('show');
+            }
+            toggle.addEventListener('click', (e) => {
+                e.stopPropagation();
+                dropdown.classList.contains('open') ? closeMenu() : openMenu();
+            });
+            overlay.addEventListener('click', closeMenu);
+            document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeMenu(); });
+            dropdown.addEventListener('click', (e) => e.stopPropagation());
+
+            /* ===== এলিমেন্ট ===== */
+            const uploadZone = document.getElementById('uploadZone');
+            const uploadBtn = document.getElementById('uploadBtn');
+            const fileInput = document.getElementById('fileInput');
+            const imageGrid = document.getElementById('imageGrid');
+            const optionsSection = document.getElementById('optionsSection');
+            const actionSection = document.getElementById('actionSection');
+            const convertBtn = document.getElementById('convertBtn');
+            const resetBtn = document.getElementById('resetBtn');
+            const progressWrap = document.getElementById('progressWrap');
+            const progressFill = document.getElementById('progressFill');
+            const progressText = document.getElementById('progressText');
+            const resultBox = document.getElementById('resultBox');
+            const resultMsg = document.getElementById('resultMsg');
+            const downloadBtn = document.getElementById('downloadBtn');
+            const pageSize = document.getElementById('pageSize');
+
+            /* ===== স্টেট ===== */
+            let images = [];
+            let pdfBlob = null;
+            let dragSrcIndex = null;
+
+            const MAX_FILES = 20;
+            const MAX_FILE_SIZE = 20 * 1024 * 1024;
+
+            async function handleFiles(files) {
+                const validFiles = [];
+                for (const f of files) {
+                    if (!f.type.startsWith('image/')) continue;
+                    if (f.size > MAX_FILE_SIZE) {
+                        alert('⚠️ "' + f.name + '" ২০ MB এর চেয়ে বড়।');
+                        continue;
+                    }
+                    validFiles.push(f);
+                }
+
+                if (images.length + validFiles.length > MAX_FILES) {
+                    alert('⚠️ সর্বোচ্চ ' + MAX_FILES + 'টি ছবি যোগ করা যাবে।');
+                    return;
+                }
+
+                for (const f of validFiles) {
+                    const dataUrl = await fileToDataUrl(f);
+                    images.push({
+                        id: Date.now() + Math.random(),
+                        file: f,
+                        name: f.name,
+                        dataUrl: dataUrl
+                    });
+                }
+
+                renderGrid();
+                if (images.length > 0) {
+                    optionsSection.classList.add('show');
+                    actionSection.classList.add('show');
+                    uploadZone.style.display = 'none';
+                    resultBox.classList.remove('show');
+                }
+            }
+
+            function fileToDataUrl(file) {
+                return new Promise((resolve, reject) => {
+                    const reader = new FileReader();
+                    reader.onload = () => resolve(reader.result);
+                    reader.onerror = reject;
+                    reader.readAsDataURL(file);
+                });
+            }
+
+            function renderGrid() {
+                if (images.length === 0) {
+                    imageGrid.style.display = 'none';
+                    imageGrid.innerHTML = '';
+                    uploadZone.style.display = 'block';
+                    optionsSection.classList.remove('show');
+                    actionSection.classList.remove('show');
+                    return;
+                }
+
+                imageGrid.style.display = 'grid';
+                imageGrid.innerHTML = '';
+
+                images.forEach((img, index) => {
+                    const item = document.createElement('div');
+                    item.className = 'image-item';
+                    item.draggable = true;
+                    item.dataset.index = index;
+
+                    const imgEl = document.createElement('img');
+                    imgEl.src = img.dataUrl;
+                    imgEl.alt = img.name;
+
+                    const badge = document.createElement('div');
+                    badge.className = 'image-item-badge';
+                    badge.textContent = '#' + (index + 1);
+
+                    const removeBtn = document.createElement('button');
+                    removeBtn.className = 'image-item-remove';
+                    removeBtn.textContent = '✕';
+                    removeBtn.title = 'মুছুন';
+                    removeBtn.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        images.splice(index, 1);
+                        renderGrid();
+                    });
+
+                    const nameEl = document.createElement('div');
+                    nameEl.className = 'image-item-name';
+                    nameEl.textContent = img.name;
+                    nameEl.title = img.name;
+
+                    item.appendChild(imgEl);
+                    item.appendChild(badge);
+                    item.appendChild(removeBtn);
+                    item.appendChild(nameEl);
+
+                    item.addEventListener('dragstart', (e) => {
+                        dragSrcIndex = index;
+                        item.classList.add('dragging');
+                        e.dataTransfer.effectAllowed = 'move';
+                    });
+                    item.addEventListener('dragend', () => {
+                        item.classList.remove('dragging');
+                        document.querySelectorAll('.image-item').forEach(el => el.classList.remove('drag-over'));
+                    });
+                    item.addEventListener('dragover', (e) => {
+                        e.preventDefault();
+                        item.classList.add('drag-over');
+                    });
+                    item.addEventListener('dragleave', () => {
+                        item.classList.remove('drag-over');
+                    });
+                    item.addEventListener('drop', (e) => {
+                        e.preventDefault();
+                        item.classList.remove('drag-over');
+                        if (dragSrcIndex === null || dragSrcIndex === index) return;
+                        const [moved] = images.splice(dragSrcIndex, 1);
+                        images.splice(index, 0, moved);
+                        dragSrcIndex = null;
+                        renderGrid();
+                    });
+
+                    imageGrid.appendChild(item);
+                });
+            }
+
+            uploadBtn.addEventListener('click', (e) => { e.stopPropagation(); fileInput.click(); });
+            uploadZone.addEventListener('click', () => fileInput.click());
+
+            fileInput.addEventListener('change', (e) => {
+                if (e.target.files.length) handleFiles(e.target.files);
+                fileInput.value = '';
+            });
+
+            uploadZone.addEventListener('dragover', (e) => { e.preventDefault(); uploadZone.classList.add('dragover'); });
+            uploadZone.addEventListener('dragleave', () => { uploadZone.classList.remove('dragover'); });
+            uploadZone.addEventListener('drop', (e) => {
+                e.preventDefault();
+                uploadZone.classList.remove('dragover');
+                if (e.dataTransfer.files.length) handleFiles(e.dataTransfer.files);
+            });
+
+            /* ===== পেজ সাইজ কনফিগ ===== */
+            function getPageFormat() {
+                const size = pageSize.value;
+                if (size === 'auto') return { auto: true };
+                if (size === 'a4') return { w: 595.28, h: 841.89 };
+                if (size === 'a4-landscape') return { w: 841.89, h: 595.28 };
+                if (size === 'letter') return { w: 612, h: 792 };
+                return { w: 595.28, h: 841.89 };
+            }
+
+            /* ===== কনভার্ট ===== */
+            convertBtn.addEventListener('click', async () => {
+                if (images.length === 0) return;
+
+                convertBtn.disabled = true;
+                convertBtn.innerHTML = '<span>⏳</span> Creating PDF...';
+                progressWrap.style.display = 'block';
+                progressWrap.classList.add('show');
+                resultBox.classList.remove('show');
+                progressFill.style.width = '10%';
+                progressText.textContent = 'Loading images...';
+
+                try {
+                    const { PDFDocument } = PDFLib;
+                    const pdfDoc = await PDFDocument.create();
+
+                    const fmt = getPageFormat();
+
+                    for (let i = 0; i < images.length; i++) {
+                        const img = images[i];
+                        progressText.textContent = `Adding image ${i + 1}/${images.length}...`;
+                        progressFill.style.width = (10 + (i / images.length) * 80) + '%';
+
+                        const dataUrl = img.dataUrl;
+                        let embedded;
+                        try {
+                            if (dataUrl.startsWith('data:image/png')) {
+                                embedded = await pdfDoc.embedPng(dataUrl);
+                            } else if (dataUrl.startsWith('data:image/jpeg') || dataUrl.startsWith('data:image/jpg')) {
+                                embedded = await pdfDoc.embedJpg(dataUrl);
+                            } else {
+                                const jpegUrl = await convertToJpeg(dataUrl);
+                                embedded = await pdfDoc.embedJpg(jpegUrl);
+                            }
+                        } catch (err) {
+                            console.warn('Image embed failed:', err);
+                            continue;
+                        }
+
+                        const iw = embedded.width;
+                        const ih = embedded.height;
+
+                        let pw, ph;
+                        if (fmt.auto) {
+                            pw = iw;
+                            ph = ih;
+                        } else {
+                            pw = fmt.w;
+                            ph = fmt.h;
+                        }
+
+                        const page = pdfDoc.addPage([pw, ph]);
+
+                        if (fmt.auto) {
+                            // Auto mode — ছবি পুরো পেজ
+                            page.drawImage(embedded, {
+                                x: 0,
+                                y: 0,
+                                width: iw,
+                                height: ih
+                            });
+                        } else {
+                            // পেজ সাইজ নির্দিষ্ট — ছবি ফিট (contain)
+                            const ratio = Math.min(pw / iw, ph / ih);
+                            const drawW = iw * ratio;
+                            const drawH = ih * ratio;
+                            const drawX = (pw - drawW) / 2;
+                            const drawY = (ph - drawH) / 2;
+
+                            page.drawImage(embedded, {
+                                x: drawX,
+                                y: drawY,
+                                width: drawW,
+                                height: drawH
+                            });
+                        }
+                    }
+
+                    progressText.textContent = 'Generating PDF file...';
+                    progressFill.style.width = '95%';
+
+                    const pdfBytes = await pdfDoc.save();
+                    pdfBlob = new Blob([pdfBytes], { type: 'application/pdf' });
+
+                    progressFill.style.width = '100%';
+                    progressText.textContent = 'Complete ✓';
+                    await new Promise(r => setTimeout(r, 400));
+                    progressWrap.classList.remove('show');
+                    progressWrap.style.display = 'none';
+
+                    resultMsg.textContent = `${images.length} image(s) converted to PDF successfully.`;
+                    resultBox.classList.add('show');
+                    convertBtn.disabled = false;
+                    convertBtn.innerHTML = '<span>📄</span> Convert to PDF';
+                    resultBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+                } catch (err) {
+                    console.error(err);
+                    progressWrap.classList.remove('show');
+                    progressWrap.style.display = 'none';
+                    alert('⚠️ Failed to create PDF: ' + (err.message || ''));
+                    convertBtn.disabled = false;
+                    convertBtn.innerHTML = '<span>📄</span> Convert to PDF';
+                }
+            });
+
+            function convertToJpeg(dataUrl) {
+                return new Promise((resolve) => {
+                    const img = new Image();
+                    img.onload = () => {
+                        const c = document.createElement('canvas');
+                        c.width = img.width;
+                        c.height = img.height;
+                        const ctx = c.getContext('2d');
+                        ctx.fillStyle = '#fff';
+                        ctx.fillRect(0, 0, c.width, c.height);
+                        ctx.drawImage(img, 0, 0);
+                        resolve(c.toDataURL('image/jpeg', 0.95));
+                    };
+                    img.src = dataUrl;
+                });
+            }
+
+            /* ===== ডাউনলোড ===== */
+            downloadBtn.addEventListener('click', () => {
+                if (!pdfBlob) return;
+
+                const outName = 'ADSpdf-photos.pdf';
+
+                const url = URL.createObjectURL(pdfBlob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = outName;
+                a.click();
+                setTimeout(() => URL.revokeObjectURL(url), 1500);
+
+                downloadBtn.innerHTML = '<span>✅</span> Downloaded!';
+                setTimeout(() => {
+                    downloadBtn.innerHTML = '<span>⬇️</span> Download PDF';
+                }, 2500);
+            });
+
+            /* ===== রিসেট ===== */
+            resetBtn.addEventListener('click', () => {
+                if (images.length > 0 && !confirm('সব ছবি মুছে ফেলবেন?')) return;
+                images = [];
+                pdfBlob = null;
+                fileInput.value = '';
+                renderGrid();
+                resultBox.classList.remove('show');
+                progressWrap.classList.remove('show');
+                progressWrap.style.display = 'none';
+            });
+        })();
+    </script>
+
+</body>
+</html>

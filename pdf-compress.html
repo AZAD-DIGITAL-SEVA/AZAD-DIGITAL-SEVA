@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Compress PDF - Azad Digital Seva</title>
-    <meta name="description" content="Compress PDF - PDF ফাইলের সাইজ আপনার পছন্দমতো KB/MB এ কমিয়ে আনুন।">
+    <meta name="description" content="Compress PDF - PDF ফাইলের সাইজ আপনার পছন্দমতো KB/MB এ কমিয়ে আনুন। পাসওয়ার্ড-প্রোটেক্টেড PDF সাপোর্ট সহ।">
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -17,7 +17,7 @@
         }
 
         /* ==================================================
-           হেডার — অতি স্লিম (38px) + গ্লাস এফেক্ট
+           হেডার
            ================================================== */
         header {
             background: rgba(15, 23, 42, 0.85);
@@ -114,8 +114,7 @@
         .btn-login:hover { box-shadow: 0 0 20px rgba(20, 184, 166, 0.7); }
 
         /* ==================================================
-           পেজ হিরো — টিল-এমেরাল্ড + অ্যানিমেটেড গ্লো
-           (সাবটাইটেল ও চিপস ডিলিট করা)
+           পেজ হিরো
            ================================================== */
         .page-hero {
             background:
@@ -189,7 +188,7 @@
         .breadcrumb a:hover { text-decoration: underline; }
 
         /* ==================================================
-           কনটেন্ট — ডার্ক গ্লাস কার্ড
+           কনটেন্ট
            ================================================== */
         .inner-container {
             max-width: 1100px;
@@ -363,8 +362,116 @@
         }
 
         /* ==================================================
-           টার্গেট সাইজ — ডার্ক কার্ড + সায়ান হাইলাইট
+           🔐 পাসওয়ার্ড সেকশন (নতুন)
            ================================================== */
+        .password-section {
+            display: none;
+            margin: 20px 0;
+            padding: 20px 22px;
+            background: linear-gradient(145deg, rgba(251, 191, 36, 0.1), rgba(245, 158, 11, 0.05));
+            border-radius: 18px;
+            border: 1px solid rgba(251, 191, 36, 0.35);
+            border-left: 5px solid #fbbf24;
+            position: relative;
+            overflow: hidden;
+        }
+        .password-section.show { display: block; }
+        .password-section::before {
+            content: '';
+            position: absolute;
+            top: -50%; right: -50%;
+            width: 100%; height: 100%;
+            background: radial-gradient(circle, rgba(251, 191, 36, 0.08), transparent 70%);
+            pointer-events: none;
+        }
+
+        .password-title {
+            font-size: 1rem;
+            font-weight: 800;
+            color: #fbbf24;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .password-subtitle {
+            font-size: 0.78rem;
+            color: #cbd5e1;
+            margin-bottom: 14px;
+            line-height: 1.55;
+            position: relative;
+            z-index: 1;
+        }
+
+        .password-input-wrap {
+            position: relative;
+            display: flex;
+            gap: 10px;
+            align-items: stretch;
+            z-index: 1;
+        }
+
+        .password-input {
+            flex: 1;
+            border: 2px solid rgba(251, 191, 36, 0.4);
+            border-radius: 12px;
+            padding: 12px 45px 12px 16px;
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: #fff;
+            background: rgba(15, 23, 42, 0.7);
+            font-family: inherit;
+            outline: none;
+            transition: all 0.25s;
+        }
+        .password-input:focus {
+            border-color: #fbbf24;
+            box-shadow: 0 0 0 4px rgba(251, 191, 36, 0.15);
+            background: rgba(15, 23, 42, 0.9);
+        }
+        .password-input::placeholder { color: #64748b; font-weight: 500; }
+
+        .password-toggle {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: transparent;
+            border: none;
+            color: #94a3b8;
+            cursor: pointer;
+            font-size: 1.1rem;
+            padding: 4px;
+            transition: color 0.2s;
+        }
+        .password-toggle:hover { color: #fbbf24; }
+
+        .password-status {
+            display: none;
+            margin-top: 12px;
+            padding: 10px 14px;
+            border-radius: 10px;
+            font-size: 0.82rem;
+            font-weight: 700;
+            position: relative;
+            z-index: 1;
+        }
+        .password-status.show { display: block; }
+        .password-status.success {
+            background: rgba(34, 197, 94, 0.15);
+            border: 1px solid rgba(34, 197, 94, 0.4);
+            color: #4ade80;
+        }
+        .password-status.error {
+            background: rgba(239, 68, 68, 0.15);
+            border: 1px solid rgba(239, 68, 68, 0.4);
+            color: #f87171;
+        }
+
+        /* ================= টার্গেট সাইজ ================= */
         .target-section {
             display: none;
             margin: 22px 0;
@@ -471,9 +578,7 @@
             box-shadow: 0 6px 16px -4px rgba(6, 182, 212, 0.4);
         }
 
-        /* ==================================================
-           প্রোগ্রেস
-           ================================================== */
+        /* ================= প্রোগ্রেস ================= */
         .progress-wrap {
             display: none; margin: 22px 0;
         }
@@ -500,9 +605,7 @@
             letter-spacing: 0.3px;
         }
 
-        /* ==================================================
-           অ্যাকশন বাটন
-           ================================================== */
+        /* ================= অ্যাকশন ================= */
         .action-section {
             display: none; gap: 12px;
             margin-top: 22px; flex-wrap: wrap;
@@ -558,9 +661,7 @@
             background: rgba(15, 23, 42, 0.9);
         }
 
-        /* ==================================================
-           রেজাল্ট — এমেরাল্ড গ্রেডিয়েন্ট
-           ================================================== */
+        /* ================= রেজাল্ট ================= */
         .result-box {
             display: none; margin-top: 24px;
             padding: 26px 24px;
@@ -654,9 +755,7 @@
             box-shadow: 0 18px 40px -5px rgba(34, 197, 94, 0.8);
         }
 
-        /* ==================================================
-           Back বাটন
-           ================================================== */
+        /* ================= Back বাটন ================= */
         .btn-back {
             display: inline-flex; align-items: center; gap: 8px;
             background: linear-gradient(135deg, #14b8a6, #2dd4bf);
@@ -673,9 +772,7 @@
             box-shadow: 0 12px 30px -5px rgba(20, 184, 166, 0.7);
         }
 
-        /* ==================================================
-           ফুটার — ডার্ক
-           ================================================== */
+        /* ================= ফুটার ================= */
         footer {
             background: #0a0f1e;
             color: #94a3b8;
@@ -697,9 +794,6 @@
         .footer-links a:hover { color: #2dd4bf; }
         .copyright { font-size: 0.7rem; opacity: 0.7; margin-top: 10px; }
 
-        /* ==================================================
-           ওভারলে
-           ================================================== */
         .menu-overlay {
             position: fixed; inset: 0;
             background: rgba(0, 0, 0, 0.6);
@@ -708,9 +802,7 @@
         }
         .menu-overlay.show { display: block; }
 
-        /* ==================================================
-           রেসপন্সিভ
-           ================================================== */
+        /* ================= রেসপন্সিভ ================= */
         @media (max-width: 768px) {
             header { height: 36px; padding: 0 8px; }
             .menu-toggle { width: 20px; height: 20px; }
@@ -736,6 +828,11 @@
             .upload-title { font-size: 1.05rem; }
             .upload-subtitle { font-size: 0.78rem; }
             .upload-btn { padding: 11px 24px; font-size: 0.85rem; }
+
+            .password-section { padding: 16px 14px; }
+            .password-title { font-size: 0.92rem; }
+            .password-subtitle { font-size: 0.72rem; }
+            .password-input { padding: 11px 40px 11px 14px; font-size: 0.88rem; }
 
             .target-section { padding: 16px 14px; }
             .target-title { font-size: 0.95rem; }
@@ -835,7 +932,7 @@
                     <span>📁</span> Browse PDF File
                 </button>
                 <input type="file" class="upload-input" id="fileInput" accept="application/pdf,.pdf">
-                <div class="upload-info">সর্বোচ্চ ফাইল সাইজ: 25 MB</div>
+                <div class="upload-info">সর্বোচ্চ ফাইল সাইজ: 25 MB • পাসওয়ার্ড-প্রোটেক্টেড PDF সাপোর্ট সহ</div>
             </div>
 
             <!-- ফাইল প্রিভিউ -->
@@ -846,6 +943,19 @@
                     <span class="file-size" id="fileSize">0 KB</span>
                 </div>
                 <button class="file-remove" id="fileRemove" title="সরান">✕</button>
+            </div>
+
+            <!-- 🔐 পাসওয়ার্ড সেকশন (নতুন) -->
+            <div class="password-section" id="passwordSection">
+                <div class="password-title">🔐 Password Protected PDF</div>
+                <div class="password-subtitle">
+                    এই PDF টি পাসওয়ার্ড দিয়ে সুরক্ষিত। প্রসেস করার জন্য পাসওয়ার্ড দিন।
+                </div>
+                <div class="password-input-wrap">
+                    <input type="password" class="password-input" id="pdfPassword" placeholder="PDF পাসওয়ার্ড লিখুন..." autocomplete="off">
+                    <button type="button" class="password-toggle" id="passwordToggle" title="দেখান">👁️</button>
+                </div>
+                <div class="password-status" id="passwordStatus"></div>
             </div>
 
             <!-- টার্গেট সাইজ -->
@@ -966,6 +1076,10 @@
             const fileName = document.getElementById('fileName');
             const fileSize = document.getElementById('fileSize');
             const fileRemove = document.getElementById('fileRemove');
+            const passwordSection = document.getElementById('passwordSection');
+            const pdfPassword = document.getElementById('pdfPassword');
+            const passwordToggle = document.getElementById('passwordToggle');
+            const passwordStatus = document.getElementById('passwordStatus');
             const targetSection = document.getElementById('targetSection');
             const actionSection = document.getElementById('actionSection');
             const compressBtn = document.getElementById('compressBtn');
@@ -985,6 +1099,8 @@
             let currentFile = null;
             let compressedBlob = null;
             let compressedUrl = null;
+            let isPasswordProtected = false;
+            let pdfPasswordValue = '';
 
             function formatSize(bytes) {
                 if (bytes < 1024) return bytes + ' B';
@@ -992,7 +1108,49 @@
                 return (bytes / 1048576).toFixed(2) + ' MB';
             }
 
-            function handleFile(file) {
+            function showPasswordStatus(msg, type) {
+                passwordStatus.textContent = msg;
+                passwordStatus.className = 'password-status show ' + type;
+            }
+
+            function hidePasswordStatus() {
+                passwordStatus.className = 'password-status';
+                passwordStatus.textContent = '';
+            }
+
+            /* ===== পাসওয়ার্ড দেখানো/লুকানো ===== */
+            passwordToggle.addEventListener('click', () => {
+                if (pdfPassword.type === 'password') {
+                    pdfPassword.type = 'text';
+                    passwordToggle.textContent = '🙈';
+                } else {
+                    pdfPassword.type = 'password';
+                    passwordToggle.textContent = '👁️';
+                }
+            });
+
+            /* ===== PDF পাসওয়ার্ড চেক ===== */
+            async function checkPdfPassword(file, password) {
+                try {
+                    const arrayBuffer = await file.arrayBuffer();
+                    const loadOptions = { data: arrayBuffer };
+                    if (password) loadOptions.password = password;
+
+                    const pdf = await pdfjsLib.getDocument(loadOptions).promise;
+                    return { ok: true, pdf, totalPages: pdf.numPages };
+                } catch (err) {
+                    if (err && err.name === 'PasswordException') {
+                        return { ok: false, needPassword: true };
+                    }
+                    if (err && err.message && err.message.toLowerCase().includes('password')) {
+                        return { ok: false, needPassword: true };
+                    }
+                    return { ok: false, error: err.message || 'PDF লোড করা যায়নি' };
+                }
+            }
+
+            /* ===== ফাইল হ্যান্ডল ===== */
+            async function handleFile(file) {
                 if (!file || file.type !== 'application/pdf') {
                     alert('⚠️ শুধু PDF ফাইল আপলোড করুন।');
                     return;
@@ -1001,15 +1159,72 @@
                     alert('⚠️ ফাইল সাইজ ২৫ MB এর কম হতে হবে।');
                     return;
                 }
+
                 currentFile = file;
                 fileName.textContent = file.name;
                 fileSize.textContent = formatSize(file.size);
                 filePreview.classList.add('show');
-                targetSection.classList.add('show');
-                actionSection.classList.add('show');
-                resultBox.classList.remove('show');
                 uploadZone.style.display = 'none';
+                resultBox.classList.remove('show');
+                hidePasswordStatus();
+                pdfPassword.value = '';
+                pdfPassword.type = 'password';
+                passwordToggle.textContent = '👁️';
+
+                // চেক করি পাসওয়ার্ড আছে কিনা
+                progressText.textContent = 'PDF চেক করা হচ্ছে...';
+
+                const result = await checkPdfPassword(file, '');
+
+                if (result.ok) {
+                    // পাসওয়ার্ড নেই
+                    isPasswordProtected = false;
+                    pdfPasswordValue = '';
+                    passwordSection.classList.remove('show');
+                    targetSection.classList.add('show');
+                    actionSection.classList.add('show');
+                } else if (result.needPassword) {
+                    // পাসওয়ার্ড আছে
+                    isPasswordProtected = true;
+                    passwordSection.classList.add('show');
+                    targetSection.classList.remove('show');
+                    actionSection.classList.remove('show');
+                    showPasswordStatus('🔐 এই PDF পাসওয়ার্ড দিয়ে সুরক্ষিত। পাসওয়ার্ড দিয়ে আনলক করুন।', 'error');
+                } else {
+                    // অন্য সমস্যা
+                    alert('⚠️ PDF লোড করা যায়নি: ' + (result.error || 'অজানা সমস্যা'));
+                    fileRemove.click();
+                }
             }
+
+            /* ===== পাসওয়ার্ড ভেরিফাই ===== */
+            pdfPassword.addEventListener('input', async () => {
+                if (!currentFile || !isPasswordProtected) return;
+
+                const pwd = pdfPassword.value;
+                hidePasswordStatus();
+
+                if (!pwd) {
+                    targetSection.classList.remove('show');
+                    actionSection.classList.remove('show');
+                    return;
+                }
+
+                const result = await checkPdfPassword(currentFile, pwd);
+
+                if (result.ok) {
+                    pdfPasswordValue = pwd;
+                    showPasswordStatus('✅ পাসওয়ার্ড সঠিক! এখন কমপ্রেস করতে পারেন।', 'success');
+                    targetSection.classList.add('show');
+                    actionSection.classList.add('show');
+                } else if (result.needPassword) {
+                    showPasswordStatus('❌ ভুল পাসওয়ার্ড। আবার চেষ্টা করুন।', 'error');
+                    targetSection.classList.remove('show');
+                    actionSection.classList.remove('show');
+                } else {
+                    showPasswordStatus('❌ ' + (result.error || 'লোড করা যায়নি'), 'error');
+                }
+            });
 
             uploadBtn.addEventListener('click', (e) => {
                 e.stopPropagation();
@@ -1037,12 +1252,17 @@
             fileRemove.addEventListener('click', () => {
                 currentFile = null;
                 compressedBlob = null;
+                isPasswordProtected = false;
+                pdfPasswordValue = '';
                 if (compressedUrl) {
                     URL.revokeObjectURL(compressedUrl);
                     compressedUrl = null;
                 }
                 fileInput.value = '';
                 filePreview.classList.remove('show');
+                passwordSection.classList.remove('show');
+                hidePasswordStatus();
+                pdfPassword.value = '';
                 targetSection.classList.remove('show');
                 actionSection.classList.remove('show');
                 resultBox.classList.remove('show');
@@ -1062,10 +1282,16 @@
 
             /* ==================================================
                আসল কমপ্রেস — Target Size অনুযায়ী
-               ডিফল্ট কোয়ালিটি: 0.72 (Balanced)
+               পাসওয়ার্ড সাপোর্ট সহ
                ================================================== */
             compressBtn.addEventListener('click', async () => {
                 if (!currentFile) return;
+
+                // পাসওয়ার্ড চেক
+                if (isPasswordProtected && !pdfPasswordValue) {
+                    alert('⚠️ আগে সঠিক পাসওয়ার্ড দিন।');
+                    return;
+                }
 
                 const rawTarget = Number(targetSize.value);
                 const unit = targetUnit.value;
@@ -1085,7 +1311,14 @@
 
                 try {
                     const arrayBuffer = await currentFile.arrayBuffer();
-                    const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
+
+                    // 🔐 পাসওয়ার্ড সহ লোড
+                    const loadOptions = { data: arrayBuffer };
+                    if (isPasswordProtected && pdfPasswordValue) {
+                        loadOptions.password = pdfPasswordValue;
+                    }
+
+                    const pdf = await pdfjsLib.getDocument(loadOptions).promise;
                     const totalPages = pdf.numPages;
 
                     progressFill.style.width = '10%';
@@ -1224,7 +1457,19 @@
                 } catch (err) {
                     console.error(err);
                     progressWrap.classList.remove('show');
-                    alert('⚠️ ' + (err.message || 'কমপ্রেস করতে সমস্যা হয়েছে।'));
+
+                    let errMsg = 'কমপ্রেস করতে সমস্যা হয়েছে।';
+                    if (err && (err.name === 'PasswordException' || (err.message && err.message.toLowerCase().includes('password')))) {
+                        errMsg = 'ভুল পাসওয়ার্ড। আবার চেষ্টা করুন।';
+                        isPasswordProtected = true;
+                        passwordSection.classList.add('show');
+                        targetSection.classList.remove('show');
+                        actionSection.classList.remove('show');
+                        showPasswordStatus('❌ ভুল পাসওয়ার্ড। আবার চেষ্টা করুন।', 'error');
+                    } else if (err && err.message) {
+                        errMsg = err.message;
+                    }
+                    alert('⚠️ ' + errMsg);
                     compressBtn.disabled = false;
                     compressBtn.innerHTML = '<span>⚡</span> Compress Now';
                 }

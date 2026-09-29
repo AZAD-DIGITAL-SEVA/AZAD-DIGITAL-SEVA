@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Compress PDF - Azad Digital Seva</title>
-    <meta name="description" content="Compress PDF - PDF ফাইলের সাইজ আপনার পছন্দমতো KB/MB এ কমিয়ে আনুন। পাসওয়ার্ড-প্রোটেক্টেড PDF সাপোর্ট সহ।">
+    <meta name="description" content="Compress PDF - কোয়ালিটি ঠিক রেখে PDF সাইজ কমান।">
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -16,9 +16,7 @@
             min-height: 100vh;
         }
 
-        /* ==================================================
-           হেডার
-           ================================================== */
+        /* ================= হেডার ================= */
         header {
             background: rgba(15, 23, 42, 0.85);
             backdrop-filter: blur(14px);
@@ -113,9 +111,7 @@
         }
         .btn-login:hover { box-shadow: 0 0 20px rgba(20, 184, 166, 0.7); }
 
-        /* ==================================================
-           পেজ হিরো
-           ================================================== */
+        /* ================= হিরো ================= */
         .page-hero {
             background:
                 radial-gradient(circle at 20% 30%, rgba(45, 212, 191, 0.15), transparent 40%),
@@ -187,9 +183,7 @@
         .breadcrumb a { color: #fef08a; text-decoration: none; }
         .breadcrumb a:hover { text-decoration: underline; }
 
-        /* ==================================================
-           কনটেন্ট
-           ================================================== */
+        /* ================= কনটেন্ট ================= */
         .inner-container {
             max-width: 1100px;
             margin: -30px auto 0;
@@ -237,7 +231,7 @@
             font-size: 0.92rem; color: #94a3b8; margin-bottom: 16px;
         }
 
-        /* ================= আপলোড জোন ================= */
+        /* ================= আপলোড ================= */
         .upload-zone {
             background: linear-gradient(145deg, rgba(20, 184, 166, 0.08), rgba(6, 182, 212, 0.05));
             border: 3px dashed rgba(45, 212, 191, 0.4);
@@ -250,15 +244,6 @@
             position: relative;
             overflow: hidden;
         }
-        .upload-zone::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: radial-gradient(circle at 50% 50%, rgba(45, 212, 191, 0.1), transparent 60%);
-            opacity: 0;
-            transition: opacity 0.35s;
-        }
-        .upload-zone:hover::before { opacity: 1; }
         .upload-zone:hover {
             border-color: #2dd4bf;
             transform: translateY(-4px);
@@ -301,17 +286,7 @@
             box-shadow: 0 8px 24px -5px rgba(20, 184, 166, 0.5);
             transition: all 0.25s;
             position: relative; z-index: 1;
-            overflow: hidden;
         }
-        .upload-btn::before {
-            content: '';
-            position: absolute;
-            top: 0; left: -100%;
-            width: 100%; height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
-            transition: left 0.6s;
-        }
-        .upload-btn:hover::before { left: 100%; }
         .upload-btn:hover {
             transform: translateY(-3px);
             box-shadow: 0 12px 32px -5px rgba(20, 184, 166, 0.7);
@@ -361,9 +336,7 @@
             transform: scale(1.1);
         }
 
-        /* ==================================================
-           🔐 পাসওয়ার্ড সেকশন (নতুন)
-           ================================================== */
+        /* ================= পাসওয়ার্ড ================= */
         .password-section {
             display: none;
             margin: 20px 0;
@@ -372,46 +345,24 @@
             border-radius: 18px;
             border: 1px solid rgba(251, 191, 36, 0.35);
             border-left: 5px solid #fbbf24;
-            position: relative;
-            overflow: hidden;
         }
         .password-section.show { display: block; }
-        .password-section::before {
-            content: '';
-            position: absolute;
-            top: -50%; right: -50%;
-            width: 100%; height: 100%;
-            background: radial-gradient(circle, rgba(251, 191, 36, 0.08), transparent 70%);
-            pointer-events: none;
-        }
 
         .password-title {
-            font-size: 1rem;
-            font-weight: 800;
-            color: #fbbf24;
-            margin-bottom: 8px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            position: relative;
-            z-index: 1;
+            font-size: 1rem; font-weight: 800;
+            color: #fbbf24; margin-bottom: 8px;
+            display: flex; align-items: center; gap: 8px;
         }
 
         .password-subtitle {
-            font-size: 0.78rem;
-            color: #cbd5e1;
-            margin-bottom: 14px;
-            line-height: 1.55;
-            position: relative;
-            z-index: 1;
+            font-size: 0.78rem; color: #cbd5e1;
+            margin-bottom: 14px; line-height: 1.55;
         }
 
         .password-input-wrap {
             position: relative;
-            display: flex;
-            gap: 10px;
+            display: flex; gap: 10px;
             align-items: stretch;
-            z-index: 1;
         }
 
         .password-input {
@@ -419,8 +370,7 @@
             border: 2px solid rgba(251, 191, 36, 0.4);
             border-radius: 12px;
             padding: 12px 45px 12px 16px;
-            font-size: 0.95rem;
-            font-weight: 700;
+            font-size: 0.95rem; font-weight: 700;
             color: #fff;
             background: rgba(15, 23, 42, 0.7);
             font-family: inherit;
@@ -430,22 +380,16 @@
         .password-input:focus {
             border-color: #fbbf24;
             box-shadow: 0 0 0 4px rgba(251, 191, 36, 0.15);
-            background: rgba(15, 23, 42, 0.9);
         }
-        .password-input::placeholder { color: #64748b; font-weight: 500; }
 
         .password-toggle {
             position: absolute;
-            right: 12px;
-            top: 50%;
+            right: 12px; top: 50%;
             transform: translateY(-50%);
             background: transparent;
-            border: none;
-            color: #94a3b8;
-            cursor: pointer;
-            font-size: 1.1rem;
+            border: none; color: #94a3b8;
+            cursor: pointer; font-size: 1.1rem;
             padding: 4px;
-            transition: color 0.2s;
         }
         .password-toggle:hover { color: #fbbf24; }
 
@@ -456,8 +400,6 @@
             border-radius: 10px;
             font-size: 0.82rem;
             font-weight: 700;
-            position: relative;
-            z-index: 1;
         }
         .password-status.show { display: block; }
         .password-status.success {
@@ -471,6 +413,80 @@
             color: #f87171;
         }
 
+        /* ==================================================
+           🎚️ কোয়ালিটি স্লাইডার সেকশন (নতুন)
+           ================================================== */
+        .quality-section {
+            display: none;
+            margin: 22px 0;
+            padding: 22px;
+            background: linear-gradient(145deg, rgba(139, 92, 246, 0.08), rgba(168, 85, 247, 0.05));
+            border-radius: 18px;
+            border: 1px solid rgba(168, 85, 247, 0.3);
+        }
+        .quality-section.show { display: block; }
+
+        .quality-title {
+            font-size: 1.05rem; font-weight: 800;
+            color: #a78bfa; margin-bottom: 6px;
+            display: flex; align-items: center; gap: 8px;
+        }
+
+        .quality-subtitle {
+            font-size: 0.78rem; color: #94a3b8;
+            margin-bottom: 16px; line-height: 1.55;
+        }
+
+        .quality-presets {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+        }
+
+        .quality-option {
+            position: relative;
+            cursor: pointer;
+        }
+        .quality-option input {
+            position: absolute;
+            opacity: 0;
+        }
+        .quality-label {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 14px 10px;
+            border-radius: 14px;
+            border: 2px solid rgba(168, 85, 247, 0.25);
+            background: rgba(15, 23, 42, 0.4);
+            transition: all 0.3s;
+            text-align: center;
+        }
+        .quality-label .q-icon {
+            font-size: 1.6rem;
+            margin-bottom: 6px;
+        }
+        .quality-label .q-name {
+            font-size: 0.9rem;
+            font-weight: 800;
+            color: #fff;
+            margin-bottom: 3px;
+        }
+        .quality-label .q-desc {
+            font-size: 0.68rem;
+            color: #94a3b8;
+            line-height: 1.4;
+        }
+        .quality-option input:checked + .quality-label {
+            border-color: #a78bfa;
+            background: rgba(168, 85, 247, 0.15);
+            box-shadow: 0 8px 24px -6px rgba(168, 85, 247, 0.5);
+            transform: translateY(-3px);
+        }
+        .quality-option:hover .quality-label {
+            border-color: rgba(168, 85, 247, 0.5);
+        }
+
         /* ================= টার্গেট সাইজ ================= */
         .target-section {
             display: none;
@@ -479,16 +495,6 @@
             background: linear-gradient(145deg, rgba(6, 182, 212, 0.08), rgba(20, 184, 166, 0.05));
             border-radius: 18px;
             border: 1px solid rgba(6, 182, 212, 0.25);
-            position: relative;
-            overflow: hidden;
-        }
-        .target-section::before {
-            content: '';
-            position: absolute;
-            top: -50%; right: -50%;
-            width: 100%; height: 100%;
-            background: radial-gradient(circle, rgba(6, 182, 212, 0.1), transparent 70%);
-            pointer-events: none;
         }
         .target-section.show { display: block; }
 
@@ -496,13 +502,11 @@
             font-size: 1.1rem; font-weight: 800;
             color: #22d3ee; margin-bottom: 8px;
             display: flex; align-items: center; gap: 8px;
-            position: relative; z-index: 1;
         }
 
         .target-subtitle {
             font-size: 0.8rem; color: #94a3b8;
             margin-bottom: 16px; line-height: 1.55;
-            position: relative; z-index: 1;
         }
 
         .target-row {
@@ -510,7 +514,6 @@
             grid-template-columns: 1fr 140px;
             gap: 10px;
             align-items: stretch;
-            position: relative; z-index: 1;
         }
 
         .target-input {
@@ -525,14 +528,11 @@
             font-family: inherit;
             outline: none;
             transition: all 0.25s;
-            letter-spacing: 0.5px;
         }
         .target-input:focus {
             border-color: #22d3ee;
             box-shadow: 0 0 0 4px rgba(6, 182, 212, 0.15);
-            background: rgba(15, 23, 42, 0.9);
         }
-        .target-input::placeholder { color: #64748b; }
 
         .target-unit {
             border: 2px solid rgba(6, 182, 212, 0.4);
@@ -545,10 +545,8 @@
             font-family: inherit;
             outline: none;
             cursor: pointer;
-            transition: all 0.25s;
             text-align: center;
         }
-        .target-unit:focus { border-color: #22d3ee; }
         .target-unit option { background: #0f172a; color: #fff; }
 
         .target-presets {
@@ -556,7 +554,6 @@
             flex-wrap: wrap;
             gap: 8px;
             margin-top: 14px;
-            position: relative; z-index: 1;
         }
 
         .preset-btn {
@@ -575,7 +572,6 @@
             background: rgba(6, 182, 212, 0.2);
             border-color: #22d3ee;
             transform: translateY(-2px);
-            box-shadow: 0 6px 16px -4px rgba(6, 182, 212, 0.4);
         }
 
         /* ================= প্রোগ্রেস ================= */
@@ -602,7 +598,6 @@
         .progress-text {
             text-align: center; font-size: 0.85rem;
             color: #2dd4bf; margin-top: 10px; font-weight: 700;
-            letter-spacing: 0.3px;
         }
 
         /* ================= অ্যাকশন ================= */
@@ -623,19 +618,7 @@
             cursor: pointer; font-family: inherit;
             box-shadow: 0 10px 28px -6px rgba(20, 184, 166, 0.6);
             transition: all 0.25s;
-            position: relative;
-            overflow: hidden;
-            letter-spacing: 0.3px;
         }
-        .btn-compress::before {
-            content: '';
-            position: absolute;
-            top: 0; left: -100%;
-            width: 100%; height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
-            transition: left 0.7s;
-        }
-        .btn-compress:hover::before { left: 100%; }
         .btn-compress:hover {
             transform: translateY(-3px);
             box-shadow: 0 16px 40px -6px rgba(20, 184, 166, 0.8);
@@ -658,7 +641,6 @@
         .btn-reset:hover {
             border-color: #94a3b8;
             color: #e2e8f0;
-            background: rgba(15, 23, 42, 0.9);
         }
 
         /* ================= রেজাল্ট ================= */
@@ -670,21 +652,10 @@
             border: 1px solid rgba(34, 197, 94, 0.3);
             border-left: 5px solid #22c55e;
             text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
-        .result-box::before {
-            content: '';
-            position: absolute;
-            top: -50%; right: -50%;
-            width: 100%; height: 100%;
-            background: radial-gradient(circle, rgba(34, 197, 94, 0.15), transparent 70%);
-            pointer-events: none;
         }
         .result-box.show { display: block; }
         .result-icon {
             font-size: 3rem; margin-bottom: 12px;
-            position: relative; z-index: 1;
             animation: pulseResult 2s ease-in-out infinite;
         }
         @keyframes pulseResult {
@@ -694,17 +665,14 @@
         .result-title {
             font-size: 1.3rem; font-weight: 800;
             color: #4ade80; margin-bottom: 8px;
-            position: relative; z-index: 1;
         }
         .result-msg {
             font-size: 0.9rem; color: #86efac;
             margin-bottom: 18px;
-            position: relative; z-index: 1;
         }
         .result-stats {
             display: flex; justify-content: center;
             gap: 30px; margin: 18px 0; flex-wrap: wrap;
-            position: relative; z-index: 1;
         }
         .result-stat { text-align: center; }
         .result-stat .stat-label {
@@ -725,8 +693,6 @@
             border-radius: 999px; font-size: 0.92rem;
             font-weight: 800; margin: 10px 0 18px;
             box-shadow: 0 8px 20px -4px rgba(34, 197, 94, 0.6);
-            position: relative; z-index: 1;
-            letter-spacing: 0.3px;
         }
         .btn-download {
             display: inline-flex; align-items: center; gap: 10px;
@@ -738,24 +704,13 @@
             box-shadow: 0 12px 30px -5px rgba(34, 197, 94, 0.6);
             transition: all 0.25s;
             text-decoration: none;
-            position: relative; z-index: 1;
-            overflow: hidden;
         }
-        .btn-download::before {
-            content: '';
-            position: absolute;
-            top: 0; left: -100%;
-            width: 100%; height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
-            transition: left 0.7s;
-        }
-        .btn-download:hover::before { left: 100%; }
         .btn-download:hover {
             transform: translateY(-3px);
             box-shadow: 0 18px 40px -5px rgba(34, 197, 94, 0.8);
         }
 
-        /* ================= Back বাটন ================= */
+        /* ================= Back ================= */
         .btn-back {
             display: inline-flex; align-items: center; gap: 8px;
             background: linear-gradient(135deg, #14b8a6, #2dd4bf);
@@ -765,11 +720,9 @@
             transition: all 0.25s;
             box-shadow: 0 8px 22px -5px rgba(20, 184, 166, 0.5);
             margin-top: 18px;
-            letter-spacing: 0.3px;
         }
         .btn-back:hover {
             transform: translateY(-3px);
-            box-shadow: 0 12px 30px -5px rgba(20, 184, 166, 0.7);
         }
 
         /* ================= ফুটার ================= */
@@ -831,8 +784,15 @@
 
             .password-section { padding: 16px 14px; }
             .password-title { font-size: 0.92rem; }
-            .password-subtitle { font-size: 0.72rem; }
             .password-input { padding: 11px 40px 11px 14px; font-size: 0.88rem; }
+
+            .quality-section { padding: 16px 14px; }
+            .quality-title { font-size: 0.92rem; }
+            .quality-presets { grid-template-columns: 1fr; gap: 8px; }
+            .quality-label { padding: 11px 14px; flex-direction: row; gap: 10px; justify-content: flex-start; text-align: left; }
+            .quality-label .q-icon { font-size: 1.4rem; margin-bottom: 0; }
+            .quality-label .q-name { font-size: 0.85rem; margin-bottom: 1px; }
+            .quality-label .q-desc { font-size: 0.68rem; }
 
             .target-section { padding: 16px 14px; }
             .target-title { font-size: 0.95rem; }
@@ -878,7 +838,7 @@
 </head>
 <body>
 
-    <!-- ================= হেডার ================= -->
+    <!-- হেডার -->
     <header>
         <div class="header-left">
             <button class="menu-toggle" id="menuToggle" aria-label="Menu">
@@ -907,23 +867,22 @@
 
     <div class="menu-overlay" id="menuOverlay"></div>
 
-    <!-- ================= পেজ হিরো ================= -->
+    <!-- হিরো -->
     <section class="page-hero">
         <div class="page-hero-icon">📉</div>
         <h1>Compress <em>PDF</em></h1>
-
         <div class="breadcrumb">
             <a href="index.html">Home</a> › <a href="online-service.html">Online Services</a> › <a href="pdf-editor.html">PDF Editor</a> › <span>Compress PDF</span>
         </div>
     </section>
 
-    <!-- ================= মূল কনটেন্ট ================= -->
+    <!-- কনটেন্ট -->
     <main class="inner-container">
         <div class="content-card">
             <h2>📉 PDF কমপ্রেস করুন</h2>
-            <p>নিচের বক্সে PDF আপলোড করুন, টার্গেট সাইজ বাছাই করুন — সত্যিকারের সাইজ কমবে।</p>
+            <p>নিচের বক্সে PDF আপলোড করুন, কোয়ালিটি বাছুন — সাইজ কমবে কিন্তু কোয়ালিটি ভালো থাকবে।</p>
 
-            <!-- আপলোড জোন -->
+            <!-- আপলোড -->
             <div class="upload-zone" id="uploadZone">
                 <div class="upload-icon">📄</div>
                 <div class="upload-title">PDF ফাইল আপলোড করুন</div>
@@ -932,7 +891,7 @@
                     <span>📁</span> Browse PDF File
                 </button>
                 <input type="file" class="upload-input" id="fileInput" accept="application/pdf,.pdf">
-                <div class="upload-info">সর্বোচ্চ ফাইল সাইজ: 25 MB • পাসওয়ার্ড-প্রোটেক্টেড PDF সাপোর্ট সহ</div>
+                <div class="upload-info">সর্বোচ্চ ফাইল সাইজ: 25 MB • পাসওয়ার্ড সাপোর্ট সহ</div>
             </div>
 
             <!-- ফাইল প্রিভিউ -->
@@ -945,7 +904,7 @@
                 <button class="file-remove" id="fileRemove" title="সরান">✕</button>
             </div>
 
-            <!-- 🔐 পাসওয়ার্ড সেকশন (নতুন) -->
+            <!-- পাসওয়ার্ড -->
             <div class="password-section" id="passwordSection">
                 <div class="password-title">🔐 Password Protected PDF</div>
                 <div class="password-subtitle">
@@ -956,6 +915,40 @@
                     <button type="button" class="password-toggle" id="passwordToggle" title="দেখান">👁️</button>
                 </div>
                 <div class="password-status" id="passwordStatus"></div>
+            </div>
+
+            <!-- 🎚️ কোয়ালিটি সেকশন (নতুন) -->
+            <div class="quality-section" id="qualitySection">
+                <div class="quality-title">🎚️ কোয়ালিটি প্রেফারেন্স</div>
+                <div class="quality-subtitle">
+                    আপনি কী চান — ছোট ফাইল নাকি ভালো কোয়ালিটি? আপনার প্রয়োজন অনুযায়ী বেছে নিন।
+                </div>
+                <div class="quality-presets">
+                    <label class="quality-option">
+                        <input type="radio" name="qlevel" value="high">
+                        <div class="quality-label">
+                            <span class="q-icon">🌟</span>
+                            <span class="q-name">High Quality</span>
+                            <span class="q-desc">সাইজ কম কমবে, কিন্তু কোয়ালিটি সবচেয়ে ভালো</span>
+                        </div>
+                    </label>
+                    <label class="quality-option">
+                        <input type="radio" name="qlevel" value="balanced" checked>
+                        <div class="quality-label">
+                            <span class="q-icon">⚖️</span>
+                            <span class="q-name">Balanced</span>
+                            <span class="q-desc">সাইজ ও কোয়ালিটি — দুটোই ঠিক থাকবে</span>
+                        </div>
+                    </label>
+                    <label class="quality-option">
+                        <input type="radio" name="qlevel" value="small">
+                        <div class="quality-label">
+                            <span class="q-icon">📦</span>
+                            <span class="q-name">Small Size</span>
+                            <span class="q-desc">সাইজ সবচেয়ে বেশি কমবে, কোয়ালিটি কম</span>
+                        </div>
+                    </label>
+                </div>
             </div>
 
             <!-- টার্গেট সাইজ -->
@@ -972,7 +965,6 @@
                     </select>
                 </div>
                 <div class="target-presets">
-                    <button type="button" class="preset-btn" data-size="100" data-unit="KB">100 KB</button>
                     <button type="button" class="preset-btn" data-size="200" data-unit="KB">200 KB</button>
                     <button type="button" class="preset-btn" data-size="500" data-unit="KB">500 KB</button>
                     <button type="button" class="preset-btn" data-size="1" data-unit="MB">1 MB</button>
@@ -1025,7 +1017,7 @@
         </div>
     </main>
 
-    <!-- ================= ফুটার ================= -->
+    <!-- ফুটার -->
     <footer>
         <p>🏢 Azad Digital Seva — আপনার বিশ্বস্ত অনলাইন সেবা প্রদানকারী</p>
         <div class="footer-links">
@@ -1038,7 +1030,7 @@
         <p class="copyright">© ২০২৫ Azad Digital Seva | সর্বস্বত্ব সংরক্ষিত</p>
     </footer>
 
-    <!-- ================= লাইব্রেরি ================= -->
+    <!-- লাইব্রেরি -->
     <script src="https://cdn.jsdelivr.net/npm/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
 
@@ -1080,6 +1072,7 @@
             const pdfPassword = document.getElementById('pdfPassword');
             const passwordToggle = document.getElementById('passwordToggle');
             const passwordStatus = document.getElementById('passwordStatus');
+            const qualitySection = document.getElementById('qualitySection');
             const targetSection = document.getElementById('targetSection');
             const actionSection = document.getElementById('actionSection');
             const compressBtn = document.getElementById('compressBtn');
@@ -1112,13 +1105,11 @@
                 passwordStatus.textContent = msg;
                 passwordStatus.className = 'password-status show ' + type;
             }
-
             function hidePasswordStatus() {
                 passwordStatus.className = 'password-status';
                 passwordStatus.textContent = '';
             }
 
-            /* ===== পাসওয়ার্ড দেখানো/লুকানো ===== */
             passwordToggle.addEventListener('click', () => {
                 if (pdfPassword.type === 'password') {
                     pdfPassword.type = 'text';
@@ -1129,27 +1120,21 @@
                 }
             });
 
-            /* ===== PDF পাসওয়ার্ড চেক ===== */
             async function checkPdfPassword(file, password) {
                 try {
                     const arrayBuffer = await file.arrayBuffer();
                     const loadOptions = { data: arrayBuffer };
                     if (password) loadOptions.password = password;
-
                     const pdf = await pdfjsLib.getDocument(loadOptions).promise;
                     return { ok: true, pdf, totalPages: pdf.numPages };
                 } catch (err) {
-                    if (err && err.name === 'PasswordException') {
-                        return { ok: false, needPassword: true };
-                    }
-                    if (err && err.message && err.message.toLowerCase().includes('password')) {
+                    if (err && (err.name === 'PasswordException' || (err.message && err.message.toLowerCase().includes('password')))) {
                         return { ok: false, needPassword: true };
                     }
                     return { ok: false, error: err.message || 'PDF লোড করা যায়নি' };
                 }
             }
 
-            /* ===== ফাইল হ্যান্ডল ===== */
             async function handleFile(file) {
                 if (!file || file.type !== 'application/pdf') {
                     alert('⚠️ শুধু PDF ফাইল আপলোড করুন।');
@@ -1171,40 +1156,35 @@
                 pdfPassword.type = 'password';
                 passwordToggle.textContent = '👁️';
 
-                // চেক করি পাসওয়ার্ড আছে কিনা
-                progressText.textContent = 'PDF চেক করা হচ্ছে...';
-
                 const result = await checkPdfPassword(file, '');
 
                 if (result.ok) {
-                    // পাসওয়ার্ড নেই
                     isPasswordProtected = false;
                     pdfPasswordValue = '';
                     passwordSection.classList.remove('show');
+                    qualitySection.classList.add('show');
                     targetSection.classList.add('show');
                     actionSection.classList.add('show');
                 } else if (result.needPassword) {
-                    // পাসওয়ার্ড আছে
                     isPasswordProtected = true;
                     passwordSection.classList.add('show');
+                    qualitySection.classList.remove('show');
                     targetSection.classList.remove('show');
                     actionSection.classList.remove('show');
                     showPasswordStatus('🔐 এই PDF পাসওয়ার্ড দিয়ে সুরক্ষিত। পাসওয়ার্ড দিয়ে আনলক করুন।', 'error');
                 } else {
-                    // অন্য সমস্যা
                     alert('⚠️ PDF লোড করা যায়নি: ' + (result.error || 'অজানা সমস্যা'));
                     fileRemove.click();
                 }
             }
 
-            /* ===== পাসওয়ার্ড ভেরিফাই ===== */
             pdfPassword.addEventListener('input', async () => {
                 if (!currentFile || !isPasswordProtected) return;
-
                 const pwd = pdfPassword.value;
                 hidePasswordStatus();
 
                 if (!pwd) {
+                    qualitySection.classList.remove('show');
                     targetSection.classList.remove('show');
                     actionSection.classList.remove('show');
                     return;
@@ -1215,10 +1195,12 @@
                 if (result.ok) {
                     pdfPasswordValue = pwd;
                     showPasswordStatus('✅ পাসওয়ার্ড সঠিক! এখন কমপ্রেস করতে পারেন।', 'success');
+                    qualitySection.classList.add('show');
                     targetSection.classList.add('show');
                     actionSection.classList.add('show');
                 } else if (result.needPassword) {
                     showPasswordStatus('❌ ভুল পাসওয়ার্ড। আবার চেষ্টা করুন।', 'error');
+                    qualitySection.classList.remove('show');
                     targetSection.classList.remove('show');
                     actionSection.classList.remove('show');
                 } else {
@@ -1226,23 +1208,15 @@
                 }
             });
 
-            uploadBtn.addEventListener('click', (e) => {
-                e.stopPropagation();
-                fileInput.click();
-            });
+            uploadBtn.addEventListener('click', (e) => { e.stopPropagation(); fileInput.click(); });
             uploadZone.addEventListener('click', () => fileInput.click());
 
             fileInput.addEventListener('change', (e) => {
                 if (e.target.files[0]) handleFile(e.target.files[0]);
             });
 
-            uploadZone.addEventListener('dragover', (e) => {
-                e.preventDefault();
-                uploadZone.classList.add('dragover');
-            });
-            uploadZone.addEventListener('dragleave', () => {
-                uploadZone.classList.remove('dragover');
-            });
+            uploadZone.addEventListener('dragover', (e) => { e.preventDefault(); uploadZone.classList.add('dragover'); });
+            uploadZone.addEventListener('dragleave', () => { uploadZone.classList.remove('dragover'); });
             uploadZone.addEventListener('drop', (e) => {
                 e.preventDefault();
                 uploadZone.classList.remove('dragover');
@@ -1254,15 +1228,13 @@
                 compressedBlob = null;
                 isPasswordProtected = false;
                 pdfPasswordValue = '';
-                if (compressedUrl) {
-                    URL.revokeObjectURL(compressedUrl);
-                    compressedUrl = null;
-                }
+                if (compressedUrl) { URL.revokeObjectURL(compressedUrl); compressedUrl = null; }
                 fileInput.value = '';
                 filePreview.classList.remove('show');
                 passwordSection.classList.remove('show');
                 hidePasswordStatus();
                 pdfPassword.value = '';
+                qualitySection.classList.remove('show');
                 targetSection.classList.remove('show');
                 actionSection.classList.remove('show');
                 resultBox.classList.remove('show');
@@ -1272,7 +1244,6 @@
 
             resetBtn.addEventListener('click', () => fileRemove.click());
 
-            /* ===== প্রিসেট বাটন ===== */
             document.querySelectorAll('.preset-btn').forEach(btn => {
                 btn.addEventListener('click', () => {
                     targetSize.value = btn.dataset.size;
@@ -1281,13 +1252,44 @@
             });
 
             /* ==================================================
-               আসল কমপ্রেস — Target Size অনুযায়ী
-               পাসওয়ার্ড সাপোর্ট সহ
+               🎚️ কোয়ালিটি সেটিংস — লেভেল অনুযায়ী
+               ================================================== */
+            function getQualitySettings() {
+                const level = document.querySelector('input[name="qlevel"]:checked').value;
+
+                if (level === 'high') {
+                    return {
+                        preferredQ: 0.92,
+                        minQ: 0.75,
+                        maxScale: 2.0,
+                        minScale: 1.0,
+                        scaleSteps: [2.0, 1.8, 1.6, 1.4, 1.2, 1.0]
+                    };
+                } else if (level === 'small') {
+                    return {
+                        preferredQ: 0.55,
+                        minQ: 0.30,
+                        maxScale: 1.4,
+                        minScale: 0.5,
+                        scaleSteps: [1.4, 1.2, 1.0, 0.9, 0.8, 0.7, 0.6, 0.5]
+                    };
+                } else {
+                    // balanced (default)
+                    return {
+                        preferredQ: 0.80,
+                        minQ: 0.55,
+                        maxScale: 1.8,
+                        minScale: 0.7,
+                        scaleSteps: [1.8, 1.6, 1.4, 1.2, 1.0, 0.9, 0.8, 0.7]
+                    };
+                }
+            }
+
+            /* ==================================================
+               কমপ্রেস প্রসেস
                ================================================== */
             compressBtn.addEventListener('click', async () => {
                 if (!currentFile) return;
-
-                // পাসওয়ার্ড চেক
                 if (isPasswordProtected && !pdfPasswordValue) {
                     alert('⚠️ আগে সঠিক পাসওয়ার্ড দিন।');
                     return;
@@ -1300,7 +1302,7 @@
                     return;
                 }
                 const targetBytes = Math.round(rawTarget * (unit === 'MB' ? 1024 * 1024 : 1024));
-                const preferredQ = 0.72;
+                const qSettings = getQualitySettings();
 
                 compressBtn.disabled = true;
                 compressBtn.innerHTML = '<span>⏳</span> Processing...';
@@ -1311,8 +1313,6 @@
 
                 try {
                     const arrayBuffer = await currentFile.arrayBuffer();
-
-                    // 🔐 পাসওয়ার্ড সহ লোড
                     const loadOptions = { data: arrayBuffer };
                     if (isPasswordProtected && pdfPasswordValue) {
                         loadOptions.password = pdfPasswordValue;
@@ -1334,7 +1334,8 @@
                             c.width = Math.max(1, Math.round(vp.width));
                             c.height = Math.max(1, Math.round(vp.height));
                             const ctx = c.getContext('2d');
-
+                            ctx.imageSmoothingEnabled = true;
+                            ctx.imageSmoothingQuality = 'high';
                             ctx.fillStyle = '#ffffff';
                             ctx.fillRect(0, 0, c.width, c.height);
 
@@ -1348,27 +1349,27 @@
                             const pg = out.addPage([orig.width, orig.height]);
                             pg.drawImage(jpg, { x: 0, y: 0, width: orig.width, height: orig.height });
                         }
-                        const bytes = await out.save({ useObjectStreams: true });
-                        return bytes;
+                        return await out.save({ useObjectStreams: true });
                     }
 
-                    const scales = [1.8, 1.6, 1.45, 1.3, 1.15, 1.0, 0.9, 0.8, 0.7, 0.6, 0.5];
                     let bestUnder = null;
                     let bestUnderSize = 0;
 
-                    for (const sc of scales) {
-                        let lo = 0.10;
-                        let hi = Math.min(0.94, Math.max(0.55, preferredQ));
+                    for (const sc of qSettings.scaleSteps) {
+                        let lo = qSettings.minQ;
+                        let hi = qSettings.preferredQ;
                         let localBest = null;
                         let localBestSize = 0;
 
+                        // প্রথমে preferredQ দিয়ে চেষ্টা
                         const first = await buildCompressed(sc, hi);
                         if (first.length <= targetBytes) {
                             localBest = first;
                             localBestSize = first.length;
                         }
 
-                        for (let iter = 0; iter < 8; iter++) {
+                        // Binary search — সর্বোচ্চ quality যেটা target এর নিচে
+                        for (let iter = 0; iter < 7; iter++) {
                             const q = (lo + hi) / 2;
                             const bytes = await buildCompressed(sc, q);
 
@@ -1388,17 +1389,20 @@
                             bestUnderSize = localBestSize;
                         }
 
-                        const progress = 15 + Math.floor((scales.indexOf(sc) + 1) / scales.length * 75);
+                        const progress = 15 + Math.floor((qSettings.scaleSteps.indexOf(sc) + 1) / qSettings.scaleSteps.length * 75);
                         progressFill.style.width = progress + '%';
                         progressText.textContent = `অপটিমাইজ করা হচ্ছে... ${progress}%`;
 
-                        if (bestUnder && bestUnderSize >= targetBytes * 0.98) break;
+                        // ৩% এর মধ্যে পৌঁছে গেলে থামুন
+                        if (bestUnder && bestUnderSize >= targetBytes * 0.97) break;
                     }
 
+                    // আরও aggressive pass — যদি কিছু না পাই
                     if (!bestUnder) {
                         progressText.textContent = 'আরও কমপ্রেস করা হচ্ছে...';
                         for (const sc of [0.45, 0.4, 0.35, 0.3]) {
-                            for (const q of [0.15, 0.12, 0.10, 0.08]) {
+                            for (const q of [qSettings.minQ, qSettings.minQ - 0.05, qSettings.minQ - 0.10]) {
+                                if (q < 0.15) continue;
                                 const bytes = await buildCompressed(sc, q);
                                 if (bytes.length <= targetBytes) {
                                     if (bytes.length > bestUnderSize) {
@@ -1413,7 +1417,7 @@
                     }
 
                     if (!bestUnder) {
-                        throw new Error('এই টার্গেট সাইজে নামানো সম্ভব হচ্ছে না। একটু বড় সাইজ দিন।');
+                        throw new Error('এই টার্গেট সাইজে নামানো সম্ভব হচ্ছে না। একটু বড় সাইজ দিন অথবা "Small Size" কোয়ালিটি বেছে নিন।');
                     }
 
                     compressedBlob = new Blob([bestUnder], { type: 'application/pdf' });
@@ -1457,12 +1461,12 @@
                 } catch (err) {
                     console.error(err);
                     progressWrap.classList.remove('show');
-
                     let errMsg = 'কমপ্রেস করতে সমস্যা হয়েছে।';
                     if (err && (err.name === 'PasswordException' || (err.message && err.message.toLowerCase().includes('password')))) {
                         errMsg = 'ভুল পাসওয়ার্ড। আবার চেষ্টা করুন।';
                         isPasswordProtected = true;
                         passwordSection.classList.add('show');
+                        qualitySection.classList.remove('show');
                         targetSection.classList.remove('show');
                         actionSection.classList.remove('show');
                         showPasswordStatus('❌ ভুল পাসওয়ার্ড। আবার চেষ্টা করুন।', 'error');

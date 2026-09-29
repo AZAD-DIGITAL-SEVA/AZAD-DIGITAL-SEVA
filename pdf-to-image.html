@@ -1,0 +1,1379 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PDF to Image - Azad Digital Seva</title>
+    <meta name="description" content="PDF to Image - PDF পেজকে HD JPG/PNG ছবিতে রূপান্তর করুন।">
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Segoe UI', Arial, 'Noto Sans Bengali', sans-serif;
+            background: #0a1628;
+            color: #e0f2fe;
+            line-height: 1.5;
+            min-height: 100vh;
+        }
+
+        /* ================= হেডার ================= */
+        header {
+            background: rgba(10, 22, 40, 0.9);
+            backdrop-filter: blur(14px);
+            color: #fff;
+            height: 38px;
+            padding: 0 10px;
+            border-bottom: 2px solid #06b6d4;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 6px;
+            box-shadow: 0 2px 20px rgba(6, 182, 212, 0.15);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            flex: 1;
+            min-width: 0;
+            position: relative;
+        }
+
+        .menu-toggle {
+            width: 22px;
+            height: 22px;
+            border-radius: 5px;
+            background: rgba(6, 182, 212, 0.15);
+            border: 1px solid rgba(6, 182, 212, 0.4);
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 2px;
+            flex-shrink: 0;
+            padding: 0;
+        }
+        .menu-toggle:hover { background: rgba(6, 182, 212, 0.3); }
+        .menu-toggle.active { background: #06b6d4; border-color: #06b6d4; }
+        .menu-toggle span { width: 2.5px; height: 2.5px; border-radius: 50%; background: #06b6d4; }
+        .menu-toggle.active span { background: #0a1628; }
+
+        .header-brand { display: flex; align-items: baseline; gap: 5px; min-width: 0; overflow: hidden; flex-wrap: nowrap; }
+        .header-logo-icon { font-size: 0.95rem; flex-shrink: 0; align-self: center; }
+        .brand-name { font-size: 0.78rem; font-weight: 700; white-space: nowrap; flex-shrink: 0; color: #fff; }
+        .brand-name span { color: #22d3ee; }
+        .brand-sub {
+            font-size: 0.58rem; color: #94a3b8; opacity: 0.85;
+            white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+            border-left: 1px solid rgba(148, 163, 184, 0.3);
+            margin-left: 2px; padding-left: 6px;
+        }
+
+        .header-dropdown {
+            position: absolute; top: calc(100% + 8px); left: 0;
+            background: #0f1e38; border-radius: 10px;
+            box-shadow: 0 12px 32px rgba(0,0,0,0.5);
+            padding: 6px; display: none; flex-direction: column;
+            gap: 1px; min-width: 180px; z-index: 1002;
+            border: 1px solid rgba(6, 182, 212, 0.3);
+            border-top: 3px solid #06b6d4;
+        }
+        .header-dropdown.open { display: flex; }
+        .header-dropdown a {
+            color: #e0f2fe; text-decoration: none;
+            padding: 7px 11px; border-radius: 6px;
+            font-weight: 500; font-size: 0.8rem;
+            display: flex; align-items: center; gap: 7px;
+        }
+        .header-dropdown a:hover { background: rgba(6, 182, 212, 0.15); color: #22d3ee; }
+
+        .header-actions { display: flex; align-items: center; gap: 4px; flex-shrink: 0; }
+
+        .btn-donate, .btn-subscribe {
+            border: 1px solid rgba(6, 182, 212, 0.5);
+            background: transparent; color: #22d3ee;
+            font-size: 0.62rem; font-weight: 600;
+            padding: 3px 8px; border-radius: 14px;
+            cursor: pointer; font-family: inherit;
+            white-space: nowrap; line-height: 1.2;
+        }
+        .btn-donate:hover { background: #06b6d4; color: #0a1628; box-shadow: 0 0 12px rgba(6, 182, 212, 0.5); }
+        .btn-subscribe { background: #e74c3c; border-color: #e74c3c; color: #fff; }
+        .btn-subscribe:hover { background: #c0392b; }
+        .btn-login {
+            background: linear-gradient(135deg, #06b6d4, #22d3ee);
+            color: #0a1628; border: none;
+            font-size: 0.64rem; font-weight: 700;
+            padding: 4px 10px; border-radius: 14px;
+            cursor: pointer; font-family: inherit;
+            white-space: nowrap; line-height: 1.2;
+            box-shadow: 0 0 12px rgba(6, 182, 212, 0.4);
+        }
+        .btn-login:hover { box-shadow: 0 0 20px rgba(6, 182, 212, 0.7); }
+
+        /* ================= হিরো ================= */
+        .page-hero {
+            background:
+                radial-gradient(circle at 20% 30%, rgba(34, 211, 238, 0.18), transparent 40%),
+                radial-gradient(circle at 85% 70%, rgba(139, 92, 246, 0.15), transparent 40%),
+                linear-gradient(135deg, #0e4f6e 0%, #0e7490 45%, #06b6d4 100%);
+            color: white;
+            padding: 40px 18px 55px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .page-hero::before {
+            content: '';
+            position: absolute;
+            top: -100px; right: -100px;
+            width: 300px; height: 300px;
+            background: radial-gradient(circle, rgba(34, 211, 238, 0.25), transparent 70%);
+            border-radius: 50%;
+            animation: floatGlow 6s ease-in-out infinite;
+        }
+        .page-hero::after {
+            content: '';
+            position: absolute;
+            bottom: -100px; left: -100px;
+            width: 280px; height: 280px;
+            background: radial-gradient(circle, rgba(139, 92, 246, 0.2), transparent 70%);
+            border-radius: 50%;
+            animation: floatGlow 8s ease-in-out infinite reverse;
+        }
+        @keyframes floatGlow {
+            0%, 100% { transform: translate(0, 0); }
+            50% { transform: translate(20px, -20px); }
+        }
+
+        .page-hero-icon {
+            font-size: 3.2rem;
+            margin-bottom: 10px;
+            position: relative;
+            z-index: 1;
+            display: inline-block;
+            filter: drop-shadow(0 6px 20px rgba(34, 211, 238, 0.6));
+            animation: floatIcon 3s ease-in-out infinite;
+        }
+        @keyframes floatIcon {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        .page-hero h1 {
+            font-size: 1.9rem;
+            font-weight: 800;
+            margin-bottom: 14px;
+            position: relative;
+            z-index: 1;
+            letter-spacing: 1px;
+            text-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+        .page-hero h1 em {
+            font-style: normal;
+            background: linear-gradient(135deg, #fbbf24, #fde047);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .breadcrumb {
+            position: relative; z-index: 1;
+            font-size: 0.78rem; opacity: 0.9;
+        }
+        .breadcrumb a { color: #fde047; text-decoration: none; }
+        .breadcrumb a:hover { text-decoration: underline; }
+
+        /* ================= কনটেন্ট ================= */
+        .inner-container {
+            max-width: 1100px;
+            margin: -30px auto 0;
+            padding: 0 18px 45px;
+            position: relative; z-index: 5;
+        }
+
+        .content-card {
+            background: linear-gradient(145deg, #0f1e38, #0a1628);
+            border-radius: 24px;
+            padding: 32px 28px;
+            box-shadow:
+                0 24px 60px -20px rgba(0, 0, 0, 0.6),
+                inset 0 1px 0 rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(6, 182, 212, 0.25);
+            position: relative;
+            overflow: hidden;
+        }
+        .content-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #06b6d4, #8b5cf6, #06b6d4);
+            background-size: 200% 100%;
+            animation: gradientMove 3s linear infinite;
+        }
+        @keyframes gradientMove {
+            0% { background-position: 0% 0%; }
+            100% { background-position: 200% 0%; }
+        }
+
+        .content-card h2 {
+            font-size: 1.25rem;
+            color: #22d3ee;
+            margin-bottom: 14px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid rgba(6, 182, 212, 0.25);
+            display: flex; align-items: center; gap: 10px;
+            font-weight: 700;
+        }
+
+        /* ================= আপলোড জোন ================= */
+        .upload-zone {
+            background: linear-gradient(145deg, rgba(6, 182, 212, 0.08), rgba(139, 92, 246, 0.05));
+            border: 3px dashed rgba(34, 211, 238, 0.4);
+            border-radius: 20px;
+            padding: 40px 25px;
+            text-align: center;
+            cursor: pointer;
+            margin-bottom: 22px;
+            transition: all 0.35s;
+            position: relative;
+            overflow: hidden;
+        }
+        .upload-zone:hover {
+            border-color: #22d3ee;
+            transform: translateY(-4px);
+            box-shadow: 0 16px 40px -10px rgba(6, 182, 212, 0.35);
+        }
+        .upload-zone.dragover {
+            border-color: #fde047;
+            background: linear-gradient(145deg, rgba(253, 224, 71, 0.1), rgba(251, 191, 36, 0.08));
+            transform: scale(1.02);
+        }
+        .upload-icon {
+            font-size: 3.5rem; margin-bottom: 12px;
+            display: inline-block;
+            animation: bounce 2s ease-in-out infinite;
+            filter: drop-shadow(0 4px 16px rgba(34, 211, 238, 0.5));
+        }
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
+        }
+        .upload-title {
+            font-size: 1.15rem; font-weight: 700;
+            color: #fff; margin-bottom: 6px;
+        }
+        .upload-subtitle {
+            font-size: 0.85rem; color: #94a3b8; margin-bottom: 15px;
+        }
+        .upload-btn {
+            display: inline-flex; align-items: center; gap: 8px;
+            background: linear-gradient(135deg, #06b6d4, #22d3ee);
+            color: #0a1628; border: none;
+            padding: 12px 30px; border-radius: 30px;
+            font-size: 0.95rem; font-weight: 800;
+            cursor: pointer; font-family: inherit;
+            box-shadow: 0 8px 20px -5px rgba(6, 182, 212, 0.5);
+            transition: all 0.25s;
+            position: relative;
+            overflow: hidden;
+        }
+        .upload-btn::before {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%;
+            width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            transition: left 0.6s;
+        }
+        .upload-btn:hover::before { left: 100%; }
+        .upload-btn:hover { transform: translateY(-2px); }
+        .upload-input { display: none; }
+        .upload-info {
+            margin-top: 12px; font-size: 0.75rem;
+            color: #64748b;
+        }
+
+        /* ================= ফাইল প্রিভিউ ================= */
+        .file-preview {
+            display: none; margin: 20px 0;
+            padding: 18px 20px;
+            background: linear-gradient(135deg, rgba(6, 182, 212, 0.1), rgba(139, 92, 246, 0.06));
+            border-radius: 16px;
+            border-left: 5px solid #06b6d4;
+            border: 1px solid rgba(6, 182, 212, 0.3);
+            border-left: 5px solid #06b6d4;
+            align-items: center; gap: 15px;
+        }
+        .file-preview.show { display: flex; }
+        .file-icon { font-size: 2.4rem; flex-shrink: 0; }
+        .file-info { flex: 1; min-width: 0; }
+        .file-info strong {
+            display: block; font-size: 0.98rem;
+            color: #fff; margin-bottom: 4px;
+            word-break: break-all;
+            font-weight: 700;
+        }
+        .file-info .file-size {
+            font-size: 0.8rem; color: #22d3ee; font-weight: 700;
+        }
+        .file-remove {
+            background: rgba(220, 38, 38, 0.15);
+            color: #f87171;
+            border: 1px solid rgba(220, 38, 38, 0.4);
+            width: 34px; height: 34px;
+            border-radius: 50%; cursor: pointer;
+            font-size: 1.1rem; font-weight: 700;
+            display: flex; align-items: center;
+            justify-content: center; flex-shrink: 0;
+            transition: all 0.25s;
+        }
+        .file-remove:hover {
+            background: #dc2626; color: #fff;
+            transform: scale(1.1);
+        }
+
+        /* ================= পাসওয়ার্ড ================= */
+        .password-section {
+            display: none;
+            margin: 20px 0;
+            padding: 20px 22px;
+            background: linear-gradient(145deg, rgba(251, 191, 36, 0.1), rgba(245, 158, 11, 0.05));
+            border-radius: 16px;
+            border: 1px solid rgba(251, 191, 36, 0.35);
+            border-left: 5px solid #fbbf24;
+        }
+        .password-section.show { display: block; }
+
+        .password-title {
+            font-size: 1rem;
+            font-weight: 800;
+            color: #fbbf24;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .password-subtitle {
+            font-size: 0.78rem;
+            color: #cbd5e1;
+            margin-bottom: 14px;
+            line-height: 1.55;
+        }
+
+        .password-input-wrap {
+            position: relative;
+            display: flex;
+            gap: 10px;
+            align-items: stretch;
+        }
+
+        .password-input {
+            flex: 1;
+            border: 2px solid rgba(251, 191, 36, 0.4);
+            border-radius: 12px;
+            padding: 12px 45px 12px 16px;
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: #fff;
+            background: rgba(10, 22, 40, 0.7);
+            font-family: inherit;
+            outline: none;
+            transition: all 0.25s;
+        }
+        .password-input:focus {
+            border-color: #fbbf24;
+            box-shadow: 0 0 0 4px rgba(251, 191, 36, 0.15);
+        }
+        .password-input::placeholder { color: #64748b; font-weight: 500; }
+
+        .password-toggle {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: transparent;
+            border: none;
+            color: #94a3b8;
+            cursor: pointer;
+            font-size: 1.1rem;
+            padding: 4px;
+        }
+        .password-toggle:hover { color: #fbbf24; }
+
+        .password-status {
+            display: none;
+            margin-top: 12px;
+            padding: 10px 14px;
+            border-radius: 10px;
+            font-size: 0.82rem;
+            font-weight: 700;
+        }
+        .password-status.show { display: block; }
+        .password-status.success {
+            background: rgba(34, 197, 94, 0.15);
+            border: 1px solid rgba(34, 197, 94, 0.4);
+            color: #4ade80;
+        }
+        .password-status.error {
+            background: rgba(239, 68, 68, 0.12);
+            border: 1px solid rgba(239, 68, 68, 0.35);
+            color: #f87171;
+        }
+
+        /* ================= অপশন সেকশন ================= */
+        .options-section {
+            display: none;
+            margin: 22px 0;
+            padding: 22px;
+            background: linear-gradient(145deg, rgba(139, 92, 246, 0.08), rgba(6, 182, 212, 0.05));
+            border-radius: 18px;
+            border: 1px solid rgba(139, 92, 246, 0.3);
+        }
+        .options-section.show { display: block; }
+
+        .options-title {
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: #a78bfa;
+            margin-bottom: 16px;
+            display: flex; align-items: center; gap: 8px;
+        }
+
+        .options-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 14px;
+        }
+
+        .option-box {
+            padding: 14px 16px;
+            background: rgba(10, 22, 40, 0.5);
+            border-radius: 12px;
+            border: 1.5px solid rgba(139, 92, 246, 0.25);
+        }
+
+        .option-label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 0.82rem;
+            font-weight: 700;
+            color: #a78bfa;
+        }
+
+        .option-input {
+            width: 100%;
+            border: 1.5px solid rgba(139, 92, 246, 0.3);
+            border-radius: 10px;
+            padding: 11px 14px;
+            font-size: 0.92rem;
+            font-weight: 700;
+            color: #fff;
+            background: rgba(10, 22, 40, 0.7);
+            font-family: inherit;
+            outline: none;
+            transition: all 0.2s;
+        }
+        .option-input:focus {
+            border-color: #a78bfa;
+            box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.15);
+        }
+        .option-input::placeholder { color: #64748b; }
+
+        .option-help {
+            font-size: 0.7rem;
+            color: #94a3b8;
+            opacity: 0.85;
+            margin-top: 5px;
+            line-height: 1.4;
+        }
+
+        .format-options {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+        .format-option { position: relative; cursor: pointer; }
+        .format-option input { position: absolute; opacity: 0; }
+        .format-label {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 14px 10px;
+            border-radius: 12px;
+            border: 2px solid rgba(139, 92, 246, 0.25);
+            background: rgba(10, 22, 40, 0.5);
+            transition: all 0.25s;
+            text-align: center;
+        }
+        .format-label .format-icon { font-size: 1.5rem; margin-bottom: 6px; }
+        .format-label .format-name {
+            font-size: 0.88rem; font-weight: 700;
+            color: #fff;
+        }
+        .format-option input:checked + .format-label {
+            border-color: #a78bfa;
+            background: rgba(139, 92, 246, 0.15);
+            box-shadow: 0 6px 16px -5px rgba(139, 92, 246, 0.5);
+            transform: translateY(-2px);
+        }
+
+        /* প্রোগ্রেস */
+        .progress-wrap {
+            display: none;
+            margin: 20px 0;
+        }
+        .progress-wrap.show { display: block; }
+        .progress-bar {
+            height: 12px;
+            background: rgba(6, 182, 212, 0.15);
+            border-radius: 10px;
+            overflow: hidden;
+            border: 1px solid rgba(6, 182, 212, 0.25);
+        }
+        .progress-fill {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, #06b6d4, #22d3ee, #8b5cf6);
+            background-size: 200% 100%;
+            border-radius: 10px;
+            transition: width 0.3s ease;
+            animation: gradientMove 2s linear infinite;
+            box-shadow: 0 0 12px rgba(34, 211, 238, 0.6);
+        }
+        .progress-text {
+            text-align: center;
+            font-size: 0.85rem;
+            color: #22d3ee;
+            margin-top: 10px;
+            font-weight: 700;
+        }
+
+        /* অ্যাকশন বাটন */
+        .action-section {
+            display: none;
+            gap: 12px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+        .action-section.show { display: flex; }
+
+        .btn-convert {
+            flex: 1;
+            min-width: 200px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            background: linear-gradient(135deg, #06b6d4, #22d3ee);
+            color: #0a1628;
+            border: none;
+            padding: 15px 32px;
+            border-radius: 30px;
+            font-size: 1rem;
+            font-weight: 800;
+            cursor: pointer;
+            font-family: inherit;
+            box-shadow: 0 10px 28px -6px rgba(6, 182, 212, 0.6);
+            transition: all 0.25s;
+            position: relative;
+            overflow: hidden;
+        }
+        .btn-convert::before {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%;
+            width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            transition: left 0.7s;
+        }
+        .btn-convert:hover::before { left: 100%; }
+        .btn-convert:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 16px 40px -6px rgba(6, 182, 212, 0.8);
+        }
+        .btn-convert:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .btn-reset {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            background: rgba(10, 22, 40, 0.6);
+            color: #94a3b8;
+            border: 2px solid rgba(148, 163, 184, 0.3);
+            padding: 15px 26px;
+            border-radius: 30px;
+            font-size: 0.9rem;
+            font-weight: 700;
+            cursor: pointer;
+            font-family: inherit;
+            transition: all 0.25s;
+        }
+        .btn-reset:hover {
+            border-color: #94a3b8;
+            color: #e0f2fe;
+            background: rgba(10, 22, 40, 0.9);
+        }
+
+        /* ================= রেজাল্ট ================= */
+        .result-box {
+            display: none;
+            margin-top: 24px;
+            padding: 26px 24px;
+            background: linear-gradient(145deg, rgba(34, 197, 94, 0.12), rgba(22, 163, 74, 0.06));
+            border-radius: 18px;
+            border: 1px solid rgba(34, 197, 94, 0.3);
+            border-left: 5px solid #22c55e;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .result-box::before {
+            content: '';
+            position: absolute;
+            top: -50%; right: -50%;
+            width: 100%; height: 100%;
+            background: radial-gradient(circle, rgba(34, 197, 94, 0.12), transparent 70%);
+            pointer-events: none;
+        }
+        .result-box.show { display: block; }
+
+        .result-icon {
+            font-size: 3rem;
+            margin-bottom: 10px;
+            animation: pulseResult 2s ease-in-out infinite;
+            position: relative; z-index: 1;
+        }
+        @keyframes pulseResult {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+        .result-title {
+            font-size: 1.25rem;
+            font-weight: 800;
+            color: #4ade80;
+            margin-bottom: 6px;
+            position: relative; z-index: 1;
+        }
+        .result-msg {
+            font-size: 0.9rem;
+            color: #86efac;
+            margin-bottom: 20px;
+            position: relative; z-index: 1;
+        }
+
+        .btn-download-zip {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            background: linear-gradient(135deg, #22c55e, #4ade80);
+            color: #0a1628;
+            border: none;
+            padding: 16px 40px;
+            border-radius: 30px;
+            font-size: 1.05rem;
+            font-weight: 800;
+            cursor: pointer;
+            font-family: inherit;
+            box-shadow: 0 12px 30px -5px rgba(34, 197, 94, 0.6);
+            transition: all 0.25s;
+            position: relative;
+            z-index: 1;
+            overflow: hidden;
+        }
+        .btn-download-zip::before {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%;
+            width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            transition: left 0.7s;
+        }
+        .btn-download-zip:hover::before { left: 100%; }
+        .btn-download-zip:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 18px 40px -5px rgba(34, 197, 94, 0.8);
+        }
+
+        .zip-info {
+            margin-top: 14px;
+            font-size: 0.78rem;
+            color: #86efac;
+            opacity: 0.85;
+            font-weight: 600;
+            position: relative; z-index: 1;
+        }
+
+        /* ================= Back বাটন ================= */
+        .btn-back {
+            display: inline-flex; align-items: center; gap: 6px;
+            background: linear-gradient(135deg, #0e7490, #06b6d4);
+            color: #fff; text-decoration: none;
+            padding: 10px 24px; border-radius: 30px;
+            font-weight: 600; font-size: 0.85rem;
+            transition: all 0.25s;
+            box-shadow: 0 8px 20px -5px rgba(6, 182, 212, 0.5);
+            margin-top: 12px;
+        }
+        .btn-back:hover { transform: translateY(-2px); }
+
+        /* ================= ফুটার ================= */
+        footer {
+            background: #061020;
+            color: #94a3b8;
+            text-align: center;
+            padding: 24px 16px;
+            border-top: 2px solid rgba(6, 182, 212, 0.3);
+            margin-top: 20px;
+        }
+        footer p { max-width: 700px; margin: 0 auto 8px; font-size: 0.85rem; }
+        .footer-links {
+            display: flex; flex-wrap: wrap;
+            justify-content: center; gap: 8px 18px;
+            margin: 12px 0 8px;
+        }
+        .footer-links a {
+            color: #94a3b8; text-decoration: none;
+            font-size: 0.8rem; transition: color 0.2s;
+        }
+        .footer-links a:hover { color: #22d3ee; }
+        .copyright { font-size: 0.7rem; opacity: 0.7; margin-top: 10px; }
+
+        .menu-overlay {
+            position: fixed; inset: 0;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(4px);
+            z-index: 999; display: none;
+        }
+        .menu-overlay.show { display: block; }
+
+        /* ================= রেসপন্সিভ ================= */
+        @media (max-width: 768px) {
+            header { height: 36px; padding: 0 8px; }
+            .menu-toggle { width: 20px; height: 20px; }
+            .menu-toggle span { width: 2px; height: 2px; }
+            .header-logo-icon { font-size: 0.85rem; }
+            .brand-name { font-size: 0.72rem; }
+            .brand-sub { display: none; }
+            .btn-donate, .btn-subscribe { display: none; }
+            .btn-login { font-size: 0.58rem; padding: 3px 8px; }
+
+            .page-hero { padding: 30px 14px 45px; }
+            .page-hero-icon { font-size: 2.5rem; }
+            .page-hero h1 { font-size: 1.4rem; }
+            .breadcrumb { font-size: 0.7rem; }
+
+            .inner-container { padding: 0 12px 35px; margin-top: -28px; }
+            .content-card { padding: 20px 16px; border-radius: 20px; }
+            .content-card h2 { font-size: 1.1rem; }
+
+            .upload-zone { padding: 28px 16px; border-radius: 16px; }
+            .upload-icon { font-size: 2.8rem; }
+            .upload-title { font-size: 1rem; }
+            .upload-subtitle { font-size: 0.78rem; }
+            .upload-btn { padding: 11px 24px; font-size: 0.85rem; }
+
+            .password-section { padding: 16px 14px; }
+            .password-title { font-size: 0.92rem; }
+            .password-subtitle { font-size: 0.72rem; }
+            .password-input { padding: 11px 40px 11px 14px; font-size: 0.88rem; }
+
+            .options-section { padding: 16px 14px; }
+            .options-title { font-size: 0.95rem; }
+            .options-grid { grid-template-columns: 1fr; gap: 10px; }
+
+            .file-preview { padding: 14px; }
+            .file-icon { font-size: 2rem; }
+            .file-info strong { font-size: 0.85rem; }
+
+            .action-section { flex-direction: column; }
+            .btn-convert, .btn-reset { width: 100%; min-width: unset; }
+            .btn-convert { padding: 13px 20px; font-size: 0.92rem; }
+            .btn-reset { padding: 12px 20px; font-size: 0.82rem; }
+
+            .result-box { padding: 22px 16px; }
+            .result-icon { font-size: 2.5rem; }
+            .result-title { font-size: 1.1rem; }
+            .result-msg { font-size: 0.82rem; }
+            .btn-download-zip { padding: 14px 28px; font-size: 0.92rem; width: 100%; }
+            .zip-info { font-size: 0.72rem; }
+
+            .btn-back { padding: 8px 18px; font-size: 0.78rem; }
+
+            footer { padding: 16px 12px; }
+            footer p { font-size: 0.75rem; }
+            .footer-links { gap: 6px 12px; }
+            .footer-links a { font-size: 0.72rem; }
+            .copyright { font-size: 0.62rem; }
+        }
+
+        @media (max-width: 400px) {
+            header { height: 34px; padding: 0 6px; }
+            .menu-toggle { width: 18px; height: 18px; }
+            .brand-name { font-size: 0.66rem; }
+            .header-logo-icon { font-size: 0.78rem; }
+            .btn-login { font-size: 0.54rem; padding: 2px 7px; }
+            .page-hero h1 { font-size: 1.15rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- হেডার -->
+    <header>
+        <div class="header-left">
+            <button class="menu-toggle" id="menuToggle" aria-label="Menu">
+                <span></span><span></span><span></span>
+            </button>
+            <div class="header-brand">
+                <span class="header-logo-icon">🖥️</span>
+                <span class="brand-name">Azad <span>Digital Seva</span></span>
+                <span class="brand-sub">সরকারি ও বেসরকারি অনলাইন পরিষেবা</span>
+            </div>
+            <nav class="header-dropdown" id="headerDropdown">
+                <a href="index.html">🏠 Home</a>
+                <a href="blog.html">📝 Blog</a>
+                <a href="youtube.html">📺 YouTube</a>
+                <a href="facebook.html">📘 Facebook</a>
+                <a href="contact.html">📞 Contact</a>
+                <a href="about.html">ℹ️ About</a>
+            </nav>
+        </div>
+        <div class="header-actions">
+            <button class="btn-donate" onclick="location.href='donate.html'">❤️ ডোনেশন</button>
+            <button class="btn-subscribe" onclick="location.href='subscribe.html'">🔔 সাবস্ক্রাইব</button>
+            <button class="btn-login" onclick="location.href='login.html'">লগ ইন</button>
+        </div>
+    </header>
+
+    <div class="menu-overlay" id="menuOverlay"></div>
+
+    <!-- হিরো -->
+    <section class="page-hero">
+        <div class="page-hero-icon">🖼️</div>
+        <h1>PDF to <em>Image</em></h1>
+        <div class="breadcrumb">
+            <a href="index.html">Home</a> › <a href="online-service.html">Online Services</a> › <a href="pdf-editor.html">PDF Editor</a> › <span>PDF to Image</span>
+        </div>
+    </section>
+
+    <!-- কনটেন্ট -->
+    <main class="inner-container">
+        <div class="content-card">
+            <h2>🖼️ PDF কে ছবিতে রূপান্তর করুন</h2>
+
+            <!-- আপলোড জোন -->
+            <div class="upload-zone" id="uploadZone">
+                <div class="upload-icon">📄</div>
+                <div class="upload-title">PDF ফাইল আপলোড করুন</div>
+                <div class="upload-subtitle">ফাইল এখানে ড্র্যাগ করুন অথবা নিচের বাটনে ক্লিক করুন</div>
+                <button class="upload-btn" type="button" id="uploadBtn">
+                    <span>📁</span> Browse PDF File
+                </button>
+                <input type="file" class="upload-input" id="fileInput" accept="application/pdf,.pdf">
+                <div class="upload-info">সর্বোচ্চ ফাইল সাইজ: 25 MB • পাসওয়ার্ড সাপোর্ট সহ</div>
+            </div>
+
+            <!-- ফাইল প্রিভিউ -->
+            <div class="file-preview" id="filePreview">
+                <div class="file-icon">📄</div>
+                <div class="file-info">
+                    <strong id="fileName">file.pdf</strong>
+                    <span class="file-size" id="fileSize">0 KB</span>
+                </div>
+                <button class="file-remove" id="fileRemove" title="সরান">✕</button>
+            </div>
+
+            <!-- পাসওয়ার্ড সেকশন -->
+            <div class="password-section" id="passwordSection">
+                <div class="password-title">🔐 Password Protected PDF</div>
+                <div class="password-subtitle">
+                    এই PDF টি পাসওয়ার্ড দিয়ে সুরক্ষিত। রূপান্তর করার জন্য পাসওয়ার্ড দিন।
+                </div>
+                <div class="password-input-wrap">
+                    <input type="password" class="password-input" id="pdfPassword" placeholder="PDF পাসওয়ার্ড লিখুন..." autocomplete="off">
+                    <button type="button" class="password-toggle" id="passwordToggle" title="দেখান">👁️</button>
+                </div>
+                <div class="password-status" id="passwordStatus"></div>
+            </div>
+
+            <!-- অপশন সেকশন -->
+            <div class="options-section" id="optionsSection">
+                <div class="options-title">⚙️ কনভার্সন অপশন</div>
+
+                <div class="options-grid">
+
+                    <div class="option-box">
+                        <label class="option-label">📷 ইমেজ ফরম্যাট</label>
+                        <div class="format-options">
+                            <label class="format-option">
+                                <input type="radio" name="imgFormat" value="jpeg" checked>
+                                <div class="format-label">
+                                    <span class="format-icon">📷</span>
+                                    <span class="format-name">JPG</span>
+                                </div>
+                            </label>
+                            <label class="format-option">
+                                <input type="radio" name="imgFormat" value="png">
+                                <div class="format-label">
+                                    <span class="format-icon">🖼️</span>
+                                    <span class="format-name">PNG</span>
+                                </div>
+                            </label>
+                        </div>
+                        <div class="option-help">JPG ছোট ফাইল, PNG ভালো কোয়ালিটি</div>
+                    </div>
+
+                    <div class="option-box">
+                        <label class="option-label">📄 পেজ রেঞ্জ</label>
+                        <input type="text" class="option-input" id="pageRange" placeholder="যেমন: 1-5 অথবা খালি = সব পেজ">
+                        <div class="option-help">খালি রাখলে সব পেজ রূপান্তর হবে</div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- প্রোগ্রেস -->
+            <div class="progress-wrap" id="progressWrap">
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+                <div class="progress-text" id="progressText">প্রসেস হচ্ছে...</div>
+            </div>
+
+            <!-- অ্যাকশন -->
+            <div class="action-section" id="actionSection">
+                <button class="btn-convert" id="convertBtn" type="button">
+                    <span>🔄</span> Convert to Images
+                </button>
+                <button class="btn-reset" id="resetBtn" type="button">
+                    <span>🔄</span> Reset
+                </button>
+            </div>
+
+            <!-- রেজাল্ট -->
+            <div class="result-box" id="resultBox">
+                <div class="result-icon">✅</div>
+                <div class="result-title">Conversion Complete!</div>
+                <div class="result-msg" id="resultMsg">All images are ready in a ZIP file.</div>
+
+                <button class="btn-download-zip" id="downloadZipBtn" type="button">
+                    <span>⬇️</span> Download All Images (ZIP)
+                </button>
+
+                <div class="zip-info" id="zipInfo">📦 All images will be downloaded together as a ZIP file</div>
+            </div>
+
+            <a href="pdf-editor.html" class="btn-back">← Back to PDF Editor</a>
+        </div>
+    </main>
+
+    <!-- ফুটার -->
+    <footer>
+        <p>🏢 Azad Digital Seva — আপনার বিশ্বস্ত অনলাইন সেবা প্রদানকারী</p>
+        <div class="footer-links">
+            <a href="index.html">Home</a>
+            <a href="services.html">Services</a>
+            <a href="tools.html">Tools</a>
+            <a href="notice.html">Notice</a>
+            <a href="contact.html">Contact</a>
+        </div>
+        <p class="copyright">© ২০২৫ Azad Digital Seva | সর্বস্বত্ব সংরক্ষিত</p>
+    </footer>
+
+    <!-- লাইব্রেরি -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+
+    <script>
+        pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+
+        (function () {
+            const toggle = document.getElementById('menuToggle');
+            const dropdown = document.getElementById('headerDropdown');
+            const overlay = document.getElementById('menuOverlay');
+            function openMenu() {
+                dropdown.classList.add('open');
+                toggle.classList.add('active');
+                overlay.classList.add('show');
+            }
+            function closeMenu() {
+                dropdown.classList.remove('open');
+                toggle.classList.remove('active');
+                overlay.classList.remove('show');
+            }
+            toggle.addEventListener('click', (e) => {
+                e.stopPropagation();
+                dropdown.classList.contains('open') ? closeMenu() : openMenu();
+            });
+            overlay.addEventListener('click', closeMenu);
+            document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeMenu(); });
+            dropdown.addEventListener('click', (e) => e.stopPropagation());
+
+            const uploadZone = document.getElementById('uploadZone');
+            const uploadBtn = document.getElementById('uploadBtn');
+            const fileInput = document.getElementById('fileInput');
+            const filePreview = document.getElementById('filePreview');
+            const fileName = document.getElementById('fileName');
+            const fileSize = document.getElementById('fileSize');
+            const fileRemove = document.getElementById('fileRemove');
+            const passwordSection = document.getElementById('passwordSection');
+            const pdfPassword = document.getElementById('pdfPassword');
+            const passwordToggle = document.getElementById('passwordToggle');
+            const passwordStatus = document.getElementById('passwordStatus');
+            const optionsSection = document.getElementById('optionsSection');
+            const actionSection = document.getElementById('actionSection');
+            const convertBtn = document.getElementById('convertBtn');
+            const resetBtn = document.getElementById('resetBtn');
+            const progressWrap = document.getElementById('progressWrap');
+            const progressFill = document.getElementById('progressFill');
+            const progressText = document.getElementById('progressText');
+            const resultBox = document.getElementById('resultBox');
+            const resultMsg = document.getElementById('resultMsg');
+            const zipInfo = document.getElementById('zipInfo');
+            const downloadZipBtn = document.getElementById('downloadZipBtn');
+            const pageRange = document.getElementById('pageRange');
+
+            const HD_SCALE = 2.5;
+            const JPG_QUALITY = 0.95;
+
+            let currentFile = null;
+            let generatedImages = [];
+            let zipBlob = null;
+            let isPasswordProtected = false;
+            let pdfPasswordValue = '';
+
+            function formatSize(bytes) {
+                if (bytes < 1024) return bytes + ' B';
+                if (bytes < 1048576) return (bytes / 1024).toFixed(1) + ' KB';
+                return (bytes / 1048576).toFixed(2) + ' MB';
+            }
+
+            function showPasswordStatus(msg, type) {
+                passwordStatus.textContent = msg;
+                passwordStatus.className = 'password-status show ' + type;
+            }
+            function hidePasswordStatus() {
+                passwordStatus.className = 'password-status';
+                passwordStatus.textContent = '';
+            }
+
+            passwordToggle.addEventListener('click', () => {
+                if (pdfPassword.type === 'password') {
+                    pdfPassword.type = 'text';
+                    passwordToggle.textContent = '🙈';
+                } else {
+                    pdfPassword.type = 'password';
+                    passwordToggle.textContent = '👁️';
+                }
+            });
+
+            async function checkPdfPassword(file, password) {
+                try {
+                    const arrayBuffer = await file.arrayBuffer();
+                    const loadOptions = { data: arrayBuffer };
+                    if (password) loadOptions.password = password;
+
+                    const pdf = await pdfjsLib.getDocument(loadOptions).promise;
+                    return { ok: true, pdf, totalPages: pdf.numPages };
+                } catch (err) {
+                    if (err && err.name === 'PasswordException') {
+                        return { ok: false, needPassword: true };
+                    }
+                    if (err && err.message && err.message.toLowerCase().includes('password')) {
+                        return { ok: false, needPassword: true };
+                    }
+                    return { ok: false, error: err.message || 'PDF লোড করা যায়নি' };
+                }
+            }
+
+            async function handleFile(file) {
+                if (!file || file.type !== 'application/pdf') {
+                    alert('⚠️ শুধু PDF ফাইল আপলোড করুন।');
+                    return;
+                }
+                if (file.size > 25 * 1024 * 1024) {
+                    alert('⚠️ ফাইল সাইজ ২৫ MB এর কম হতে হবে।');
+                    return;
+                }
+
+                currentFile = file;
+                fileName.textContent = file.name;
+                fileSize.textContent = formatSize(file.size);
+                filePreview.classList.add('show');
+                uploadZone.style.display = 'none';
+                resultBox.classList.remove('show');
+                hidePasswordStatus();
+                pdfPassword.value = '';
+                pdfPassword.type = 'password';
+                passwordToggle.textContent = '👁️';
+
+                const result = await checkPdfPassword(file, '');
+
+                if (result.ok) {
+                    isPasswordProtected = false;
+                    pdfPasswordValue = '';
+                    passwordSection.classList.remove('show');
+                    optionsSection.classList.add('show');
+                    actionSection.classList.add('show');
+                } else if (result.needPassword) {
+                    isPasswordProtected = true;
+                    passwordSection.classList.add('show');
+                    optionsSection.classList.remove('show');
+                    actionSection.classList.remove('show');
+                    showPasswordStatus('🔐 This PDF is password protected. Enter password to unlock.', 'error');
+                } else {
+                    alert('⚠️ Failed to load PDF: ' + (result.error || 'Unknown error'));
+                    fileRemove.click();
+                }
+            }
+
+            pdfPassword.addEventListener('input', async () => {
+                if (!currentFile || !isPasswordProtected) return;
+
+                const pwd = pdfPassword.value;
+                hidePasswordStatus();
+
+                if (!pwd) {
+                    optionsSection.classList.remove('show');
+                    actionSection.classList.remove('show');
+                    return;
+                }
+
+                const result = await checkPdfPassword(currentFile, pwd);
+
+                if (result.ok) {
+                    pdfPasswordValue = pwd;
+                    showPasswordStatus('✅ Password correct! You can now convert.', 'success');
+                    optionsSection.classList.add('show');
+                    actionSection.classList.add('show');
+                } else if (result.needPassword) {
+                    showPasswordStatus('❌ Wrong password. Please try again.', 'error');
+                    optionsSection.classList.remove('show');
+                    actionSection.classList.remove('show');
+                } else {
+                    showPasswordStatus('❌ ' + (result.error || 'Failed to load'), 'error');
+                }
+            });
+
+            uploadBtn.addEventListener('click', (e) => { e.stopPropagation(); fileInput.click(); });
+            uploadZone.addEventListener('click', () => fileInput.click());
+
+            fileInput.addEventListener('change', (e) => {
+                if (e.target.files[0]) handleFile(e.target.files[0]);
+            });
+
+            uploadZone.addEventListener('dragover', (e) => { e.preventDefault(); uploadZone.classList.add('dragover'); });
+            uploadZone.addEventListener('dragleave', () => { uploadZone.classList.remove('dragover'); });
+            uploadZone.addEventListener('drop', (e) => {
+                e.preventDefault();
+                uploadZone.classList.remove('dragover');
+                if (e.dataTransfer.files[0]) handleFile(e.dataTransfer.files[0]);
+            });
+
+            fileRemove.addEventListener('click', () => {
+                currentFile = null;
+                generatedImages = [];
+                zipBlob = null;
+                isPasswordProtected = false;
+                pdfPasswordValue = '';
+                fileInput.value = '';
+                filePreview.classList.remove('show');
+                passwordSection.classList.remove('show');
+                hidePasswordStatus();
+                pdfPassword.value = '';
+                optionsSection.classList.remove('show');
+                actionSection.classList.remove('show');
+                resultBox.classList.remove('show');
+                progressWrap.classList.remove('show');
+                uploadZone.style.display = 'block';
+            });
+
+            resetBtn.addEventListener('click', () => fileRemove.click());
+
+            function parsePageRange(rangeStr, total) {
+                const str = (rangeStr || '').trim();
+                if (!str) {
+                    const all = [];
+                    for (let i = 1; i <= total; i++) all.push(i);
+                    return all;
+                }
+
+                const pages = [];
+                const parts = str.split(',');
+                for (const part of parts) {
+                    const p = part.trim();
+                    if (p.includes('-')) {
+                        let [a, b] = p.split('-').map(x => parseInt(x.trim(), 10));
+                        if (isNaN(a) || isNaN(b)) continue;
+                        if (a > b) [a, b] = [b, a];
+                        for (let i = a; i <= b; i++) {
+                            if (i >= 1 && i <= total) pages.push(i);
+                        }
+                    } else {
+                        const n = parseInt(p, 10);
+                        if (!isNaN(n) && n >= 1 && n <= total) pages.push(n);
+                    }
+                }
+
+                return [...new Set(pages)].sort((a, b) => a - b);
+            }
+
+            convertBtn.addEventListener('click', async () => {
+                if (!currentFile) return;
+
+                if (isPasswordProtected && !pdfPasswordValue) {
+                    alert('⚠️ Please enter the correct password first.');
+                    return;
+                }
+
+                const fmt = document.querySelector('input[name="imgFormat"]:checked').value;
+                const scale = HD_SCALE;
+                const jpgQ = JPG_QUALITY;
+
+                convertBtn.disabled = true;
+                convertBtn.innerHTML = '<span>⏳</span> Converting...';
+                progressWrap.classList.add('show');
+                resultBox.classList.remove('show');
+                generatedImages = [];
+                zipBlob = null;
+
+                progressFill.style.width = '5%';
+                progressText.textContent = 'Loading PDF... 5%';
+
+                try {
+                    const arrayBuffer = await currentFile.arrayBuffer();
+                    const loadOptions = { data: arrayBuffer };
+                    if (isPasswordProtected && pdfPasswordValue) {
+                        loadOptions.password = pdfPasswordValue;
+                    }
+
+                    const pdf = await pdfjsLib.getDocument(loadOptions).promise;
+                    const totalPages = pdf.numPages;
+
+                    const pagesToConvert = parsePageRange(pageRange.value, totalPages);
+
+                    if (pagesToConvert.length === 0) {
+                        throw new Error('No valid pages found. Check page range.');
+                    }
+
+                    progressFill.style.width = '10%';
+                    progressText.textContent = `${pagesToConvert.length} pages will be converted`;
+
+                    const ext = (fmt === 'jpeg') ? 'jpg' : 'png';
+
+                    for (let idx = 0; idx < pagesToConvert.length; idx++) {
+                        const pageNum = pagesToConvert[idx];
+                        const p = await pdf.getPage(pageNum);
+                        const vp = p.getViewport({ scale });
+
+                        const canvas = document.createElement('canvas');
+                        canvas.width = Math.max(1, Math.round(vp.width));
+                        canvas.height = Math.max(1, Math.round(vp.height));
+                        const ctx = canvas.getContext('2d');
+
+                        ctx.fillStyle = '#ffffff';
+                        ctx.fillRect(0, 0, canvas.width, canvas.height);
+                        ctx.imageSmoothingEnabled = true;
+                        ctx.imageSmoothingQuality = 'high';
+
+                        await p.render({ canvasContext: ctx, viewport: vp }).promise;
+
+                        const blob = await new Promise(r => {
+                            if (fmt === 'jpeg') {
+                                canvas.toBlob(r, 'image/jpeg', jpgQ);
+                            } else {
+                                canvas.toBlob(r, 'image/png');
+                            }
+                        });
+
+                        const imgName = `ADSpdf-page-${String(pageNum).padStart(3, '0')}.${ext}`;
+                        generatedImages.push({ blob, name: imgName, pageNum });
+
+                        const progress = 10 + Math.floor((idx + 1) / pagesToConvert.length * 85);
+                        progressFill.style.width = progress + '%';
+                        progressText.textContent = `Converting page ${pageNum}... ${progress}%`;
+
+                        await new Promise(r => setTimeout(r, 30));
+                    }
+
+                    progressText.textContent = 'Creating ZIP file...';
+                    const zip = new JSZip();
+                    generatedImages.forEach(img => {
+                        zip.file(img.name, img.blob);
+                    });
+                    zipBlob = await zip.generateAsync({ type: 'blob' });
+
+                    progressFill.style.width = '100%';
+                    progressText.textContent = 'Complete ✓';
+                    await new Promise(r => setTimeout(r, 400));
+                    progressWrap.classList.remove('show');
+
+                    const totalSize = generatedImages.reduce((sum, img) => sum + img.blob.size, 0);
+                    resultMsg.textContent = `${generatedImages.length} images ready (Total: ${formatSize(totalSize)})`;
+                    zipInfo.textContent = `📦 ZIP file size: ${formatSize(zipBlob.size)}`;
+
+                    resultBox.classList.add('show');
+                    convertBtn.disabled = false;
+                    convertBtn.innerHTML = '<span>🔄</span> Convert to Images';
+                    resultBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+                } catch (err) {
+                    console.error(err);
+                    progressWrap.classList.remove('show');
+
+                    let errMsg = 'Conversion failed.';
+                    if (err && (err.name === 'PasswordException' || (err.message && err.message.toLowerCase().includes('password')))) {
+                        errMsg = 'Wrong password. Please try again.';
+                        isPasswordProtected = true;
+                        passwordSection.classList.add('show');
+                        optionsSection.classList.remove('show');
+                        actionSection.classList.remove('show');
+                        showPasswordStatus('❌ Wrong password. Please try again.', 'error');
+                    } else if (err && err.message) {
+                        errMsg = err.message;
+                    }
+                    alert('⚠️ ' + errMsg);
+                    convertBtn.disabled = false;
+                    convertBtn.innerHTML = '<span>🔄</span> Convert to Images';
+                }
+            });
+
+            downloadZipBtn.addEventListener('click', () => {
+                if (!zipBlob) return;
+
+                const baseName = currentFile
+                    ? currentFile.name.replace(/\.pdf$/i, '').replace(/[^a-zA-Z0-9\u0980-\u09FF_-]/g, '_')
+                    : 'images';
+                const zipName = `ADSpdf-${baseName}-images.zip`;
+
+                const url = URL.createObjectURL(zipBlob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = zipName;
+                a.click();
+                setTimeout(() => URL.revokeObjectURL(url), 1500);
+
+                downloadZipBtn.innerHTML = '<span>✅</span> Downloaded Successfully!';
+                setTimeout(() => {
+                    downloadZipBtn.innerHTML = '<span>⬇️</span> Download All Images (ZIP)';
+                }, 2500);
+            });
+        })();
+    </script>
+
+</body>
+</html>

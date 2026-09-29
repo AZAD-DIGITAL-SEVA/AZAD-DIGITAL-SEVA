@@ -107,7 +107,7 @@ footer p{max-width:700px;margin:0 auto 6px;font-size:0.82rem;}
 .crop-header h3{font-size:0.95rem;font-weight:800;}
 .crop-close-btn{background:rgba(255,255,255,0.2);border:none;color:#fff;width:28px;height:28px;border-radius:50%;font-size:1rem;cursor:pointer;font-weight:700;}
 .crop-body{padding:18px;display:flex;flex-direction:column;gap:14px;overflow-y:auto;align-items:center;}
-.crop-canvas-wrap{position:relative;background:#000;border-radius:12px;overflow:hidden;touch-action:none;user-select:none;-webkit-user-select:none;}
+.crop-canvas-wrap{position:relative;background:#000;border-radius:12px;overflow:hidden;touch-action:none;user-select:none;}
 .crop-canvas-wrap canvas{display:block;cursor:grab;touch-action:none;}
 .crop-controls{width:100%;display:flex;flex-direction:column;gap:10px;}
 .crop-control-item{display:flex;align-items:center;gap:12px;}
@@ -380,10 +380,10 @@ footer p{max-width:700px;margin:0 auto 6px;font-size:0.82rem;}
 (function () {
     'use strict';
 
-    /* MENU */
-    const toggle = document.getElementById('menuToggle');
-    const dropdown = document.getElementById('headerDropdown');
-    const overlay = document.getElementById('menuOverlay');
+    /* ============ MENU ============ */
+    var toggle = document.getElementById('menuToggle');
+    var dropdown = document.getElementById('headerDropdown');
+    var overlay = document.getElementById('menuOverlay');
     if (toggle && dropdown && overlay) {
         toggle.addEventListener('click', function (e) {
             e.stopPropagation();
@@ -398,43 +398,42 @@ footer p{max-width:700px;margin:0 auto 6px;font-size:0.82rem;}
         });
     }
 
-    /* ELEMENTS */
-    const photoPreview = document.getElementById('photoPreview');
-    const photoBtn = document.getElementById('photoBtn');
-    const photoRemoveBtn = document.getElementById('photoRemoveBtn');
-    const photoRecropBtn = document.getElementById('photoRecropBtn');
-    const photoInput = document.getElementById('photoInput');
-    const previewBtn = document.getElementById('previewBtn');
-    const downloadBtn = document.getElementById('downloadBtn');
-    const resetBtn = document.getElementById('resetBtn');
-    const previewSection = document.getElementById('previewSection');
-    const biodataDoc = document.getElementById('biodataDoc');
-    const maritalStatus = document.getElementById('maritalStatus');
-    const wifeNameField = document.getElementById('wifeNameField');
-    const wifeName = document.getElementById('wifeName');
-    const aadharInput = document.getElementById('aadharNumber');
+    /* ============ ELEMENTS ============ */
+    var photoPreview = document.getElementById('photoPreview');
+    var photoBtn = document.getElementById('photoBtn');
+    var photoRemoveBtn = document.getElementById('photoRemoveBtn');
+    var photoRecropBtn = document.getElementById('photoRecropBtn');
+    var photoInput = document.getElementById('photoInput');
+    var previewBtn = document.getElementById('previewBtn');
+    var downloadBtn = document.getElementById('downloadBtn');
+    var resetBtn = document.getElementById('resetBtn');
+    var previewSection = document.getElementById('previewSection');
+    var biodataDoc = document.getElementById('biodataDoc');
+    var maritalStatus = document.getElementById('maritalStatus');
+    var wifeNameField = document.getElementById('wifeNameField');
+    var wifeName = document.getElementById('wifeName');
+    var aadharInput = document.getElementById('aadharNumber');
 
-    /* CROP MODAL */
-    const cropModal = document.getElementById('cropModal');
-    const cropCanvas = document.getElementById('cropCanvas');
-    const zoomRange = document.getElementById('zoomRange');
-    const cropCloseBtn = document.getElementById('cropCloseBtn');
-    const cropCancelBtn = document.getElementById('cropCancelBtn');
-    const cropApplyBtn = document.getElementById('cropApplyBtn');
+    var cropModal = document.getElementById('cropModal');
+    var cropCanvas = document.getElementById('cropCanvas');
+    var zoomRange = document.getElementById('zoomRange');
+    var cropCloseBtn = document.getElementById('cropCloseBtn');
+    var cropCancelBtn = document.getElementById('cropCancelBtn');
+    var cropApplyBtn = document.getElementById('cropApplyBtn');
 
-    let photoDataUrl = null;
-    let originalPhotoSrc = null;
+    var photoDataUrl = null;
+    var originalPhotoSrc = null;
 
-    /* CROP STATE */
-    const CROP_W = 300;
-    const CROP_H = 360;
-    let cropImg = null;
-    let imgX = 0, imgY = 0, imgScale = 1;
-    let isDragging = false;
-    let dragStartX = 0, dragStartY = 0;
-    let imgStartX = 0, imgStartY = 0;
+    /* ============ CROP STATE ============ */
+    var CROP_W = 300;
+    var CROP_H = 360;
+    var cropImg = null;
+    var imgX = 0, imgY = 0, imgScale = 1;
+    var isDragging = false;
+    var dragStartX = 0, dragStartY = 0;
+    var imgStartX = 0, imgStartY = 0;
 
-    /* MARITAL TOGGLE */
+    /* ============ MARITAL TOGGLE ============ */
     maritalStatus.addEventListener('change', function () {
         if (maritalStatus.value === 'Married') {
             wifeNameField.classList.add('show');
@@ -444,20 +443,20 @@ footer p{max-width:700px;margin:0 auto 6px;font-size:0.82rem;}
         }
     });
 
-    /* AADHAR FORMAT */
+    /* ============ AADHAR FORMAT ============ */
     aadharInput.addEventListener('input', function (e) {
-        let value = e.target.value.replace(/\D/g, '');
+        var value = e.target.value.replace(/\D/g, '');
         if (value.length > 12) value = value.substring(0, 12);
-        const formatted = value.replace(/(\d{4})(\d{4})(\d{4})/, '$1 $2 $3').trim();
+        var formatted = value.replace(/(\d{4})(\d{4})(\d{4})/, '$1 $2 $3').trim();
         e.target.value = formatted;
     });
 
-    /* PHOTO UPLOAD */
+    /* ============ PHOTO UPLOAD ============ */
     photoBtn.addEventListener('click', function (e) { e.stopPropagation(); photoInput.click(); });
     photoPreview.addEventListener('click', function () { photoInput.click(); });
 
     photoInput.addEventListener('change', function (e) {
-        const file = e.target.files[0];
+        var file = e.target.files[0];
         if (!file) return;
         if (!file.type.startsWith('image/')) {
             alert('⚠️ Please upload an image file.');
@@ -467,7 +466,7 @@ footer p{max-width:700px;margin:0 auto 6px;font-size:0.82rem;}
             alert('⚠️ Photo size must be less than 5 MB.');
             return;
         }
-        const reader = new FileReader();
+        var reader = new FileReader();
         reader.onload = function (ev) {
             originalPhotoSrc = ev.target.result;
             openCropModal(originalPhotoSrc);
@@ -490,7 +489,7 @@ footer p{max-width:700px;margin:0 auto 6px;font-size:0.82rem;}
         photoRecropBtn.classList.remove('show');
     });
 
-    /* CROP MODAL */
+    /* ============ CROP MODAL ============ */
     function openCropModal(src) {
         cropModal.classList.add('show');
         cropCanvas.width = CROP_W;
@@ -519,23 +518,23 @@ footer p{max-width:700px;margin:0 auto 6px;font-size:0.82rem;}
 
     function drawCrop() {
         if (!cropImg) return;
-        const ctx = cropCanvas.getContext('2d');
+        var ctx = cropCanvas.getContext('2d');
         ctx.clearRect(0, 0, CROP_W, CROP_H);
         ctx.fillStyle = '#000';
         ctx.fillRect(0, 0, CROP_W, CROP_H);
 
-        const baseScale = Math.max(CROP_W / cropImg.width, CROP_H / cropImg.height);
-        const finalScale = baseScale * imgScale;
-        const drawW = cropImg.width * finalScale;
-        const drawH = cropImg.height * finalScale;
-        const drawX = (CROP_W - drawW) / 2 + imgX;
-        const drawY = (CROP_H - drawH) / 2 + imgY;
+        var baseScale = Math.max(CROP_W / cropImg.width, CROP_H / cropImg.height);
+        var finalScale = baseScale * imgScale;
+        var drawW = cropImg.width * finalScale;
+        var drawH = cropImg.height * finalScale;
+        var drawX = (CROP_W - drawW) / 2 + imgX;
+        var drawY = (CROP_H - drawH) / 2 + imgY;
 
         ctx.drawImage(cropImg, drawX, drawY, drawW, drawH);
 
         ctx.strokeStyle = 'rgba(255,255,255,0.35)';
         ctx.lineWidth = 1;
-        for (let i = 1; i < 3; i++) {
+        for (var i = 1; i < 3; i++) {
             ctx.beginPath();
             ctx.moveTo((CROP_W / 3) * i, 0);
             ctx.lineTo((CROP_W / 3) * i, CROP_H);
@@ -554,10 +553,8 @@ footer p{max-width:700px;margin:0 auto 6px;font-size:0.82rem;}
         if (!cropImg) return;
         e.preventDefault();
         isDragging = true;
-        dragStartX = e.clientX;
-        dragStartY = e.clientY;
-        imgStartX = imgX;
-        imgStartY = imgY;
+        dragStartX = e.clientX; dragStartY = e.clientY;
+        imgStartX = imgX; imgStartY = imgY;
     });
 
     cropCanvas.addEventListener('touchstart', function (e) {
@@ -566,8 +563,7 @@ footer p{max-width:700px;margin:0 auto 6px;font-size:0.82rem;}
         isDragging = true;
         dragStartX = e.touches[0].clientX;
         dragStartY = e.touches[0].clientY;
-        imgStartX = imgX;
-        imgStartY = imgY;
+        imgStartX = imgX; imgStartY = imgY;
     }, { passive: false });
 
     document.addEventListener('mousemove', function (e) {
@@ -596,22 +592,22 @@ footer p{max-width:700px;margin:0 auto 6px;font-size:0.82rem;}
     cropApplyBtn.addEventListener('click', function () {
         if (!cropImg) return;
         try {
-            const finalW = 500;
-            const finalH = Math.round(finalW * (CROP_H / CROP_W));
-            const finalCanvas = document.createElement('canvas');
+            var finalW = 500;
+            var finalH = Math.round(finalW * (CROP_H / CROP_W));
+            var finalCanvas = document.createElement('canvas');
             finalCanvas.width = finalW;
             finalCanvas.height = finalH;
-            const ctx = finalCanvas.getContext('2d');
+            var ctx = finalCanvas.getContext('2d');
             ctx.fillStyle = '#ffffff';
             ctx.fillRect(0, 0, finalW, finalH);
 
-            const ratio = finalW / CROP_W;
-            const baseScale = Math.max(CROP_W / cropImg.width, CROP_H / cropImg.height);
-            const finalScale = baseScale * imgScale;
-            const drawW = cropImg.width * finalScale * ratio;
-            const drawH = cropImg.height * finalScale * ratio;
-            const drawX = ((CROP_W - (cropImg.width * finalScale)) / 2 + imgX) * ratio;
-            const drawY = ((CROP_H - (cropImg.height * finalScale)) / 2 + imgY) * ratio;
+            var ratio = finalW / CROP_W;
+            var baseScale = Math.max(CROP_W / cropImg.width, CROP_H / cropImg.height);
+            var finalScale = baseScale * imgScale;
+            var drawW = cropImg.width * finalScale * ratio;
+            var drawH = cropImg.height * finalScale * ratio;
+            var drawX = ((CROP_W - (cropImg.width * finalScale)) / 2 + imgX) * ratio;
+            var drawY = ((CROP_H - (cropImg.height * finalScale)) / 2 + imgY) * ratio;
             ctx.drawImage(cropImg, drawX, drawY, drawW, drawH);
 
             photoDataUrl = finalCanvas.toDataURL('image/jpeg', 0.95);
@@ -625,7 +621,7 @@ footer p{max-width:700px;margin:0 auto 6px;font-size:0.82rem;}
         }
     });
 
-    /* GET DATA */
+    /* ============ GET DATA ============ */
     function getFormData() {
         return {
             fullName: document.getElementById('fullName').value.trim(),
@@ -650,22 +646,22 @@ footer p{max-width:700px;margin:0 auto 6px;font-size:0.82rem;}
 
     function formatDate(dateStr) {
         if (!dateStr) return '';
-        const d = new Date(dateStr);
+        var d = new Date(dateStr);
         if (isNaN(d)) return dateStr;
-        const months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+        var months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
         return d.getDate() + ' ' + months[d.getMonth()] + ' ' + d.getFullYear();
     }
 
     function escapeHtml(str) {
         if (!str) return '';
-        const div = document.createElement('div');
+        var div = document.createElement('div');
         div.textContent = str;
         return div.innerHTML;
     }
 
-    /* BUILD BIODATA HTML */
+    /* ============ BUILD BIODATA HTML ============ */
     function buildBiodataHTML(data) {
-        let html = '';
+        var html = '';
 
         html += '<div style="text-align:center;margin-bottom:20px;padding-bottom:14px;border-bottom:3px double #059669;">';
         html += '<div style="display:inline-block;background:#065f46;color:#ffffff;font-size:24px;font-weight:900;letter-spacing:6px;padding:10px 36px;border-radius:50px;">BIO-DATA</div>';
@@ -688,7 +684,7 @@ footer p{max-width:700px;margin:0 auto 6px;font-size:0.82rem;}
         }
         html += '</div></div>';
 
-        const personalRows = [];
+        var personalRows = [];
         if (data.fullName) personalRows.push(['Full Name', data.fullName]);
         if (data.fatherName) personalRows.push(["Father's Name", data.fatherName]);
         if (data.motherName) personalRows.push(["Mother's Name", data.motherName]);
@@ -714,7 +710,7 @@ footer p{max-width:700px;margin:0 auto 6px;font-size:0.82rem;}
             html += '</table></div>';
         }
 
-        const contactRows = [];
+        var contactRows = [];
         if (data.phone) contactRows.push(['Mobile', data.phone]);
         if (data.email) contactRows.push(['Email', data.email]);
         if (data.address) contactRows.push(['Address', data.address]);
@@ -768,9 +764,9 @@ footer p{max-width:700px;margin:0 auto 6px;font-size:0.82rem;}
         return html;
     }
 
-    /* PREVIEW */
+    /* ============ PREVIEW ============ */
     previewBtn.addEventListener('click', function () {
-        const data = getFormData();
+        var data = getFormData();
         if (!data.fullName) {
             alert('⚠️ Please enter your Full Name.');
             document.getElementById('fullName').focus();
@@ -787,9 +783,9 @@ footer p{max-width:700px;margin:0 auto 6px;font-size:0.82rem;}
         previewSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
     });
 
-    /* ============ DOWNLOAD PDF (PRINT METHOD) ============ */
+    /* ============ DOWNLOAD PDF — IFRAME PRINT ============ */
     downloadBtn.addEventListener('click', function () {
-        const data = getFormData();
+        var data = getFormData();
         if (!data.fullName) {
             alert('⚠️ Please enter your Full Name.');
             return;
@@ -799,45 +795,61 @@ footer p{max-width:700px;margin:0 auto 6px;font-size:0.82rem;}
             return;
         }
 
-        /* Preview তৈরি ও দেখাই */
+        /* Preview দেখাই */
         biodataDoc.innerHTML = buildBiodataHTML(data);
         previewSection.classList.add('show');
 
-        /* নতুন উইন্ডোতে Print */
-        const printWindow = window.open('', '_blank');
-        if (!printWindow) {
-            alert('⚠️ Please allow pop-ups to download PDF.');
-            return;
-        }
+        var content = buildBiodataHTML(data);
 
-        const content = buildBiodataHTML(data);
+        /* সম্পূর্ণ HTML ডকুমেন্ট */
+        var fullHTML = '<!DOCTYPE html>' +
+            '<html><head>' +
+            '<meta charset="UTF-8">' +
+            '<title>Bio-Data</title>' +
+            '<style>' +
+            '@page { size: A4 portrait; margin: 8mm; }' +
+            '* { box-sizing: border-box; margin: 0; padding: 0; }' +
+            'html, body { font-family: Arial, Helvetica, sans-serif; background: #fff; color: #1e2b3c; }' +
+            '.wrap { width: 100%; padding: 0; margin: 0 auto; }' +
+            '@media print { .wrap { width: 100%; padding: 0; } }' +
+            '</style>' +
+            '</head><body>' +
+            '<div class="wrap">' +
+            content +
+            '</div>' +
+            '</body></html>';
 
-        printWindow.document.open();
-        printWindow.document.write('<!DOCTYPE html><html><head>');
-        printWindow.document.write('<meta charset="UTF-8">');
-        printWindow.document.write('<title>Bio-Data</title>');
-        printWindow.document.write('<style>');
-        printWindow.document.write('@page { size: A4 portrait; margin: 8mm; }');
-        printWindow.document.write('* { box-sizing: border-box; margin: 0; padding: 0; }');
-        printWindow.document.write('body { font-family: Arial, Helvetica, sans-serif; background: #fff; color: #1e2b3c; padding: 0; }');
-        printWindow.document.write('.wrap { width: 100%; max-width: 194mm; margin: 0 auto; padding: 0; }');
-        printWindow.document.write('@media print { body { padding: 0; } .wrap { width: 100%; padding: 0; } }');
-        printWindow.document.write('</style>');
-        printWindow.document.write('</head><body>');
-        printWindow.document.write('<div class="wrap">');
-        printWindow.document.write(content);
-        printWindow.document.write('</div>');
-        printWindow.document.write('</body></html>');
-        printWindow.document.close();
+        /* Hidden iframe তৈরি */
+        var iframe = document.createElement('iframe');
+        iframe.style.cssText = 'position:fixed;left:0;top:0;width:210mm;height:297mm;border:0;opacity:0;pointer-events:none;z-index:-1;';
+        document.body.appendChild(iframe);
 
-        /* Print Dialog খুলি */
+        /* iframe এ HTML লিখি */
+        var doc = iframe.contentDocument || iframe.contentWindow.document;
+        doc.open();
+        doc.write(fullHTML);
+        doc.close();
+
+        /* ইমেজ লোড হওয়ার জন্য অপেক্ষা */
         setTimeout(function () {
-            printWindow.focus();
-            printWindow.print();
+            try {
+                iframe.contentWindow.focus();
+                iframe.contentWindow.print();
+            } catch (e) {
+                console.error(e);
+                alert('⚠️ Print failed. Please try again.');
+            }
+
+            /* Cleanup */
+            setTimeout(function () {
+                if (iframe.parentNode) {
+                    document.body.removeChild(iframe);
+                }
+            }, 3000);
         }, 1000);
     });
 
-    /* RESET */
+    /* ============ RESET ============ */
     resetBtn.addEventListener('click', function () {
         if (!confirm('Clear all data?')) return;
         document.getElementById('biodataForm').reset();

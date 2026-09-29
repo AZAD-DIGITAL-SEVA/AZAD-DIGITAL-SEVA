@@ -1,0 +1,1791 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PVC Card অর্ডার | Azad Digital Seva - পশ্চিমবঙ্গ</title>
+<meta name="description" content="পশ্চিমবঙ্গের সব জেলায় PVC কার্ড অর্ডার করুন। আধার, ভোটার, রেশন, আয়ুষ্মান, ড্রাইভিং লাইসেন্স সহ সব কার্ড।">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;500;600;700&family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --saffron: #FF9933;
+    --white: #FFFFFF;
+    --green: #138808;
+    --navy: #000080;
+    --gold: #D4AF37;
+    --cream: #FFF8E7;
+    --maroon: #8B0000;
+    --deep-blue: #0a2540;
+    --light-bg: #f5f7fa;
+  }
+
+  body {
+    font-family: 'Hind Siliguri', 'Poppins', sans-serif;
+    background: var(--light-bg);
+    color: #1e2b3c;
+    line-height: 1.5;
+    min-height: 100vh;
+  }
+
+  /* ============ TOP FLAG STRIP ============ */
+  .flag-strip {
+    height: 4px;
+    display: flex;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+  }
+  .flag-strip div { flex: 1; }
+  .flag-strip .s { background: var(--saffron); }
+  .flag-strip .w { background: #fff; }
+  .flag-strip .g { background: var(--green); }
+
+  /* ============ HEADER (matching index style) ============ */
+  header {
+    background: linear-gradient(135deg, #075e54, #128c7e);
+    color: #fff;
+    height: 48px;
+    padding: 0 14px;
+    border-bottom: 2px solid var(--gold);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    box-shadow: 0 2px 8px rgba(7,94,84,0.25);
+    position: sticky;
+    top: 4px;
+    z-index: 999;
+  }
+
+  .header-brand {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    min-width: 0;
+    flex: 1;
+    overflow: hidden;
+  }
+
+  .header-brand .back-icon {
+    width: 30px;
+    height: 30px;
+    border-radius: 8px;
+    background: rgba(255,255,255,0.15);
+    border: 1px solid rgba(255,255,255,0.3);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    text-decoration: none;
+    flex-shrink: 0;
+    transition: all 0.2s;
+  }
+  .header-brand .back-icon:hover {
+    background: var(--gold);
+    border-color: var(--gold);
+    color: #1e2b3c;
+    transform: translateX(-2px);
+  }
+
+  .header-brand .logo-icon { font-size: 1.1rem; flex-shrink: 0; }
+
+  .header-text {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    line-height: 1.15;
+  }
+
+  .header-text .b-name {
+    font-size: 0.86rem;
+    font-weight: 700;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .header-text .b-name span { color: var(--gold); }
+
+  .header-text .b-sub {
+    font-size: 0.6rem;
+    color: #d4ece8;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .header-actions {
+    display: flex;
+    gap: 6px;
+    flex-shrink: 0;
+  }
+
+  .btn-header {
+    background: rgba(255,255,255,0.15);
+    border: 1px solid rgba(255,255,255,0.35);
+    color: #fff;
+    font-size: 0.68rem;
+    font-weight: 600;
+    padding: 5px 12px;
+    border-radius: 14px;
+    cursor: pointer;
+    font-family: inherit;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    white-space: nowrap;
+    transition: all 0.2s;
+  }
+  .btn-header:hover {
+    background: var(--gold);
+    border-color: var(--gold);
+    color: #1e2b3c;
+  }
+
+  /* ============ HERO ============ */
+  .hero {
+    background: linear-gradient(135deg, #0a2540 0%, #1e3a5f 50%, #0a2540 100%);
+    color: white;
+    padding: 32px 18px 50px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -80px; right: -80px;
+    width: 220px; height: 220px;
+    background: radial-gradient(circle, rgba(255,153,51,0.25), transparent 70%);
+    border-radius: 50%;
+  }
+  .hero::after {
+    content: '';
+    position: absolute;
+    bottom: -80px; left: -60px;
+    width: 200px; height: 200px;
+    background: radial-gradient(circle, rgba(19,136,8,0.2), transparent 70%);
+    border-radius: 50%;
+  }
+
+  .hero-content { position: relative; z-index: 1; max-width: 700px; margin: 0 auto; }
+
+  .hero-icon {
+    width: 70px;
+    height: 70px;
+    margin: 0 auto 12px;
+    background: linear-gradient(135deg, var(--saffron), var(--gold));
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    box-shadow: 0 10px 30px rgba(255,153,51,0.4);
+    border: 2px solid rgba(255,255,255,0.2);
+    animation: heroFloat 3s ease-in-out infinite;
+  }
+
+  @keyframes heroFloat {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-6px); }
+  }
+
+  .hero h1 {
+    font-family: 'Poppins', 'Hind Siliguri', sans-serif;
+    font-size: 1.6rem;
+    font-weight: 800;
+    margin-bottom: 8px;
+    letter-spacing: 0.5px;
+  }
+
+  .hero h1 span {
+    background: linear-gradient(90deg, var(--saffron), var(--gold));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .hero p {
+    font-size: 0.92rem;
+    color: rgba(255,255,255,0.85);
+    max-width: 560px;
+    margin: 0 auto;
+  }
+
+  .hero-badges {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 14px;
+    flex-wrap: wrap;
+  }
+
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.2);
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.7rem;
+    color: #fff;
+  }
+
+  .hero-badge .dot {
+    width: 6px; height: 6px;
+    background: #4ade80;
+    border-radius: 50%;
+    box-shadow: 0 0 8px #4ade80;
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+  }
+
+  /* ============ MAIN CONTAINER ============ */
+  .main-container {
+    max-width: 1100px;
+    margin: -28px auto 0;
+    padding: 0 14px 40px;
+    position: relative;
+    z-index: 5;
+  }
+
+  .main-card {
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 15px 40px -15px rgba(10,37,64,0.2);
+    overflow: hidden;
+    border-top: 4px solid var(--saffron);
+  }
+
+  /* ============ TOP BANNER ============ */
+  .top-banner {
+    padding: 22px 20px;
+    background: linear-gradient(135deg, #fff8e7 0%, #ffffff 100%);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 14px;
+    border-bottom: 1px solid #f0e6d2;
+  }
+
+  .banner-left h2 {
+    font-size: 1.15rem;
+    color: var(--deep-blue);
+    font-weight: 700;
+    margin-bottom: 3px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .banner-left h2 svg { width: 22px; height: 22px; color: var(--saffron); }
+
+  .banner-left p {
+    font-size: 0.82rem;
+    color: #666;
+  }
+
+  .click-here-btn {
+    background: linear-gradient(135deg, var(--saffron), #e67e22);
+    color: white;
+    border: none;
+    padding: 13px 28px;
+    border-radius: 10px;
+    font-size: 0.9rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s;
+    box-shadow: 0 4px 14px rgba(255,153,51,0.4);
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: inherit;
+  }
+
+  .click-here-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 22px rgba(255,153,51,0.55);
+  }
+
+  .click-here-btn svg {
+    width: 16px; height: 16px;
+    animation: arrowMove 1.5s infinite;
+  }
+
+  @keyframes arrowMove {
+    0%, 100% { transform: translateX(0); }
+    50% { transform: translateX(4px); }
+  }
+
+  /* ============ FORM SECTION ============ */
+  .form-section {
+    display: none;
+    padding: 26px 20px;
+  }
+  .form-section.active { display: block; animation: fadeIn 0.4s ease; }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .form-title {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 22px;
+    padding-bottom: 14px;
+    border-bottom: 2px solid #f0e6d2;
+  }
+
+  .form-title .icon-circle {
+    width: 44px;
+    height: 44px;
+    background: linear-gradient(135deg, var(--navy), #1e3a5f);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .form-title .icon-circle svg { width: 22px; height: 22px; color: #fff; }
+
+  .form-title h3 {
+    font-size: 1.08rem;
+    color: var(--deep-blue);
+    font-weight: 700;
+  }
+  .form-title p { font-size: 0.75rem; color: #666; margin-top: 2px; }
+
+  .form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 20px;
+  }
+
+  .form-group { display: flex; flex-direction: column; gap: 5px; }
+  .form-group.full { grid-column: 1 / -1; }
+
+  .form-group label {
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: #374151;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+
+  .form-group label .req { color: #dc2626; }
+  .form-group label svg { width: 14px; height: 14px; color: var(--saffron); }
+
+  .form-group input,
+  .form-group textarea,
+  .form-group select {
+    padding: 11px 13px;
+    border: 2px solid #e5e7eb;
+    border-radius: 10px;
+    font-size: 0.88rem;
+    font-family: inherit;
+    color: #111827;
+    transition: all 0.3s;
+    background: #fafbfc;
+    width: 100%;
+  }
+
+  .form-group input:focus,
+  .form-group textarea:focus,
+  .form-group select:focus {
+    outline: none;
+    border-color: var(--saffron);
+    background: #fff;
+    box-shadow: 0 0 0 4px rgba(255,153,51,0.12);
+  }
+
+  .form-group textarea { resize: vertical; min-height: 68px; }
+
+  .form-group input.error,
+  .form-group textarea.error,
+  .form-group select.error {
+    border-color: #dc2626;
+    background: #fef2f2;
+  }
+
+  .error-msg {
+    font-size: 0.7rem;
+    color: #dc2626;
+    display: none;
+    margin-top: 1px;
+  }
+  .error-msg.show { display: block; }
+
+  .submit-form-btn {
+    width: 100%;
+    background: linear-gradient(135deg, var(--green), #0f6b06);
+    color: white;
+    border: none;
+    padding: 15px;
+    border-radius: 12px;
+    font-size: 0.95rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    box-shadow: 0 4px 14px rgba(19,136,8,0.3);
+    font-family: inherit;
+  }
+
+  .submit-form-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 22px rgba(19,136,8,0.45);
+  }
+  .submit-form-btn svg { width: 18px; height: 18px; }
+
+  /* ============ CARD MENU ============ */
+  .card-menu {
+    display: none;
+    padding: 22px 18px;
+    background: #fafbfc;
+  }
+  .card-menu.active { display: block; animation: fadeIn 0.4s; }
+
+  .menu-title {
+    font-size: 1rem;
+    color: var(--deep-blue);
+    margin-bottom: 16px;
+    font-weight: 700;
+    text-align: center;
+  }
+
+  .menu-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 10px;
+  }
+
+  .menu-item {
+    background: #fff;
+    border: 2px solid #e5e7eb;
+    padding: 14px 8px;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.3s;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 7px;
+  }
+
+  .menu-item:hover {
+    border-color: var(--saffron);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(255,153,51,0.18);
+  }
+
+  .menu-item .card-thumb {
+    width: 55px;
+    height: 38px;
+    border-radius: 5px;
+    overflow: hidden;
+    box-shadow: 0 3px 8px rgba(0,0,0,0.15);
+    flex-shrink: 0;
+  }
+  .menu-item .card-thumb svg { width: 100%; height: 100%; display: block; }
+
+  .menu-item .m-name {
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: #374151;
+    line-height: 1.15;
+  }
+
+  .menu-item.other {
+    background: linear-gradient(135deg, #fff8e7, #ffffff);
+    border-color: var(--gold);
+  }
+
+  /* ============ ORDER SECTION ============ */
+  .order-section { display: none; padding: 22px 18px; }
+  .order-section.active { display: block; animation: fadeIn 0.4s; }
+
+  .order-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 18px;
+    padding: 14px;
+    background: linear-gradient(135deg, #fff8e7, #ffffff);
+    border-radius: 12px;
+    border-left: 4px solid var(--saffron);
+  }
+
+  .order-header .oh-icon {
+    width: 44px; height: 44px;
+    border-radius: 10px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.15);
+  }
+  .order-header .oh-icon svg { width: 100%; height: 100%; }
+
+  .order-header h3 {
+    font-size: 1rem;
+    color: var(--deep-blue);
+    font-weight: 700;
+  }
+  .order-header p { font-size: 0.72rem; color: #666; margin-top: 2px; }
+
+  .upload-box {
+    border: 2px dashed #cbd5e1;
+    border-radius: 14px;
+    padding: 30px 18px;
+    text-align: center;
+    background: #fafbfc;
+    cursor: pointer;
+    transition: all 0.3s;
+    margin-bottom: 16px;
+  }
+
+  .upload-box:hover {
+    border-color: var(--saffron);
+    background: #fff8e7;
+  }
+
+  .upload-box input { display: none; }
+
+  .upload-box .up-icon {
+    width: 55px; height: 55px;
+    margin: 0 auto 10px;
+    background: linear-gradient(135deg, #e0f2fe, #bae6fd);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .upload-box .up-icon svg { width: 26px; height: 26px; color: #0284c7; }
+
+  .upload-box p {
+    color: #374151;
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin-bottom: 3px;
+  }
+  .upload-box .hint { font-size: 0.72rem; color: #888; }
+
+  .file-info {
+    background: #f0fdf4;
+    border: 1px solid #bbf7d0;
+    border-left: 4px solid var(--green);
+    padding: 11px 14px;
+    border-radius: 10px;
+    margin-bottom: 16px;
+    display: none;
+    font-size: 0.8rem;
+    color: #166534;
+    align-items: center;
+    gap: 8px;
+  }
+  .file-info.active { display: flex; }
+  .file-info svg { width: 18px; height: 18px; flex-shrink: 0; }
+
+  /* QR Section */
+  .qr-section {
+    display: none;
+    text-align: center;
+    padding: 22px 18px;
+    background: linear-gradient(135deg, #fff8e7, #ffffff);
+    border-radius: 14px;
+    margin-bottom: 16px;
+    border: 2px solid var(--gold);
+  }
+  .qr-section.active { display: block; animation: fadeIn 0.4s; }
+
+  .qr-section h3 {
+    color: var(--maroon);
+    margin-bottom: 14px;
+    font-size: 1rem;
+    font-weight: 700;
+  }
+
+  #qrcode {
+    display: inline-block;
+    padding: 10px;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+    margin-bottom: 12px;
+    border: 1px solid #f0e6d2;
+  }
+
+  .payment-amount {
+    font-size: 1.6rem;
+    color: var(--maroon);
+    font-weight: 800;
+    margin: 8px 0;
+    font-family: 'Poppins', sans-serif;
+  }
+  .payment-amount small { font-size: 0.8rem; color: #666; font-weight: 500; }
+
+  .upi-id-box {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: #f1f5f9;
+    padding: 7px 14px;
+    border-radius: 8px;
+    font-size: 0.78rem;
+    color: #334155;
+    margin-bottom: 12px;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+  }
+  .upi-id-box .copy {
+    color: var(--saffron);
+    cursor: pointer;
+    font-size: 0.7rem;
+    font-weight: 700;
+  }
+
+  .submit-payment-btn {
+    background: linear-gradient(135deg, var(--green), #0f6b06);
+    color: white;
+    border: none;
+    padding: 13px 28px;
+    border-radius: 10px;
+    font-size: 0.9rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s;
+    margin-top: 8px;
+    font-family: inherit;
+    box-shadow: 0 4px 14px rgba(19,136,8,0.3);
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .submit-payment-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 22px rgba(19,136,8,0.45);
+  }
+
+  /* Processing */
+  .processing {
+    display: none;
+    text-align: center;
+    padding: 28px 18px;
+    background: #eff6ff;
+    border-radius: 14px;
+    margin-bottom: 16px;
+    border: 1px solid #bfdbfe;
+  }
+  .processing.active { display: block; animation: fadeIn 0.4s; }
+
+  .spinner {
+    border: 4px solid #dbeafe;
+    border-top: 4px solid #2563eb;
+    border-radius: 50%;
+    width: 48px;
+    height: 48px;
+    animation: spin 1s linear infinite;
+    margin: 0 auto 12px;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  .processing p {
+    color: #1e40af;
+    font-weight: 600;
+    font-size: 0.85rem;
+  }
+
+  /* WhatsApp */
+  .whatsapp-section {
+    display: none;
+    text-align: center;
+    padding: 22px 18px;
+    background: #f0fdf4;
+    border-radius: 14px;
+    border: 2px solid #86efac;
+  }
+  .whatsapp-section.active { display: block; animation: fadeIn 0.4s; }
+
+  .whatsapp-section h3 {
+    color: var(--green);
+    margin-bottom: 6px;
+    font-size: 1rem;
+    font-weight: 700;
+  }
+  .whatsapp-section .sub {
+    color: #4b5563;
+    font-size: 0.78rem;
+    margin-bottom: 14px;
+  }
+
+  .whatsapp-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: linear-gradient(135deg, #25d366, #128c7e);
+    color: white;
+    padding: 13px 26px;
+    border-radius: 10px;
+    text-decoration: none;
+    font-size: 0.88rem;
+    font-weight: 700;
+    margin: 8px 0;
+    transition: all 0.3s;
+    box-shadow: 0 4px 14px rgba(37,211,102,0.3);
+  }
+  .whatsapp-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 22px rgba(37,211,102,0.45);
+  }
+  .whatsapp-icon { width: 20px; height: 20px; }
+
+  .screenshot-note {
+    color: #166534;
+    font-weight: 600;
+    font-size: 0.78rem;
+    margin-top: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+  }
+  .screenshot-note svg { width: 15px; height: 15px; }
+
+  /* ============ CARDS DOWNLOAD SECTION ============ */
+  .cards-section {
+    padding: 28px 18px;
+    background: #fafbfc;
+    border-top: 1px solid #e5e7eb;
+  }
+
+  .cards-section h2 {
+    text-align: center;
+    color: var(--deep-blue);
+    margin-bottom: 6px;
+    font-size: 1.15rem;
+    font-weight: 700;
+  }
+
+  .cards-section .subtitle {
+    text-align: center;
+    color: #666;
+    font-size: 0.78rem;
+    margin-bottom: 22px;
+  }
+
+  .cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 12px;
+  }
+
+  .card-btn {
+    background: #fff;
+    border-radius: 12px;
+    padding: 16px 10px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s;
+    border: 2px solid #e5e7eb;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 9px;
+  }
+
+  .card-btn:hover {
+    border-color: var(--saffron);
+    transform: translateY(-4px);
+    box-shadow: 0 10px 25px rgba(255,153,51,0.18);
+  }
+
+  .card-btn .card-thumb {
+    width: 80px;
+    height: 54px;
+    border-radius: 6px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  }
+  .card-btn .card-thumb svg { width: 100%; height: 100%; display: block; }
+
+  .card-btn .name {
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: var(--deep-blue);
+  }
+  .card-btn .desc { font-size: 0.65rem; color: #888; }
+
+  /* Card Type Selector */
+  .card-type-selector {
+    display: none;
+    padding: 18px;
+    background: #fff;
+    border-radius: 14px;
+    margin-top: 18px;
+    border: 2px solid #e5e7eb;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+  }
+  .card-type-selector.active { display: block; animation: fadeIn 0.4s; }
+
+  .card-type-selector h4 {
+    color: var(--deep-blue);
+    margin-bottom: 12px;
+    font-size: 0.88rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+  }
+  .card-type-selector h4 svg { width: 16px; height: 16px; color: var(--saffron); }
+
+  .type-buttons { display: flex; flex-wrap: wrap; gap: 8px; }
+
+  .type-btn {
+    background: #f8fafc;
+    border: 2px solid #e2e8f0;
+    padding: 9px 18px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    color: #475569;
+    font-size: 0.78rem;
+    transition: all 0.3s;
+    font-family: inherit;
+  }
+
+  .type-btn:hover, .type-btn.selected {
+    background: var(--saffron);
+    color: white;
+    border-color: var(--saffron);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(255,153,51,0.3);
+  }
+
+  /* Download Section */
+  .download-section {
+    display: none;
+    text-align: center;
+    padding: 22px;
+    background: linear-gradient(135deg, #fff8e7, #ffffff);
+    border-radius: 14px;
+    margin-top: 18px;
+    border: 2px dashed var(--gold);
+  }
+  .download-section.active { display: block; animation: fadeIn 0.4s; }
+
+  .download-section h4 {
+    color: var(--maroon);
+    margin-bottom: 14px;
+    font-size: 0.92rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+  }
+  .download-section h4 svg { width: 18px; height: 18px; color: var(--green); }
+
+  .download-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+  }
+
+  .download-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    background: linear-gradient(135deg, var(--saffron), #e67e22);
+    color: white;
+    border: none;
+    padding: 12px 22px;
+    border-radius: 10px;
+    font-size: 0.82rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s;
+    box-shadow: 0 4px 14px rgba(255,153,51,0.3);
+    font-family: inherit;
+  }
+
+  .download-btn.zip {
+    background: linear-gradient(135deg, var(--navy), #1e3a5f);
+    box-shadow: 0 4px 14px rgba(0,0,128,0.3);
+  }
+
+  .download-btn:hover { transform: translateY(-2px); }
+
+  /* Preview */
+  .preview-area {
+    display: none;
+    margin-top: 18px;
+    padding: 14px;
+    background: #fff;
+    border-radius: 12px;
+    text-align: center;
+    border: 2px solid #e5e7eb;
+  }
+  .preview-area.active { display: block; animation: fadeIn 0.4s; }
+
+  .preview-area .preview-label {
+    font-size: 0.72rem;
+    color: #666;
+    margin-bottom: 10px;
+    font-weight: 600;
+  }
+
+  .preview-area img {
+    max-width: 100%;
+    max-height: 320px;
+    border-radius: 8px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+  }
+
+  /* ============ FOOTER ============ */
+  footer {
+    background: #0b2e2a;
+    color: #d4e6e3;
+    text-align: center;
+    padding: 20px 14px;
+    border-top: 3px solid var(--gold);
+    margin-top: 20px;
+  }
+
+  footer p { max-width: 700px; margin: 0 auto 6px; font-size: 0.82rem; }
+
+  .footer-links {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px 16px;
+    margin: 8px 0 5px;
+  }
+
+  .footer-links a {
+    color: #c2e5df;
+    text-decoration: none;
+    font-size: 0.78rem;
+    transition: color 0.2s;
+  }
+  .footer-links a:hover { color: var(--gold); }
+
+  .copyright { font-size: 0.68rem; opacity: 0.75; margin-top: 8px; }
+
+  /* ============ RESPONSIVE ============ */
+  @media (max-width: 700px) {
+    header { height: 42px; padding: 0 10px; }
+    .header-text .b-name { font-size: 0.75rem; }
+    .header-text .b-sub { font-size: 0.55rem; }
+    .btn-header { font-size: 0.6rem; padding: 4px 9px; }
+
+    .hero { padding: 24px 14px 40px; }
+    .hero-icon { width: 56px; height: 56px; font-size: 1.6rem; }
+    .hero h1 { font-size: 1.2rem; }
+    .hero p { font-size: 0.8rem; }
+
+    .main-container { padding: 0 10px 30px; }
+    .top-banner { padding: 18px 14px; }
+    .banner-left h2 { font-size: 1rem; }
+    .click-here-btn { width: 100%; justify-content: center; padding: 12px 20px; font-size: 0.85rem; }
+
+    .form-section, .card-menu, .order-section, .cards-section { padding: 18px 14px; }
+    .form-grid { grid-template-columns: 1fr; gap: 12px; }
+
+    .menu-grid { grid-template-columns: repeat(2, 1fr); gap: 8px; }
+    .menu-item .card-thumb { width: 48px; height: 33px; }
+    .menu-item .m-name { font-size: 0.68rem; }
+
+    .cards-grid { grid-template-columns: repeat(2, 1fr); gap: 9px; }
+    .card-btn .card-thumb { width: 68px; height: 46px; }
+    .card-btn .name { font-size: 0.72rem; }
+
+    .payment-amount { font-size: 1.35rem; }
+    .download-buttons { flex-direction: column; }
+    .download-btn { width: 100%; justify-content: center; }
+
+    footer { padding: 15px 10px; }
+    footer p { font-size: 0.72rem; }
+    .footer-links a { font-size: 0.7rem; }
+    .copyright { font-size: 0.6rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Top Flag Strip -->
+<div class="flag-strip">
+  <div class="s"></div>
+  <div class="w"></div>
+  <div class="g"></div>
+</div>
+
+<!-- Header (matching index style) -->
+<header>
+  <div class="header-brand">
+    <a href="index.html" class="back-icon" title="ফিরে যান">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+    </a>
+    <span class="logo-icon">💳</span>
+    <div class="header-text">
+      <span class="b-name">Azad <span>Digital Seva</span></span>
+      <span class="b-sub">PVC কার্ড সেবা — পশ্চিমবঙ্গ</span>
+    </div>
+  </div>
+  <div class="header-actions">
+    <a href="index.html" class="btn-header">🏠 হোম</a>
+  </div>
+</header>
+
+<!-- Hero -->
+<section class="hero">
+  <div class="hero-content">
+    <div class="hero-icon">💳</div>
+    <h1>PVC কার্ড <span>অর্ডার করুন</span></h1>
+    <p>পশ্চিমবঙ্গের সমস্ত জেলায় দ্রুত, নিরাপদ ও বিশ্বস্ত PVC কার্ড সেবা। আধার, ভোটার, রেশন, আয়ুষ্মান সহ সব কার্ড।</p>
+    <div class="hero-badges">
+      <span class="hero-badge"><span class="dot"></span> অনলাইন সেবা চালু</span>
+      <span class="hero-badge">🇮🇳 পশ্চিমবঙ্গ</span>
+      <span class="hero-badge">✅ বিশ্বস্ত সেবা</span>
+      <span class="hero-badge">⚡ দ্রুত ডেলিভারি</span>
+    </div>
+  </div>
+</section>
+
+<!-- Main Container -->
+<div class="main-container">
+  <div class="main-card">
+
+    <!-- Top Banner -->
+    <div class="top-banner" id="topBanner">
+      <div class="banner-left">
+        <h2>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2" y="5" width="20" height="14" rx="2"/>
+            <path d="M2 10h20"/>
+          </svg>
+          পিভিসি কার্ড অর্ডার করুন
+        </h2>
+        <p>নিচের বাটনে ক্লিক করে আপনার পছন্দের কার্ড অর্ডার করুন</p>
+      </div>
+      <button class="click-here-btn" onclick="openForm()">
+        ক্লিক হিয়ার
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M5 12h14M12 5l7 7-7 7"/>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Form Section -->
+    <div class="form-section" id="formSection">
+      <div class="form-title">
+        <div class="icon-circle">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+            <circle cx="12" cy="7" r="4"/>
+          </svg>
+        </div>
+        <div>
+          <h3>কাস্টমার তথ্য দিন</h3>
+          <p>সঠিক তথ্য দিলে দ্রুত ডেলিভারি পাবেন</p>
+        </div>
+      </div>
+
+      <div class="form-grid">
+        <div class="form-group">
+          <label>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+            কাস্টমারের নাম <span class="req">*</span>
+          </label>
+          <input type="text" id="custName" placeholder="আপনার সম্পূর্ণ নাম লিখুন">
+          <div class="error-msg" id="err-custName">নাম লিখুন</div>
+        </div>
+
+        <div class="form-group">
+          <label>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            মোবাইল নাম্বার <span class="req">*</span>
+          </label>
+          <input type="tel" id="custPhone" placeholder="10 সংখ্যার মোবাইল নাম্বার" maxlength="10">
+          <div class="error-msg" id="err-custPhone">সঠিক ১০ সংখ্যার নাম্বার দিন</div>
+        </div>
+
+        <div class="form-group">
+          <label>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            ইমেইল আইডি
+          </label>
+          <input type="email" id="custEmail" placeholder="example@gmail.com">
+          <div class="error-msg" id="err-custEmail">সঠিক ইমেইল দিন</div>
+        </div>
+
+        <div class="form-group">
+          <label>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            জেলা <span class="req">*</span>
+          </label>
+          <select id="custDistrict">
+            <option value="">জেলা সিলেক্ট করুন</option>
+            <option>কলকাতা</option>
+            <option>উত্তর ২৪ পরগনা</option>
+            <option>দক্ষিণ ২৪ পরগনা</option>
+            <option>হাওড়া</option>
+            <option>হুগলি</option>
+            <option>নদিয়া</option>
+            <option>মুর্শিদাবাদ</option>
+            <option>বীরভূম</option>
+            <option>বর্ধমান (পূর্ব)</option>
+            <option>বর্ধমান (পশ্চিম)</option>
+            <option>বাঁকুড়া</option>
+            <option>পুরুলিয়া</option>
+            <option>মেদিনীপুর (পূর্ব)</option>
+            <option>মেদিনীপুর (পশ্চিম)</option>
+            <option>ঝাড়গ্রাম</option>
+            <option>মালদা</option>
+            <option>উত্তর দিনাজপুর</option>
+            <option>দক্ষিণ দিনাজপুর</option>
+            <option>কোচবিহার</option>
+            <option>জলপাইগুড়ি</option>
+            <option>আলিপুরদুয়ার</option>
+            <option>দার্জিলিং</option>
+            <option>কালিম্পং</option>
+            <option>অন্যান্য</option>
+          </select>
+          <div class="error-msg" id="err-custDistrict">জেলা সিলেক্ট করুন</div>
+        </div>
+
+        <div class="form-group full">
+          <label>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+            সম্পূর্ণ ঠিকানা <span class="req">*</span>
+          </label>
+          <textarea id="custAddress" placeholder="গ্রাম/বাড়ি নং, ডাকঘর, থানা, ব্লক, পিন কোড সহ সম্পূর্ণ ঠিকানা লিখুন"></textarea>
+          <div class="error-msg" id="err-custAddress">সম্পূর্ণ ঠিকানা লিখুন</div>
+        </div>
+      </div>
+
+      <button class="submit-form-btn" onclick="submitForm()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M5 12h14M12 5l7 7-7 7"/>
+        </svg>
+        পরবর্তী ধাপে যান
+      </button>
+    </div>
+
+    <!-- Card Menu -->
+    <div class="card-menu" id="cardMenu">
+      <div class="menu-title">🗂️ আপনার প্রয়োজনীয় কার্ড সিলেক্ট করুন</div>
+      <div class="menu-grid" id="menuGrid"></div>
+    </div>
+
+    <!-- Order Section -->
+    <div class="order-section" id="orderSection">
+      <div class="order-header">
+        <div class="oh-icon" id="orderIcon"></div>
+        <div>
+          <h3 id="orderTitle">কার্ড অর্ডার</h3>
+          <p>PDF আপলোড করে পেমেন্ট সম্পন্ন করুন</p>
+        </div>
+      </div>
+
+      <div class="upload-box" onclick="document.getElementById('pdfInput').click()">
+        <div class="up-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+            <polyline points="17 8 12 3 7 8"/>
+            <line x1="12" y1="3" x2="12" y2="15"/>
+          </svg>
+        </div>
+        <p>PDF ফাইল আপলোড করুন</p>
+        <p class="hint">এখানে ক্লিক করুন বা ফাইল ড্র্যাগ করুন</p>
+        <input type="file" id="pdfInput" accept="application/pdf" onchange="handlePdfUpload(event)">
+      </div>
+
+      <div class="file-info" id="fileInfo">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+        <span id="fileInfoText"></span>
+      </div>
+
+      <div class="qr-section" id="qrSection">
+        <h3>💳 পেমেন্ট করুন</h3>
+        <div id="qrcode"></div>
+        <div class="payment-amount">₹ 50 <small>/ কার্ড</small></div>
+        <div class="upi-id-box">
+          UPI: azaddigital@upi
+          <span class="copy" onclick="copyUPI(event)">📋 কপি</span>
+        </div>
+        <p style="color:#666; font-size:0.72rem; margin-bottom:10px;">
+          উপরের QR কোড স্ক্যান করে পেমেন্ট করুন
+        </p>
+        <button class="submit-payment-btn" onclick="submitPayment()">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px;"><polyline points="20 6 9 17 4 12"/></svg>
+          পেমেন্ট সম্পন্ন হয়েছে
+        </button>
+      </div>
+
+      <div class="processing" id="processing">
+        <div class="spinner"></div>
+        <p>⏳ পেমেন্ট প্রসেস হচ্ছে... অপেক্ষা করুন</p>
+      </div>
+
+      <div class="whatsapp-section" id="whatsappSection">
+        <h3>✅ পেমেন্ট সফল হয়েছে</h3>
+        <p class="sub">আপনার অর্ডারটি প্রসেস করার জন্য WhatsApp-এ যোগাযোগ করুন</p>
+        <a href="https://wa.me/919999999999?text=আমি%20পেমেন্ট%20করেছি%20-%20PVC%20কার্ড" 
+           target="_blank" class="whatsapp-btn">
+          <svg class="whatsapp-icon" viewBox="0 0 24 24" fill="white">
+            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+          </svg>
+          WhatsApp-এ যোগাযোগ করুন
+        </a>
+        <p class="screenshot-note">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+          পেমেন্টের স্ক্রিনশট আপলোড করুন
+        </p>
+      </div>
+    </div>
+
+    <!-- Cards Download Section -->
+    <div class="cards-section">
+      <h2>✂️ PDF Crop করে কার্ড ডাউনলোড করুন</h2>
+      <p class="subtitle">PDF আপলোড করুন → অটোমেটিক ক্রপ → PNG + ZIP ডাউনলোড</p>
+      <div class="cards-grid" id="cardsGrid"></div>
+
+      <div class="card-type-selector" id="typeSelector">
+        <h4>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+          কার্ড টাইপ সিলেক্ট করুন:
+        </h4>
+        <div class="type-buttons" id="typeButtons"></div>
+      </div>
+
+      <div class="upload-box" id="cardUploadBox" style="display:none; margin-top:18px;" 
+           onclick="document.getElementById('cardPdfInput').click()">
+        <div class="up-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+            <polyline points="17 8 12 3 7 8"/>
+            <line x1="12" y1="3" x2="12" y2="15"/>
+          </svg>
+        </div>
+        <p>PDF ফাইল আপলোড করুন</p>
+        <p class="hint">PDF আপলোড করলে অটো ক্রপ হয়ে PNG + ZIP ডাউনলোড হবে</p>
+        <input type="file" id="cardPdfInput" accept="application/pdf" onchange="handleCardPdf(event)">
+      </div>
+
+      <div class="preview-area" id="previewArea">
+        <div class="preview-label">📸 প্রিভিউ</div>
+        <img id="previewImg" src="" alt="Preview">
+      </div>
+
+      <div class="download-section" id="downloadSection">
+        <h4>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          ফাইল প্রস্তুত! ডাউনলোড করুন
+        </h4>
+        <div class="download-buttons">
+          <button class="download-btn" onclick="downloadPNG()">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            PNG ডাউনলোড
+          </button>
+          <button class="download-btn zip" onclick="downloadZIP()">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            ZIP ডাউনলোড
+          </button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- Footer -->
+<footer>
+  <p>🏢 Azad Digital Seva — আপনার বিশ্বস্ত অনলাইন সেবা প্রদানকারী</p>
+  <div class="footer-links">
+    <a href="index.html">Home</a>
+    <a href="services.html">Services</a>
+    <a href="tools.html">Tools</a>
+    <a href="notice.html">Notice</a>
+    <a href="contact.html">Contact</a>
+  </div>
+  <p class="copyright">© ২০২৫ Azad Digital Seva | সর্বস্বত্ব সংরক্ষিত</p>
+</footer>
+
+<script>
+// ============================================================
+// REALISTIC CARD SVG GENERATOR
+// ============================================================
+function getCardSVG(type) {
+  const svgs = {
+    aadhaar: `<svg viewBox="0 0 100 64" xmlns="http://www.w3.org/2000/svg">
+      <defs><linearGradient id="aadhaarBg" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#ffffff"/><stop offset="50%" stop-color="#f8f9ff"/><stop offset="100%" stop-color="#e8ecff"/></linearGradient></defs>
+      <rect width="100" height="64" fill="url(#aadhaarBg)" rx="3"/>
+      <rect x="0" y="0" width="100" height="10" fill="#ff9933"/>
+      <rect x="0" y="10" width="100" height="2" fill="#138808"/>
+      <circle cx="12" cy="9" r="4" fill="#000080"/><path d="M12 5 L12 13 M8 9 L16 9" stroke="#fff" stroke-width="1"/>
+      <rect x="5" y="16" width="22" height="28" fill="#e0e7ff" rx="1"/>
+      <circle cx="16" cy="26" r="5" fill="#a0aec0"/><path d="M8 42 Q16 36 24 42 Z" fill="#a0aec0"/>
+      <rect x="32" y="16" width="60" height="3" fill="#000080"/>
+      <rect x="32" y="23" width="45" height="2" fill="#4a5568"/>
+      <rect x="32" y="28" width="55" height="2" fill="#4a5568"/>
+      <rect x="32" y="33" width="40" height="2" fill="#4a5568"/>
+      <rect x="32" y="38" width="50" height="2" fill="#4a5568"/>
+      <text x="50" y="58" font-size="4" fill="#000080" text-anchor="middle" font-weight="bold">GOVERNMENT OF INDIA</text>
+    </svg>`,
+    pan: `<svg viewBox="0 0 100 64" xmlns="http://www.w3.org/2000/svg">
+      <defs><linearGradient id="panBg" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#fff8e7"/><stop offset="100%" stop-color="#ffe4b5"/></linearGradient></defs>
+      <rect width="100" height="64" fill="url(#panBg)" rx="3"/>
+      <rect x="0" y="0" width="100" height="14" fill="#8B0000"/>
+      <text x="50" y="10" font-size="6" fill="#ffffff" text-anchor="middle" font-weight="bold">INCOME TAX DEPARTMENT</text>
+      <rect x="5" y="22" width="20" height="24" fill="#e0e7ff" rx="1"/>
+      <circle cx="15" cy="30" r="4" fill="#a0aec0"/><path d="M8 46 Q15 40 22 46 Z" fill="#a0aec0"/>
+      <rect x="30" y="22" width="65" height="3" fill="#8B0000"/>
+      <rect x="30" y="28" width="40" height="2" fill="#4a5568"/>
+      <rect x="30" y="33" width="55" height="2" fill="#4a5568"/>
+      <rect x="30" y="38" width="45" height="2" fill="#4a5568"/>
+      <rect x="30" y="43" width="50" height="2" fill="#4a5568"/>
+      <text x="50" y="58" font-size="5" fill="#8B0000" text-anchor="middle" font-weight="bold">आयकर विभाग</text>
+    </svg>`,
+    voter: `<svg viewBox="0 0 100 64" xmlns="http://www.w3.org/2000/svg">
+      <defs><linearGradient id="voterBg" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#ffffff"/><stop offset="100%" stop-color="#e6f5ff"/></linearGradient></defs>
+      <rect width="100" height="64" fill="url(#voterBg)" rx="3"/>
+      <rect x="0" y="0" width="100" height="12" fill="#000080"/>
+      <text x="50" y="8" font-size="5.5" fill="#ffffff" text-anchor="middle" font-weight="bold">ELECTION COMMISSION OF INDIA</text>
+      <rect x="0" y="12" width="100" height="3" fill="#ff9933"/>
+      <rect x="5" y="18" width="20" height="24" fill="#e0e7ff" rx="1"/>
+      <circle cx="15" cy="26" r="4" fill="#a0aec0"/><path d="M8 42 Q15 36 22 42 Z" fill="#a0aec0"/>
+      <rect x="30" y="18" width="65" height="3" fill="#000080"/>
+      <rect x="30" y="24" width="45" height="2" fill="#4a5568"/>
+      <rect x="30" y="29" width="55" height="2" fill="#4a5568"/>
+      <rect x="30" y="34" width="40" height="2" fill="#4a5568"/>
+      <rect x="30" y="39" width="50" height="2" fill="#4a5568"/>
+      <rect x="5" y="48" width="90" height="10" fill="#138808"/>
+      <text x="50" y="55" font-size="4.5" fill="#fff" text-anchor="middle">ভারতের নির্বাচন কমিশন</text>
+    </svg>`,
+    ration: `<svg viewBox="0 0 100 64" xmlns="http://www.w3.org/2000/svg">
+      <defs><linearGradient id="rationBg" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#fff5e6"/><stop offset="100%" stop-color="#ffe0b2"/></linearGradient></defs>
+      <rect width="100" height="64" fill="url(#rationBg)" rx="3"/>
+      <rect x="0" y="0" width="100" height="13" fill="#138808"/>
+      <text x="50" y="6" font-size="5" fill="#ffffff" text-anchor="middle" font-weight="bold">GOVT. OF WEST BENGAL</text>
+      <text x="50" y="11" font-size="4" fill="#ffffff" text-anchor="middle">Food &amp; Supplies Department</text>
+      <rect x="5" y="18" width="20" height="24" fill="#e0e7ff" rx="1"/>
+      <circle cx="15" cy="26" r="4" fill="#a0aec0"/><path d="M8 42 Q15 36 22 42 Z" fill="#a0aec0"/>
+      <rect x="30" y="18" width="65" height="3" fill="#138808"/>
+      <rect x="30" y="24" width="45" height="2" fill="#4a5568"/>
+      <rect x="30" y="29" width="55" height="2" fill="#4a5568"/>
+      <rect x="30" y="34" width="40" height="2" fill="#4a5568"/>
+      <rect x="30" y="39" width="50" height="2" fill="#4a5568"/>
+      <rect x="5" y="48" width="90" height="10" fill="#ff9933"/>
+      <text x="50" y="55" font-size="4.5" fill="#fff" text-anchor="middle" font-weight="bold">RATION CARD</text>
+    </svg>`,
+    driving: `<svg viewBox="0 0 100 64" xmlns="http://www.w3.org/2000/svg">
+      <defs><linearGradient id="drvBg" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#e8f5e9"/><stop offset="100%" stop-color="#c8e6c9"/></linearGradient></defs>
+      <rect width="100" height="64" fill="url(#drvBg)" rx="3"/>
+      <rect x="0" y="0" width="100" height="12" fill="#1a237e"/>
+      <text x="50" y="5" font-size="5" fill="#ffffff" text-anchor="middle" font-weight="bold">INDIAN UNION</text>
+      <text x="50" y="10" font-size="5" fill="#ffd700" text-anchor="middle" font-weight="bold">DRIVING LICENCE</text>
+      <rect x="5" y="17" width="20" height="24" fill="#e0e7ff" rx="1"/>
+      <circle cx="15" cy="25" r="4" fill="#a0aec0"/><path d="M8 41 Q15 35 22 41 Z" fill="#a0aec0"/>
+      <rect x="30" y="17" width="65" height="3" fill="#1a237e"/>
+      <rect x="30" y="23" width="45" height="2" fill="#4a5568"/>
+      <rect x="30" y="28" width="55" height="2" fill="#4a5568"/>
+      <rect x="30" y="33" width="40" height="2" fill="#4a5568"/>
+      <rect x="30" y="38" width="50" height="2" fill="#4a5568"/>
+      <rect x="5" y="48" width="90" height="10" fill="#ff9933"/>
+      <text x="50" y="55" font-size="4.5" fill="#fff" text-anchor="middle" font-weight="bold">DL - WB</text>
+    </svg>`,
+    ayushman: `<svg viewBox="0 0 100 64" xmlns="http://www.w3.org/2000/svg">
+      <defs><linearGradient id="ayBg" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#e3f2fd"/><stop offset="100%" stop-color="#bbdefb"/></linearGradient></defs>
+      <rect width="100" height="64" fill="url(#ayBg)" rx="3"/>
+      <rect x="0" y="0" width="100" height="13" fill="#0d47a1"/>
+      <text x="50" y="6" font-size="4.5" fill="#ffffff" text-anchor="middle" font-weight="bold">AYUSHMAN BHARAT</text>
+      <text x="50" y="11" font-size="4" fill="#ffd700" text-anchor="middle">PM-JAY</text>
+      <rect x="5" y="18" width="20" height="24" fill="#e0e7ff" rx="1"/>
+      <circle cx="15" cy="26" r="4" fill="#a0aec0"/><path d="M8 42 Q15 36 22 42 Z" fill="#a0aec0"/>
+      <rect x="30" y="18" width="65" height="3" fill="#0d47a1"/>
+      <rect x="30" y="24" width="45" height="2" fill="#4a5568"/>
+      <rect x="30" y="29" width="55" height="2" fill="#4a5568"/>
+      <rect x="30" y="34" width="40" height="2" fill="#4a5568"/>
+      <rect x="30" y="39" width="50" height="2" fill="#4a5568"/>
+      <rect x="5" y="48" width="90" height="10" fill="#4caf50"/>
+      <text x="50" y="55" font-size="4.5" fill="#fff" text-anchor="middle" font-weight="bold">স্বাস্থ্য সুরক্ষা</text>
+    </svg>`,
+    school: `<svg viewBox="0 0 100 64" xmlns="http://www.w3.org/2000/svg">
+      <defs><linearGradient id="schBg" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#f3e5f5"/><stop offset="100%" stop-color="#e1bee7"/></linearGradient></defs>
+      <rect width="100" height="64" fill="url(#schBg)" rx="3"/>
+      <rect x="0" y="0" width="100" height="13" fill="#6a1b9a"/>
+      <text x="50" y="6" font-size="5" fill="#ffffff" text-anchor="middle" font-weight="bold">STUDENT IDENTITY CARD</text>
+      <text x="50" y="11" font-size="4" fill="#ffd700" text-anchor="middle">শিক্ষার্থী পরিচয় পত্র</text>
+      <rect x="5" y="18" width="20" height="24" fill="#e0e7ff" rx="1"/>
+      <circle cx="15" cy="26" r="4" fill="#a0aec0"/><path d="M8 42 Q15 36 22 42 Z" fill="#a0aec0"/>
+      <rect x="30" y="18" width="65" height="3" fill="#6a1b9a"/>
+      <rect x="30" y="24" width="45" height="2" fill="#4a5568"/>
+      <rect x="30" y="29" width="55" height="2" fill="#4a5568"/>
+      <rect x="30" y="34" width="40" height="2" fill="#4a5568"/>
+      <rect x="30" y="39" width="50" height="2" fill="#4a5568"/>
+      <rect x="5" y="48" width="90" height="10" fill="#ff9933"/>
+      <text x="50" y="55" font-size="4.5" fill="#fff" text-anchor="middle" font-weight="bold">🎓 Class X</text>
+    </svg>`,
+    birth: `<svg viewBox="0 0 100 64" xmlns="http://www.w3.org/2000/svg">
+      <defs><linearGradient id="birthBg" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#fff9c4"/><stop offset="100%" stop-color="#fff59d"/></linearGradient></defs>
+      <rect width="100" height="64" fill="url(#birthBg)" rx="3"/>
+      <rect x="0" y="0" width="100" height="13" fill="#bf360c"/>
+      <text x="50" y="6" font-size="5" fill="#ffffff" text-anchor="middle" font-weight="bold">BIRTH CERTIFICATE</text>
+      <text x="50" y="11" font-size="4" fill="#ffd700" text-anchor="middle">জন্ম সার্টিফিকেট</text>
+      <rect x="8" y="20" width="84" height="3" fill="#bf360c" opacity="0.5"/>
+      <rect x="8" y="27" width="60" height="2" fill="#4a5568"/>
+      <rect x="8" y="33" width="75" height="2" fill="#4a5568"/>
+      <rect x="8" y="39" width="55" height="2" fill="#4a5568"/>
+      <circle cx="80" cy="45" r="10" fill="none" stroke="#bf360c" stroke-width="1.5"/>
+      <text x="80" y="48" font-size="4" fill="#bf360c" text-anchor="middle">SEAL</text>
+    </svg>`,
+    labor: `<svg viewBox="0 0 100 64" xmlns="http://www.w3.org/2000/svg">
+      <defs><linearGradient id="laborBg" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#ffe0b2"/><stop offset="100%" stop-color="#ffcc80"/></linearGradient></defs>
+      <rect width="100" height="64" fill="url(#laborBg)" rx="3"/>
+      <rect x="0" y="0" width="100" height="13" fill="#e65100"/>
+      <text x="50" y="6" font-size="5" fill="#ffffff" text-anchor="middle" font-weight="bold">LABOUR CARD</text>
+      <text x="50" y="11" font-size="4" fill="#ffffff" text-anchor="middle">শ্রমিক কার্ড - পশ্চিমবঙ্গ</text>
+      <rect x="5" y="18" width="20" height="24" fill="#e0e7ff" rx="1"/>
+      <circle cx="15" cy="26" r="4" fill="#a0aec0"/><path d="M8 42 Q15 36 22 42 Z" fill="#a0aec0"/>
+      <rect x="30" y="18" width="65" height="3" fill="#e65100"/>
+      <rect x="30" y="24" width="45" height="2" fill="#4a5568"/>
+      <rect x="30" y="29" width="55" height="2" fill="#4a5568"/>
+      <rect x="30" y="34" width="40" height="2" fill="#4a5568"/>
+      <rect x="30" y="39" width="50" height="2" fill="#4a5568"/>
+      <rect x="5" y="48" width="90" height="10" fill="#138808"/>
+      <text x="50" y="55" font-size="4.5" fill="#fff" text-anchor="middle" font-weight="bold">👷 WB LABOUR</text>
+    </svg>`,
+    kcc: `<svg viewBox="0 0 100 64" xmlns="http://www.w3.org/2000/svg">
+      <defs><linearGradient id="kccBg" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#e8f5e9"/><stop offset="100%" stop-color="#c8e6c9"/></linearGradient></defs>
+      <rect width="100" height="64" fill="url(#kccBg)" rx="3"/>
+      <rect x="0" y="0" width="100" height="13" fill="#1b5e20"/>
+      <text x="50" y="6" font-size="4.5" fill="#ffffff" text-anchor="middle" font-weight="bold">KISAN CREDIT CARD</text>
+      <text x="50" y="11" font-size="4" fill="#ffd700" text-anchor="middle">কিষাণ ক্রেডিট কার্ড</text>
+      <rect x="5" y="18" width="20" height="24" fill="#e0e7ff" rx="1"/>
+      <circle cx="15" cy="26" r="4" fill="#a0aec0"/><path d="M8 42 Q15 36 22 42 Z" fill="#a0aec0"/>
+      <rect x="30" y="18" width="65" height="3" fill="#1b5e20"/>
+      <rect x="30" y="24" width="45" height="2" fill="#4a5568"/>
+      <rect x="30" y="29" width="55" height="2" fill="#4a5568"/>
+      <rect x="30" y="34" width="40" height="2" fill="#4a5568"/>
+      <rect x="30" y="39" width="50" height="2" fill="#4a5568"/>
+      <rect x="5" y="48" width="90" height="10" fill="#ff9933"/>
+      <text x="50" y="55" font-size="4.5" fill="#fff" text-anchor="middle" font-weight="bold">🌾 কৃষক সহায়তা</text>
+    </svg>`
+  };
+  return svgs[type] || svgs.aadhaar;
+}
+
+// ============================================================
+// CARD DATA
+// ============================================================
+const cardList = [
+  { name: 'আধার কার্ড', svg: 'aadhaar' },
+  { name: 'প্যান কার্ড', svg: 'pan' },
+  { name: 'ভোটার কার্ড', svg: 'voter' },
+  { name: 'রেশন কার্ড', svg: 'ration' },
+  { name: 'ড্রাইভিং লাইসেন্স', svg: 'driving' },
+  { name: 'আয়ুষ্মান কার্ড', svg: 'ayushman' },
+  { name: 'স্কুল আইডেন্টিটি কার্ড', svg: 'school' },
+  { name: 'কলেজ আইডি কার্ড', svg: 'school' },
+  { name: 'কেসিসি কার্ড', svg: 'kcc' },
+  { name: 'লেবার কার্ড', svg: 'labor' },
+  { name: 'জন্ম সার্টিফিকেট', svg: 'birth' },
+  { name: 'ব্রোঞ্জ কার্ড', svg: 'aadhaar' },
+  { name: 'স্বাস্থ্য কার্ড', svg: 'ayushman' },
+  { name: 'পেনশন কার্ড', svg: 'aadhaar' },
+  { name: 'বিবাহ কার্ড', svg: 'birth' },
+  { name: 'মৃত্যু সার্টিফিকেট', svg: 'birth' },
+  { name: 'মানসিক স্বাস্থ্য কার্ড', svg: 'ayushman' },
+  { name: 'অন্যান্য কার্ড', svg: 'aadhaar', other: true }
+];
+
+const cardDownloadList = [
+  { name: 'আধার কার্ড', svg: 'aadhaar' },
+  { name: 'ভোটার কার্ড', svg: 'voter' },
+  { name: 'রেশন কার্ড', svg: 'ration', hasTypes: true,
+    types: ['PHH', 'RKS-1', 'RKS-2', 'RKS-3', 'AAY', 'APL', 'BPL', 'SPHH', 'NPHH'] },
+  { name: 'আয়ুষ্মান ভারত', svg: 'ayushman' },
+  { name: 'প্যান কার্ড', svg: 'pan' },
+  { name: 'ড্রাইভিং লাইসেন্স', svg: 'driving' },
+  { name: 'স্কুল আইডি', svg: 'school' },
+  { name: 'জন্ম সার্টিফিকেট', svg: 'birth' },
+  { name: 'লেবার কার্ড', svg: 'labor' },
+  { name: 'কেসিসি কার্ড', svg: 'kcc' }
+];
+
+// ============================================================
+// POPULATE MENU & GRID
+// ============================================================
+const menuGrid = document.getElementById('menuGrid');
+cardList.forEach(card => {
+  const div = document.createElement('div');
+  div.className = 'menu-item' + (card.other ? ' other' : '');
+  div.innerHTML = `<div class="card-thumb">${getCardSVG(card.svg)}</div><div class="m-name">${card.name}</div>`;
+  div.onclick = () => openOrder(card.name, card.svg);
+  menuGrid.appendChild(div);
+});
+
+const cardsGrid = document.getElementById('cardsGrid');
+cardDownloadList.forEach((card, idx) => {
+  const div = document.createElement('div');
+  div.className = 'card-btn';
+  div.innerHTML = `
+    <div class="card-thumb">${getCardSVG(card.svg)}</div>
+    <div class="name">${card.name}</div>
+    <div class="desc">PDF → PNG + ZIP</div>
+  `;
+  div.onclick = () => selectDownloadCard(idx);
+  cardsGrid.appendChild(div);
+});
+
+// ============================================================
+// FLOW CONTROL
+// ============================================================
+function openForm() {
+  document.getElementById('topBanner').style.display = 'none';
+  document.getElementById('formSection').classList.add('active');
+  window.scrollTo({ top: 200, behavior: 'smooth' });
+}
+
+// ============================================================
+// FORM VALIDATION & SUBMIT
+// ============================================================
+function validatePhone(phone) { return /^[6-9]\d{9}$/.test(phone); }
+function validateEmail(email) { return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email); }
+
+function showError(fieldId, show) {
+  const err = document.getElementById('err-' + fieldId);
+  const field = document.getElementById(fieldId);
+  if (show) { err.classList.add('show'); field.classList.add('error'); }
+  else { err.classList.remove('show'); field.classList.remove('error'); }
+}
+
+function submitForm() {
+  const name = document.getElementById('custName').value.trim();
+  const phone = document.getElementById('custPhone').value.trim();
+  const email = document.getElementById('custEmail').value.trim();
+  const district = document.getElementById('custDistrict').value;
+  const address = document.getElementById('custAddress').value.trim();
+
+  let valid = true;
+  if (!name || name.length < 2) { showError('custName', true); valid = false; } else showError('custName', false);
+  if (!validatePhone(phone)) { showError('custPhone', true); valid = false; } else showError('custPhone', false);
+  if (email && !validateEmail(email)) { showError('custEmail', true); valid = false; } else showError('custEmail', false);
+  if (!district) { showError('custDistrict', true); valid = false; } else showError('custDistrict', false);
+  if (!address || address.length < 10) { showError('custAddress', true); valid = false; } else showError('custAddress', false);
+
+  if (!valid) {
+    const firstErr = document.querySelector('.error');
+    if (firstErr) firstErr.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    return;
+  }
+
+  window.customerData = { name, phone, email, district, address };
+  document.getElementById('formSection').classList.remove('active');
+  document.getElementById('cardMenu').classList.add('active');
+  window.scrollTo({ top: 200, behavior: 'smooth' });
+}
+
+// ============================================================
+// OPEN ORDER
+// ============================================================
+function openOrder(cardName, cardSvg) {
+  document.getElementById('cardMenu').classList.remove('active');
+  document.getElementById('orderSection').classList.add('active');
+  document.getElementById('orderTitle').textContent = cardName + ' অর্ডার';
+  document.getElementById('orderIcon').innerHTML = getCardSVG(cardSvg);
+  window.scrollTo({ top: 200, behavior: 'smooth' });
+
+  document.getElementById('fileInfo').classList.remove('active');
+  document.getElementById('qrSection').classList.remove('active');
+  document.getElementById('processing').classList.remove('active');
+  document.getElementById('whatsappSection').classList.remove('active');
+  document.getElementById('pdfInput').value = '';
+}
+
+// ============================================================
+// PDF UPLOAD (Order)
+// ============================================================
+function handlePdfUpload(e) {
+  const file = e.target.files[0];
+  if (!file) return;
+
+  document.getElementById('fileInfoText').innerHTML = `<strong>${file.name}</strong> (${(file.size/1024).toFixed(1)} KB) আপলোড হয়েছে`;
+  document.getElementById('fileInfo').classList.add('active');
+
+  document.getElementById('qrSection').classList.add('active');
+  const qrDiv = document.getElementById('qrcode');
+  qrDiv.innerHTML = '';
+  new QRCode(qrDiv, {
+    text: 'upi://pay?pa=azaddigital@upi&pn=Azad Digital Service&am=50&cu=INR',
+    width: 170, height: 170,
+    colorDark: '#0a2540', colorLight: '#ffffff'
+  });
+
+  setTimeout(() => document.getElementById('qrSection').scrollIntoView({ behavior: 'smooth', block: 'center' }), 200);
+}
+
+function copyUPI(event) {
+  navigator.clipboard.writeText('azaddigital@upi');
+  const el = event.target;
+  const orig = el.textContent;
+  el.textContent = '✅ কপি হয়েছে';
+  setTimeout(() => el.textContent = orig, 1500);
+}
+
+function submitPayment() {
+  document.getElementById('qrSection').classList.remove('active');
+  document.getElementById('processing').classList.add('active');
+
+  setTimeout(() => {
+    document.getElementById('processing').classList.remove('active');
+    document.getElementById('whatsappSection').classList.add('active');
+    setTimeout(() => document.getElementById('whatsappSection').scrollIntoView({ behavior: 'smooth', block: 'center' }), 200);
+  }, 3000);
+}
+
+// ============================================================
+// CARD DOWNLOAD (Crop)
+// ============================================================
+let selectedCard = null;
+let selectedType = null;
+let generatedPNGBlob = null;
+
+function selectDownloadCard(idx) {
+  selectedCard = cardDownloadList[idx];
+  selectedType = null;
+
+  document.getElementById('previewArea').classList.remove('active');
+  document.getElementById('downloadSection').classList.remove('active');
+  document.getElementById('cardUploadBox').style.display = 'none';
+
+  if (selectedCard.hasTypes) {
+    const sel = document.getElementById('typeSelector');
+    const btns = document.getElementById('typeButtons');
+    btns.innerHTML = '';
+    selectedCard.types.forEach(t => {
+      const b = document.createElement('button');
+      b.className = 'type-btn';
+      b.textContent = t;
+      b.onclick = () => {
+        document.querySelectorAll('.type-btn').forEach(x => x.classList.remove('selected'));
+        b.classList.add('selected');
+        selectedType = t;
+        document.getElementById('cardUploadBox').style.display = 'block';
+        setTimeout(() => document.getElementById('cardUploadBox').scrollIntoView({ behavior: 'smooth', block: 'center' }), 150);
+      };
+      btns.appendChild(b);
+    });
+    sel.classList.add('active');
+    setTimeout(() => sel.scrollIntoView({ behavior: 'smooth', block: 'center' }), 150);
+  } else {
+    document.getElementById('typeSelector').classList.remove('active');
+    document.getElementById('cardUploadBox').style.display = 'block';
+    setTimeout(() => document.getElementById('cardUploadBox').scrollIntoView({ behavior: 'smooth', block: 'center' }), 150);
+  }
+}
+
+async function handleCardPdf(e) {
+  const file = e.target.files[0];
+  if (!file) return;
+
+  const arrayBuffer = await file.arrayBuffer();
+  const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
+  const page = await pdf.getPage(1);
+  const viewport = page.getViewport({ scale: 2.5 });
+
+  const canvas = document.createElement('canvas');
+  const ctx = canvas.getContext('2d');
+  canvas.width = viewport.width;
+  canvas.height = viewport.height;
+
+  await page.render({ canvasContext: ctx, viewport }).promise;
+  const croppedCanvas = autoCrop(canvas);
+
+  document.getElementById('previewImg').src = croppedCanvas.toDataURL('image/png');
+  document.getElementById('previewArea').classList.add('active');
+
+  croppedCanvas.toBlob(blob => {
+    generatedPNGBlob = blob;
+    document.getElementById('downloadSection').classList.add('active');
+    setTimeout(() => document.getElementById('downloadSection').scrollIntoView({ behavior: 'smooth', block: 'center' }), 200);
+  }, 'image/png');
+}
+
+function autoCrop(canvas) {
+  const ctx = canvas.getContext('2d');
+  const w = canvas.width, h = canvas.height;
+  const data = ctx.getImageData(0, 0, w, h).data;
+  let top = 0, left = 0, right = w - 1, bottom = h - 1;
+  const t = 240;
+
+  outer1: for (let y = 0; y < h; y++) { for (let x = 0; x < w; x++) { const i = (y*w+x)*4; if (data[i]<t||data[i+1]<t||data[i+2]<t) { top=y; break outer1; } } }
+  outer2: for (let y = h-1; y >= 0; y--) { for (let x = 0; x < w; x++) { const i = (y*w+x)*4; if (data[i]<t||data[i+1]<t||data[i+2]<t) { bottom=y; break outer2; } } }
+  outer3: for (let x = 0; x < w; x++) { for (let y = 0; y < h; y++) { const i = (y*w+x)*4; if (data[i]<t||data[i+1]<t||data[i+2]<t) { left=x; break outer3; } } }
+  outer4: for (let x = w-1; x >= 0; x--) { for (let y = 0; y < h; y++) { const i = (y*w+x)*4; if (data[i]<t||data[i+1]<t||data[i+2]<t) { right=x; break outer4; } } }
+
+  const pad = 10;
+  left = Math.max(0, left - pad);
+  top = Math.max(0, top - pad);
+  right = Math.min(w - 1, right + pad);
+  bottom = Math.min(h - 1, bottom + pad);
+
+  const cw = right - left + 1;
+  const ch = bottom - top + 1;
+  const out = document.createElement('canvas');
+  out.width = cw; out.height = ch;
+  out.getContext('2d').drawImage(canvas, left, top, cw, ch, 0, 0, cw, ch);
+  return out;
+}
+
+function downloadPNG() {
+  if (!generatedPNGBlob) return;
+  const url = URL.createObjectURL(generatedPNGBlob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `${selectedCard.name}${selectedType ? '_' + selectedType : ''}.png`;
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
+async function downloadZIP() {
+  if (!generatedPNGBlob) return;
+  const zip = new JSZip();
+  zip.file(`${selectedCard.name}${selectedType ? '_' + selectedType : ''}.png`, generatedPNGBlob);
+  const blob = await zip.generateAsync({ type: 'blob' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `${selectedCard.name}${selectedType ? '_' + selectedType : ''}.zip`;
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
+pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+</script>
+
+</body>
+</html>

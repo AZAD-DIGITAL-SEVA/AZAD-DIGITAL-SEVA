@@ -1,0 +1,764 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PDF Editor - Azad Digital Seva</title>
+    <meta name="description" content="PDF Editor - PDF এডিট, মার্জ, স্প্লিট, কমপ্রেস ও কনভার্ট করুন সহজে।">
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Segoe UI', Arial, 'Noto Sans Bengali', sans-serif;
+            background: #f5f3ff;
+            color: #1e2b3c;
+            line-height: 1.5;
+        }
+
+        /* ==================================================
+           হেডার — অতি স্লিম (38px)
+           ================================================== */
+        header {
+            background: linear-gradient(135deg, #075e54, #128c7e);
+            color: #fff;
+            height: 38px;
+            padding: 0 10px;
+            border-bottom: 2px solid #f9a826;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 6px;
+            box-shadow: 0 2px 6px rgba(7, 94, 84, 0.2);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            flex: 1;
+            min-width: 0;
+            position: relative;
+        }
+
+        .menu-toggle {
+            width: 22px;
+            height: 22px;
+            border-radius: 5px;
+            background: rgba(255,255,255,0.15);
+            border: 1px solid rgba(255,255,255,0.35);
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 2px;
+            flex-shrink: 0;
+            padding: 0;
+        }
+        .menu-toggle:hover { background: rgba(255,255,255,0.28); }
+        .menu-toggle.active { background: #f9a826; border-color: #f9a826; }
+        .menu-toggle span { width: 2.5px; height: 2.5px; border-radius: 50%; background: #fff; }
+        .menu-toggle.active span { background: #1e2b3c; }
+
+        .header-brand {
+            display: flex;
+            align-items: baseline;
+            gap: 5px;
+            min-width: 0;
+            overflow: hidden;
+            flex-wrap: nowrap;
+        }
+
+        .header-logo-icon {
+            font-size: 0.95rem;
+            line-height: 1;
+            flex-shrink: 0;
+            align-self: center;
+        }
+
+        .brand-name {
+            font-size: 0.78rem;
+            font-weight: 700;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+
+        .brand-name span { color: #f9a826; }
+
+        .brand-sub {
+            font-size: 0.58rem;
+            font-weight: 400;
+            color: #d4ece8;
+            opacity: 0.85;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            border-left: 1px solid rgba(255,255,255,0.3);
+            margin-left: 2px;
+            padding-left: 6px;
+        }
+
+        .header-dropdown {
+            position: absolute;
+            top: calc(100% + 8px);
+            left: 0;
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 12px 32px rgba(0,0,0,0.25);
+            padding: 6px;
+            display: none;
+            flex-direction: column;
+            gap: 1px;
+            min-width: 180px;
+            z-index: 1002;
+            border-top: 3px solid #f9a826;
+        }
+        .header-dropdown.open { display: flex; }
+        .header-dropdown a {
+            color: #1e2b3c;
+            text-decoration: none;
+            padding: 7px 11px;
+            border-radius: 6px;
+            font-weight: 500;
+            font-size: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            transition: background 0.15s;
+        }
+        .header-dropdown a:hover { background: #e3f2ef; color: #075e54; }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            flex-shrink: 0;
+        }
+
+        .btn-donate, .btn-subscribe {
+            border: 1px solid rgba(255,255,255,0.65);
+            background: transparent;
+            color: #fff;
+            font-size: 0.62rem;
+            font-weight: 600;
+            padding: 3px 8px;
+            border-radius: 14px;
+            cursor: pointer;
+            font-family: inherit;
+            white-space: nowrap;
+            line-height: 1.2;
+        }
+        .btn-donate:hover { background: #f9a826; border-color: #f9a826; color: #1e2b3c; }
+        .btn-subscribe { background: #e74c3c; border-color: #e74c3c; }
+        .btn-subscribe:hover { background: #c0392b; }
+
+        .btn-login {
+            background: #fff;
+            color: #075e54;
+            border: none;
+            font-size: 0.64rem;
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 14px;
+            cursor: pointer;
+            font-family: inherit;
+            white-space: nowrap;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+            line-height: 1.2;
+        }
+        .btn-login:hover { background: #f9a826; color: #1e2b3c; }
+
+        /* ==================================================
+           পেজ হিরো — ইন্ডিগো-ভায়োলেট প্রিমিয়াম
+           ================================================== */
+        .page-hero {
+            background:
+                radial-gradient(circle at 85% 20%, rgba(255,255,255,.15), transparent 35%),
+                linear-gradient(135deg, #4c1d95 0%, #6d28d9 45%, #8b5cf6 100%);
+            color: white;
+            padding: 35px 18px 50px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .page-hero::before {
+            content: '';
+            position: absolute;
+            top: -80px; right: -80px;
+            width: 240px; height: 240px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50%;
+        }
+        .page-hero::after {
+            content: '';
+            position: absolute;
+            bottom: -90px; left: -70px;
+            width: 220px; height: 220px;
+            background: rgba(255,255,255,0.07);
+            border-radius: 50%;
+        }
+        .page-hero-icon {
+            font-size: 2.8rem;
+            margin-bottom: 10px;
+            position: relative;
+            z-index: 1;
+            display: inline-block;
+            filter: drop-shadow(0 6px 14px rgba(0,0,0,0.3));
+            animation: floatIcon 3s ease-in-out infinite;
+        }
+        @keyframes floatIcon {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
+        }
+        .page-hero h1 {
+            font-size: 1.7rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+            position: relative;
+            z-index: 1;
+            letter-spacing: 0.5px;
+            text-shadow: 0 3px 10px rgba(0,0,0,0.25);
+        }
+        .page-hero h1 em {
+            font-style: normal;
+            color: #fde047;
+        }
+        .page-hero p {
+            font-size: 0.92rem;
+            opacity: 0.95;
+            max-width: 620px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+        .hero-chips {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 16px;
+            position: relative;
+            z-index: 1;
+        }
+        .hero-chips span {
+            padding: 5px 14px;
+            border-radius: 999px;
+            background: rgba(255,255,255,0.15);
+            border: 1px solid rgba(255,255,255,0.3);
+            font-size: 0.72rem;
+            font-weight: 600;
+            backdrop-filter: blur(8px);
+        }
+        .breadcrumb {
+            position: relative;
+            z-index: 1;
+            margin-top: 14px;
+            font-size: 0.75rem;
+            opacity: 0.9;
+        }
+        .breadcrumb a { color: #fde047; text-decoration: none; }
+        .breadcrumb a:hover { text-decoration: underline; }
+
+        /* ================= কনটেন্ট ================= */
+        .inner-container {
+            max-width: 1100px;
+            margin: -30px auto 0;
+            padding: 0 18px 45px;
+            position: relative;
+            z-index: 5;
+        }
+
+        .content-card {
+            background: #fff;
+            border-radius: 20px;
+            padding: 26px 24px;
+            box-shadow: 0 20px 50px -20px rgba(76, 29, 149, 0.25);
+            border-top: 5px solid #8b5cf6;
+        }
+
+        .content-card h2 {
+            font-size: 1.25rem;
+            background: linear-gradient(135deg, #4c1d95, #8b5cf6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 14px;
+            padding-bottom: 10px;
+            border-bottom: 2px dashed #e9d5ff;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .content-card > p {
+            font-size: 0.9rem;
+            color: #3a4d5e;
+            margin-bottom: 14px;
+        }
+
+        /* ================= ইনফো ব্যানার — সায়ান ================= */
+        .info-banner {
+            background: linear-gradient(135deg, #ecfeff, #cffafe);
+            border-left: 4px solid #06b6d4;
+            border-radius: 12px;
+            padding: 13px 18px;
+            margin-bottom: 18px;
+            font-size: 0.86rem;
+            color: #0e7490;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 600;
+        }
+        .info-banner-icon {
+            font-size: 1.5rem;
+            flex-shrink: 0;
+        }
+        .info-banner strong { color: #0891b2; }
+
+        /* ==================================================
+           সার্ভিস লিস্ট — প্রতিটি কার্ড আলাদা রঙ
+           ================================================== */
+        .service-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 14px;
+            margin: 20px 0;
+        }
+
+        .service-item {
+            --c1: #8b5cf6;
+            --c2: #a78bfa;
+            --soft: rgba(139, 92, 246, 0.18);
+            background: linear-gradient(145deg, #ffffff, #faf8ff);
+            border-radius: 14px;
+            padding: 15px 17px;
+            border: 1.5px solid #e9d5ff;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            transition: transform 0.25s, box-shadow 0.25s, border-color 0.25s;
+            text-decoration: none;
+            color: inherit;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+        .service-item::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0;
+            width: 4px; height: 100%;
+            background: linear-gradient(180deg, var(--c1), var(--c2));
+            transition: width 0.3s;
+        }
+        .service-item:hover::before { width: 6px; }
+
+        .service-item:hover {
+            transform: translateY(-4px);
+            border-color: var(--c1);
+            box-shadow: 0 14px 28px -10px var(--soft);
+        }
+
+        .service-item-icon {
+            font-size: 1.7rem;
+            flex-shrink: 0;
+            width: 46px;
+            height: 46px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+            background: linear-gradient(135deg, var(--c1), var(--c2));
+            color: #fff;
+            box-shadow: 0 6px 14px var(--soft);
+        }
+
+        .service-item-text strong {
+            display: block;
+            font-size: 0.96rem;
+            color: #1e2b3c;
+            margin-bottom: 3px;
+            font-weight: 700;
+        }
+
+        .service-item-text span {
+            font-size: 0.78rem;
+            color: #64748b;
+            line-height: 1.4;
+        }
+
+        /* ==================================================
+           প্রতিটি টুলের ইউনিক কালার (১২টি ভিন্ন রঙ)
+           ================================================== */
+        .pdf-edit {
+            --c1: #ef4444; --c2: #f87171;
+            --soft: rgba(239, 68, 68, 0.20);
+        }
+        .pdf-merge {
+            --c1: #2563eb; --c2: #60a5fa;
+            --soft: rgba(37, 99, 235, 0.20);
+        }
+        .pdf-split {
+            --c1: #16a34a; --c2: #4ade80;
+            --soft: rgba(22, 163, 74, 0.20);
+        }
+        .pdf-compress {
+            --c1: #ea580c; --c2: #fb923c;
+            --soft: rgba(234, 88, 12, 0.20);
+        }
+        .pdf-to-word {
+            --c1: #0891b2; --c2: #22d3ee;
+            --soft: rgba(8, 145, 178, 0.20);
+        }
+        .word-to-pdf {
+            --c1: #7c3aed; --c2: #a78bfa;
+            --soft: rgba(124, 58, 237, 0.20);
+        }
+        .pdf-to-image {
+            --c1: #db2777; --c2: #f472b6;
+            --soft: rgba(219, 39, 119, 0.20);
+        }
+        .image-to-pdf {
+            --c1: #059669; --c2: #34d399;
+            --soft: rgba(5, 150, 105, 0.20);
+        }
+        .pdf-rotate {
+            --c1: #d97706; --c2: #fbbf24;
+            --soft: rgba(217, 119, 6, 0.20);
+        }
+        .pdf-watermark {
+            --c1: #0284c7; --c2: #38bdf8;
+            --soft: rgba(2, 132, 199, 0.20);
+        }
+        .pdf-protect {
+            --c1: #dc2626; --c2: #f87171;
+            --soft: rgba(220, 38, 38, 0.20);
+        }
+        .pdf-unlock {
+            --c1: #65a30d; --c2: #a3e635;
+            --soft: rgba(101, 163, 13, 0.20);
+        }
+
+        /* ================= বাটন ================= */
+        .btn-back {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: linear-gradient(135deg, #4c1d95, #7c3aed);
+            color: white;
+            text-decoration: none;
+            padding: 10px 24px;
+            border-radius: 30px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            transition: all 0.25s;
+            box-shadow: 0 8px 20px -5px rgba(124, 58, 237, 0.5);
+            margin-top: 12px;
+        }
+        .btn-back:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 26px -5px rgba(124, 58, 237, 0.6);
+        }
+
+        /* ================= ফুটার ================= */
+        footer {
+            background: #0b2e2a;
+            color: #d4e6e3;
+            text-align: center;
+            padding: 18px 14px;
+            border-top: 3px solid #f9a826;
+        }
+        footer p { max-width: 700px; margin: 0 auto 6px; font-size: 0.82rem; }
+        .footer-links {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 8px 16px;
+            margin: 8px 0 5px;
+        }
+        .footer-links a {
+            color: #c2e5df;
+            text-decoration: none;
+            font-size: 0.78rem;
+            transition: color 0.2s;
+        }
+        .footer-links a:hover { color: #f9a826; }
+        .copyright { font-size: 0.68rem; opacity: 0.75; margin-top: 8px; }
+
+        /* ================= ওভারলে ================= */
+        .menu-overlay {
+            position: fixed; inset: 0;
+            background: rgba(0,0,0,0.4);
+            z-index: 999;
+            display: none;
+        }
+        .menu-overlay.show { display: block; }
+
+        /* ================= রেসপন্সিভ ================= */
+        @media (max-width: 768px) {
+            header { height: 36px; padding: 0 8px; }
+            .menu-toggle { width: 20px; height: 20px; }
+            .menu-toggle span { width: 2px; height: 2px; }
+            .header-logo-icon { font-size: 0.85rem; }
+            .brand-name { font-size: 0.72rem; }
+            .brand-sub { display: none; }
+            .btn-donate, .btn-subscribe { display: none; }
+            .btn-login { font-size: 0.58rem; padding: 3px 8px; }
+
+            .page-hero { padding: 25px 14px 40px; }
+            .page-hero-icon { font-size: 2.2rem; }
+            .page-hero h1 { font-size: 1.2rem; }
+            .page-hero p { font-size: 0.82rem; }
+            .hero-chips span { font-size: 0.66rem; padding: 4px 10px; }
+            .breadcrumb { font-size: 0.7rem; margin-top: 10px; }
+
+            .inner-container { padding: 0 12px 35px; margin-top: -25px; }
+            .content-card { padding: 18px 14px; border-radius: 16px; }
+            .content-card h2 { font-size: 1rem; }
+            .content-card > p { display: none; }
+
+            .info-banner {
+                font-size: 0.75rem;
+                padding: 10px 12px;
+                gap: 8px;
+            }
+            .info-banner-icon { font-size: 1.2rem; }
+
+            .service-list { grid-template-columns: 1fr; gap: 9px; margin: 14px 0; }
+            .service-item { padding: 12px 14px; gap: 11px; }
+            .service-item-icon { width: 40px; height: 40px; font-size: 1.3rem; border-radius: 10px; }
+            .service-item-text strong { font-size: 0.88rem; }
+            .service-item-text span { display: none; }
+
+            .btn-back { padding: 8px 18px; font-size: 0.78rem; }
+
+            footer { padding: 12px 10px; }
+            footer p { font-size: 0.72rem; }
+            .footer-links { gap: 5px 10px; }
+            .footer-links a { font-size: 0.7rem; }
+            .copyright { font-size: 0.6rem; }
+        }
+
+        @media (max-width: 400px) {
+            header { height: 34px; padding: 0 6px; }
+            .menu-toggle { width: 18px; height: 18px; }
+            .brand-name { font-size: 0.66rem; }
+            .header-logo-icon { font-size: 0.78rem; }
+            .btn-login { font-size: 0.54rem; padding: 2px 7px; }
+            .page-hero h1 { font-size: 1.05rem; }
+            .service-item-icon { width: 36px; height: 36px; font-size: 1.15rem; }
+            .service-item-text strong { font-size: 0.82rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ================= হেডার ================= -->
+    <header>
+        <div class="header-left">
+            <button class="menu-toggle" id="menuToggle" aria-label="Menu">
+                <span></span><span></span><span></span>
+            </button>
+
+            <div class="header-brand">
+                <span class="header-logo-icon">🖥️</span>
+                <span class="brand-name">Azad <span>Digital Seva</span></span>
+                <span class="brand-sub">সরকারি ও বেসরকারি অনলাইন পরিষেবা</span>
+            </div>
+
+            <nav class="header-dropdown" id="headerDropdown">
+                <a href="index.html">🏠 Home</a>
+                <a href="blog.html">📝 Blog</a>
+                <a href="youtube.html">📺 YouTube</a>
+                <a href="facebook.html">📘 Facebook</a>
+                <a href="contact.html">📞 Contact</a>
+                <a href="about.html">ℹ️ About</a>
+            </nav>
+        </div>
+
+        <div class="header-actions">
+            <button class="btn-donate" onclick="location.href='donate.html'">❤️ ডোনেশন</button>
+            <button class="btn-subscribe" onclick="location.href='subscribe.html'">🔔 সাবস্ক্রাইব</button>
+            <button class="btn-login" onclick="location.href='login.html'">লগ ইন</button>
+        </div>
+    </header>
+
+    <div class="menu-overlay" id="menuOverlay"></div>
+
+    <!-- ================= পেজ হিরো ================= -->
+    <section class="page-hero">
+        <div class="page-hero-icon">📄</div>
+        <h1>PDF <em>Editor</em></h1>
+        <p>PDF এডিট, মার্জ, স্প্লিট, কমপ্রেস ও কনভার্ট — সব কিছু এক জায়গায়।</p>
+
+        <div class="hero-chips">
+            <span>✨ 100% ফ্রি</span>
+            <span>🔒 সিকিউর</span>
+            <span>⚡ ফাস্ট</span>
+            <span>📱 মোবাইল ফ্রেন্ডলি</span>
+        </div>
+
+        <div class="breadcrumb">
+            <a href="index.html">Home</a> › <a href="online-service.html">Online Services</a> › <span>PDF Editor</span>
+        </div>
+    </section>
+
+    <!-- ================= মূল কনটেন্ট ================= -->
+    <main class="inner-container">
+        <div class="content-card">
+            <h2>📋 PDF সেবাসমূহ</h2>
+            <p>নিচের যেকোনো PDF সেবার ওপর ক্লিক করুন — সরাসরি সেই টুল ব্যবহার করতে পারবেন।</p>
+
+            <div class="info-banner">
+                <span class="info-banner-icon">💡</span>
+                <span>সব PDF টুল <strong>সম্পূর্ণ ফ্রি</strong> — ফাইল সাইজ লিমিট নেই, রেজিস্ট্রেশন লাগবে না।</span>
+            </div>
+
+            <div class="service-list">
+
+                <a href="pdf-edit.html" class="service-item pdf-edit">
+                    <span class="service-item-icon">✏️</span>
+                    <div class="service-item-text">
+                        <strong>Edit PDF</strong>
+                        <span>PDF ফাইলে টেক্সট ও ছবি এডিট করুন</span>
+                    </div>
+                </a>
+
+                <a href="pdf-merge.html" class="service-item pdf-merge">
+                    <span class="service-item-icon">🔗</span>
+                    <div class="service-item-text">
+                        <strong>Merge PDF</strong>
+                        <span>একাধিক PDF একটি ফাইলে মার্জ করুন</span>
+                    </div>
+                </a>
+
+                <a href="pdf-split.html" class="service-item pdf-split">
+                    <span class="service-item-icon">✂️</span>
+                    <div class="service-item-text">
+                        <strong>Split PDF</strong>
+                        <span>PDF থেকে নির্দিষ্ট পেজ আলাদা করুন</span>
+                    </div>
+                </a>
+
+                <a href="pdf-compress.html" class="service-item pdf-compress">
+                    <span class="service-item-icon">📉</span>
+                    <div class="service-item-text">
+                        <strong>Compress PDF</strong>
+                        <span>PDF ফাইলের সাইজ কমিয়ে আনুন</span>
+                    </div>
+                </a>
+
+                <a href="pdf-to-word.html" class="service-item pdf-to-word">
+                    <span class="service-item-icon">📝</span>
+                    <div class="service-item-text">
+                        <strong>PDF to Word</strong>
+                        <span>PDF কে Word ডকুমেন্টে রূপান্তর করুন</span>
+                    </div>
+                </a>
+
+                <a href="word-to-pdf.html" class="service-item word-to-pdf">
+                    <span class="service-item-icon">📄</span>
+                    <div class="service-item-text">
+                        <strong>Word to PDF</strong>
+                        <span>Word ফাইলকে PDF এ কনভার্ট করুন</span>
+                    </div>
+                </a>
+
+                <a href="pdf-to-image.html" class="service-item pdf-to-image">
+                    <span class="service-item-icon">🖼️</span>
+                    <div class="service-item-text">
+                        <strong>PDF to Image</strong>
+                        <span>PDF পেজকে JPG/PNG ছবিতে রূপান্তর</span>
+                    </div>
+                </a>
+
+                <a href="image-to-pdf.html" class="service-item image-to-pdf">
+                    <span class="service-item-icon">📸</span>
+                    <div class="service-item-text">
+                        <strong>Image to PDF</strong>
+                        <span>ছবি থেকে PDF ফাইল তৈরি করুন</span>
+                    </div>
+                </a>
+
+                <a href="pdf-rotate.html" class="service-item pdf-rotate">
+                    <span class="service-item-icon">🔄</span>
+                    <div class="service-item-text">
+                        <strong>Rotate PDF</strong>
+                        <span>PDF পেজ ঘুরিয়ে সঠিকভাবে সাজান</span>
+                    </div>
+                </a>
+
+                <a href="pdf-watermark.html" class="service-item pdf-watermark">
+                    <span class="service-item-icon">💧</span>
+                    <div class="service-item-text">
+                        <strong>Add Watermark</strong>
+                        <span>PDF এ ওয়াটারমার্ক যোগ করুন</span>
+                    </div>
+                </a>
+
+                <a href="pdf-password.html" class="service-item pdf-protect">
+                    <span class="service-item-icon">🔒</span>
+                    <div class="service-item-text">
+                        <strong>Protect PDF</strong>
+                        <span>পাসওয়ার্ড দিয়ে PDF সুরক্ষিত করুন</span>
+                    </div>
+                </a>
+
+                <a href="pdf-unlock.html" class="service-item pdf-unlock">
+                    <span class="service-item-icon">🔓</span>
+                    <div class="service-item-text">
+                        <strong>Unlock PDF</strong>
+                        <span>পাসওয়ার্ড সরিয়ে PDF আনলক করুন</span>
+                    </div>
+                </a>
+
+            </div>
+
+            <a href="online-service.html" class="btn-back">← Back to Online Services</a>
+        </div>
+    </main>
+
+    <!-- ================= ফুটার ================= -->
+    <footer>
+        <p>🏢 Azad Digital Seva — আপনার বিশ্বস্ত অনলাইন সেবা প্রদানকারী</p>
+        <div class="footer-links">
+            <a href="index.html">Home</a>
+            <a href="services.html">Services</a>
+            <a href="tools.html">Tools</a>
+            <a href="notice.html">Notice</a>
+            <a href="contact.html">Contact</a>
+        </div>
+        <p class="copyright">© ২০২৫ Azad Digital Seva | সর্বস্বত্ব সংরক্ষিত</p>
+    </footer>
+
+    <script>
+        (function () {
+            const toggle = document.getElementById('menuToggle');
+            const dropdown = document.getElementById('headerDropdown');
+            const overlay = document.getElementById('menuOverlay');
+            function openMenu() {
+                dropdown.classList.add('open');
+                toggle.classList.add('active');
+                overlay.classList.add('show');
+            }
+            function closeMenu() {
+                dropdown.classList.remove('open');
+                toggle.classList.remove('active');
+                overlay.classList.remove('show');
+            }
+            toggle.addEventListener('click', (e) => {
+                e.stopPropagation();
+                dropdown.classList.contains('open') ? closeMenu() : openMenu();
+            });
+            overlay.addEventListener('click', closeMenu);
+            document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeMenu(); });
+            dropdown.addEventListener('click', (e) => e.stopPropagation());
+        })();
+    </script>
+
+</body>
+</html>

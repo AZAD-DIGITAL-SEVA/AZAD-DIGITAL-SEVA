@@ -4,13 +4,44 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
 <title>Background Remove | Azad Digital Seva</title>
-<meta name="description" content="ছবির ব্যাকগ্রাউন্ড মুছে ফেলুন সম্পূর্ণ ফ্রিতে — ব্রাউজারেই AI কাজ করে, ছবি কোথাও যায় না।">
+<meta name="description" content="ছবির ব্যাকগ্রাউন্ড মুছে ফেলুন সম্পূর্ণ ফ্রিতে — ব্রাউজারেই AI কাজ করে।">
 <meta name="theme-color" content="#075e54">
 <link rel="icon" type="image/png" href="assets/azad-logo.png">
 <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&family=Noto+Sans+Bengali:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
-<!-- ========== AI Background Removal Library ========== -->
-<script src="https://cdn.jsdelivr.net/npm/@imgly/background-removal@1.4.5/dist/browser.js"></script>
+<!-- ========== Multiple CDN Fallback ========== -->
+<script>
+window.OCB_IMG_LIB_READY = false;
+window.OCB_IMG_LIB_URLS = [
+  'https://cdn.jsdelivr.net/npm/@imgly/background-removal@1.5.5/dist/browser.js',
+  'https://unpkg.com/@imgly/background-removal@1.5.5/dist/browser.js',
+  'https://cdn.jsdelivr.net/npm/@imgly/background-removal@1.4.5/dist/browser.js'
+];
+
+(function loadLib(i) {
+  if (i >= window.OCB_IMG_LIB_URLS.length) {
+    console.warn('All CDN attempts failed');
+    return;
+  }
+  var script = document.createElement('script');
+  script.src = window.OCB_IMG_LIB_URLS[i];
+  script.onload = function() {
+    setTimeout(function() {
+      if (window.imglyBackgroundRemoval || window['@imgly/background-removal']) {
+        window.OCB_IMG_LIB_READY = true;
+        console.log('✅ Library loaded from:', window.OCB_IMG_LIB_URLS[i]);
+      } else {
+        loadLib(i + 1);
+      }
+    }, 100);
+  };
+  script.onerror = function() {
+    console.warn('Failed CDN:', window.OCB_IMG_LIB_URLS[i]);
+    loadLib(i + 1);
+  };
+  document.head.appendChild(script);
+})(0);
+</script>
 
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
@@ -91,7 +122,6 @@
   .container { max-width: 950px; margin: -28px auto 0; padding: 0 12px 40px; position: relative; z-index: 5; }
   .card-box { background: #fff; border-radius: 18px; box-shadow: 0 15px 40px rgba(10,37,64,.15); border-top: 4px solid var(--saffron); padding: 24px 20px; }
 
-  /* ========== UPLOAD ========== */
   .upload-box {
     border: 3px dashed #cbd5e1;
     border-radius: 18px;
@@ -101,55 +131,49 @@
     cursor: pointer;
     transition: all .3s;
   }
-  .upload-box:hover {
-    border-color: var(--saffron);
-    background: linear-gradient(145deg, #fff8e7, #fff);
-    transform: translateY(-2px);
-  }
+  .upload-box:hover { border-color: var(--saffron); background: linear-gradient(145deg, #fff8e7, #fff); transform: translateY(-2px); }
   .upload-box input { display: none; }
-  .upload-icon {
-    width: 80px;
-    height: 80px;
-    margin: 0 auto 14px;
-    background: linear-gradient(135deg, #e0f2fe, #bae6fd);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 2rem;
-    animation: uploadPulse 2s ease-in-out infinite;
-  }
+  .upload-icon { width: 80px; height: 80px; margin: 0 auto 14px; background: linear-gradient(135deg, #e0f2fe, #bae6fd); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2rem; animation: uploadPulse 2s ease-in-out infinite; }
   @keyframes uploadPulse { 0%,100% { transform: scale(1); } 50% { transform: scale(1.05); } }
   .upload-box h3 { font-size: 1.15rem; color: var(--dark); font-weight: 800; margin-bottom: 6px; }
   .upload-box p { font-size: .82rem; color: var(--text-muted); font-weight: 600; }
-  .upload-box .file-types {
-    display: inline-block;
-    margin-top: 12px;
-    padding: 5px 12px;
-    border-radius: 20px;
-    background: #f0fdf4;
-    color: #065f46;
-    font-size: .68rem;
+  .upload-box .file-types { display: inline-block; margin-top: 12px; padding: 5px 12px; border-radius: 20px; background: #f0fdf4; color: #065f46; font-size: .68rem; font-weight: 700; border: 1px solid #bbf7d0; }
+
+  .lib-warning {
+    display: none;
+    margin-top: 16px;
+    padding: 14px 16px;
+    border-radius: 12px;
+    background: #fef3c7;
+    border: 2px solid #fbbf24;
+    color: #92400e;
+    font-size: .82rem;
     font-weight: 700;
-    border: 1px solid #bbf7d0;
+    text-align: center;
+  }
+  .lib-warning.show { display: block; }
+  .lib-warning strong { display: block; margin-bottom: 4px; color: #78350f; }
+
+  .retry-btn {
+    margin-top: 10px;
+    padding: 8px 18px;
+    background: #f59e0b;
+    color: #fff;
+    border: none;
+    border-radius: 20px;
+    font-weight: 800;
+    font-size: .78rem;
+    cursor: pointer;
+    font-family: inherit;
   }
 
-  /* ========== FEATURES ========== */
   .features { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 22px; }
-  .feature {
-    background: linear-gradient(145deg, #f8fbff, #fff);
-    border: 1px solid #e1ebf5;
-    border-radius: 12px;
-    padding: 14px 10px;
-    text-align: center;
-    transition: .3s;
-  }
+  .feature { background: linear-gradient(145deg, #f8fbff, #fff); border: 1px solid #e1ebf5; border-radius: 12px; padding: 14px 10px; text-align: center; transition: .3s; }
   .feature:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(10,37,64,.08); }
   .feature-icon { font-size: 1.4rem; margin-bottom: 6px; display: block; }
   .feature strong { display: block; font-size: .74rem; color: var(--dark); font-weight: 800; }
   .feature small { display: block; font-size: .62rem; color: var(--text-muted); font-weight: 600; margin-top: 2px; }
 
-  /* ========== PROCESSING SCREEN ========== */
   .processing-screen {
     display: none;
     position: fixed;
@@ -171,152 +195,35 @@
   .ai-ring:nth-child(2) { inset: 12px; border-top-color: var(--saffron); animation: spin 2s linear infinite reverse; }
   .ai-ring:nth-child(3) { inset: 24px; border-top-color: var(--success); animation: spin 2.5s linear infinite; }
   @keyframes spin { to { transform: rotate(360deg); } }
-  .ai-center {
-    position: absolute;
-    inset: 36px;
-    background: linear-gradient(135deg,var(--saffron),var(--gold));
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.5rem;
-    box-shadow: 0 0 40px rgba(255,153,51,.6);
-    animation: pulseCore 1.5s ease-in-out infinite;
-  }
-  @keyframes pulseCore {
-    0%,100% { transform: scale(1); box-shadow: 0 0 40px rgba(255,153,51,.6); }
-    50% { transform: scale(1.1); box-shadow: 0 0 60px rgba(255,153,51,.9); }
-  }
+  .ai-center { position: absolute; inset: 36px; background: linear-gradient(135deg,var(--saffron),var(--gold)); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; box-shadow: 0 0 40px rgba(255,153,51,.6); animation: pulseCore 1.5s ease-in-out infinite; }
+  @keyframes pulseCore { 0%,100% { transform: scale(1); } 50% { transform: scale(1.1); } }
 
   .processing-screen h2 { font-size: 1.4rem; font-weight: 800; margin-bottom: 10px; }
   .processing-screen h2 span { background: linear-gradient(90deg,var(--saffron),var(--gold)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
   .processing-screen p { font-size: .88rem; color: rgba(255,255,255,.8); margin-bottom: 22px; }
 
-  .progress-bar {
-    width: 100%;
-    max-width: 400px;
-    height: 10px;
-    background: rgba(255,255,255,.15);
-    border-radius: 20px;
-    overflow: hidden;
-    margin: 0 auto 18px;
-  }
-  .progress-fill {
-    height: 100%;
-    background: linear-gradient(90deg,var(--saffron),var(--gold));
-    border-radius: 20px;
-    width: 0%;
-    transition: width .3s ease;
-    box-shadow: 0 0 20px rgba(255,153,51,.6);
-  }
+  .progress-bar { width: 100%; max-width: 400px; height: 10px; background: rgba(255,255,255,.15); border-radius: 20px; overflow: hidden; margin: 0 auto 18px; }
+  .progress-fill { height: 100%; background: linear-gradient(90deg,var(--saffron),var(--gold)); border-radius: 20px; width: 0%; transition: width .3s ease; box-shadow: 0 0 20px rgba(255,153,51,.6); }
 
-  .progress-status {
-    display: inline-block;
-    padding: 6px 16px;
-    background: rgba(255,255,255,.1);
-    border: 1px solid rgba(255,255,255,.15);
-    border-radius: 20px;
-    font-size: .8rem;
-    font-weight: 700;
-    color: #fff;
-    margin-bottom: 22px;
-    min-width: 200px;
-  }
+  .progress-status { display: inline-block; padding: 6px 16px; background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.15); border-radius: 20px; font-size: .8rem; font-weight: 700; color: #fff; margin-bottom: 22px; min-width: 220px; }
 
-  .cancel-btn {
-    background: rgba(255,255,255,.1);
-    color: #fff;
-    border: 1.5px solid rgba(255,255,255,.2);
-    padding: 10px 24px;
-    border-radius: 25px;
-    font-size: .85rem;
-    font-weight: 700;
-    cursor: pointer;
-    font-family: inherit;
-    transition: all .3s;
-  }
+  .cancel-btn { background: rgba(255,255,255,.1); color: #fff; border: 1.5px solid rgba(255,255,255,.2); padding: 10px 24px; border-radius: 25px; font-size: .85rem; font-weight: 700; cursor: pointer; font-family: inherit; transition: all .3s; }
   .cancel-btn:hover { background: rgba(255,255,255,.2); }
 
-  /* ========== RESULT AREA ========== */
-  .result-section {
-    display: none;
-    padding: 4px 0;
-  }
-  .result-section.active {
-    display: block;
-    animation: fadeIn .4s;
-  }
-  @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
+  .result-section { display: none; padding: 4px 0; }
+  .result-section.active { display: block; animation: fadeIn .4s; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-  .result-title {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin-bottom: 16px;
-    padding-bottom: 12px;
-    border-bottom: 2px solid #f0e6d2;
-  }
-  .result-title .rt-icon {
-    width: 42px;
-    height: 42px;
-    border-radius: 11px;
-    background: linear-gradient(135deg, #138808, #0f6b06);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.2rem;
-    flex-shrink: 0;
-    box-shadow: 0 5px 14px rgba(19,136,8,.3);
-  }
-  .result-title h2 {
-    font-size: 1.1rem;
-    color: var(--dark);
-    font-weight: 800;
-  }
-  .result-title p {
-    font-size: .72rem;
-    color: var(--text-muted);
-    font-weight: 600;
-    margin-top: 2px;
-  }
+  .result-title { display: flex; align-items: center; gap: 10px; margin-bottom: 16px; padding-bottom: 12px; border-bottom: 2px solid #f0e6d2; }
+  .result-title .rt-icon { width: 42px; height: 42px; border-radius: 11px; background: linear-gradient(135deg, #138808, #0f6b06); display: flex; align-items: center; justify-content: center; font-size: 1.2rem; flex-shrink: 0; box-shadow: 0 5px 14px rgba(19,136,8,.3); }
+  .result-title h2 { font-size: 1.1rem; color: var(--dark); font-weight: 800; }
+  .result-title p { font-size: .72rem; color: var(--text-muted); font-weight: 600; margin-top: 2px; }
 
-  /* Image Comparison */
-  .compare-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 12px;
-    margin-bottom: 18px;
-  }
-  .compare-box {
-    background: linear-gradient(145deg, #f8fafc, #eef2f7);
-    border: 2px solid #e2e8f0;
-    border-radius: 14px;
-    padding: 12px;
-    text-align: center;
-  }
-  .compare-box .label {
-    display: inline-block;
-    padding: 4px 12px;
-    border-radius: 20px;
-    font-size: .68rem;
-    font-weight: 800;
-    margin-bottom: 10px;
-    text-transform: uppercase;
-    letter-spacing: .3px;
-  }
-  .compare-box.before .label {
-    background: #fee2e2;
-    color: #991b1b;
-    border: 1px solid #fecaca;
-  }
-  .compare-box.after .label {
-    background: #d1fae5;
-    color: #065f46;
-    border: 1px solid #86efac;
-  }
+  .compare-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 18px; }
+  .compare-box { background: linear-gradient(145deg, #f8fafc, #eef2f7); border: 2px solid #e2e8f0; border-radius: 14px; padding: 12px; text-align: center; }
+  .compare-box .label { display: inline-block; padding: 4px 12px; border-radius: 20px; font-size: .68rem; font-weight: 800; margin-bottom: 10px; text-transform: uppercase; letter-spacing: .3px; }
+  .compare-box.before .label { background: #fee2e2; color: #991b1b; border: 1px solid #fecaca; }
+  .compare-box.after .label { background: #d1fae5; color: #065f46; border: 1px solid #86efac; }
 
   .compare-box .img-wrap {
     position: relative;
@@ -334,163 +241,31 @@
     background-position: 0 0, 0 8px, 8px -8px, -8px 0px;
     background-color: #ffffff;
   }
-  .compare-box .img-wrap img {
-    display: block;
-    max-width: 100%;
-    max-height: 340px;
-    width: auto;
-    height: auto;
-  }
+  .compare-box .img-wrap img { display: block; max-width: 100%; max-height: 340px; width: auto; height: auto; }
 
-  /* Background Color Options */
-  .bg-color-section {
-    background: #fff;
-    border: 1.5px solid #e1ebf5;
-    border-radius: 14px;
-    padding: 14px;
-    margin-bottom: 16px;
-  }
-  .bg-color-title {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    font-size: .85rem;
-    font-weight: 800;
-    color: var(--dark);
-    margin-bottom: 12px;
-  }
-  .bg-color-grid {
-    display: grid;
-    grid-template-columns: repeat(6, 1fr);
-    gap: 8px;
-  }
-  .bg-color-btn {
-    aspect-ratio: 1;
-    border: 3px solid #e5e7eb;
-    border-radius: 10px;
-    cursor: pointer;
-    transition: all .25s;
-    position: relative;
-    padding: 0;
-    font-family: inherit;
-  }
-  .bg-color-btn:hover {
-    transform: scale(1.08);
-  }
-  .bg-color-btn.active {
-    border-color: var(--gold);
-    box-shadow: 0 0 0 3px rgba(249,168,38,.3), 0 6px 16px rgba(249,168,38,.25);
-    transform: scale(1.08);
-  }
-  .bg-color-btn.active::after {
-    content: '✓';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 22px;
-    height: 22px;
-    background: var(--gold);
-    color: #fff;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: .75rem;
-    font-weight: 900;
-    box-shadow: 0 3px 10px rgba(0,0,0,.3);
-  }
-  .bg-transparent {
-    background-image:
-      linear-gradient(45deg, #ccc 25%, transparent 25%),
-      linear-gradient(-45deg, #ccc 25%, transparent 25%),
-      linear-gradient(45deg, transparent 75%, #ccc 75%),
-      linear-gradient(-45deg, transparent 75%, #ccc 75%);
-    background-size: 12px 12px;
-    background-position: 0 0, 0 6px, 6px -6px, -6px 0px;
-    background-color: #fff;
-  }
+  .bg-color-section { background: #fff; border: 1.5px solid #e1ebf5; border-radius: 14px; padding: 14px; margin-bottom: 16px; }
+  .bg-color-title { display: flex; align-items: center; gap: 6px; font-size: .85rem; font-weight: 800; color: var(--dark); margin-bottom: 12px; }
+  .bg-color-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 8px; }
+  .bg-color-btn { aspect-ratio: 1; border: 3px solid #e5e7eb; border-radius: 10px; cursor: pointer; transition: all .25s; position: relative; padding: 0; font-family: inherit; }
+  .bg-color-btn:hover { transform: scale(1.08); }
+  .bg-color-btn.active { border-color: var(--gold); box-shadow: 0 0 0 3px rgba(249,168,38,.3), 0 6px 16px rgba(249,168,38,.25); transform: scale(1.08); }
+  .bg-color-btn.active::after { content: '✓'; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 22px; height: 22px; background: var(--gold); color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: .75rem; font-weight: 900; box-shadow: 0 3px 10px rgba(0,0,0,.3); }
+  .bg-transparent { background-image: linear-gradient(45deg, #ccc 25%, transparent 25%), linear-gradient(-45deg, #ccc 25%, transparent 25%), linear-gradient(45deg, transparent 75%, #ccc 75%), linear-gradient(-45deg, transparent 75%, #ccc 75%); background-size: 12px 12px; background-position: 0 0, 0 6px, 6px -6px, -6px 0px; background-color: #fff; }
 
-  /* Action Buttons */
-  .action-buttons {
-    display: flex;
-    gap: 10px;
-    flex-wrap: wrap;
-    margin-top: 6px;
-  }
-  .action-btn {
-    flex: 1;
-    min-width: 140px;
-    padding: 14px 20px;
-    border-radius: 12px;
-    border: none;
-    font-family: inherit;
-    font-size: .88rem;
-    font-weight: 800;
-    cursor: pointer;
-    transition: all .3s;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    text-decoration: none;
-  }
-  .action-btn-primary {
-    background: linear-gradient(135deg, #138808, #0f6b06);
-    color: #fff;
-    box-shadow: 0 6px 18px rgba(19,136,8,.35);
-  }
-  .action-btn-primary:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 10px 24px rgba(19,136,8,.45);
-  }
-  .action-btn-outline {
-    background: #fff;
-    color: #475569;
-    border: 2px solid #e2e8f0;
-  }
-  .action-btn-outline:hover {
-    background: #f1f5f9;
-    border-color: #cbd5e1;
-  }
+  .action-buttons { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 6px; }
+  .action-btn { flex: 1; min-width: 140px; padding: 14px 20px; border-radius: 12px; border: none; font-family: inherit; font-size: .88rem; font-weight: 800; cursor: pointer; transition: all .3s; display: inline-flex; align-items: center; justify-content: center; gap: 8px; text-decoration: none; }
+  .action-btn-primary { background: linear-gradient(135deg, #138808, #0f6b06); color: #fff; box-shadow: 0 6px 18px rgba(19,136,8,.35); }
+  .action-btn-primary:hover { transform: translateY(-2px); box-shadow: 0 10px 24px rgba(19,136,8,.45); }
+  .action-btn-outline { background: #fff; color: #475569; border: 2px solid #e2e8f0; }
+  .action-btn-outline:hover { background: #f1f5f9; border-color: #cbd5e1; }
 
-  /* ========== TOAST ========== */
-  .toast {
-    position: fixed;
-    bottom: 90px;
-    left: 50%;
-    transform: translateX(-50%) translateY(100px);
-    background: #1e293b;
-    color: #fff;
-    padding: 11px 22px;
-    border-radius: 30px;
-    font-size: .82rem;
-    font-weight: 700;
-    box-shadow: 0 10px 30px rgba(0,0,0,.3);
-    opacity: 0;
-    transition: all .4s cubic-bezier(.4,0,.2,1);
-    z-index: 9999;
-    white-space: nowrap;
-    max-width: 90vw;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    pointer-events: none;
-  }
+  .toast { position: fixed; bottom: 90px; left: 50%; transform: translateX(-50%) translateY(100px); background: #1e293b; color: #fff; padding: 11px 22px; border-radius: 30px; font-size: .82rem; font-weight: 700; box-shadow: 0 10px 30px rgba(0,0,0,.3); opacity: 0; transition: all .4s cubic-bezier(.4,0,.2,1); z-index: 9999; white-space: nowrap; max-width: 90vw; overflow: hidden; text-overflow: ellipsis; pointer-events: none; }
   .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
 
-  footer {
-    background: linear-gradient(135deg, #0a2540, #1e3a5f);
-    color: #d4e6e3;
-    text-align: center;
-    padding: 22px 14px 90px;
-    border-top: 3px solid var(--gold);
-    margin-top: 30px;
-    font-size: .78rem;
-  }
+  footer { background: linear-gradient(135deg, #0a2540, #1e3a5f); color: #d4e6e3; text-align: center; padding: 22px 14px 90px; border-top: 3px solid var(--gold); margin-top: 30px; font-size: .78rem; }
   footer p { max-width: 750px; margin: 0 auto 8px; }
   .footer-links { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; margin: 10px 0; }
   .footer-links a { color: var(--gold); text-decoration: none; font-size: .75rem; font-weight: 700; }
-  .footer-links a:hover { text-decoration: underline; }
   .footer-copyright { font-size: .68rem; opacity: .7; margin-top: 10px; }
 
   .bottom-nav { display: none; position: fixed; bottom: 0; left: 0; right: 0; background: #fff; border-top: 1px solid var(--border); padding: 6px 4px calc(6px + env(safe-area-inset-bottom)); z-index: 998; }
@@ -513,7 +288,6 @@
     .bg-color-grid { grid-template-columns: repeat(4, 1fr); }
     .action-btn { min-width: 100%; }
     .bottom-nav { display: block; }
-    .processing-screen h2 { font-size: 1.15rem; }
   }
 </style>
 </head>
@@ -545,7 +319,6 @@
     <div class="hero-badges">
       <span class="hero-badge"><span class="dot"></span> 100% Free</span>
       <span class="hero-badge">🔒 Privacy Safe</span>
-      <span class="hero-badge">⚡ Instant</span>
       <span class="hero-badge">🎨 Any BG Color</span>
     </div>
   </div>
@@ -554,7 +327,6 @@
 <div class="container">
   <div class="card-box">
 
-    <!-- ========== UPLOAD SECTION ========== -->
     <div id="uploadSection">
       <div class="upload-box" onclick="document.getElementById('photoInput').click()">
         <div class="upload-icon">📸</div>
@@ -562,6 +334,13 @@
         <p>এখানে ক্লিক করুন অথবা ছবি ড্র্যাগ করুন<br>সরাসরি মুখের ছবি হলে সবচেয়ে ভালো হয়</p>
         <span class="file-types">JPG • PNG • JPEG • WEBP</span>
         <input type="file" id="photoInput" accept="image/*">
+      </div>
+
+      <div class="lib-warning" id="libWarning">
+        <strong>⚠️ AI লাইব্রেরি লোড হয়নি</strong>
+        দয়া করে ইন্টারনেট চেক করুন অথবা AdBlocker বন্ধ করুন।
+        <br>
+        <button class="retry-btn" onclick="location.reload()">🔄 আবার চেষ্টা করুন</button>
       </div>
 
       <div class="features">
@@ -583,18 +362,15 @@
       </div>
     </div>
 
-    <!-- ========== RESULT SECTION ========== -->
     <div class="result-section" id="resultSection">
-
       <div class="result-title">
         <div class="rt-icon">✅</div>
         <div>
           <h2>ব্যাকগ্রাউন্ড সফলভাবে রিমুভ হয়েছে!</h2>
-          <p>এখন ব্যাকগ্রাউন্ড কালার বেছে নিন অথবা ট্রান্সপারেন্ট রাখুন</p>
+          <p>এখন ব্যাকগ্রাউন্ড কালার বেছে নিন</p>
         </div>
       </div>
 
-      <!-- Comparison -->
       <div class="compare-grid">
         <div class="compare-box before">
           <span class="label">আগে (Before)</span>
@@ -610,7 +386,6 @@
         </div>
       </div>
 
-      <!-- BG Color -->
       <div class="bg-color-section">
         <div class="bg-color-title">🎨 ব্যাকগ্রাউন্ড কালার সিলেক্ট করুন</div>
         <div class="bg-color-grid" id="bgColorGrid">
@@ -629,47 +404,31 @@
         </div>
       </div>
 
-      <!-- Actions -->
       <div class="action-buttons">
-        <button class="action-btn action-btn-outline" onclick="resetAll()">
-          🔄 নতুন ছবি
-        </button>
-        <button class="action-btn action-btn-primary" onclick="downloadResult()">
-          ⬇️ ডাউনলোড করুন
-        </button>
+        <button class="action-btn action-btn-outline" onclick="resetAll()">🔄 নতুন ছবি</button>
+        <button class="action-btn action-btn-primary" onclick="downloadResult()">⬇️ ডাউনলোড করুন</button>
       </div>
-
     </div>
 
   </div>
 </div>
 
-<!-- ========== PROCESSING SCREEN ========== -->
 <div class="processing-screen" id="processingScreen">
   <div class="processing-content">
-
     <div class="ai-loader">
       <div class="ai-ring"></div>
       <div class="ai-ring"></div>
       <div class="ai-ring"></div>
       <div class="ai-center">✨</div>
     </div>
-
     <h2>AI প্রসেস হচ্ছে... <span>অপেক্ষা করুন</span></h2>
     <p>ব্রাউজারেই কাজ চলছে — ছবি কোথাও যায় না</p>
-
-    <div class="progress-bar">
-      <div class="progress-fill" id="progressFill"></div>
-    </div>
-
+    <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
     <div class="progress-status" id="progressStatus">⏳ মডেল লোড হচ্ছে...</div>
-
     <button class="cancel-btn" onclick="cancelProcessing()">বাতিল করুন</button>
-
   </div>
 </div>
 
-<!-- ========== FOOTER ========== -->
 <footer>
   <p>🖥️ <strong>Azad Digital Seva</strong> — সরকারি ও বেসরকারি অনলাইন পরিষেবা</p>
   <div class="footer-links">
@@ -697,10 +456,11 @@
 var state = {
   originalFile: null,
   originalUrl: null,
-  removedBlob: null,      // Transparent PNG blob
+  removedBlob: null,
   currentBg: 'transparent',
-  finalBlob: null,        // Final with BG
-  processingActive: false
+  finalBlob: null,
+  processingActive: false,
+  libLoaded: false
 };
 
 // ==================== DOM ====================
@@ -712,6 +472,7 @@ var progressFill = document.getElementById('progressFill');
 var progressStatus = document.getElementById('progressStatus');
 var beforeImg = document.getElementById('beforeImg');
 var afterImg = document.getElementById('afterImg');
+var libWarning = document.getElementById('libWarning');
 var toast = document.getElementById('toast');
 
 // ==================== HELPERS ====================
@@ -725,6 +486,41 @@ function updateProgress(percent, status) {
   progressFill.style.width = percent + '%';
   if (status) progressStatus.textContent = status;
 }
+
+function getRemoveFunction() {
+  if (window.imglyBackgroundRemoval && window.imglyBackgroundRemoval.removeBackground) {
+    return window.imglyBackgroundRemoval.removeBackground;
+  }
+  if (window['@imgly/background-removal'] && window['@imgly/background-removal'].removeBackground) {
+    return window['@imgly/background-removal'].removeBackground;
+  }
+  return null;
+}
+
+// ==================== CHECK LIBRARY ====================
+function checkLibrary() {
+  var fn = getRemoveFunction();
+  if (fn) {
+    state.libLoaded = true;
+    libWarning.classList.remove('show');
+    console.log('✅ Library ready');
+    return true;
+  } else {
+    state.libLoaded = false;
+    libWarning.classList.add('show');
+    console.warn('❌ Library not loaded');
+    return false;
+  }
+}
+
+// Check library every second for 10 seconds
+var libCheckCount = 0;
+var libCheckInterval = setInterval(function() {
+  libCheckCount++;
+  if (checkLibrary() || libCheckCount >= 10) {
+    clearInterval(libCheckInterval);
+  }
+}, 1000);
 
 // ==================== UPLOAD ====================
 photoInput.addEventListener('change', function(e) {
@@ -741,6 +537,14 @@ photoInput.addEventListener('change', function(e) {
     return;
   }
 
+  // Check library before processing
+  if (!getRemoveFunction()) {
+    alert('❌ AI লাইব্রেরি এখনো লোড হয়নি।\n\nঅনুগ্রহ করে:\n১. ইন্টারনেট চেক করুন\n২. AdBlocker বন্ধ করুন\n৩. ৫ সেকেন্ড অপেক্ষা করে আবার চেষ্টা করুন');
+    photoInput.value = '';
+    libWarning.classList.add('show');
+    return;
+  }
+
   state.originalFile = file;
   state.originalUrl = URL.createObjectURL(file);
   beforeImg.src = state.originalUrl;
@@ -753,30 +557,29 @@ async function processImage() {
   if (state.processingActive) return;
   state.processingActive = true;
 
-  // Show processing
   processingScreen.classList.add('active');
   document.body.style.overflow = 'hidden';
-  updateProgress(0, '⏳ মডেল লোড হচ্ছে...');
+  updateProgress(0, '⏳ AI লোড হচ্ছে...');
 
   try {
-    // Check library loaded
-    if (!window.imglyBackgroundRemoval || !window.imglyBackgroundRemoval.removeBackground) {
-      throw new Error('AI library load হয়নি — ইন্টারনেট চেক করুন');
+    var removeBackground = getRemoveFunction();
+    if (!removeBackground) {
+      throw new Error('AI লাইব্রেরি পাওয়া যায়নি');
     }
 
     updateProgress(15, '🤖 AI মডেল প্রস্তুত হচ্ছে...');
 
-    // Progress callback if supported
     var progressCallback = function(key, current, total) {
-      var percent = Math.round((current / total) * 70) + 15;
-      if (percent > 90) percent = 90;
-      updateProgress(percent, '📥 মডেল ডাউনলোড: ' + Math.round((current/total)*100) + '%');
+      if (typeof current === 'number' && typeof total === 'number' && total > 0) {
+        var percent = Math.round((current / total) * 70) + 15;
+        if (percent > 90) percent = 90;
+        updateProgress(percent, '📥 মডেল লোড: ' + Math.round((current/total)*100) + '%');
+      }
     };
 
     updateProgress(25, '✂️ ব্যাকগ্রাউন্ড রিমুভ হচ্ছে...');
 
-    // === THE MAGIC — Runs entirely in browser ===
-    var blob = await window.imglyBackgroundRemoval.removeBackground(state.originalFile, {
+    var blob = await removeBackground(state.originalFile, {
       progress: progressCallback,
       output: {
         format: 'image/png',
@@ -784,7 +587,7 @@ async function processImage() {
       }
     });
 
-    updateProgress(95, '🎨 ফাইনাল ছবি তৈরি হচ্ছে...');
+    updateProgress(95, '🎨 ছবি প্রস্তুত হচ্ছে...');
 
     state.removedBlob = blob;
     var removedUrl = URL.createObjectURL(blob);
@@ -792,10 +595,7 @@ async function processImage() {
 
     updateProgress(100, '✅ সম্পন্ন!');
 
-    // Small delay to show 100%
-    setTimeout(function() {
-      finishProcessing();
-    }, 500);
+    setTimeout(finishProcessing, 500);
 
   } catch (err) {
     console.error('Processing error:', err);
@@ -812,7 +612,6 @@ function finishProcessing() {
   uploadSection.style.display = 'none';
   resultSection.classList.add('active');
 
-  // Reset BG selection to transparent
   state.currentBg = 'transparent';
   document.querySelectorAll('.bg-color-btn').forEach(function(b) {
     b.classList.toggle('active', b.dataset.color === 'transparent');
@@ -825,7 +624,6 @@ function finishProcessing() {
   }, 200);
 }
 
-// ==================== CANCEL ====================
 function cancelProcessing() {
   state.processingActive = false;
   processingScreen.classList.remove('active');
@@ -833,7 +631,7 @@ function cancelProcessing() {
   photoInput.value = '';
 }
 
-// ==================== SELECT BG COLOR ====================
+// ==================== BG COLOR ====================
 async function selectBgColor(color, btn) {
   state.currentBg = color;
 
@@ -842,20 +640,14 @@ async function selectBgColor(color, btn) {
   });
   btn.classList.add('active');
 
-  // Update preview
   await updateAfterPreview(color);
 
-  if (color === 'transparent') {
-    showToast('🎨 ট্রান্সপারেন্ট');
-  } else {
-    showToast('🎨 ব্যাকগ্রাউন্ড আপডেট হয়েছে');
-  }
+  showToast(color === 'transparent' ? '🎨 ট্রান্সপারেন্ট' : '🎨 ব্যাকগ্রাউন্ড আপডেট');
 }
 
 async function updateAfterPreview(color) {
   if (!state.removedBlob) return;
 
-  // If transparent, just show removed blob
   if (color === 'transparent') {
     var url = URL.createObjectURL(state.removedBlob);
     afterImg.src = url;
@@ -863,23 +655,16 @@ async function updateAfterPreview(color) {
     return;
   }
 
-  // Load removed image
   var img = await loadImage(state.removedBlob);
-
-  // Create canvas with bg color
   var canvas = document.createElement('canvas');
   canvas.width = img.width;
   canvas.height = img.height;
   var ctx = canvas.getContext('2d');
 
-  // Fill with BG color
   ctx.fillStyle = color;
   ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-  // Draw removed image on top
   ctx.drawImage(img, 0, 0);
 
-  // Convert to blob
   return new Promise(function(resolve) {
     canvas.toBlob(function(blob) {
       state.finalBlob = blob;
@@ -910,14 +695,12 @@ async function downloadResult() {
     return;
   }
 
-  // If transparent, download blob directly
   if (state.currentBg === 'transparent') {
     downloadBlob(state.removedBlob, 'background-removed-transparent.png');
     showToast('⬇️ ডাউনলোড হয়েছে');
     return;
   }
 
-  // Otherwise generate final with BG
   try {
     var img = await loadImage(state.removedBlob);
     var canvas = document.createElement('canvas');
@@ -975,19 +758,7 @@ function resetAll() {
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
-// ==================== PRELOAD CHECK ====================
-window.addEventListener('load', function() {
-  // Check if library loaded after 3 seconds
-  setTimeout(function() {
-    if (!window.imglyBackgroundRemoval) {
-      console.warn('⚠️ Background removal library not loaded');
-    } else {
-      console.log('✅ Background removal library ready');
-    }
-  }, 3000);
-});
-
-// Expose for onclick
+// Expose
 window.cancelProcessing = cancelProcessing;
 window.selectBgColor = selectBgColor;
 window.downloadResult = downloadResult;

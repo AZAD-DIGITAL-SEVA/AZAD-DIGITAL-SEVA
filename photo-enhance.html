@@ -167,34 +167,32 @@
   }
   .ready-overlay.active { display: flex; }
 
-  .ready-modal { background: #fff; border-radius: 22px; max-width: 480px; width: 100%; padding: 28px 22px; text-align: center; box-shadow: 0 30px 70px rgba(0,0,0,.4); max-height: 92vh; overflow-y: auto; animation: modalIn .4s cubic-bezier(.2,.9,.3,1.3); }
+  .ready-modal { background: #fff; border-radius: 22px; max-width: 420px; width: 100%; padding: 30px 24px; text-align: center; box-shadow: 0 30px 70px rgba(0,0,0,.4); max-height: 92vh; overflow-y: auto; animation: modalIn .4s cubic-bezier(.2,.9,.3,1.3); }
   @keyframes modalIn { from { opacity: 0; transform: scale(.85) translateY(20px); } to { opacity: 1; transform: scale(1) translateY(0); } }
 
   .ready-icon { width: 70px; height: 70px; margin: 0 auto 16px; border-radius: 50%; background: linear-gradient(135deg, #d1fae5, #a7f3d0); display: flex; align-items: center; justify-content: center; font-size: 2rem; animation: successPop .6s ease; }
   @keyframes successPop { 0% { transform: scale(0); } 50% { transform: scale(1.15); } 100% { transform: scale(1); } }
 
-  .ready-modal h3 { font-size: 1.35rem; color: var(--dark); font-weight: 800; margin-bottom: 8px; }
-  .ready-modal > p { font-size: .85rem; color: var(--text-muted); margin-bottom: 18px; line-height: 1.6; }
+  .ready-modal h3 { font-size: 1.4rem; color: var(--dark); font-weight: 800; margin-bottom: 8px; }
+  .ready-modal > p { font-size: .88rem; color: var(--text-muted); margin-bottom: 20px; line-height: 1.6; }
+  .ready-modal > p b { color: var(--primary); }
 
-  .copy-status { display: flex; align-items: center; justify-content: center; gap: 8px; padding: 12px 16px; border-radius: 12px; background: linear-gradient(135deg, #dcfce7, #bbf7d0); color: #065f46; font-size: .82rem; font-weight: 700; margin-bottom: 16px; border: 1.5px solid #86efac; }
+  .copy-status { display: flex; align-items: center; justify-content: center; gap: 8px; padding: 14px 16px; border-radius: 12px; background: linear-gradient(135deg, #dcfce7, #bbf7d0); color: #065f46; font-size: .85rem; font-weight: 700; margin-bottom: 22px; border: 1.5px solid #86efac; }
   .check-circle { width: 22px; height: 22px; background: #22c55e; color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: .75rem; font-weight: 900; flex-shrink: 0; }
 
-  .modal-steps { background: linear-gradient(135deg, #eff6ff, #dbeafe); border-radius: 12px; padding: 14px; text-align: left; margin-bottom: 18px; border-left: 4px solid #3b82f6; }
-  .modal-steps h4 { font-size: .82rem; color: #1e40af; font-weight: 800; margin-bottom: 8px; }
-  .modal-steps ol { padding-left: 20px; font-size: .78rem; color: #334155; line-height: 1.75; font-weight: 600; }
-  .modal-steps li { margin-bottom: 3px; }
-
-  .modal-buttons { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 4px; }
-  .modal-btn { flex: 1; min-width: 140px; padding: 14px 20px; border-radius: 12px; border: none; font-family: inherit; font-size: .9rem; font-weight: 800; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; gap: 6px; text-decoration: none; transition: .3s; }
+  .modal-buttons { display: flex; gap: 10px; flex-wrap: wrap; }
+  .modal-btn { flex: 1; min-width: 120px; padding: 14px 20px; border-radius: 12px; border: none; font-family: inherit; font-size: .9rem; font-weight: 800; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; gap: 6px; text-decoration: none; transition: .3s; }
   .modal-btn-primary { background: linear-gradient(135deg, #075e54, #128c7e); color: #fff; box-shadow: 0 6px 18px rgba(7,94,84,.35); }
-  .modal-btn-primary:hover { transform: translateY(-2px); }
+  .modal-btn-primary:hover { transform: translateY(-2px); box-shadow: 0 10px 24px rgba(7,94,84,.45); }
   .modal-btn-secondary { background: #f1f5f9; color: #475569; border: 1.5px solid #e2e8f0; }
+  .modal-btn-secondary:hover { background: #e2e8f0; }
 
   /* ============ FOOTER ============ */
   footer { background: linear-gradient(135deg, #0a2540, #1e3a5f); color: #d4e6e3; text-align: center; padding: 22px 14px 90px; border-top: 3px solid var(--gold); margin-top: 30px; font-size: .78rem; }
   footer p { max-width: 750px; margin: 0 auto 8px; }
   .footer-links { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; margin: 10px 0; }
   .footer-links a { color: var(--gold); text-decoration: none; font-size: .75rem; font-weight: 700; }
+  .footer-links a:hover { text-decoration: underline; }
   .footer-copyright { font-size: .68rem; opacity: .7; margin-top: 10px; }
 
   .bottom-nav { display: none; position: fixed; bottom: 0; left: 0; right: 0; background: #fff; border-top: 1px solid var(--border); padding: 6px 4px calc(6px + env(safe-area-inset-bottom)); z-index: 998; }
@@ -202,6 +200,9 @@
   .bn-item { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; padding: 7px 4px; border-radius: 12px; text-decoration: none; color: #64748b; font-size: 10px; font-weight: 700; min-height: 48px; }
   .bn-item.active { color: var(--primary); background: linear-gradient(135deg, #e8f7ee, #d1f0dd); }
   .bn-icon { font-size: 1.25rem; line-height: 1; }
+
+  .scroll-top { position: fixed; bottom: 76px; right: 16px; width: 42px; height: 42px; border-radius: 50%; background: linear-gradient(135deg,var(--saffron),#e67e22); color: #fff; border: none; font-size: 1.15rem; cursor: pointer; box-shadow: 0 6px 18px rgba(255,153,51,.5); display: none; align-items: center; justify-content: center; z-index: 997; font-weight: 900; }
+  .scroll-top.show { display: flex; }
 
   .toast { position: fixed; bottom: 90px; left: 50%; transform: translateX(-50%) translateY(100px); background: #1e293b; color: #fff; padding: 11px 22px; border-radius: 30px; font-size: .82rem; font-weight: 700; box-shadow: 0 10px 30px rgba(0,0,0,.3); opacity: 0; transition: all .4s; z-index: 9999; white-space: nowrap; max-width: 90vw; overflow: hidden; text-overflow: ellipsis; pointer-events: none; }
   .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
@@ -218,6 +219,9 @@
     .feature-icon { margin: 0; }
     .bottom-nav { display: block; }
     .modal-btn { min-width: 100%; }
+    .ready-modal { padding: 24px 18px; }
+    .ready-modal h3 { font-size: 1.2rem; }
+    .ready-modal > p { font-size: .82rem; }
   }
 </style>
 </head>
@@ -225,6 +229,7 @@
 
 <div class="flag-strip"><div class="s"></div><div class="w"></div><div class="g"></div></div>
 
+<!-- ================= HEADER ================= -->
 <header>
   <div class="header-wrap">
     <a class="brand" href="index.html">
@@ -241,11 +246,12 @@
   </div>
 </header>
 
+<!-- ================= HERO ================= -->
 <section class="hero">
   <div class="hero-content">
     <div class="hero-icon">✨</div>
     <h1>পুরোনো ছবি <span>HD করুন</span></h1>
-    <p>AI দিয়ে মুহূর্তেই আপনার পুরোনো ছবিকে প্রফেশনাল স্টুডিও মানের HD পোর্ট্রেটে রূপান্তর করুন — সম্পূর্ণ বিনামূল্যে।</p>
+    <p>AI দিয়ে মুহূর্তেই আপনার পুরোনো ছবিকে প্রফেশনাল স্টুডিও মানের HD পোর্ট্রেটে রূপান্তর করুন।</p>
     <div class="hero-badges">
       <span class="hero-badge"><span class="dot"></span> AI Powered</span>
       <span class="hero-badge">⚡ Instant</span>
@@ -255,16 +261,27 @@
   </div>
 </section>
 
+<!-- ================= CONTAINER ================= -->
 <div class="container">
   <div class="card-box">
 
+    <!-- Steps -->
     <div class="steps">
-      <div class="step active" id="step1"><span class="step-num">1</span> ছবি আপলোড</div>
-      <div class="step" id="step2"><span class="step-num">2</span> কপি Prompt</div>
-      <div class="step" id="step3"><span class="step-num">3</span> Gemini তে Paste</div>
-      <div class="step" id="step4"><span class="step-num">4</span> ডাউনলোড</div>
+      <div class="step active" id="step1">
+        <span class="step-num">1</span> ছবি আপলোড
+      </div>
+      <div class="step" id="step2">
+        <span class="step-num">2</span> কপি Prompt
+      </div>
+      <div class="step" id="step3">
+        <span class="step-num">3</span> Gemini তে Paste
+      </div>
+      <div class="step" id="step4">
+        <span class="step-num">4</span> ডাউনলোড
+      </div>
     </div>
 
+    <!-- Upload Box -->
     <div class="upload-box" onclick="document.getElementById('photoInput').click()">
       <div class="upload-icon">📸</div>
       <h3>আপনার ছবি আপলোড করুন</h3>
@@ -273,68 +290,89 @@
       <input type="file" id="photoInput" accept="image/*">
     </div>
 
+    <!-- Features -->
     <div class="features">
-      <div class="feature"><span class="feature-icon">🔍</span><div><strong>HD Restoration</strong><small>ঝাপসা ছবি স্পষ্ট</small></div></div>
-      <div class="feature"><span class="feature-icon">🎨</span><div><strong>Blue Background</strong><small>স্টুডিও স্টাইল</small></div></div>
-      <div class="feature"><span class="feature-icon">👤</span><div><strong>Face Safe</strong><small>মুখ অপরিবর্তিত</small></div></div>
+      <div class="feature">
+        <span class="feature-icon">🔍</span>
+        <div><strong>HD Restoration</strong><small>ঝাপসা ছবি স্পষ্ট</small></div>
+      </div>
+      <div class="feature">
+        <span class="feature-icon">🎨</span>
+        <div><strong>Blue Background</strong><small>স্টুডিও স্টাইল</small></div>
+      </div>
+      <div class="feature">
+        <span class="feature-icon">👤</span>
+        <div><strong>Face Safe</strong><small>মুখ অপরিবর্তিত</small></div>
+      </div>
     </div>
 
   </div>
 </div>
 
-<!-- PROCESSING -->
+<!-- ================= PROCESSING SCREEN ================= -->
 <div class="processing-screen" id="processingScreen">
   <div class="processing-content">
+
     <div class="ai-loader">
       <div class="ai-ring"></div>
       <div class="ai-ring"></div>
       <div class="ai-ring"></div>
       <div class="ai-center">✨</div>
     </div>
+
     <h2>AI প্রসেস হচ্ছে... <span>অপেক্ষা করুন</span></h2>
     <p>অনুগ্রহ করে কয়েক সেকেন্ড অপেক্ষা করুন</p>
-    <div class="processing-timer">⏱️ <span id="timer">0.0</span> সেকেন্ড</div>
-    <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
-    <div class="processing-checklist">
-      <div class="check-item" id="check1"><span class="check-icon">✓</span><span>ছবি প্রসেস করা হচ্ছে</span></div>
-      <div class="check-item" id="check2"><span class="check-icon">✓</span><span>Prompt কপি করা হচ্ছে</span></div>
+
+    <div class="processing-timer">
+      ⏱️ <span id="timer">0.0</span> সেকেন্ড
     </div>
+
+    <div class="progress-bar">
+      <div class="progress-fill" id="progressFill"></div>
+    </div>
+
+    <div class="processing-checklist">
+      <div class="check-item" id="check1">
+        <span class="check-icon">✓</span>
+        <span>ছবি প্রসেস করা হচ্ছে</span>
+      </div>
+      <div class="check-item" id="check2">
+        <span class="check-icon">✓</span>
+        <span>Prompt কপি করা হচ্ছে</span>
+      </div>
+    </div>
+
     <button class="cancel-btn" onclick="cancelProcessing()">বাতিল করুন</button>
+
   </div>
 </div>
 
-<!-- READY MODAL -->
+<!-- ================= READY MODAL (English) ================= -->
 <div class="ready-overlay" id="readyOverlay">
   <div class="ready-modal">
+
     <div class="ready-icon">✅</div>
-    <h3>সব প্রস্তুত!</h3>
-    <p>Prompt অটো-কপি হয়ে গেছে। এখন <b>Gemini খুলুন</b> বাটনে ক্লিক করে ছবিটি আপলোড করুন।</p>
+    <h3>Ready!</h3>
+    <p>Your prompt has been copied. Click <b>Submit</b> to continue.</p>
 
     <div class="copy-status">
       <span class="check-circle">✓</span>
-      <span>Prompt কপি হয়েছে</span>
-    </div>
-
-    <div class="modal-steps">
-      <h4>📌 Gemini-তে কী করবেন:</h4>
-      <ol>
-        <li><b>Gemini খুলুন</b> বাটনে ক্লিক করুন</li>
-        <li>Gemini-তে <b>ছবি আপলোড</b> করুন</li>
-        <li>টেক্সট বক্সে <b>Ctrl + V</b> চাপুন</li>
-        <li>Enter দিয়ে <b>Generate</b> করুন</li>
-        <li>ফলাফল <b>Download</b> করুন</li>
-      </ol>
+      <span>Prompt copied successfully</span>
     </div>
 
     <div class="modal-buttons">
-      <button class="modal-btn modal-btn-secondary" onclick="closeReady()">✕ বন্ধ করুন</button>
+      <button class="modal-btn modal-btn-secondary" onclick="closeReady()">
+        ✕ Close
+      </button>
       <a class="modal-btn modal-btn-primary" href="https://gemini.google.com/app" target="_blank" rel="noopener" onclick="onGeminiClick()">
-        🚀 Gemini খুলুন
+        Submit →
       </a>
     </div>
+
   </div>
 </div>
 
+<!-- ================= FOOTER ================= -->
 <footer>
   <p>🖥️ <strong>Azad Digital Seva</strong> — সরকারি ও বেসরকারি অনলাইন পরিষেবা</p>
   <div class="footer-links">
@@ -345,22 +383,39 @@
   <p class="footer-copyright">© ২০২৫ Azad Digital Seva | সর্বস্বত্ব সংরক্ষিত</p>
 </footer>
 
+<!-- ================= BOTTOM NAV ================= -->
 <nav class="bottom-nav">
   <div class="bottom-nav-inner">
-    <a href="index.html" class="bn-item"><span class="bn-icon">🏠</span><span>Home</span></a>
-    <a href="passport-photo.html" class="bn-item"><span class="bn-icon">📸</span><span>Photo</span></a>
-    <a href="background-remove.html" class="bn-item"><span class="bn-icon">🎨</span><span>BG</span></a>
-    <a href="photo-enhance.html" class="bn-item active"><span class="bn-icon">✨</span><span>Enhance</span></a>
+    <a href="index.html" class="bn-item">
+      <span class="bn-icon">🏠</span>
+      <span>Home</span>
+    </a>
+    <a href="passport-photo.html" class="bn-item">
+      <span class="bn-icon">📸</span>
+      <span>Photo</span>
+    </a>
+    <a href="background-remove.html" class="bn-item">
+      <span class="bn-icon">🎨</span>
+      <span>BG</span>
+    </a>
+    <a href="photo-enhance.html" class="bn-item active">
+      <span class="bn-icon">✨</span>
+      <span>Enhance</span>
+    </a>
   </div>
 </nav>
 
+<!-- ================= SCROLL TOP ================= -->
+<button class="scroll-top" id="scrollTop" aria-label="Scroll to top">↑</button>
+
+<!-- ================= TOAST ================= -->
 <div class="toast" id="toast"></div>
 
+<!-- ================= SCRIPT ================= -->
 <script>
 (function() {
   'use strict';
 
-  // ==================== CONFIG ====================
   var PROMPT_TEXT = 'Enhance and restore this old photograph into a high-quality, realistic HD portrait.\n\n' +
     'Keep the person\'s original face, facial features, identity, skin tone, hairstyle, expression, and natural appearance exactly the same. Do not change or beautify the face unnaturally.\n\n' +
     'Remove old-photo damage, blur, noise, scratches, stains, grain, and compression artifacts. Restore missing details carefully and improve facial and clothing details while keeping the photo realistic.\n\n' +
@@ -369,7 +424,6 @@
     'Maintain realistic lighting on the person and create a clean separation between the subject and the blue background.\n\n' +
     'Final result should look like a professionally photographed modern HD portrait, while preserving the original person\'s appearance and authenticity.';
 
-  // ==================== DOM ====================
   var photoInput = document.getElementById('photoInput');
   var processingScreen = document.getElementById('processingScreen');
   var readyOverlay = document.getElementById('readyOverlay');
@@ -381,13 +435,14 @@
   var step2 = document.getElementById('step2');
   var step3 = document.getElementById('step3');
   var step4 = document.getElementById('step4');
+  var scrollBtn = document.getElementById('scrollTop');
   var toast = document.getElementById('toast');
 
   var elapsedTimer = null;
   var elapsed = 0;
   var processingActive = false;
 
-  // ==================== HELPERS ====================
+  /* ==================== HELPERS ==================== */
   function showToast(msg) {
     if (!toast) return;
     toast.textContent = msg;
@@ -396,10 +451,9 @@
   }
 
   function copyToClipboard(text) {
-    // Try modern API
     if (navigator.clipboard && window.isSecureContext) {
       return navigator.clipboard.writeText(text).catch(function() {
-        return fallbackCopy(text);
+        return Promise.resolve(fallbackCopy(text));
       });
     }
     return Promise.resolve(fallbackCopy(text));
@@ -425,7 +479,7 @@
     }
   }
 
-  // ==================== UPLOAD ====================
+  /* ==================== UPLOAD ==================== */
   photoInput.addEventListener('change', function(e) {
     var file = e.target.files[0];
     if (!file) return;
@@ -445,32 +499,27 @@
     startProcessing();
   });
 
-  // ==================== START PROCESSING ====================
+  /* ==================== PROCESSING ==================== */
   function startProcessing() {
     if (processingActive) return;
     processingActive = true;
 
-    // Reset UI
     progressFill.style.width = '0%';
     elapsed = 0;
     timerEl.textContent = '0.0';
     check1.className = 'check-item';
     check2.className = 'check-item';
 
-    // Show processing
     processingScreen.classList.add('active');
     document.body.style.overflow = 'hidden';
 
-    // Start timer
     if (elapsedTimer) clearInterval(elapsedTimer);
     elapsedTimer = setInterval(function() {
       elapsed += 0.1;
       if (timerEl) timerEl.textContent = elapsed.toFixed(1);
     }, 100);
 
-    // ============ SEQUENTIAL STEPS ============
-
-    // Step 1: Process photo
+    // Step 1
     setTimeout(function() {
       check1.classList.add('active');
       progressFill.style.width = '30%';
@@ -481,11 +530,10 @@
       check1.classList.add('done');
     }, 1000);
 
-    // Step 2: Copy prompt
+    // Step 2 — Copy prompt
     setTimeout(function() {
       check2.classList.add('active');
       progressFill.style.width = '70%';
-      // Copy prompt
       copyToClipboard(PROMPT_TEXT).then(function() {
         console.log('✅ Prompt copied');
       });
@@ -497,42 +545,35 @@
       progressFill.style.width = '100%';
     }, 1800);
 
-    // ============ FINISH — ALWAYS RUNS (3 seconds) ============
+    // Finish
     setTimeout(function() {
       try {
-        // Stop timer
         if (elapsedTimer) {
           clearInterval(elapsedTimer);
           elapsedTimer = null;
         }
 
-        // Hide processing
         processingScreen.classList.remove('active');
         document.body.style.overflow = '';
-
-        // Show modal
         readyOverlay.classList.add('active');
 
-        // Update steps
         step1.classList.remove('active');
         step1.classList.add('done');
         step2.classList.add('done');
         step3.classList.add('active');
 
-        // Re-copy for safety
         setTimeout(function() {
           copyToClipboard(PROMPT_TEXT);
         }, 300);
 
       } catch(err) {
         console.error('Finish error:', err);
-        // ULTIMATE FALLBACK
         try {
           processingScreen.classList.remove('active');
           document.body.style.overflow = '';
           readyOverlay.classList.add('active');
         } catch(e2) {
-          alert('সম্পন্ন। Gemini-তে ছবি আপলোড করে Prompt পেস্ট করুন।');
+          alert('Ready. Open Gemini and paste the prompt.');
         }
       } finally {
         processingActive = false;
@@ -540,7 +581,7 @@
     }, 3000);
   }
 
-  // ==================== CANCEL ====================
+  /* ==================== CANCEL ==================== */
   window.cancelProcessing = function() {
     if (elapsedTimer) {
       clearInterval(elapsedTimer);
@@ -553,7 +594,7 @@
     showToast('❌ বাতিল করা হয়েছে');
   };
 
-  // ==================== CLOSE READY ====================
+  /* ==================== CLOSE READY ==================== */
   window.closeReady = function() {
     readyOverlay.classList.remove('active');
     document.body.style.overflow = '';
@@ -572,20 +613,17 @@
     }, 3000);
   };
 
-  // ==================== ON GEMINI CLICK ====================
+  /* ==================== ON SUBMIT CLICK ==================== */
   window.onGeminiClick = function() {
-    // Re-copy prompt before opening Gemini
     copyToClipboard(PROMPT_TEXT).then(function() {
-      showToast('📋 Prompt আবার কপি করা হয়েছে');
+      showToast('📋 Prompt copied again');
     });
-    // Close modal after a small delay
     setTimeout(function() {
       closeReady();
     }, 500);
   };
 
-  // ==================== RE-COPY ON FOCUS ====================
-  // When user returns to this page, re-copy prompt
+  /* ==================== RE-COPY ON FOCUS ==================== */
   window.addEventListener('focus', function() {
     if (readyOverlay.classList.contains('active')) {
       copyToClipboard(PROMPT_TEXT);
@@ -597,6 +635,21 @@
       copyToClipboard(PROMPT_TEXT);
     }
   });
+
+  /* ==================== SCROLL TOP ==================== */
+  if (scrollBtn) {
+    window.addEventListener('scroll', function() {
+      if (window.scrollY > 400) {
+        scrollBtn.classList.add('show');
+      } else {
+        scrollBtn.classList.remove('show');
+      }
+    }, { passive: true });
+
+    scrollBtn.addEventListener('click', function() {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  }
 
 })();
 </script>

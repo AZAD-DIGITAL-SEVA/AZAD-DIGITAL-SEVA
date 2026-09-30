@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
 <title>প্রয়োজনীয় সরকারি ওয়েবসাইট | Azad Digital Seva</title>
-<meta name="description" content="Cyber Cafe ও সাধারণ ব্যবহারকারীদের জন্য দরকারি সব সরকারি portal এক জায়গায়। সার্টিফিকেট, স্কলারশিপ, জমি, গাড়ি, চাকরি, স্বাস্থ্য, ব্যবসা — সব সেবা।">
+<meta name="description" content="Cyber Cafe ও সাধারণ ব্যবহারকারীদের জন্য দরকারি সব সরকারি portal এক জায়গায়।">
 <meta name="theme-color" content="#075e54">
 <link rel="icon" type="image/png" href="assets/azad-logo.png">
 <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&family=Noto+Sans+Bengali:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -14,13 +14,11 @@
   :root {
     --primary: #075e54;
     --secondary: #128c7e;
-    --accent: #25d366;
     --gold: #f9a826;
     --dark: #0a2540;
     --light: #f0f4f8;
     --saffron: #FF9933;
     --success: #138808;
-    --card-bg: #ffffff;
     --text: #1e2b3c;
     --text-muted: #64748b;
     --border: #e5e7eb;
@@ -39,7 +37,6 @@
     min-height: 100vh;
     overflow-x: hidden;
     -webkit-font-smoothing: antialiased;
-    padding-bottom: 0;
   }
 
   /* ============ TOP FLAG STRIP ============ */
@@ -295,7 +292,7 @@
   }
 
   .card-box {
-    background: var(--card-bg);
+    background: #fff;
     border-radius: 18px;
     box-shadow: var(--shadow-lg);
     overflow: hidden;
@@ -303,18 +300,16 @@
     padding: 20px 16px;
   }
 
-  /* ============ TOOLBAR ============ */
+  /* ============ TOOLBAR (NON-STICKY, FIXED PROBLEM) ============ */
   .toolbar {
-    margin-bottom: 20px;
+    margin-bottom: 22px;
     padding: 14px;
     border-radius: 16px;
     background: linear-gradient(145deg, #f8fbff, #fff);
     border: 1px solid #e1ebf5;
     box-shadow: var(--shadow-sm);
-    position: sticky;
-    top: 66px;
-    z-index: 100;
-    backdrop-filter: blur(10px);
+    position: relative;
+    z-index: 1;
   }
 
   .search-box {
@@ -355,7 +350,7 @@
     font-size: 14px;
   }
 
-  /* ============ CATEGORIES (Horizontal Scroll on Mobile) ============ */
+  /* ============ CATEGORY CHIPS ============ */
   .cats-wrap {
     position: relative;
     margin-top: 12px;
@@ -379,7 +374,6 @@
     padding: 4px 30px 6px 2px;
     scrollbar-width: none;
     -webkit-overflow-scrolling: touch;
-    scroll-behavior: smooth;
   }
 
   .cats::-webkit-scrollbar { display: none; }
@@ -402,12 +396,9 @@
     flex-shrink: 0;
     min-height: 36px;
     user-select: none;
-    -webkit-user-select: none;
   }
 
-  .cat:active {
-    transform: scale(.96);
-  }
+  .cat:active { transform: scale(.96); }
 
   .cat.active {
     background: linear-gradient(135deg, var(--saffron), #e67e22);
@@ -418,13 +409,14 @@
 
   /* ============ SECTIONS ============ */
   .section {
-    margin-bottom: 22px;
-    padding: 14px;
+    margin-bottom: 24px;
+    padding: 0;
     border-radius: 16px;
-    background: linear-gradient(145deg, #ffffff, #f8fbff);
+    background: #fff;
     border: 1px solid #e1ebf5;
     box-shadow: var(--shadow-sm);
-    scroll-margin-top: 130px;
+    scroll-margin-top: 80px;
+    overflow: hidden;
     animation: sectionIn .35s ease;
   }
 
@@ -433,17 +425,14 @@
     to { opacity: 1; transform: translateY(0); }
   }
 
+  /* Section Header - Clean & Colorful */
   .section-head {
     display: flex;
     align-items: center;
-    gap: 11px;
-    padding: 13px 14px;
-    border-radius: 13px;
-    margin-bottom: 14px;
-    background:
-      radial-gradient(circle at 12% 20%, rgba(255,255,255,.18), transparent 30%),
-      linear-gradient(120deg, var(--dark) 0%, #1e3a5f 48%, #075e54 100%);
-    box-shadow: 0 8px 20px rgba(10,37,64,.18);
+    gap: 12px;
+    padding: 14px 16px;
+    background: linear-gradient(135deg, #f8fbff, #eef7f4);
+    border-bottom: 2px solid #e1ebf5;
     position: relative;
     overflow: hidden;
   }
@@ -451,12 +440,12 @@
   .section-head::before {
     content: '';
     position: absolute;
-    top: 0; right: 0;
-    width: 70px; height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255,215,0,.15));
-    pointer-events: none;
+    left: 0; top: 0; bottom: 0;
+    width: 4px;
+    background: linear-gradient(180deg, var(--saffron), var(--gold));
   }
 
+  /* Digital Colorful Icon */
   .section-icon {
     width: 42px;
     height: 42px;
@@ -464,62 +453,64 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 1.15rem;
     flex-shrink: 0;
-    background: rgba(255,255,255,.15);
-    border: 1px solid rgba(255,255,255,.2);
-    box-shadow: inset 0 1px 0 rgba(255,255,255,.2);
+    font-size: 1.1rem;
+    font-weight: 900;
+    color: #fff;
+    box-shadow: 0 5px 14px rgba(0,0,0,.15);
+    background: linear-gradient(135deg, #075e54, #128c7e);
   }
+
+  .section[data-group="certificate"] .section-icon { background: linear-gradient(135deg, #1565c0, #42a5f5); }
+  .section[data-group="education"] .section-icon { background: linear-gradient(135deg, #6a1b9a, #a855f7); }
+  .section[data-group="land"] .section-icon { background: linear-gradient(135deg, #1b5e20, #43a047); }
+  .section[data-group="vehicle"] .section-icon { background: linear-gradient(135deg, #b45309, #f59e0b); }
+  .section[data-group="jobs"] .section-icon { background: linear-gradient(135deg, #1a237e, #3f51b5); }
+  .section[data-group="health"] .section-icon { background: linear-gradient(135deg, #c62828, #ef5350); }
+  .section[data-group="business"] .section-icon { background: linear-gradient(135deg, #004d40, #00897b); }
 
   .section-title { min-width: 0; flex: 1; }
 
   .section-title h2 {
-    color: #fff;
-    font-size: .98rem;
+    color: var(--dark);
+    font-size: 1rem;
     font-weight: 800;
     line-height: 1.25;
-    text-shadow: 0 2px 6px rgba(0,0,0,.2);
   }
 
   .section-title h3 {
-    color: var(--gold);
+    color: #64748b;
     font-size: .68rem;
     font-weight: 700;
     margin-top: 2px;
     letter-spacing: .2px;
   }
 
-  .section-title p {
-    color: rgba(255,255,255,.8);
-    font-size: .68rem;
-    margin-top: 3px;
-    line-height: 1.4;
-    display: none;
-  }
-
-  /* ============ CARD GRID ============ */
+  /* Grid */
   .grid {
+    padding: 14px;
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
     gap: 10px;
   }
 
+  /* ============ CARD - DIGITAL COLORFUL ============ */
   .g-card {
-    --c1: #075e54;
-    --c2: #128c7e;
+    --grad: linear-gradient(135deg, #1565c0, #42a5f5);
+    --shadow-color: rgba(21,101,192,.35);
     position: relative;
     overflow: hidden;
     display: flex;
     align-items: center;
-    gap: 11px;
+    gap: 12px;
     padding: 13px;
-    border-radius: 14px;
+    border-radius: 13px;
     text-decoration: none;
     background: #fff;
     border: 1.5px solid var(--border);
-    box-shadow: var(--shadow-sm);
-    transition: all .25s cubic-bezier(.4,0,.2,1);
-    min-height: 72px;
+    box-shadow: 0 2px 6px rgba(10,37,64,.05);
+    transition: all .28s cubic-bezier(.4,0,.2,1);
+    min-height: 76px;
     will-change: transform;
   }
 
@@ -528,36 +519,34 @@
     position: absolute;
     left: 0; top: 0; bottom: 0;
     width: 4px;
-    background: linear-gradient(180deg, var(--c1), var(--c2));
+    background: var(--grad);
     transition: width .25s;
   }
 
   .g-card:hover,
   .g-card:active {
-    border-color: var(--c1);
-    transform: translateY(-2px);
-    box-shadow: 0 10px 22px rgba(10,37,64,.12);
+    transform: translateY(-3px);
+    border-color: transparent;
+    box-shadow: 0 12px 26px var(--shadow-color);
   }
 
   .g-card:hover::before { width: 6px; }
 
-  .g-card:nth-child(4n+1) { --c1: #075e54; --c2: #128c7e; }
-  .g-card:nth-child(4n+2) { --c1: #8B0000; --c2: #dc2626; }
-  .g-card:nth-child(4n+3) { --c1: #6a1b9a; --c2: #a855f7; }
-  .g-card:nth-child(4n+4) { --c1: #1a237e; --c2: #3f51b5; }
-
+  /* Digital Colorful Icon (No emoji, pure CSS colored icons with letters) */
   .g-icon {
-    width: 40px;
-    height: 40px;
-    border-radius: 10px;
+    width: 42px;
+    height: 42px;
+    border-radius: 11px;
     display: flex;
     align-items: center;
     justify-content: center;
     flex-shrink: 0;
-    font-size: 1.2rem;
+    font-size: 1rem;
+    font-weight: 900;
     color: #fff;
-    background: linear-gradient(135deg, var(--c1), var(--c2));
-    box-shadow: 0 3px 8px rgba(0,0,0,.15);
+    background: var(--grad);
+    box-shadow: 0 5px 14px var(--shadow-color);
+    letter-spacing: -.5px;
   }
 
   .g-info { min-width: 0; flex: 1; }
@@ -585,33 +574,28 @@
     text-overflow: ellipsis;
   }
 
-  .g-info em {
-    display: inline-block;
-    margin-top: 4px;
-    padding: 2px 7px;
-    border-radius: 999px;
-    color: var(--c1);
-    background: rgba(10,37,64,.06);
-    border: 1px solid rgba(10,37,64,.08);
-    font-size: .55rem;
-    font-weight: 700;
-    font-style: normal;
-  }
-
   .g-open {
-    width: 24px;
-    height: 24px;
+    width: 26px;
+    height: 26px;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
     flex-shrink: 0;
     color: #fff;
-    font-size: .72rem;
+    font-size: .75rem;
     font-weight: 900;
-    background: linear-gradient(135deg, var(--c1), var(--c2));
-    box-shadow: 0 3px 8px rgba(0,0,0,.12);
+    background: var(--grad);
+    box-shadow: 0 3px 8px var(--shadow-color);
   }
+
+  /* Color variations - Repeating every 6 cards */
+  .g-card:nth-child(6n+1) { --grad: linear-gradient(135deg, #1565c0, #42a5f5); --shadow-color: rgba(21,101,192,.35); }
+  .g-card:nth-child(6n+2) { --grad: linear-gradient(135deg, #c62828, #ef5350); --shadow-color: rgba(198,40,40,.35); }
+  .g-card:nth-child(6n+3) { --grad: linear-gradient(135deg, #6a1b9a, #a855f7); --shadow-color: rgba(106,27,154,.35); }
+  .g-card:nth-child(6n+4) { --grad: linear-gradient(135deg, #1b5e20, #43a047); --shadow-color: rgba(27,94,32,.35); }
+  .g-card:nth-child(6n+5) { --grad: linear-gradient(135deg, #b45309, #f59e0b); --shadow-color: rgba(180,83,9,.35); }
+  .g-card:nth-child(6n+6) { --grad: linear-gradient(135deg, #00695c, #26a69a); --shadow-color: rgba(0,105,92,.35); }
 
   /* ============ EMPTY & NOTE ============ */
   .empty {
@@ -691,7 +675,7 @@
     margin-top: 10px;
   }
 
-  /* ============ BOTTOM NAVIGATION (Mobile Only) ============ */
+  /* ============ BOTTOM NAVIGATION ============ */
   .bottom-nav {
     display: none;
     position: fixed;
@@ -774,14 +758,7 @@
 
   .scroll-top:active { transform: scale(.9); }
 
-  /* ============ RESPONSIVE - TABLET ============ */
-  @media (max-width: 900px) {
-    .grid {
-      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-    }
-  }
-
-  /* ============ RESPONSIVE - MOBILE ============ */
+  /* ============ MOBILE ============ */
   @media (max-width: 768px) {
     body { padding-bottom: 70px; }
 
@@ -800,7 +777,6 @@
 
     .brand-text strong { font-size: 14px; }
     .brand-text small { font-size: 8.5px; }
-
     .nav-links { display: none; }
 
     .hero {
@@ -837,7 +813,6 @@
     .toolbar {
       padding: 10px;
       border-radius: 14px;
-      top: 62px;
       margin-bottom: 16px;
     }
 
@@ -846,18 +821,10 @@
       border-radius: 11px;
     }
 
-    .search-box input {
-      font-size: 15px;
-    }
+    .search-box input { font-size: 15px; }
+    .search-box input::placeholder { font-size: 12.5px; }
 
-    .search-box input::placeholder {
-      font-size: 12.5px;
-    }
-
-    .cats {
-      gap: 6px;
-      padding: 4px 24px 4px 0;
-    }
+    .cats { gap: 6px; padding: 4px 24px 4px 0; }
 
     .cat {
       padding: 7px 13px;
@@ -867,52 +834,51 @@
     }
 
     .section {
-      padding: 12px;
-      border-radius: 14px;
       margin-bottom: 16px;
+      border-radius: 14px;
     }
 
     .section-head {
-      padding: 11px 12px;
-      border-radius: 11px;
+      padding: 12px 13px;
       gap: 10px;
-      margin-bottom: 12px;
     }
+
+    .section-head::before { width: 3px; }
 
     .section-icon {
       width: 38px;
       height: 38px;
-      font-size: 1.05rem;
+      font-size: 1rem;
       border-radius: 10px;
     }
 
-    .section-title h2 { font-size: .9rem; }
+    .section-title h2 { font-size: .92rem; }
     .section-title h3 { font-size: .63rem; }
 
     .grid {
+      padding: 11px;
       grid-template-columns: 1fr;
       gap: 8px;
     }
 
     .g-card {
-      padding: 11px;
-      gap: 10px;
-      min-height: 68px;
+      padding: 12px;
+      gap: 11px;
+      min-height: 70px;
       border-radius: 12px;
-      border-left-width: 0;
     }
 
     .g-card::before { width: 3px; }
 
     .g-icon {
-      width: 38px;
-      height: 38px;
-      font-size: 1.1rem;
-      border-radius: 9px;
+      width: 40px;
+      height: 40px;
+      font-size: .95rem;
+      border-radius: 10px;
     }
 
     .g-info strong {
-      font-size: .82rem;
+      font-size: .84rem;
       white-space: normal;
       overflow: visible;
       text-overflow: clip;
@@ -920,21 +886,16 @@
     }
 
     .g-info small {
-      font-size: .66rem;
+      font-size: .68rem;
       white-space: normal;
       overflow: visible;
       text-overflow: clip;
     }
 
-    .g-info em {
-      font-size: .56rem;
-      padding: 2px 6px;
-    }
-
     .g-open {
-      width: 22px;
-      height: 22px;
-      font-size: .68rem;
+      width: 24px;
+      height: 24px;
+      font-size: .7rem;
     }
 
     .bottom-nav { display: block; }
@@ -951,28 +912,20 @@
       padding: 18px 12px 86px;
       margin-top: 24px;
     }
-
-    .footer-links { gap: 10px; }
-    .footer-links a { font-size: .72rem; }
   }
 
   @media (max-width: 400px) {
     .brand-text strong { font-size: 13px; }
     .brand-text small { font-size: 8px; }
-
     .hero h1 { font-size: 1.15rem; }
     .hero p { font-size: .78rem; }
-
-    .section-title h2 { font-size: .85rem; }
-
-    .g-info strong { font-size: .78rem; }
+    .section-title h2 { font-size: .88rem; }
+    .g-info strong { font-size: .8rem; }
   }
 
-  /* Reduced motion */
   @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after {
       animation-duration: .01ms !important;
-      animation-iteration-count: 1 !important;
       transition-duration: .01ms !important;
       scroll-behavior: auto !important;
     }
@@ -1017,7 +970,6 @@
       <span class="hero-badge"><span class="dot"></span> ৬০+ সেবা</span>
       <span class="hero-badge">🇮🇳 পশ্চিমবঙ্গ</span>
       <span class="hero-badge">✅ যাচাইকৃত</span>
-      <span class="hero-badge">⚡ দ্রুত সার্চ</span>
     </div>
   </div>
 </section>
@@ -1034,14 +986,14 @@
       </div>
       <div class="cats-wrap">
         <div class="cats">
-          <button type="button" class="cat active" data-target="all">✨ সব পরিষেবা</button>
-          <button type="button" class="cat" data-target="certificate">📜 সার্টিফিকেট</button>
-          <button type="button" class="cat" data-target="education">🎓 শিক্ষা</button>
-          <button type="button" class="cat" data-target="land">🌾 জমি ও কৃষি</button>
-          <button type="button" class="cat" data-target="vehicle">🚘 গাড়ি</button>
-          <button type="button" class="cat" data-target="jobs">💼 চাকরি</button>
-          <button type="button" class="cat" data-target="health">❤️ স্বাস্থ্য</button>
-          <button type="button" class="cat" data-target="business">🏢 ব্যবসা ও Tax</button>
+          <button type="button" class="cat active" data-target="all">সব পরিষেবা</button>
+          <button type="button" class="cat" data-target="certificate">সার্টিফিকেট</button>
+          <button type="button" class="cat" data-target="education">শিক্ষা ও স্কলারশিপ</button>
+          <button type="button" class="cat" data-target="land">জমি ও কৃষি</button>
+          <button type="button" class="cat" data-target="vehicle">গাড়ি ও লাইসেন্স</button>
+          <button type="button" class="cat" data-target="jobs">সরকারি চাকরি</button>
+          <button type="button" class="cat" data-target="health">স্বাস্থ্য</button>
+          <button type="button" class="cat" data-target="business">ব্যবসা ও Tax</button>
         </div>
       </div>
     </div>
@@ -1052,52 +1004,51 @@
       <!-- CERTIFICATE -->
       <section class="section" data-group="certificate">
         <div class="section-head">
-          <div class="section-icon">📜</div>
+          <div class="section-icon">CS</div>
           <div class="section-title">
             <h2>সার্টিফিকেট ও নাগরিক পরিষেবা</h2>
             <h3>Certificates &amp; Citizen Services</h3>
-            <p>পঞ্চায়েত সার্টিফিকেট, জন্ম-মৃত্যু, e-District ও পরিচয় সংক্রান্ত</p>
           </div>
         </div>
         <div class="grid">
           <a class="g-card" target="_blank" rel="noopener noreferrer" data-search="wb e-district citizen services" href="https://edistrict.wb.gov.in/">
-            <div class="g-icon">🏛️</div>
-            <div class="g-info"><strong>WB e-District</strong><small>Citizen Services</small><em>Certificates</em></div>
+            <div class="g-icon">WB</div>
+            <div class="g-info"><strong>WB e-District</strong><small>Citizen Services</small></div>
             <span class="g-open">↗</span>
           </a>
           <a class="g-card" target="_blank" rel="noopener noreferrer" data-search="wbpms gram panchayat certificate residence income" href="https://wbpms.in/citizen/index.html">
-            <div class="g-icon">📜</div>
-            <div class="g-info"><strong>WBPMS Panchayat</strong><small>Residence / Income / Character</small><em>Certificates</em></div>
+            <div class="g-icon">GP</div>
+            <div class="g-info"><strong>WBPMS Panchayat</strong><small>Residence / Income / Character</small></div>
             <span class="g-open">↗</span>
           </a>
           <a class="g-card" target="_blank" rel="noopener noreferrer" data-search="birth death registration wb janma mrityu" href="https://janma-mrityutathya.wb.gov.in/">
-            <div class="g-icon">👶</div>
-            <div class="g-info"><strong>Birth &amp; Death Reg.</strong><small>WB Janma-Mrityu Tathya</small><em>Certificates</em></div>
+            <div class="g-icon">BD</div>
+            <div class="g-info"><strong>Birth &amp; Death Reg.</strong><small>WB Janma-Mrityu Tathya</small></div>
             <span class="g-open">↗</span>
           </a>
           <a class="g-card" target="_blank" rel="noopener noreferrer" data-search="aadhaar uidai services" href="https://uidai.gov.in/">
-            <div class="g-icon">🪪</div>
-            <div class="g-info"><strong>Aadhaar / UIDAI</strong><small>Aadhaar Services</small><em>Certificates</em></div>
+            <div class="g-icon">AD</div>
+            <div class="g-info"><strong>Aadhaar / UIDAI</strong><small>Aadhaar Services</small></div>
             <span class="g-open">↗</span>
           </a>
           <a class="g-card" target="_blank" rel="noopener noreferrer" data-search="pan services protean tinpan" href="https://www.protean-tinpan.com/services/pan/">
-            <div class="g-icon">💳</div>
-            <div class="g-info"><strong>PAN Services</strong><small>Application / Services</small><em>Certificates</em></div>
+            <div class="g-icon">PN</div>
+            <div class="g-info"><strong>PAN Services</strong><small>Application / Services</small></div>
             <span class="g-open">↗</span>
           </a>
           <a class="g-card" target="_blank" rel="noopener noreferrer" data-search="voter services election eci" href="https://voters.eci.gov.in/">
-            <div class="g-icon">🗳️</div>
-            <div class="g-info"><strong>Voter Services</strong><small>Election / Voter Portal</small><em>Certificates</em></div>
+            <div class="g-icon">VT</div>
+            <div class="g-info"><strong>Voter Services</strong><small>Election / Voter Portal</small></div>
             <span class="g-open">↗</span>
           </a>
           <a class="g-card" target="_blank" rel="noopener noreferrer" data-search="passport seva" href="https://www.passportindia.gov.in/">
-            <div class="g-icon">📘</div>
-            <div class="g-info"><strong>Passport Seva</strong><small>Passport Services</small><em>Certificates</em></div>
+            <div class="g-icon">PS</div>
+            <div class="g-info"><strong>Passport Seva</strong><small>Passport Services</small></div>
             <span class="g-open">↗</span>
           </a>
           <a class="g-card" target="_blank" rel="noopener noreferrer" data-search="caa indian citizenship online" href="https://indiancitizenshiponline.nic.in/">
-            <div class="g-icon">🇮🇳</div>
-            <div class="g-info"><strong>CAA / Citizenship</strong><small>Citizenship Application</small><em>Certificates</em></div>
+            <div class="g-icon">CT</div>
+            <div class="g-info"><strong>CAA / Citizenship</strong><small>Citizenship Application</small></div>
             <span class="g-open">↗</span>
           </a>
         </div>
@@ -1106,77 +1057,76 @@
       <!-- EDUCATION -->
       <section class="section" data-group="education">
         <div class="section-head">
-          <div class="section-icon">🎓</div>
+          <div class="section-icon">ED</div>
           <div class="section-title">
             <h2>শিক্ষা ও স্কলারশিপ</h2>
             <h3>Education &amp; Scholarships</h3>
-            <p>পশ্চিমবঙ্গের ছাত্রছাত্রীদের জন্য সরকারি ও বেসরকারি Scholarship</p>
           </div>
         </div>
         <div class="grid">
           <a class="g-card" target="_blank" rel="noopener noreferrer" data-search="svmcm scholarship vivekananda merit" href="https://svmcm.wb.gov.in/">
-            <div class="g-icon">🎓</div>
-            <div class="g-info"><strong>SVMCM Scholarship</strong><small>Vivekananda Merit-cum-Means</small><em>Scholarship</em></div>
+            <div class="g-icon">SV</div>
+            <div class="g-info"><strong>SVMCM Scholarship</strong><small>Vivekananda Merit-cum-Means</small></div>
             <span class="g-open">↗</span>
           </a>
           <a class="g-card" target="_blank" rel="noopener noreferrer" data-search="aikyashree minority scholarship" href="https://www.wbmdfcscholarship.in/">
-            <div class="g-icon">☪️</div>
-            <div class="g-info"><strong>Aikyashree</strong><small>Minority Students WB</small><em>Scholarship</em></div>
+            <div class="g-icon">AK</div>
+            <div class="g-info"><strong>Aikyashree</strong><small>Minority Students WB</small></div>
             <span class="g-open">↗</span>
           </a>
           <a class="g-card" target="_blank" rel="noopener noreferrer" data-search="oasis scholarship sc st obc" href="https://oasis.gov.in/">
-            <div class="g-icon">📚</div>
-            <div class="g-info"><strong>OASIS Scholarship</strong><small>SC / ST / OBC WB</small><em>Scholarship</em></div>
+            <div class="g-icon">OS</div>
+            <div class="g-info"><strong>OASIS Scholarship</strong><small>SC / ST / OBC WB</small></div>
             <span class="g-open">↗</span>
           </a>
           <a class="g-card" target="_blank" rel="noopener noreferrer" data-search="nabanna scholarship cmrf" href="https://cmrf.wb.gov.in/">
-            <div class="g-icon">🏛️</div>
-            <div class="g-info"><strong>Nabanna Scholarship</strong><small>CMRF Educational Assist.</small><em>Scholarship</em></div>
+            <div class="g-icon">NB</div>
+            <div class="g-info"><strong>Nabanna Scholarship</strong><small>CMRF Educational Assist.</small></div>
             <span class="g-open">↗</span>
           </a>
           <a class="g-card" target="_blank" rel="noopener noreferrer" data-search="national scholarship portal nsp" href="https://scholarships.gov.in/">
-            <div class="g-icon">🏅</div>
-            <div class="g-info"><strong>NSP</strong><small>National Scholarship</small><em>Scholarship</em></div>
+            <div class="g-icon">NS</div>
+            <div class="g-info"><strong>NSP</strong><small>National Scholarship</small></div>
             <span class="g-open">↗</span>
           </a>
           <a class="g-card" target="_blank" rel="noopener noreferrer" data-search="nmms scholarship wb means merit" href="https://banglarshiksha.wb.gov.in/scholarships/">
-            <div class="g-icon">📝</div>
-            <div class="g-info"><strong>NMMS Scholarship</strong><small>Means-cum-Merit WB</small><em>Scholarship</em></div>
+            <div class="g-icon">NM</div>
+            <div class="g-info"><strong>NMMS Scholarship</strong><small>Means-cum-Merit WB</small></div>
             <span class="g-open">↗</span>
           </a>
           <a class="g-card" target="_blank" rel="noopener noreferrer" data-search="west bengal freeship scheme" href="https://wbfs.wb.gov.in/">
-            <div class="g-icon">🎒</div>
-            <div class="g-info"><strong>WB Freeship</strong><small>Tuition Fee Waiver</small><em>Scholarship</em></div>
+            <div class="g-icon">FS</div>
+            <div class="g-info"><strong>WB Freeship</strong><small>Tuition Fee Waiver</small></div>
             <span class="g-open">↗</span>
           </a>
           <a class="g-card" target="_blank" rel="noopener noreferrer" data-search="kanyashree k1 k2 girls education" href="https://admin-kanyashree.wb.gov.in/admin/login">
-            <div class="g-icon">👩‍🎓</div>
-            <div class="g-info"><strong>Kanyashree</strong><small>K1 / K2 WB Girls</small><em>Scholarship</em></div>
+            <div class="g-icon">KS</div>
+            <div class="g-info"><strong>Kanyashree</strong><small>K1 / K2 WB Girls</small></div>
             <span class="g-open">↗</span>
           </a>
           <a class="g-card" target="_blank" rel="noopener noreferrer" data-search="banglar shiksha school education wb" href="https://banglarshiksha.wb.gov.in/">
-            <div class="g-icon">🏫</div>
-            <div class="g-info"><strong>Banglar Shiksha</strong><small>WB School Education</small><em>Education</em></div>
+            <div class="g-icon">BS</div>
+            <div class="g-info"><strong>Banglar Shiksha</strong><small>WB School Education</small></div>
             <span class="g-open">↗</span>
           </a>
           <a class="g-card" target="_blank" rel="noopener noreferrer" data-search="wbchse scholarship directory" href="https://wbchse.wb.gov.in/student/scholarship/">
-            <div class="g-icon">📑</div>
-            <div class="g-info"><strong>WBCHSE Directory</strong><small>Official Scholarship List</small><em>Scholarship</em></div>
+            <div class="g-icon">WC</div>
+            <div class="g-info"><strong>WBCHSE Directory</strong><small>Official Scholarship List</small></div>
             <span class="g-open">↗</span>
           </a>
           <a class="g-card" target="_blank" rel="noopener noreferrer" data-search="lic golden jubilee foundation scholarship" href="https://licindia.in/en/web/guest/golden-jubilee-foundation">
-            <div class="g-icon">🏆</div>
-            <div class="g-info"><strong>LIC Golden Jubilee</strong><small>Foundation Scholarship</small><em>Scholarship</em></div>
+            <div class="g-icon">LC</div>
+            <div class="g-info"><strong>LIC Golden Jubilee</strong><small>Foundation Scholarship</small></div>
             <span class="g-open">↗</span>
           </a>
           <a class="g-card" target="_blank" rel="noopener noreferrer" data-search="g p birla scholarship foundation" href="https://gpbirlaedufoundation.com/scholarship/">
-            <div class="g-icon">🎖️</div>
-            <div class="g-info"><strong>G P Birla Scholarship</strong><small>Merit-cum-Means</small><em>Scholarship</em></div>
+            <div class="g-icon">GP</div>
+            <div class="g-info"><strong>G P Birla Scholarship</strong><small>Merit-cum-Means</small></div>
             <span class="g-open">↗</span>
           </a>
           <a class="g-card" target="_blank" rel="noopener noreferrer" data-search="sitaram jindal foundation scholarship" href="https://app.sitaramjindalfoundation.org/Student/ApplyStudentScholarship/0">
-            <div class="g-icon">📘</div>
-            <div class="g-info"><strong>Sitaram Jindal</strong><small>Foundation Scholarship</small><em>Scholarship</em></div>
+            <div class="g-icon">SJ</div>
+            <div class="g-info"><strong>Sitaram Jindal</strong><small>Foundation Scholarship</small></div>
             <span class="g-open">↗</span>
           </a>
         </div>
@@ -1185,42 +1135,41 @@
       <!-- LAND -->
       <section class="section" data-group="land">
         <div class="section-head">
-          <div class="section-icon">🌾</div>
+          <div class="section-icon">LD</div>
           <div class="section-title">
             <h2>জমি, কৃষি ও গ্রামীণ পরিষেবা</h2>
             <h3>Land, Agriculture &amp; Rural Services</h3>
-            <p>জমি, Job Card, কৃষক, রেশন ও পঞ্চায়েত পরিষেবা</p>
           </div>
         </div>
         <div class="grid">
           <a class="g-card" target="_blank" rel="noopener noreferrer" data-search="banglarbhumi land mutation জমি" href="https://banglarbhumi.gov.in/">
-            <div class="g-icon">🗺️</div>
-            <div class="g-info"><strong>Banglarbhumi</strong><small>Land &amp; Mutation</small><em>Land</em></div>
+            <div class="g-icon">BB</div>
+            <div class="g-info"><strong>Banglarbhumi</strong><small>Land &amp; Mutation</small></div>
             <span class="g-open">↗</span>
           </a>
           <a class="g-card" target="_blank" rel="noopener noreferrer" data-search="mgnrega job card worker information" href="https://mnregaweb4.nic.in/netnrega/workers/wrkinfo.aspx?lang=en">
-            <div class="g-icon">🧑‍🌾</div>
-            <div class="g-info"><strong>MGNREGA Job Card</strong><small>Worker Information</small><em>Rural</em></div>
+            <div class="g-icon">MN</div>
+            <div class="g-info"><strong>MGNREGA Job Card</strong><small>Worker Information</small></div>
             <span class="g-open">↗</span>
           </a>
           <a class="g-card" target="_blank" rel="noopener noreferrer" data-search="pm-kisan farmer services kisan" href="https://pmkisan.gov.in/">
-            <div class="g-icon">🌱</div>
-            <div class="g-info"><strong>PM-KISAN</strong><small>Farmer Services</small><em>Agriculture</em></div>
+            <div class="g-icon">PK</div>
+            <div class="g-info"><strong>PM-KISAN</strong><small>Farmer Services</small></div>
             <span class="g-open">↗</span>
           </a>
           <a class="g-card" target="_blank" rel="noopener noreferrer" data-search="ration card food wb supplies" href="https://food.wb.gov.in/">
-            <div class="g-icon">🌾</div>
-            <div class="g-info"><strong>Ration Card WB</strong><small>Food &amp; Supplies</small><em>Ration</em></div>
+            <div class="g-icon">RC</div>
+            <div class="g-info"><strong>Ration Card WB</strong><small>Food &amp; Supplies</small></div>
             <span class="g-open">↗</span>
           </a>
           <a class="g-card" target="_blank" rel="noopener noreferrer" data-search="nfsa national food security act" href="https://nfsa.gov.in/">
-            <div class="g-icon">📗</div>
-            <div class="g-info"><strong>NFSA</strong><small>National Food Security</small><em>Ration</em></div>
+            <div class="g-icon">NF</div>
+            <div class="g-info"><strong>NFSA</strong><small>National Food Security</small></div>
             <span class="g-open">↗</span>
           </a>
           <a class="g-card" target="_blank" rel="noopener noreferrer" data-search="wbprd property tax panchayat online" href="https://prdtax.wb.gov.in/">
-            <div class="g-icon">🏠</div>
-            <div class="g-info"><strong>WBPRD Property Tax</strong><small>Panchayat Online Tax</small><em>Panchayat</em></div>
+            <div class="g-icon">PT</div>
+            <div class="g-info"><strong>WBPRD Property Tax</strong><small>Panchayat Online Tax</small></div>
             <span class="g-open">↗</span>
           </a>
         </div>
@@ -1229,32 +1178,31 @@
       <!-- VEHICLE -->
       <section class="section" data-group="vehicle">
         <div class="section-head">
-          <div class="section-icon">🚘</div>
+          <div class="section-icon">VH</div>
           <div class="section-title">
             <h2>গাড়ি, লাইসেন্স ও চালান</h2>
             <h3>Vehicle, Driving Licence &amp; Challan</h3>
-            <p>Driving Licence, vehicle service ও traffic challan</p>
           </div>
         </div>
         <div class="grid">
           <a class="g-card" target="_blank" rel="noopener noreferrer" data-search="parivahan sewa driving vehicle" href="https://parivahan.gov.in/">
-            <div class="g-icon">🚘</div>
-            <div class="g-info"><strong>Parivahan Sewa</strong><small>Driving / Vehicle</small><em>Vehicle</em></div>
+            <div class="g-icon">PV</div>
+            <div class="g-info"><strong>Parivahan Sewa</strong><small>Driving / Vehicle</small></div>
             <span class="g-open">↗</span>
           </a>
           <a class="g-card" target="_blank" rel="noopener noreferrer" data-search="sarathi parivahan driving learner licence" href="https://sarathi.parivahan.gov.in/">
-            <div class="g-icon">🪪</div>
-            <div class="g-info"><strong>Sarathi Parivahan</strong><small>Driving / Learner Licence</small><em>Licence</em></div>
+            <div class="g-icon">SR</div>
+            <div class="g-info"><strong>Sarathi Parivahan</strong><small>Driving / Learner Licence</small></div>
             <span class="g-open">↗</span>
           </a>
           <a class="g-card" target="_blank" rel="noopener noreferrer" data-search="vahan vehicle related services" href="https://vahan.parivahan.gov.in/">
-            <div class="g-icon">🚙</div>
-            <div class="g-info"><strong>Vahan</strong><small>Vehicle Services</small><em>Vehicle</em></div>
+            <div class="g-icon">VN</div>
+            <div class="g-info"><strong>Vahan</strong><small>Vehicle Services</small></div>
             <span class="g-open">↗</span>
           </a>
           <a class="g-card" target="_blank" rel="noopener noreferrer" data-search="e-challan traffic challan check payment" href="https://echallan.parivahan.gov.in/">
-            <div class="g-icon">🚦</div>
-            <div class="g-info"><strong>e-Challan</strong><small>Challan Check / Payment</small><em>Challan</em></div>
+            <div class="g-icon">EC</div>
+            <div class="g-info"><strong>e-Challan</strong><small>Challan Check / Payment</small></div>
             <span class="g-open">↗</span>
           </a>
         </div>
@@ -1263,92 +1211,91 @@
       <!-- JOBS -->
       <section class="section" data-group="jobs">
         <div class="section-head">
-          <div class="section-icon">💼</div>
+          <div class="section-icon">JB</div>
           <div class="section-title">
             <h2>সরকারি চাকরি ও Employment</h2>
             <h3>Government Jobs &amp; Employment</h3>
-            <p>Railway, Bank, SSC, UPSC, West Bengal সহ সব portal</p>
           </div>
         </div>
         <div class="grid">
           <a class="g-card" target="_blank" rel="noopener noreferrer" data-search="employment bank wb job seeker" href="https://employmentbankwb.gov.in/">
-            <div class="g-icon">💼</div>
-            <div class="g-info"><strong>Employment Bank WB</strong><small>Job Seeker Services</small><em>Jobs</em></div>
+            <div class="g-icon">EB</div>
+            <div class="g-info"><strong>Employment Bank WB</strong><small>Job Seeker Services</small></div>
             <span class="g-open">↗</span>
           </a>
           <a class="g-card" target="_blank" rel="noopener noreferrer" data-search="wbpsc wbcs clerkship psc" href="https://psc.wb.gov.in/">
-            <div class="g-icon">🏛️</div>
-            <div class="g-info"><strong>WBPSC</strong><small>WBCS / Clerkship</small><em>Jobs</em></div>
+            <div class="g-icon">WP</div>
+            <div class="g-info"><strong>WBPSC</strong><small>WBCS / Clerkship</small></div>
             <span class="g-open">↗</span>
           </a>
           <a class="g-card" target="_blank" rel="noopener noreferrer" data-search="west bengal school service commission teacher" href="https://www.westbengalssc.com/">
-            <div class="g-icon">🏫</div>
-            <div class="g-info"><strong>WB SSC</strong><small>Teacher Recruitment</small><em>Jobs</em></div>
+            <div class="g-icon">WS</div>
+            <div class="g-info"><strong>WB SSC</strong><small>Teacher Recruitment</small></div>
             <span class="g-open">↗</span>
           </a>
           <a class="g-card" target="_blank" rel="noopener noreferrer" data-search="west bengal police recruitment wbp kolkata" href="https://www.wbpolice.gov.in/wbp/common/WBP_RecruitmentNew.aspx">
-            <div class="g-icon">👮</div>
-            <div class="g-info"><strong>WB Police</strong><small>Recruitment</small><em>Jobs</em></div>
+            <div class="g-icon">PL</div>
+            <div class="g-info"><strong>WB Police</strong><small>Recruitment</small></div>
             <span class="g-open">↗</span>
           </a>
           <a class="g-card" target="_blank" rel="noopener noreferrer" data-search="ssc cgl chsl mts gd je staff selection" href="https://ssc.gov.in/">
-            <div class="g-icon">📋</div>
-            <div class="g-info"><strong>SSC</strong><small>CGL / CHSL / MTS / GD</small><em>Jobs</em></div>
+            <div class="g-icon">SC</div>
+            <div class="g-info"><strong>SSC</strong><small>CGL / CHSL / MTS / GD</small></div>
             <span class="g-open">↗</span>
           </a>
           <a class="g-card" target="_blank" rel="noopener noreferrer" data-search="upsc civil services nda cds" href="https://www.upsc.gov.in/">
-            <div class="g-icon">🇮🇳</div>
-            <div class="g-info"><strong>UPSC</strong><small>Civil Services / NDA / CDS</small><em>Jobs</em></div>
+            <div class="g-icon">UP</div>
+            <div class="g-info"><strong>UPSC</strong><small>Civil Services / NDA / CDS</small></div>
             <span class="g-open">↗</span>
           </a>
           <a class="g-card" target="_blank" rel="noopener noreferrer" data-search="rrb kolkata railway recruitment" href="https://www.rrbkolkata.gov.in/">
-            <div class="g-icon">🚆</div>
-            <div class="g-info"><strong>RRB Kolkata</strong><small>Railway Recruitment</small><em>Jobs</em></div>
+            <div class="g-icon">RR</div>
+            <div class="g-info"><strong>RRB Kolkata</strong><small>Railway Recruitment</small></div>
             <span class="g-open">↗</span>
           </a>
           <a class="g-card" target="_blank" rel="noopener noreferrer" data-search="ibps bank po clerk specialist officer" href="https://www.ibps.in/">
-            <div class="g-icon">🏦</div>
-            <div class="g-info"><strong>IBPS</strong><small>Bank PO / Clerk / SO</small><em>Jobs</em></div>
+            <div class="g-icon">IB</div>
+            <div class="g-info"><strong>IBPS</strong><small>Bank PO / Clerk / SO</small></div>
             <span class="g-open">↗</span>
           </a>
           <a class="g-card" target="_blank" rel="noopener noreferrer" data-search="sbi careers po clerk specialist" href="https://sbi.co.in/web/careers/">
-            <div class="g-icon">🏦</div>
-            <div class="g-info"><strong>SBI Careers</strong><small>PO / Clerk / SO</small><em>Jobs</em></div>
+            <div class="g-icon">SB</div>
+            <div class="g-info"><strong>SBI Careers</strong><small>PO / Clerk / SO</small></div>
             <span class="g-open">↗</span>
           </a>
           <a class="g-card" target="_blank" rel="noopener noreferrer" data-search="rbi opportunities reserve bank recruitment" href="https://opportunities.rbi.org.in/">
-            <div class="g-icon">💰</div>
-            <div class="g-info"><strong>RBI Opportunities</strong><small>Recruitment</small><em>Jobs</em></div>
+            <div class="g-icon">RB</div>
+            <div class="g-info"><strong>RBI Opportunities</strong><small>Recruitment</small></div>
             <span class="g-open">↗</span>
           </a>
           <a class="g-card" target="_blank" rel="noopener noreferrer" data-search="india post gds gramin dak sevak" href="https://indiapostgdsonline.gov.in/">
-            <div class="g-icon">📮</div>
-            <div class="g-info"><strong>India Post GDS</strong><small>Gramin Dak Sevak</small><em>Jobs</em></div>
+            <div class="g-icon">IP</div>
+            <div class="g-info"><strong>India Post GDS</strong><small>Gramin Dak Sevak</small></div>
             <span class="g-open">↗</span>
           </a>
           <a class="g-card" target="_blank" rel="noopener noreferrer" data-search="indian army recruitment join" href="https://joinindianarmy.nic.in/">
-            <div class="g-icon">🪖</div>
-            <div class="g-info"><strong>Indian Army</strong><small>Recruitment</small><em>Defence</em></div>
+            <div class="g-icon">AR</div>
+            <div class="g-info"><strong>Indian Army</strong><small>Recruitment</small></div>
             <span class="g-open">↗</span>
           </a>
           <a class="g-card" target="_blank" rel="noopener noreferrer" data-search="indian navy recruitment join" href="https://www.joinindiannavy.gov.in/">
-            <div class="g-icon">⚓</div>
-            <div class="g-info"><strong>Indian Navy</strong><small>Recruitment</small><em>Defence</em></div>
+            <div class="g-icon">NV</div>
+            <div class="g-info"><strong>Indian Navy</strong><small>Recruitment</small></div>
             <span class="g-open">↗</span>
           </a>
           <a class="g-card" target="_blank" rel="noopener noreferrer" data-search="indian air force agnipath vayu recruitment" href="https://agnipathvayu.cdac.in/">
-            <div class="g-icon">✈️</div>
-            <div class="g-info"><strong>Indian Air Force</strong><small>Agniveervayu Recruitment</small><em>Defence</em></div>
+            <div class="g-icon">AF</div>
+            <div class="g-info"><strong>Indian Air Force</strong><small>Agniveervayu Recruitment</small></div>
             <span class="g-open">↗</span>
           </a>
           <a class="g-card" target="_blank" rel="noopener noreferrer" data-search="coast guard recruitment join" href="https://joinindiancoastguard.cdac.in/">
-            <div class="g-icon">🛟</div>
-            <div class="g-info"><strong>Coast Guard</strong><small>Recruitment</small><em>Defence</em></div>
+            <div class="g-icon">CG</div>
+            <div class="g-info"><strong>Coast Guard</strong><small>Recruitment</small></div>
             <span class="g-open">↗</span>
           </a>
           <a class="g-card" target="_blank" rel="noopener noreferrer" data-search="national career service ncs jobs" href="https://www.ncs.gov.in/">
-            <div class="g-icon">👔</div>
-            <div class="g-info"><strong>National Career Service</strong><small>Govt Jobs &amp; Career</small><em>Jobs</em></div>
+            <div class="g-icon">NC</div>
+            <div class="g-info"><strong>National Career Service</strong><small>Govt Jobs &amp; Career</small></div>
             <span class="g-open">↗</span>
           </a>
         </div>
@@ -1357,27 +1304,26 @@
       <!-- HEALTH -->
       <section class="section" data-group="health">
         <div class="section-head">
-          <div class="section-icon">❤️</div>
+          <div class="section-icon">HL</div>
           <div class="section-title">
             <h2>স্বাস্থ্য ও সামাজিক প্রকল্প</h2>
             <h3>Health &amp; Social Welfare</h3>
-            <p>স্বাস্থ্য কার্ড ও গুরুত্বপূর্ণ সামাজিক প্রকল্প</p>
           </div>
         </div>
         <div class="grid">
           <a class="g-card" target="_blank" rel="noopener noreferrer" data-search="ayushman bharat pmjay health" href="https://pmjay.gov.in/">
-            <div class="g-icon">❤️</div>
-            <div class="g-info"><strong>Ayushman Bharat</strong><small>PM-JAY Services</small><em>Health</em></div>
+            <div class="g-icon">AY</div>
+            <div class="g-info"><strong>Ayushman Bharat</strong><small>PM-JAY Services</small></div>
             <span class="g-open">↗</span>
           </a>
           <a class="g-card" target="_blank" rel="noopener noreferrer" data-search="swasthya sathi west bengal health" href="https://swasthyasathi.gov.in/">
-            <div class="g-icon">🩺</div>
-            <div class="g-info"><strong>Swasthya Sathi</strong><small>WB Health Scheme</small><em>Health</em></div>
+            <div class="g-icon">SS</div>
+            <div class="g-info"><strong>Swasthya Sathi</strong><small>WB Health Scheme</small></div>
             <span class="g-open">↗</span>
           </a>
           <a class="g-card" target="_blank" rel="noopener noreferrer" data-search="kanyashree west bengal scheme girls" href="https://www.wbkanyashree.gov.in/">
-            <div class="g-icon">👩‍🎓</div>
-            <div class="g-info"><strong>Kanyashree</strong><small>WB Scheme</small><em>Welfare</em></div>
+            <div class="g-icon">KY</div>
+            <div class="g-info"><strong>Kanyashree</strong><small>WB Scheme</small></div>
             <span class="g-open">↗</span>
           </a>
         </div>
@@ -1386,42 +1332,41 @@
       <!-- BUSINESS -->
       <section class="section" data-group="business">
         <div class="section-head">
-          <div class="section-icon">🏢</div>
+          <div class="section-icon">BZ</div>
           <div class="section-title">
             <h2>ব্যবসা, Tax ও Licence</h2>
             <h3>Business, Tax &amp; Licence</h3>
-            <p>Business registration, tax, PF ও licence services</p>
           </div>
         </div>
         <div class="grid">
           <a class="g-card" target="_blank" rel="noopener noreferrer" data-search="silpa sathi west bengal single window" href="https://silpasathi.wb.gov.in/">
-            <div class="g-icon">🏭</div>
-            <div class="g-info"><strong>Silpa Sathi</strong><small>WB Single Window</small><em>Business</em></div>
+            <div class="g-icon">SL</div>
+            <div class="g-info"><strong>Silpa Sathi</strong><small>WB Single Window</small></div>
             <span class="g-open">↗</span>
           </a>
           <a class="g-card" target="_blank" rel="noopener noreferrer" data-search="income tax e-filing portal itr" href="https://www.incometax.gov.in/">
-            <div class="g-icon">🧾</div>
-            <div class="g-info"><strong>Income Tax</strong><small>e-Filing Portal</small><em>Tax</em></div>
+            <div class="g-icon">IT</div>
+            <div class="g-info"><strong>Income Tax</strong><small>e-Filing Portal</small></div>
             <span class="g-open">↗</span>
           </a>
           <a class="g-card" target="_blank" rel="noopener noreferrer" data-search="gst portal services" href="https://www.gst.gov.in/">
-            <div class="g-icon">🧮</div>
-            <div class="g-info"><strong>GST Portal</strong><small>GST Services</small><em>Tax</em></div>
+            <div class="g-icon">GS</div>
+            <div class="g-info"><strong>GST Portal</strong><small>GST Services</small></div>
             <span class="g-open">↗</span>
           </a>
           <a class="g-card" target="_blank" rel="noopener noreferrer" data-search="epfo pf provident fund" href="https://www.epfindia.gov.in/">
-            <div class="g-icon">🏦</div>
-            <div class="g-info"><strong>EPFO</strong><small>PF Services</small><em>PF</em></div>
+            <div class="g-icon">EP</div>
+            <div class="g-info"><strong>EPFO</strong><small>PF Services</small></div>
             <span class="g-open">↗</span>
           </a>
           <a class="g-card" target="_blank" rel="noopener noreferrer" data-search="udyam registration msme" href="https://udyamregistration.gov.in/">
-            <div class="g-icon">🏪</div>
-            <div class="g-info"><strong>Udyam Registration</strong><small>MSME Registration</small><em>Business</em></div>
+            <div class="g-icon">UD</div>
+            <div class="g-info"><strong>Udyam Registration</strong><small>MSME Registration</small></div>
             <span class="g-open">↗</span>
           </a>
           <a class="g-card" target="_blank" rel="noopener noreferrer" data-search="fssai foscos food licence" href="https://foscos.fssai.gov.in/">
-            <div class="g-icon">🍽️</div>
-            <div class="g-info"><strong>FSSAI / FoSCoS</strong><small>Food Licence</small><em>Licence</em></div>
+            <div class="g-icon">FS</div>
+            <div class="g-info"><strong>FSSAI / FoSCoS</strong><small>Food Licence</small></div>
             <span class="g-open">↗</span>
           </a>
         </div>
@@ -1435,7 +1380,7 @@
     </div>
 
     <div class="note">
-      <strong>✓ নির্দেশনা:</strong> যেকোনো card-এ tap করলে সংশ্লিষ্ট সরকারি website নতুন tab-এ খুলবে। গুরুত্বপূর্ণ কাজের আগে URL ও service details যাচাই করে নিন।
+      <strong>✓ নির্দেশনা:</strong> যেকোনো card-এ tap করলে সংশ্লিষ্ট সরকারি website নতুন tab-এ খুলবে।
     </div>
 
   </div>
@@ -1445,15 +1390,15 @@
 <footer>
   <p>🖥️ <strong>Azad Digital Seva</strong> — সরকারি ও বেসরকারি অনলাইন পরিষেবা</p>
   <div class="footer-links">
-    <a href="index.html">🏠 Home</a>
-    <a href="pvc-card.html">💳 PVC Card</a>
-    <a href="gov-service.html">📋 Govt Services</a>
-    <a href="contact.html">📞 Contact</a>
+    <a href="index.html">Home</a>
+    <a href="pvc-card.html">PVC Card</a>
+    <a href="gov-service.html">Govt Services</a>
+    <a href="contact.html">Contact</a>
   </div>
   <p class="footer-copyright">© ২০২৫ Azad Digital Seva | সর্বস্বত্ব সংরক্ষিত</p>
 </footer>
 
-<!-- ================= BOTTOM NAVIGATION (Mobile) ================= -->
+<!-- ================= BOTTOM NAVIGATION ================= -->
 <nav class="bottom-nav">
   <div class="bottom-nav-inner">
     <a href="index.html" class="bn-item">
@@ -1462,7 +1407,7 @@
     </a>
     <a href="pvc-card.html" class="bn-item">
       <span class="bn-icon">💳</span>
-      <span>PVC Card</span>
+      <span>PVC</span>
     </a>
     <a href="gov-service.html" class="bn-item active">
       <span class="bn-icon">📋</span>
@@ -1516,13 +1461,9 @@ document.addEventListener('DOMContentLoaded', function() {
       cats.forEach(function(b) { b.classList.remove('active'); });
       this.classList.add('active');
       filter();
-      // Scroll to top of sections smoothly
-      var top = document.getElementById('azSections').offsetTop - 130;
-      window.scrollTo({ top: top, behavior: 'smooth' });
     });
   });
 
-  // Scroll to top button
   window.addEventListener('scroll', function() {
     if (window.scrollY > 400) {
       scrollBtn.classList.add('show');

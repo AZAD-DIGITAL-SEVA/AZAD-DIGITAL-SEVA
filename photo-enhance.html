@@ -508,7 +508,6 @@
     max-width: 500px;
   }
 
-  /* AI Loader */
   .ai-loader {
     width: 120px;
     height: 120px;
@@ -580,7 +579,6 @@
     line-height: 1.6;
   }
 
-  /* Progress Bar */
   .progress-bar {
     width: 100%;
     max-width: 400px;
@@ -601,7 +599,6 @@
     box-shadow: 0 0 20px rgba(255,153,51,.6);
   }
 
-  /* Checklist */
   .processing-checklist {
     display: flex;
     flex-direction: column;
@@ -663,7 +660,6 @@
     color: #fff;
   }
 
-  /* Timer */
   .processing-timer {
     display: inline-flex;
     align-items: center;
@@ -678,7 +674,6 @@
     margin-bottom: 20px;
   }
 
-  /* Cancel Button */
   .cancel-btn {
     background: rgba(255,255,255,.1);
     color: #fff;
@@ -765,7 +760,6 @@
     line-height: 1.6;
   }
 
-  /* Copy Status */
   .copy-status {
     display: flex;
     align-items: center;
@@ -795,7 +789,6 @@
     flex-shrink: 0;
   }
 
-  /* Prompt Preview */
   .prompt-preview {
     background: linear-gradient(145deg, #f8fafc, #f1f5f9);
     border: 1.5px solid #e2e8f0;
@@ -822,7 +815,6 @@
     font-size: .75rem;
   }
 
-  /* Modal Steps */
   .modal-steps {
     background: linear-gradient(135deg, #eff6ff, #dbeafe);
     border-radius: 12px;
@@ -854,7 +846,6 @@
     margin-bottom: 3px;
   }
 
-  /* Buttons */
   .modal-buttons {
     display: flex;
     gap: 8px;
@@ -1275,7 +1266,7 @@
     </a>
     <nav class="nav-links">
       <a href="index.html">🏠 Home</a>
-      <a href="pvc-card.html">💳 PVC Card</a>
+      <a href="passport-photo.html">📸 Photo</a>
     </nav>
   </div>
 </header>
@@ -1373,7 +1364,6 @@
 <div class="processing-screen" id="processingScreen">
   <div class="processing-content">
 
-    <!-- AI Loader -->
     <div class="ai-loader">
       <div class="ai-ring"></div>
       <div class="ai-ring"></div>
@@ -1384,17 +1374,14 @@
     <h2>AI প্রসেস হচ্ছে... <span>অপেক্ষা করুন</span></h2>
     <p>অনুগ্রহ করে কয়েক সেকেন্ড অপেক্ষা করুন</p>
 
-    <!-- Timer -->
     <div class="processing-timer">
       ⏱️ <span id="timer">0.0</span> সেকেন্ড
     </div>
 
-    <!-- Progress Bar -->
     <div class="progress-bar">
       <div class="progress-fill" id="progressFill"></div>
     </div>
 
-    <!-- Checklist (শুধু ২টি) -->
     <div class="processing-checklist">
       <div class="check-item" id="check1">
         <span class="check-icon">✓</span>
@@ -1419,18 +1406,15 @@
     <h3>সব প্রস্তুত!</h3>
     <p>Prompt কপি হয়ে গেছে। এখন <b>Gemini</b> তে Paste করে ছবিটি আপলোড করুন।</p>
 
-    <!-- Copy Status -->
     <div class="copy-status">
       <span class="check-circle">✓</span>
       <span>Prompt কপি হয়েছে</span>
     </div>
 
-    <!-- Prompt Preview -->
     <div class="prompt-preview" id="promptPreview">
       Enhance and restore this old photograph into a high-quality, realistic HD portrait...
     </div>
 
-    <!-- Steps -->
     <div class="modal-steps">
       <h4>📌 Gemini-তে কী করবেন:</h4>
       <ol>
@@ -1456,7 +1440,8 @@
   <p>🖥️ <strong>Azad Digital Seva</strong> — সরকারি ও বেসরকারি অনলাইন পরিষেবা</p>
   <div class="footer-links">
     <a href="index.html">Home</a>
-    <a href="pvc-card.html">PVC Card</a>
+    <a href="online-service.html">Services</a>
+    <a href="passport-photo.html">Photo Studio</a>
     <a href="gov-service.html">Govt Services</a>
   </div>
   <p class="footer-copyright">© ২০২৫ Azad Digital Seva | সর্বস্বত্ব সংরক্ষিত</p>
@@ -1469,17 +1454,17 @@
       <span class="bn-icon">🏠</span>
       <span>Home</span>
     </a>
-    <a href="pvc-card.html" class="bn-item">
-      <span class="bn-icon">💳</span>
-      <span>PVC</span>
+    <a href="online-service.html" class="bn-item">
+      <span class="bn-icon">🌐</span>
+      <span>Services</span>
     </a>
-    <a href="gov-service.html" class="bn-item">
-      <span class="bn-icon">📋</span>
-      <span>Govt</span>
+    <a href="passport-photo.html" class="bn-item">
+      <span class="bn-icon">📸</span>
+      <span>Photo</span>
     </a>
     <a href="photo-enhance.html" class="bn-item active">
       <span class="bn-icon">✨</span>
-      <span>Photo</span>
+      <span>Enhance</span>
     </a>
   </div>
 </nav>
@@ -1493,23 +1478,18 @@
 <!-- ================= SCRIPT ================= -->
 <script>
 (function() {
+  'use strict';
 
   /* ==================== CONFIG ==================== */
   var GEMINI_URL = 'https://gemini.google.com/app';
 
-  var PROMPT_TEXT = `Enhance and restore this old photograph into a high-quality, realistic HD portrait.
-
-Keep the person's original face, facial features, identity, skin tone, hairstyle, expression, and natural appearance exactly the same. Do not change or beautify the face unnaturally.
-
-Remove old-photo damage, blur, noise, scratches, stains, grain, and compression artifacts. Restore missing details carefully and improve facial and clothing details while keeping the photo realistic.
-
-Increase sharpness, clarity, and resolution to a professional studio-quality HD/Ultra HD photograph. Make the skin look natural with realistic texture, not plastic or overly smooth.
-
-Replace the existing background with a clean, elegant solid blue studio-style background. Use a professional medium/deep blue tone with a subtle natural gradient, without any objects, patterns, text, or distractions.
-
-Maintain realistic lighting on the person and create a clean separation between the subject and the blue background.
-
-Final result should look like a professionally photographed modern HD portrait, while preserving the original person's appearance and authenticity.`;
+  var PROMPT_TEXT = 'Enhance and restore this old photograph into a high-quality, realistic HD portrait.\n\n' +
+    'Keep the person\'s original face, facial features, identity, skin tone, hairstyle, expression, and natural appearance exactly the same. Do not change or beautify the face unnaturally.\n\n' +
+    'Remove old-photo damage, blur, noise, scratches, stains, grain, and compression artifacts. Restore missing details carefully and improve facial and clothing details while keeping the photo realistic.\n\n' +
+    'Increase sharpness, clarity, and resolution to a professional studio-quality HD/Ultra HD photograph. Make the skin look natural with realistic texture, not plastic or overly smooth.\n\n' +
+    'Replace the existing background with a clean, elegant solid blue studio-style background. Use a professional medium/deep blue tone with a subtle natural gradient, without any objects, patterns, text, or distractions.\n\n' +
+    'Maintain realistic lighting on the person and create a clean separation between the subject and the blue background.\n\n' +
+    'Final result should look like a professionally photographed modern HD portrait, while preserving the original person\'s appearance and authenticity.';
 
   /* ==================== DOM ==================== */
   var photoInput = document.getElementById('photoInput');
@@ -1527,138 +1507,192 @@ Final result should look like a professionally photographed modern HD portrait, 
   var scrollBtn = document.getElementById('scrollTop');
   var toast = document.getElementById('toast');
 
-  var processingTimer = null;
   var elapsedTimer = null;
   var elapsed = 0;
-  var geminiWindow = null;
+  var processingActive = false;
 
   /* ==================== HELPERS ==================== */
   function showToast(msg) {
+    if (!toast) return;
     toast.textContent = msg;
     toast.classList.add('show');
-    setTimeout(function() {
-      toast.classList.remove('show');
-    }, 2500);
+    setTimeout(function() { toast.classList.remove('show'); }, 2500);
   }
 
   function copyToClipboard(text) {
+    // Try modern API first
     if (navigator.clipboard && window.isSecureContext) {
       return navigator.clipboard.writeText(text);
-    } else {
+    }
+    // Fallback
+    try {
       var textarea = document.createElement('textarea');
       textarea.value = text;
       textarea.style.position = 'fixed';
       textarea.style.left = '-9999px';
+      textarea.style.top = '0';
+      textarea.setAttribute('readonly', '');
       document.body.appendChild(textarea);
       textarea.select();
-      try {
-        document.execCommand('copy');
-      } catch(e) {}
+      textarea.setSelectionRange(0, 99999);
+      var success = document.execCommand('copy');
       document.body.removeChild(textarea);
-      return Promise.resolve();
+      return success ? Promise.resolve() : Promise.reject(new Error('execCommand failed'));
+    } catch(e) {
+      return Promise.reject(e);
     }
   }
 
-  /* ==================== HANDLE PHOTO UPLOAD ==================== */
+  /* ==================== HANDLE UPLOAD ==================== */
   window.handlePhotoUpload = function(event) {
-    var file = event.target.files[0];
-    if (!file) return;
+    try {
+      var file = event.target.files[0];
+      if (!file) return;
 
-    if (!file.type.startsWith('image/')) {
-      showToast('❌ শুধু ছবি আপলোড করুন');
-      return;
+      if (!file.type.startsWith('image/')) {
+        showToast('❌ শুধু ছবি আপলোড করুন');
+        return;
+      }
+
+      if (file.size > 20 * 1024 * 1024) {
+        showToast('❌ ছবি ২০MB এর কম হতে হবে');
+        return;
+      }
+
+      startProcessing();
+    } catch(err) {
+      console.error('Upload error:', err);
+      showToast('❌ ত্রুটি হয়েছে, আবার চেষ্টা করুন');
+      resetEverything();
     }
-
-    if (file.size > 20 * 1024 * 1024) {
-      showToast('❌ ছবি ২০MB এর কম হতে হবে');
-      return;
-    }
-
-    startProcessing();
   };
 
   /* ==================== START PROCESSING ==================== */
   function startProcessing() {
+    if (processingActive) return;
+    processingActive = true;
+
+    // Reset UI
     progressFill.style.width = '0%';
     elapsed = 0;
     timerEl.textContent = '0.0';
     check1.className = 'check-item';
     check2.className = 'check-item';
 
+    // Show processing
     processingScreen.classList.add('active');
     document.body.style.overflow = 'hidden';
 
+    // Start elapsed timer
+    if (elapsedTimer) clearInterval(elapsedTimer);
     elapsedTimer = setInterval(function() {
       elapsed += 0.1;
       timerEl.textContent = elapsed.toFixed(1);
     }, 100);
 
-    // Step 1: Process photo
+    // ---------- STEP 1: Process photo ----------
     setTimeout(function() {
       check1.classList.add('active');
-      progressFill.style.width = '30%';
+      progressFill.style.width = '25%';
     }, 200);
 
     setTimeout(function() {
       check1.classList.remove('active');
       check1.classList.add('done');
-    }, 1000);
+    }, 900);
 
-    // Step 2: Copy prompt
+    // ---------- STEP 2: Copy prompt (SAFE — won't block) ----------
     setTimeout(function() {
       check2.classList.add('active');
-      progressFill.style.width = '65%';
+      progressFill.style.width = '60%';
 
-      copyToClipboard(PROMPT_TEXT).then(function() {
-        console.log('✅ Prompt copied');
-      }).catch(function(err) {
-        console.warn('Copy failed', err);
-      });
-    }, 1100);
+      // Copy prompt — even if it fails, continue
+      copyToClipboard(PROMPT_TEXT)
+        .then(function() {
+          console.log('✅ Prompt copied');
+        })
+        .catch(function(err) {
+          console.warn('Copy failed, using fallback on modal:', err);
+        });
+    }, 1000);
 
     setTimeout(function() {
       check2.classList.remove('active');
       check2.classList.add('done');
       progressFill.style.width = '100%';
-    }, 1900);
+    }, 1700);
 
-    // Open Gemini silently (no UI text about it)
+    // ---------- Open Gemini in BACKGROUND (won't block if fails) ----------
     setTimeout(function() {
       try {
-        geminiWindow = window.open(GEMINI_URL, '_blank');
-        if (!geminiWindow || geminiWindow.closed || typeof geminiWindow.closed === 'undefined') {
-          console.warn('Popup blocked');
-          showToast('⚠️ Popup blocked — Gemini বাটনে ক্লিক করুন');
+        var win = window.open(GEMINI_URL, '_blank');
+        if (!win || win.closed || typeof win.closed === 'undefined') {
+          console.warn('Popup blocked by browser');
+          // Not fatal — user will see "Gemini খুলুন" button in modal
         }
       } catch(e) {
-        console.warn('Window.open failed:', e);
+        console.warn('window.open threw error:', e);
       }
-    }, 2200);
+    }, 2000);
 
-    // Finish
+    // ---------- FINISH — ALWAYS RUNS (this is the key fix) ----------
     setTimeout(function() {
-      clearInterval(elapsedTimer);
-      stopProcessing();
+      try {
+        // Stop timers
+        if (elapsedTimer) {
+          clearInterval(elapsedTimer);
+          elapsedTimer = null;
+        }
 
-      promptPreview.textContent = PROMPT_TEXT.substring(0, 300) + '...';
-      readyOverlay.classList.add('active');
+        // Hide processing
+        processingScreen.classList.remove('active');
+        document.body.style.overflow = '';
 
-      step1.classList.remove('active');
-      step1.classList.add('done');
-      step2.classList.add('done');
-      step3.classList.add('active');
+        // Show prompt preview in modal
+        if (promptPreview) {
+          promptPreview.textContent = PROMPT_TEXT.substring(0, 300) + '...';
+        }
 
-    }, 3200);
-  }
+        // Show ready modal
+        if (readyOverlay) {
+          readyOverlay.classList.add('active');
+        }
 
-  function stopProcessing() {
-    clearInterval(processingTimer);
-    clearInterval(elapsedTimer);
+        // Update steps
+        step1.classList.remove('active');
+        step1.classList.add('done');
+        step2.classList.add('done');
+        step3.classList.add('active');
+
+        // Try re-copy (in case first attempt failed)
+        setTimeout(function() {
+          copyToClipboard(PROMPT_TEXT).catch(function() {});
+        }, 200);
+
+      } catch(err) {
+        console.error('Finish error:', err);
+        // ULTIMATE FALLBACK — force show modal
+        try {
+          processingScreen.classList.remove('active');
+          document.body.style.overflow = '';
+          readyOverlay.classList.add('active');
+        } catch(e2) {
+          alert('প্রসেসিং সম্পূর্ণ। Gemini-তে ছবি আপলোড করে Prompt পেস্ট করুন।');
+        }
+      } finally {
+        processingActive = false;
+      }
+    }, 3000);
   }
 
   /* ==================== CANCEL ==================== */
   window.cancelProcessing = function() {
-    stopProcessing();
+    if (elapsedTimer) {
+      clearInterval(elapsedTimer);
+      elapsedTimer = null;
+    }
+    processingActive = false;
+
     processingScreen.classList.remove('active');
     document.body.style.overflow = '';
     photoInput.value = '';
@@ -1685,22 +1719,58 @@ Final result should look like a professionally photographed modern HD portrait, 
     }, 3000);
   };
 
-  /* ==================== SCROLL TO TOP ==================== */
-  window.addEventListener('scroll', function() {
-    if (window.scrollY > 400) {
-      scrollBtn.classList.add('show');
-    } else {
-      scrollBtn.classList.remove('show');
+  /* ==================== RESET ==================== */
+  function resetEverything() {
+    if (elapsedTimer) {
+      clearInterval(elapsedTimer);
+      elapsedTimer = null;
     }
-  }, { passive: true });
+    processingActive = false;
+    processingScreen.classList.remove('active');
+    readyOverlay.classList.remove('active');
+    document.body.style.overflow = '';
+    photoInput.value = '';
+  }
 
-  scrollBtn.addEventListener('click', function() {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+  /* ==================== SCROLL TO TOP ==================== */
+  if (scrollBtn) {
+    window.addEventListener('scroll', function() {
+      if (window.scrollY > 400) {
+        scrollBtn.classList.add('show');
+      } else {
+        scrollBtn.classList.remove('show');
+      }
+    }, { passive: true });
+
+    scrollBtn.addEventListener('click', function() {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  }
+
+  /* ==================== SAFETY NET — Modal stuck হলে ---------- */
+  // If somehow modal never shows, show it after 6s max
+  document.addEventListener('visibilitychange', function() {
+    if (!document.hidden && processingActive) {
+      // User came back, force finish
+      setTimeout(function() {
+        if (processingActive) {
+          processingActive = false;
+          if (elapsedTimer) clearInterval(elapsedTimer);
+          processingScreen.classList.remove('active');
+          document.body.style.overflow = '';
+          readyOverlay.classList.add('active');
+          step1.classList.remove('active');
+          step1.classList.add('done');
+          step2.classList.add('done');
+          step3.classList.add('active');
+        }
+      }, 500);
+    }
   });
 
-  /* ==================== AUTO RE-COPY ==================== */
-  document.addEventListener('visibilitychange', function() {
-    if (!document.hidden && readyOverlay.classList.contains('active')) {
+  /* ==================== RECOPY ON FOCUS ==================== */
+  window.addEventListener('focus', function() {
+    if (readyOverlay && readyOverlay.classList.contains('active')) {
       copyToClipboard(PROMPT_TEXT).catch(function() {});
     }
   });

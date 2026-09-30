@@ -33,12 +33,14 @@
     overflow-x: hidden;
   }
 
+  /* ============ TOP FLAG STRIP ============ */
   .flag-strip { height: 3px; display: flex; position: fixed; top: 0; left: 0; right: 0; z-index: 10000; }
   .flag-strip div { flex: 1; }
   .flag-strip .s { background: var(--saffron); }
   .flag-strip .w { background: #fff; }
   .flag-strip .g { background: var(--success); }
 
+  /* ============ HEADER ============ */
   header {
     background: linear-gradient(135deg, #075e54 0%, #128c7e 100%);
     color: #fff;
@@ -65,6 +67,7 @@
   .nav-links a { padding: 6px 12px; border-radius: 18px; color: #eaf8ef; font-size: 11.5px; font-weight: 700; text-decoration: none; }
   .nav-links a:hover { background: rgba(255,255,255,.15); }
 
+  /* ============ HERO ============ */
   .hero {
     background: radial-gradient(circle at 15% 20%, rgba(255,153,51,.18), transparent 30%), radial-gradient(circle at 85% 80%, rgba(19,136,8,.15), transparent 30%), linear-gradient(135deg, #0a2540 0%, #1e3a5f 50%, #0a2540 100%);
     color: #fff;
@@ -84,9 +87,11 @@
   .hero-badge .dot { width: 5px; height: 5px; background: #4ade80; border-radius: 50%; box-shadow: 0 0 8px #4ade80; animation: pulse 2s infinite; }
   @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: .4; } }
 
+  /* ============ CONTAINER ============ */
   .container { max-width: 950px; margin: -28px auto 0; padding: 0 12px 40px; position: relative; z-index: 5; }
   .card-box { background: #fff; border-radius: 18px; box-shadow: 0 15px 40px rgba(10,37,64,.15); border-top: 4px solid var(--saffron); padding: 24px 20px; }
 
+  /* ============ STEPS ============ */
   .steps { display: flex; justify-content: center; gap: 8px; margin-bottom: 24px; flex-wrap: wrap; }
   .step { display: flex; align-items: center; gap: 6px; padding: 6px 14px; border-radius: 20px; background: #f1f5f9; color: #64748b; font-size: .72rem; font-weight: 700; border: 1.5px solid transparent; transition: .3s; }
   .step.active { background: linear-gradient(135deg, #075e54, #128c7e); color: #fff; }
@@ -95,6 +100,7 @@
   .step.active .step-num { background: var(--gold); color: #075e54; }
   .step.done .step-num { background: #065f46; color: #fff; }
 
+  /* ============ UPLOAD BOX ============ */
   .upload-box { border: 3px dashed #cbd5e1; border-radius: 18px; padding: 40px 20px; text-align: center; background: linear-gradient(145deg, #f8fbff, #fff); cursor: pointer; transition: all .3s; }
   .upload-box:hover { border-color: var(--saffron); background: linear-gradient(145deg, #fff8e7, #fff); transform: translateY(-2px); }
   .upload-box input { display: none; }
@@ -104,6 +110,7 @@
   .upload-box p { font-size: .82rem; color: var(--text-muted); font-weight: 600; }
   .upload-box .file-types { display: inline-block; margin-top: 12px; padding: 5px 12px; border-radius: 20px; background: #f0fdf4; color: #065f46; font-size: .68rem; font-weight: 700; border: 1px solid #bbf7d0; }
 
+  /* ============ FEATURES ============ */
   .features { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 22px; }
   .feature { background: linear-gradient(145deg, #f8fbff, #fff); border: 1px solid #e1ebf5; border-radius: 12px; padding: 14px 10px; text-align: center; }
   .feature-icon { font-size: 1.4rem; margin-bottom: 6px; display: block; }
@@ -111,19 +118,7 @@
   .feature small { display: block; font-size: .62rem; color: var(--text-muted); font-weight: 600; margin-top: 2px; }
 
   /* ============ PROCESSING SCREEN ============ */
-  .processing-screen {
-    display: none;
-    position: fixed;
-    top: 0; left: 0; right: 0; bottom: 0;
-    background: linear-gradient(135deg, #0a2540 0%, #1e3a5f 50%, #075e54 100%);
-    color: #fff;
-    z-index: 99999;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    padding: 20px;
-    text-align: center;
-  }
+  .processing-screen { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: linear-gradient(135deg, #0a2540 0%, #1e3a5f 50%, #075e54 100%); color: #fff; z-index: 99999; align-items: center; justify-content: center; flex-direction: column; padding: 20px; text-align: center; }
   .processing-screen.active { display: flex; }
   .processing-content { position: relative; z-index: 1; max-width: 500px; }
 
@@ -167,21 +162,172 @@
   }
   .ready-overlay.active { display: flex; }
 
-  .ready-modal { background: #fff; border-radius: 22px; max-width: 420px; width: 100%; padding: 30px 24px; text-align: center; box-shadow: 0 30px 70px rgba(0,0,0,.4); max-height: 92vh; overflow-y: auto; animation: modalIn .4s cubic-bezier(.2,.9,.3,1.3); }
+  .ready-modal {
+    background: #fff;
+    border-radius: 22px;
+    max-width: 460px;
+    width: 100%;
+    padding: 26px 22px;
+    text-align: center;
+    box-shadow: 0 30px 70px rgba(0,0,0,.4);
+    max-height: 92vh;
+    overflow-y: auto;
+    animation: modalIn .4s cubic-bezier(.2,.9,.3,1.3);
+  }
   @keyframes modalIn { from { opacity: 0; transform: scale(.85) translateY(20px); } to { opacity: 1; transform: scale(1) translateY(0); } }
 
-  .ready-icon { width: 70px; height: 70px; margin: 0 auto 16px; border-radius: 50%; background: linear-gradient(135deg, #d1fae5, #a7f3d0); display: flex; align-items: center; justify-content: center; font-size: 2rem; animation: successPop .6s ease; }
+  .ready-icon {
+    width: 65px;
+    height: 65px;
+    margin: 0 auto 14px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #d1fae5, #a7f3d0);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.9rem;
+    animation: successPop .6s ease;
+  }
   @keyframes successPop { 0% { transform: scale(0); } 50% { transform: scale(1.15); } 100% { transform: scale(1); } }
 
-  .ready-modal h3 { font-size: 1.4rem; color: var(--dark); font-weight: 800; margin-bottom: 8px; }
-  .ready-modal > p { font-size: .88rem; color: var(--text-muted); margin-bottom: 20px; line-height: 1.6; }
+  .ready-modal h3 { font-size: 1.3rem; color: var(--dark); font-weight: 800; margin-bottom: 6px; }
+  .ready-modal > p { font-size: .84rem; color: var(--text-muted); margin-bottom: 16px; line-height: 1.55; }
   .ready-modal > p b { color: var(--primary); }
 
-  .copy-status { display: flex; align-items: center; justify-content: center; gap: 8px; padding: 14px 16px; border-radius: 12px; background: linear-gradient(135deg, #dcfce7, #bbf7d0); color: #065f46; font-size: .85rem; font-weight: 700; margin-bottom: 22px; border: 1.5px solid #86efac; }
-  .check-circle { width: 22px; height: 22px; background: #22c55e; color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: .75rem; font-weight: 900; flex-shrink: 0; }
+  .copy-status {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 12px 16px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #dcfce7, #bbf7d0);
+    color: #065f46;
+    font-size: .82rem;
+    font-weight: 700;
+    margin-bottom: 16px;
+    border: 1.5px solid #86efac;
+  }
+  .check-circle {
+    width: 22px;
+    height: 22px;
+    background: #22c55e;
+    color: #fff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: .75rem;
+    font-weight: 900;
+    flex-shrink: 0;
+  }
 
+  /* ============ NOTICE INSIDE MODAL ============ */
+  .modal-notice {
+    background: linear-gradient(145deg, #fffbf0, #fff8e7);
+    border: 2px solid #f9a826;
+    border-left: 4px solid #f9a826;
+    border-radius: 12px;
+    padding: 14px 15px;
+    margin-bottom: 18px;
+    text-align: left;
+    position: relative;
+    overflow: hidden;
+  }
+  .modal-notice::before {
+    content: '';
+    position: absolute;
+    top: -30px;
+    right: -30px;
+    width: 90px;
+    height: 90px;
+    background: radial-gradient(circle, rgba(249, 168, 38, 0.15), transparent 70%);
+    border-radius: 50%;
+    pointer-events: none;
+  }
+  .modal-notice-head {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 10px;
+    padding-bottom: 8px;
+    border-bottom: 1.5px dashed #fde68a;
+    position: relative;
+    z-index: 1;
+  }
+  .modal-notice-head .mn-icon {
+    width: 28px;
+    height: 28px;
+    border-radius: 8px;
+    background: linear-gradient(135deg, #f9a826, #e67e22);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: .85rem;
+    flex-shrink: 0;
+    box-shadow: 0 4px 10px rgba(249, 168, 38, 0.4);
+    animation: mnPulse 2s ease-in-out infinite;
+  }
+  @keyframes mnPulse { 0%,100% { transform: scale(1); } 50% { transform: scale(1.05); } }
+  .modal-notice-head .mn-title {
+    font-size: .85rem;
+    color: #7a4f00;
+    font-weight: 800;
+    letter-spacing: .3px;
+  }
+  .modal-notice-body {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    position: relative;
+    z-index: 1;
+  }
+  .mn-line {
+    display: flex;
+    align-items: flex-start;
+    gap: 7px;
+    font-size: .74rem;
+    color: #4b5563;
+    line-height: 1.5;
+    font-weight: 600;
+    padding: 5px 8px;
+    border-radius: 7px;
+    background: rgba(255, 255, 255, 0.65);
+    transition: all .2s;
+  }
+  .mn-line:hover {
+    background: #fff8e7;
+    transform: translateX(2px);
+  }
+  .mn-line b {
+    color: #075e54;
+    font-weight: 800;
+  }
+  .mn-emoji {
+    font-size: .85rem;
+    flex-shrink: 0;
+    line-height: 1.4;
+  }
+
+  /* ============ MODAL BUTTONS ============ */
   .modal-buttons { display: flex; gap: 10px; flex-wrap: wrap; }
-  .modal-btn { flex: 1; min-width: 120px; padding: 14px 20px; border-radius: 12px; border: none; font-family: inherit; font-size: .9rem; font-weight: 800; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; gap: 6px; text-decoration: none; transition: .3s; }
+  .modal-btn {
+    flex: 1;
+    min-width: 120px;
+    padding: 13px 20px;
+    border-radius: 12px;
+    border: none;
+    font-family: inherit;
+    font-size: .88rem;
+    font-weight: 800;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    text-decoration: none;
+    transition: .3s;
+  }
   .modal-btn-primary { background: linear-gradient(135deg, #075e54, #128c7e); color: #fff; box-shadow: 0 6px 18px rgba(7,94,84,.35); }
   .modal-btn-primary:hover { transform: translateY(-2px); box-shadow: 0 10px 24px rgba(7,94,84,.45); }
   .modal-btn-secondary { background: #f1f5f9; color: #475569; border: 1.5px solid #e2e8f0; }
@@ -195,18 +341,21 @@
   .footer-links a:hover { text-decoration: underline; }
   .footer-copyright { font-size: .68rem; opacity: .7; margin-top: 10px; }
 
+  /* ============ BOTTOM NAV ============ */
   .bottom-nav { display: none; position: fixed; bottom: 0; left: 0; right: 0; background: #fff; border-top: 1px solid var(--border); padding: 6px 4px calc(6px + env(safe-area-inset-bottom)); z-index: 998; }
   .bottom-nav-inner { max-width: 500px; margin: auto; display: grid; grid-template-columns: repeat(4, 1fr); gap: 4px; }
   .bn-item { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; padding: 7px 4px; border-radius: 12px; text-decoration: none; color: #64748b; font-size: 10px; font-weight: 700; min-height: 48px; }
   .bn-item.active { color: var(--primary); background: linear-gradient(135deg, #e8f7ee, #d1f0dd); }
   .bn-icon { font-size: 1.25rem; line-height: 1; }
 
+  /* ============ SCROLL TOP & TOAST ============ */
   .scroll-top { position: fixed; bottom: 76px; right: 16px; width: 42px; height: 42px; border-radius: 50%; background: linear-gradient(135deg,var(--saffron),#e67e22); color: #fff; border: none; font-size: 1.15rem; cursor: pointer; box-shadow: 0 6px 18px rgba(255,153,51,.5); display: none; align-items: center; justify-content: center; z-index: 997; font-weight: 900; }
   .scroll-top.show { display: flex; }
 
   .toast { position: fixed; bottom: 90px; left: 50%; transform: translateX(-50%) translateY(100px); background: #1e293b; color: #fff; padding: 11px 22px; border-radius: 30px; font-size: .82rem; font-weight: 700; box-shadow: 0 10px 30px rgba(0,0,0,.3); opacity: 0; transition: all .4s; z-index: 9999; white-space: nowrap; max-width: 90vw; overflow: hidden; text-overflow: ellipsis; pointer-events: none; }
   .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
 
+  /* ============ MOBILE ============ */
   @media (max-width: 768px) {
     body { padding-bottom: 70px; }
     .nav-links { display: none; }
@@ -219,9 +368,14 @@
     .feature-icon { margin: 0; }
     .bottom-nav { display: block; }
     .modal-btn { min-width: 100%; }
-    .ready-modal { padding: 24px 18px; }
+    .ready-modal { padding: 22px 18px; }
     .ready-modal h3 { font-size: 1.2rem; }
-    .ready-modal > p { font-size: .82rem; }
+    .ready-modal > p { font-size: .8rem; }
+    .modal-notice { padding: 12px 12px; }
+    .modal-notice-head .mn-icon { width: 24px; height: 24px; font-size: .75rem; }
+    .modal-notice-head .mn-title { font-size: .78rem; }
+    .mn-line { font-size: .68rem; padding: 4px 7px; }
+    .mn-emoji { font-size: .78rem; }
   }
 </style>
 </head>
@@ -265,7 +419,6 @@
 <div class="container">
   <div class="card-box">
 
-    <!-- Steps -->
     <div class="steps">
       <div class="step active" id="step1">
         <span class="step-num">1</span> ছবি আপলোড
@@ -281,7 +434,6 @@
       </div>
     </div>
 
-    <!-- Upload Box -->
     <div class="upload-box" onclick="document.getElementById('photoInput').click()">
       <div class="upload-icon">📸</div>
       <h3>আপনার ছবি আপলোড করুন</h3>
@@ -290,7 +442,6 @@
       <input type="file" id="photoInput" accept="image/*">
     </div>
 
-    <!-- Features -->
     <div class="features">
       <div class="feature">
         <span class="feature-icon">🔍</span>
@@ -312,25 +463,20 @@
 <!-- ================= PROCESSING SCREEN ================= -->
 <div class="processing-screen" id="processingScreen">
   <div class="processing-content">
-
     <div class="ai-loader">
       <div class="ai-ring"></div>
       <div class="ai-ring"></div>
       <div class="ai-ring"></div>
       <div class="ai-center">✨</div>
     </div>
-
     <h2>AI প্রসেস হচ্ছে... <span>অপেক্ষা করুন</span></h2>
     <p>অনুগ্রহ করে কয়েক সেকেন্ড অপেক্ষা করুন</p>
-
     <div class="processing-timer">
       ⏱️ <span id="timer">0.0</span> সেকেন্ড
     </div>
-
     <div class="progress-bar">
       <div class="progress-fill" id="progressFill"></div>
     </div>
-
     <div class="processing-checklist">
       <div class="check-item" id="check1">
         <span class="check-icon">✓</span>
@@ -341,13 +487,11 @@
         <span>Prompt কপি করা হচ্ছে</span>
       </div>
     </div>
-
     <button class="cancel-btn" onclick="cancelProcessing()">বাতিল করুন</button>
-
   </div>
 </div>
 
-<!-- ================= READY MODAL (English) ================= -->
+<!-- ================= READY MODAL ================= -->
 <div class="ready-overlay" id="readyOverlay">
   <div class="ready-modal">
 
@@ -359,6 +503,37 @@
       <span class="check-circle">✓</span>
       <span>Prompt copied successfully</span>
     </div>
+
+    <!-- ============ NOTICE INSIDE MODAL ============ -->
+    <div class="modal-notice">
+      <div class="modal-notice-head">
+        <span class="mn-icon">📢</span>
+        <span class="mn-title">Notice</span>
+      </div>
+      <div class="modal-notice-body">
+        <p class="mn-line">
+          <span class="mn-emoji">✨</span>
+          <span>আপনার <b>ছবি তৈরির জন্য সম্পূর্ণ রেডি</b>।</span>
+        </p>
+        <p class="mn-line">
+          <span class="mn-emoji">🖱️</span>
+          <span><b>Submit</b> বাটনে ক্লিক করার সঙ্গে সঙ্গে সামনে একটি <b>নতুন ওয়েবসাইট</b> ওপেন হবে।</span>
+        </p>
+        <p class="mn-line">
+          <span class="mn-emoji">📋</span>
+          <span>সেখানে শুধু <b>Paste</b> করবেন — <b>অটোমেটিক পেস্ট</b> হয়ে যাবে।</span>
+        </p>
+        <p class="mn-line">
+          <span class="mn-emoji">📸</span>
+          <span>এবার আপনার <b>ছবি সিলেক্ট</b> করুন।</span>
+        </p>
+        <p class="mn-line">
+          <span class="mn-emoji">✅</span>
+          <span>এরপরে একবার <b>Next / Generate</b> করুন — তাহলেই আপনার <b>ফটো তৈরি!</b></span>
+        </p>
+      </div>
+    </div>
+    <!-- ============ NOTICE END ============ -->
 
     <div class="modal-buttons">
       <button class="modal-btn modal-btn-secondary" onclick="closeReady()">
@@ -530,7 +705,7 @@
       check1.classList.add('done');
     }, 1000);
 
-    // Step 2 — Copy prompt
+    // Step 2 - Copy prompt
     setTimeout(function() {
       check2.classList.add('active');
       progressFill.style.width = '70%';
@@ -613,7 +788,7 @@
     }, 3000);
   };
 
-  /* ==================== ON SUBMIT CLICK ==================== */
+  /* ==================== ON SUBMIT ==================== */
   window.onGeminiClick = function() {
     copyToClipboard(PROMPT_TEXT).then(function() {
       showToast('📋 Prompt copied again');

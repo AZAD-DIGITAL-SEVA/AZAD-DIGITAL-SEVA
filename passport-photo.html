@@ -1,1 +1,1805 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+<title>Passport Size Photo Maker | Azad Digital Seva</title>
+<meta name="description" content="পাসপোর্ট সাইজ ছবি, ব্যাকগ্রাউন্ড চেঞ্জ, রেস্টোরেশন — সব এক জায়গায়। ফ্রি এবং প্রিন্ট রেডি।">
+<meta name="theme-color" content="#075e54">
+<link rel="icon" type="image/png" href="assets/azad-logo.png">
+<link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&family=Noto+Sans+Bengali:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
 
+  :root {
+    --primary: #075e54;
+    --secondary: #128c7e;
+    --gold: #f9a826;
+    --dark: #0a2540;
+    --light: #f0f4f8;
+    --saffron: #FF9933;
+    --success: #138808;
+    --text: #1e2b3c;
+    --text-muted: #64748b;
+    --border: #e5e7eb;
+    --shadow-sm: 0 2px 8px rgba(10,37,64,.06);
+    --shadow-md: 0 6px 20px rgba(10,37,64,.1);
+    --shadow-lg: 0 15px 40px rgba(10,37,64,.15);
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Hind Siliguri', 'Noto Sans Bengali', sans-serif;
+    background: var(--light);
+    color: var(--text);
+    line-height: 1.55;
+    min-height: 100vh;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ============ TOP FLAG STRIP ============ */
+  .flag-strip {
+    height: 3px;
+    display: flex;
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 10000;
+  }
+  .flag-strip div { flex: 1; }
+  .flag-strip .s { background: var(--saffron); }
+  .flag-strip .w { background: #fff; }
+  .flag-strip .g { background: var(--success); }
+
+  /* ============ HEADER ============ */
+  header {
+    background: linear-gradient(135deg, #075e54 0%, #128c7e 100%);
+    color: #fff;
+    padding: 10px 14px;
+    padding-top: 13px;
+    border-bottom: 2px solid var(--gold);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    box-shadow: 0 4px 14px rgba(7,94,84,.25);
+    position: fixed;
+    top: 3px;
+    left: 0;
+    right: 0;
+    z-index: 999;
+    height: 60px;
+  }
+
+  .header-wrap {
+    width: min(1280px, 100%);
+    margin: auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    width: 100%;
+  }
+
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    text-decoration: none;
+    color: #fff;
+    flex-shrink: 0;
+    min-width: 0;
+  }
+
+  .brand-logo {
+    width: 40px;
+    height: 40px;
+    border-radius: 11px;
+    background: linear-gradient(135deg, var(--saffron), var(--gold));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.25rem;
+    flex-shrink: 0;
+    box-shadow: 0 4px 12px rgba(255,153,51,.35);
+    border: 1.5px solid rgba(255,255,255,.25);
+  }
+
+  .brand-text {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.1;
+    min-width: 0;
+    overflow: hidden;
+  }
+
+  .brand-text strong {
+    color: #fff;
+    font-size: 15px;
+    font-weight: 800;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .brand-text strong em {
+    color: var(--gold);
+    font-style: normal;
+  }
+
+  .brand-text small {
+    margin-top: 2px;
+    color: #bfe9ce;
+    font-size: 9px;
+    font-weight: 600;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    flex-wrap: wrap;
+  }
+
+  .nav-links a {
+    padding: 6px 12px;
+    border-radius: 18px;
+    color: #eaf8ef;
+    font-size: 11.5px;
+    font-weight: 700;
+    text-decoration: none;
+    transition: .22s;
+    border: 1px solid transparent;
+    white-space: nowrap;
+  }
+
+  .nav-links a:hover { background: rgba(255,255,255,.15); }
+  .nav-links a.active {
+    background: var(--gold);
+    color: #075e54;
+    border-color: var(--gold);
+  }
+
+  /* ============ HERO ============ */
+  .hero {
+    background:
+      radial-gradient(circle at 15% 20%, rgba(255,153,51,.18), transparent 30%),
+      radial-gradient(circle at 85% 80%, rgba(19,136,8,.15), transparent 30%),
+      linear-gradient(135deg, #0a2540 0%, #1e3a5f 50%, #0a2540 100%);
+    color: #fff;
+    padding: 90px 16px 55px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    margin-top: 60px;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -70px; right: -70px;
+    width: 220px; height: 220px;
+    background: radial-gradient(circle, rgba(255,153,51,.25), transparent 70%);
+    border-radius: 50%;
+    pointer-events: none;
+  }
+
+  .hero::after {
+    content: '';
+    position: absolute;
+    bottom: -60px; left: -60px;
+    width: 180px; height: 180px;
+    background: radial-gradient(circle, rgba(19,136,8,.2), transparent 70%);
+    border-radius: 50%;
+    pointer-events: none;
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 1;
+    max-width: 750px;
+    margin: 0 auto;
+  }
+
+  .hero-icon {
+    width: 62px;
+    height: 62px;
+    margin: 0 auto 12px;
+    background: linear-gradient(135deg, var(--saffron), var(--gold));
+    border-radius: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.8rem;
+    box-shadow: 0 10px 26px rgba(255,153,51,.4);
+    border: 2px solid rgba(255,255,255,.2);
+    animation: float 3s ease-in-out infinite;
+  }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-5px); }
+  }
+
+  .hero h1 {
+    font-size: 1.55rem;
+    font-weight: 800;
+    margin-bottom: 8px;
+    letter-spacing: .3px;
+    line-height: 1.2;
+  }
+
+  .hero h1 span {
+    background: linear-gradient(90deg, var(--saffron), var(--gold));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .hero p {
+    font-size: .88rem;
+    color: rgba(255,255,255,.85);
+    max-width: 560px;
+    margin: 0 auto;
+    line-height: 1.5;
+  }
+
+  .hero-badges {
+    display: flex;
+    justify-content: center;
+    gap: 6px;
+    margin-top: 14px;
+    flex-wrap: wrap;
+  }
+
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    background: rgba(255,255,255,.1);
+    border: 1px solid rgba(255,255,255,.2);
+    padding: 4px 11px;
+    border-radius: 20px;
+    font-size: .68rem;
+    font-weight: 600;
+    backdrop-filter: blur(8px);
+  }
+
+  .hero-badge .dot {
+    width: 5px; height: 5px;
+    background: #4ade80;
+    border-radius: 50%;
+    box-shadow: 0 0 8px #4ade80;
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: .4; }
+  }
+
+  /* ============ CONTAINER ============ */
+  .container {
+    max-width: 950px;
+    margin: -28px auto 0;
+    padding: 0 12px 40px;
+    position: relative;
+    z-index: 5;
+  }
+
+  .card-box {
+    background: #fff;
+    border-radius: 18px;
+    box-shadow: var(--shadow-lg);
+    overflow: hidden;
+    border-top: 4px solid var(--saffron);
+    padding: 22px 18px;
+    margin-bottom: 20px;
+  }
+
+  /* ============ SERVICE CARDS (TOP 5) ============ */
+  .service-cards-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 1.05rem;
+    color: var(--dark);
+    font-weight: 800;
+    margin-bottom: 16px;
+    padding-bottom: 12px;
+    border-bottom: 2px solid #f0e6d2;
+  }
+
+  .service-cards-title .st-icon {
+    width: 34px;
+    height: 34px;
+    border-radius: 9px;
+    background: linear-gradient(135deg, #6a11cb, #2575fc);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    flex-shrink: 0;
+    box-shadow: 0 5px 12px rgba(106,17,203,.3);
+  }
+
+  .service-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 12px;
+    margin-bottom: 6px;
+  }
+
+  .sc-card {
+    --c1: #6a11cb;
+    --c2: #2575fc;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 22px 14px;
+    border-radius: 16px;
+    text-decoration: none;
+    background: linear-gradient(145deg, #ffffff, #f8fbff);
+    border: 2px solid #e1ebf5;
+    box-shadow: 0 4px 14px rgba(10,37,64,.06);
+    transition: all .3s cubic-bezier(.4,0,.2,1);
+    min-height: 160px;
+    text-align: center;
+    cursor: pointer;
+  }
+
+  .sc-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 5px;
+    background: linear-gradient(90deg, var(--c1), var(--c2));
+    transition: height .3s;
+  }
+
+  .sc-card:hover {
+    transform: translateY(-6px);
+    border-color: transparent;
+    box-shadow: 0 18px 36px var(--shadow-color, rgba(106,17,203,.3));
+  }
+
+  .sc-card:hover::before {
+    height: 7px;
+  }
+
+  .sc-card.coming-soon {
+    opacity: .75;
+    cursor: not-allowed;
+  }
+
+  .sc-card.coming-soon:hover {
+    transform: none;
+    box-shadow: 0 4px 14px rgba(10,37,64,.06);
+  }
+
+  .sc-icon {
+    width: 60px;
+    height: 60px;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.8rem;
+    background: linear-gradient(135deg, var(--c1), var(--c2));
+    box-shadow: 0 8px 20px var(--shadow-color, rgba(106,17,203,.35));
+    margin-bottom: 12px;
+    color: #fff;
+    transition: transform .3s;
+  }
+
+  .sc-card:hover .sc-icon {
+    transform: scale(1.08) rotate(-3deg);
+  }
+
+  .sc-card strong {
+    display: block;
+    font-size: .88rem;
+    font-weight: 800;
+    color: var(--dark);
+    line-height: 1.3;
+    margin-bottom: 4px;
+  }
+
+  .sc-card small {
+    display: block;
+    font-size: .68rem;
+    color: var(--text-muted);
+    font-weight: 600;
+    line-height: 1.4;
+  }
+
+  .sc-arrow {
+    position: absolute;
+    bottom: 8px;
+    right: 10px;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: .72rem;
+    font-weight: 900;
+    color: #fff;
+    background: linear-gradient(135deg, var(--c1), var(--c2));
+    box-shadow: 0 3px 8px var(--shadow-color, rgba(106,17,203,.3));
+  }
+
+  .sc-badge {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: linear-gradient(135deg, #22c55e, #16a34a);
+    color: #fff;
+    padding: 3px 9px;
+    border-radius: 20px;
+    font-size: .56rem;
+    font-weight: 900;
+    letter-spacing: .3px;
+    box-shadow: 0 3px 10px rgba(34,197,94,.4);
+  }
+
+  .sc-badge.soon {
+    background: linear-gradient(135deg, #94a3b8, #64748b);
+    box-shadow: 0 3px 10px rgba(100,116,139,.3);
+  }
+
+  /* Card color variations */
+  .sc-card:nth-child(1) { --c1: #6a11cb; --c2: #2575fc; --shadow-color: rgba(106,17,203,.35); }
+  .sc-card:nth-child(2) { --c1: #059669; --c2: #10b981; --shadow-color: rgba(5,150,105,.35); }
+  .sc-card:nth-child(3) { --c1: #ea580c; --c2: #f97316; --shadow-color: rgba(234,88,12,.35); }
+  .sc-card:nth-child(4) { --c1: #dc2626; --c2: #ef4444; --shadow-color: rgba(220,38,38,.35); }
+  .sc-card:nth-child(5) { --c1: #0d47a1; --c2: #1976d2; --shadow-color: rgba(13,71,161,.35); }
+
+  /* ============ DIVIDER ============ */
+  .divider {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 24px 0 20px;
+    color: var(--text-muted);
+    font-size: .78rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: .5px;
+  }
+
+  .divider::before,
+  .divider::after {
+    content: '';
+    flex: 1;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, #e1ebf5, transparent);
+  }
+
+  /* ============ UPLOAD BOX ============ */
+  .upload-box {
+    border: 3px dashed #cbd5e1;
+    border-radius: 18px;
+    padding: 42px 20px;
+    text-align: center;
+    background: linear-gradient(145deg, #f8fbff, #fff);
+    cursor: pointer;
+    transition: all .3s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .upload-box:hover {
+    border-color: var(--saffron);
+    background: linear-gradient(145deg, #fff8e7, #fff);
+    transform: translateY(-2px);
+    box-shadow: 0 12px 30px rgba(255,153,51,.15);
+  }
+
+  .upload-box input { display: none; }
+
+  .upload-icon {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto 16px;
+    background: linear-gradient(135deg, #e0f2fe, #bae6fd);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    box-shadow: 0 8px 20px rgba(59,130,246,.2);
+    animation: uploadPulse 2s ease-in-out infinite;
+  }
+
+  @keyframes uploadPulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+  }
+
+  .upload-box h3 {
+    font-size: 1.15rem;
+    color: var(--dark);
+    font-weight: 800;
+    margin-bottom: 8px;
+  }
+
+  .upload-box p {
+    font-size: .82rem;
+    color: var(--text-muted);
+    font-weight: 600;
+    line-height: 1.5;
+  }
+
+  .upload-box .file-types {
+    display: inline-block;
+    margin-top: 14px;
+    padding: 6px 14px;
+    border-radius: 20px;
+    background: #f0fdf4;
+    color: #065f46;
+    font-size: .7rem;
+    font-weight: 700;
+    border: 1px solid #bbf7d0;
+  }
+
+  /* ============ EDITOR SECTION ============ */
+  .editor-section {
+    display: none;
+    padding: 4px 0;
+  }
+
+  .editor-section.active {
+    display: block;
+    animation: fadeIn .4s;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .editor-title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 16px;
+    padding-bottom: 12px;
+    border-bottom: 2px solid #f0e6d2;
+  }
+
+  .editor-title .et-icon {
+    width: 42px;
+    height: 42px;
+    border-radius: 11px;
+    background: linear-gradient(135deg, #6a11cb, #2575fc);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    flex-shrink: 0;
+    box-shadow: 0 5px 14px rgba(106,17,203,.3);
+  }
+
+  .editor-title h2 {
+    font-size: 1.1rem;
+    color: var(--dark);
+    font-weight: 800;
+  }
+
+  .editor-title p {
+    font-size: .72rem;
+    color: var(--text-muted);
+    font-weight: 600;
+    margin-top: 2px;
+  }
+
+  /* Canvas Area */
+  .canvas-area {
+    background: linear-gradient(135deg, #f8fafc, #eef2f7);
+    border: 2px solid #e2e8f0;
+    border-radius: 14px;
+    padding: 16px;
+    margin-bottom: 16px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .canvas-wrap {
+    position: relative;
+    display: inline-block;
+    max-width: 100%;
+    box-shadow: 0 8px 24px rgba(10,37,64,.12);
+    border-radius: 8px;
+    overflow: hidden;
+    background: #000;
+  }
+
+  #previewCanvas {
+    display: block;
+    max-width: 100%;
+    height: auto;
+    cursor: move;
+    touch-action: none;
+    user-select: none;
+    -webkit-user-select: none;
+  }
+
+  .canvas-hint {
+    margin-top: 10px;
+    font-size: .72rem;
+    color: var(--text-muted);
+    font-weight: 600;
+  }
+
+  /* Controls */
+  .control-group {
+    background: #fff;
+    border: 1.5px solid #e1ebf5;
+    border-radius: 14px;
+    padding: 14px;
+    margin-bottom: 12px;
+  }
+
+  .control-label {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: .82rem;
+    font-weight: 800;
+    color: var(--dark);
+    margin-bottom: 10px;
+  }
+
+  .control-label .ci {
+    font-size: 1rem;
+  }
+
+  /* Size Buttons */
+  .size-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+  }
+
+  .size-btn {
+    padding: 10px 8px;
+    border: 2px solid #e5e7eb;
+    background: #fff;
+    border-radius: 10px;
+    font-family: inherit;
+    font-size: .72rem;
+    font-weight: 700;
+    color: #475569;
+    cursor: pointer;
+    transition: all .25s;
+    text-align: center;
+    line-height: 1.3;
+  }
+
+  .size-btn:hover {
+    border-color: var(--saffron);
+    color: var(--saffron);
+  }
+
+  .size-btn.active {
+    background: linear-gradient(135deg, var(--saffron), #e67e22);
+    color: #fff;
+    border-color: transparent;
+    box-shadow: 0 5px 14px rgba(255,153,51,.35);
+  }
+
+  .size-btn strong {
+    display: block;
+    font-size: .78rem;
+    font-weight: 800;
+    margin-bottom: 2px;
+  }
+
+  .size-btn small {
+    display: block;
+    font-size: .58rem;
+    font-weight: 600;
+    opacity: .8;
+  }
+
+  /* Background Colors */
+  .bg-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 8px;
+  }
+
+  .bg-btn {
+    height: 44px;
+    border-radius: 10px;
+    border: 3px solid #e5e7eb;
+    cursor: pointer;
+    transition: all .25s;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: .62rem;
+    font-weight: 800;
+    color: #fff;
+    text-shadow: 0 1px 2px rgba(0,0,0,.3);
+    font-family: inherit;
+  }
+
+  .bg-btn:hover {
+    transform: scale(1.05);
+  }
+
+  .bg-btn.active {
+    border-color: var(--gold);
+    box-shadow: 0 0 0 3px rgba(249,168,38,.3), 0 6px 16px rgba(249,168,38,.25);
+    transform: scale(1.05);
+  }
+
+  .bg-btn.active::after {
+    content: '✓';
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    width: 20px;
+    height: 20px;
+    background: var(--gold);
+    color: #fff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: .7rem;
+    font-weight: 900;
+    box-shadow: 0 3px 8px rgba(249,168,38,.5);
+  }
+
+  .bg-white { background: #ffffff; color: #333; text-shadow: none; border-color: #cbd5e1; }
+  .bg-blue  { background: linear-gradient(135deg, #1e40af, #3b82f6); }
+  .bg-lightblue { background: linear-gradient(135deg, #60a5fa, #93c5fd); }
+  .bg-red   { background: linear-gradient(135deg, #b91c1c, #ef4444); }
+  .bg-gray  { background: linear-gradient(135deg, #64748b, #94a3b8); }
+  .bg-green { background: linear-gradient(135deg, #15803d, #22c55e); }
+  .bg-none  { background: repeating-conic-gradient(#e5e7eb 0% 25%, #ffffff 0% 50%) 50% / 12px 12px; color: #333; text-shadow: none; border-color: #cbd5e1; font-size: .55rem; }
+
+  /* Zoom Slider */
+  .zoom-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .zoom-row input[type=range] {
+    flex: 1;
+    -webkit-appearance: none;
+    appearance: none;
+    height: 6px;
+    background: linear-gradient(90deg, var(--saffron), var(--gold));
+    border-radius: 20px;
+    outline: none;
+  }
+
+  .zoom-row input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 22px;
+    height: 22px;
+    background: #fff;
+    border: 3px solid var(--saffron);
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(255,153,51,.4);
+    transition: .2s;
+  }
+
+  .zoom-row input[type=range]::-webkit-slider-thumb:hover {
+    transform: scale(1.15);
+  }
+
+  .zoom-row input[type=range]::-moz-range-thumb {
+    width: 22px;
+    height: 22px;
+    background: #fff;
+    border: 3px solid var(--saffron);
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(255,153,51,.4);
+  }
+
+  .zoom-value {
+    min-width: 48px;
+    text-align: center;
+    font-size: .75rem;
+    font-weight: 800;
+    color: var(--primary);
+    background: #f1f5f9;
+    padding: 5px 10px;
+    border-radius: 8px;
+    font-family: 'Poppins', monospace;
+  }
+
+  /* Preview Sheet */
+  .preview-sheet {
+    background: #fff;
+    border: 2px solid #e2e8f0;
+    border-radius: 14px;
+    padding: 16px;
+    margin-bottom: 16px;
+    text-align: center;
+  }
+
+  .preview-sheet h4 {
+    font-size: .88rem;
+    color: var(--dark);
+    font-weight: 800;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+  }
+
+  #sheetCanvas {
+    max-width: 100%;
+    height: auto;
+    border-radius: 6px;
+    box-shadow: 0 6px 18px rgba(10,37,64,.12);
+    border: 1px solid #e2e8f0;
+  }
+
+  /* Action Buttons */
+  .action-buttons {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-top: 6px;
+  }
+
+  .action-btn {
+    flex: 1;
+    min-width: 140px;
+    padding: 14px 20px;
+    border-radius: 12px;
+    border: none;
+    font-family: inherit;
+    font-size: .88rem;
+    font-weight: 800;
+    cursor: pointer;
+    transition: all .3s;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+  }
+
+  .action-btn-primary {
+    background: linear-gradient(135deg, #138808, #0f6b06);
+    color: #fff;
+    box-shadow: 0 6px 18px rgba(19,136,8,.35);
+  }
+
+  .action-btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 24px rgba(19,136,8,.45);
+  }
+
+  .action-btn-secondary {
+    background: linear-gradient(135deg, #6a11cb, #2575fc);
+    color: #fff;
+    box-shadow: 0 6px 18px rgba(106,17,203,.35);
+  }
+
+  .action-btn-secondary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 24px rgba(106,17,203,.45);
+  }
+
+  .action-btn-outline {
+    background: #fff;
+    color: #475569;
+    border: 2px solid #e2e8f0;
+  }
+
+  .action-btn-outline:hover {
+    background: #f1f5f9;
+    border-color: #cbd5e1;
+  }
+
+  /* ============ FOOTER ============ */
+  footer {
+    background: linear-gradient(135deg, #0a2540, #1e3a5f);
+    color: #d4e6e3;
+    text-align: center;
+    padding: 22px 14px 90px;
+    border-top: 3px solid var(--gold);
+    margin-top: 30px;
+    font-size: .78rem;
+  }
+
+  footer p {
+    max-width: 750px;
+    margin: 0 auto 8px;
+    line-height: 1.6;
+  }
+
+  .footer-links {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin: 10px 0;
+  }
+
+  .footer-links a {
+    color: var(--gold);
+    text-decoration: none;
+    font-size: .75rem;
+    font-weight: 700;
+    transition: .2s;
+  }
+
+  .footer-links a:hover { color: #fff; text-decoration: underline; }
+
+  .footer-copyright {
+    font-size: .68rem;
+    opacity: .7;
+    margin-top: 10px;
+  }
+
+  /* ============ BOTTOM NAV ============ */
+  .bottom-nav {
+    display: none;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: #fff;
+    border-top: 1px solid var(--border);
+    box-shadow: 0 -4px 20px rgba(10,37,64,.08);
+    z-index: 998;
+    padding: 6px 4px;
+    padding-bottom: calc(6px + env(safe-area-inset-bottom));
+  }
+
+  .bottom-nav-inner {
+    max-width: 500px;
+    margin: auto;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 4px;
+  }
+
+  .bn-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2px;
+    padding: 7px 4px;
+    border-radius: 12px;
+    text-decoration: none;
+    color: #64748b;
+    font-size: 10px;
+    font-weight: 700;
+    transition: .22s;
+    min-height: 48px;
+  }
+
+  .bn-item .bn-icon {
+    font-size: 1.25rem;
+    line-height: 1;
+  }
+
+  .bn-item.active {
+    color: var(--primary);
+    background: linear-gradient(135deg, #e8f7ee, #d1f0dd);
+  }
+
+  /* ============ SCROLL TO TOP ============ */
+  .scroll-top {
+    position: fixed;
+    bottom: 76px;
+    right: 16px;
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--saffron), #e67e22);
+    color: #fff;
+    border: none;
+    font-size: 1.15rem;
+    cursor: pointer;
+    box-shadow: 0 6px 18px rgba(255,153,51,.5);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 997;
+    transition: all .3s;
+    font-weight: 900;
+  }
+
+  .scroll-top.show {
+    display: flex;
+    animation: popIn .3s ease;
+  }
+
+  @keyframes popIn {
+    from { opacity: 0; transform: scale(.5); }
+    to { opacity: 1; transform: scale(1); }
+  }
+
+  /* ============ TOAST ============ */
+  .toast {
+    position: fixed;
+    bottom: 90px;
+    left: 50%;
+    transform: translateX(-50%) translateY(100px);
+    background: #1e293b;
+    color: #fff;
+    padding: 11px 22px;
+    border-radius: 30px;
+    font-size: .82rem;
+    font-weight: 700;
+    box-shadow: 0 10px 30px rgba(0,0,0,.3);
+    opacity: 0;
+    transition: all .4s cubic-bezier(.4,0,.2,1);
+    z-index: 9999;
+    white-space: nowrap;
+    max-width: 90vw;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    pointer-events: none;
+  }
+
+  .toast.show {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+
+  /* ============ MOBILE ============ */
+  @media (max-width: 768px) {
+    body { padding-bottom: 70px; }
+
+    header {
+      height: 56px;
+      padding: 8px 12px;
+      padding-top: 11px;
+    }
+
+    .brand-logo {
+      width: 36px;
+      height: 36px;
+      font-size: 1.1rem;
+      border-radius: 10px;
+    }
+
+    .brand-text strong { font-size: 14px; }
+    .brand-text small { font-size: 8.5px; }
+    .nav-links { display: none; }
+
+    .hero {
+      padding: 82px 14px 48px;
+      margin-top: 56px;
+    }
+
+    .hero-icon {
+      width: 56px;
+      height: 56px;
+      font-size: 1.6rem;
+      border-radius: 16px;
+    }
+
+    .hero h1 { font-size: 1.3rem; }
+    .hero p { font-size: .82rem; }
+
+    .container {
+      padding: 0 10px 30px;
+      margin-top: -24px;
+    }
+
+    .card-box {
+      padding: 18px 14px;
+      border-radius: 16px;
+      border-top-width: 3px;
+    }
+
+    .service-cards {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+    }
+
+    .sc-card {
+      padding: 18px 10px;
+      min-height: 140px;
+    }
+
+    .sc-icon {
+      width: 52px;
+      height: 52px;
+      font-size: 1.5rem;
+      border-radius: 14px;
+    }
+
+    .sc-card strong {
+      font-size: .78rem;
+    }
+
+    .sc-card small {
+      font-size: .62rem;
+    }
+
+    .upload-box {
+      padding: 32px 16px;
+    }
+
+    .upload-icon {
+      width: 65px;
+      height: 65px;
+      font-size: 1.6rem;
+    }
+
+    .upload-box h3 { font-size: 1.05rem; }
+    .upload-box p { font-size: .78rem; }
+
+    .size-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .bg-grid {
+      grid-template-columns: repeat(4, 1fr);
+    }
+
+    .action-btn {
+      min-width: 100%;
+    }
+
+    .bottom-nav { display: block; }
+
+    .scroll-top {
+      bottom: 78px;
+      right: 12px;
+      width: 38px;
+      height: 38px;
+      font-size: 1rem;
+    }
+
+    footer {
+      padding: 18px 12px 86px;
+      margin-top: 24px;
+    }
+  }
+
+  @media (max-width: 400px) {
+    .brand-text strong { font-size: 13px; }
+    .brand-text small { font-size: 8px; }
+    .hero h1 { font-size: 1.15rem; }
+    .hero p { font-size: .78rem; }
+    .service-cards { grid-template-columns: 1fr; }
+    .bg-grid { grid-template-columns: repeat(3, 1fr); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: .01ms !important;
+      transition-duration: .01ms !important;
+    }
+  }
+</style>
+</head>
+<body>
+
+<!-- Flag Strip -->
+<div class="flag-strip">
+  <div class="s"></div>
+  <div class="w"></div>
+  <div class="g"></div>
+</div>
+
+<!-- ================= HEADER ================= -->
+<header>
+  <div class="header-wrap">
+    <a class="brand" href="index.html">
+      <span class="brand-logo">🖥️</span>
+      <span class="brand-text">
+        <strong>Azad <em>Digital Seva</em></strong>
+        <small>সরকারি ও বেসরকারি অনলাইন পরিষেবা</small>
+      </span>
+    </a>
+    <nav class="nav-links">
+      <a href="index.html">🏠 Home</a>
+      <a href="online-service.html">🌐 Services</a>
+    </nav>
+  </div>
+</header>
+
+<!-- ================= HERO ================= -->
+<section class="hero">
+  <div class="hero-content">
+    <div class="hero-icon">📸</div>
+    <h1>Passport Size <span>Photo Studio</span></h1>
+    <p>পাসপোর্ট ছবি, ব্যাকগ্রাউন্ড চেঞ্জ, রেস্টোরেশন — সব সেবা এক জায়গায়। ফ্রি এবং প্রিন্ট রেডি।</p>
+    <div class="hero-badges">
+      <span class="hero-badge"><span class="dot"></span> 100% Free</span>
+      <span class="hero-badge">🎨 AI Powered</span>
+      <span class="hero-badge">🖨️ Print Ready</span>
+    </div>
+  </div>
+</section>
+
+<!-- ================= CONTAINER ================= -->
+<div class="container">
+
+  <!-- ========== SERVICE CARDS ========== -->
+  <div class="card-box">
+    <div class="service-cards-title">
+      <span class="st-icon">🎯</span>
+      ফটো সার্ভিস সমূহ
+    </div>
+
+    <div class="service-cards">
+
+      <!-- 1. Photo Background Change (Active) -->
+      <a href="photo-enhance.html" class="sc-card">
+        <span class="sc-badge">POPULAR</span>
+        <span class="sc-icon">🎨</span>
+        <strong>ফটো ব্যাকগ্রাউন্ড চেঞ্জ</strong>
+        <small>পুরোনো ছবি HD + নীল ব্যাকগ্রাউন্ড</small>
+        <span class="sc-arrow">→</span>
+      </a>
+
+      <!-- 2. Old Photo Restore -->
+      <div class="sc-card coming-soon">
+        <span class="sc-badge soon">SOON</span>
+        <span class="sc-icon">✨</span>
+        <strong>পুরোনো ছবি রেস্টোর</strong>
+        <small>ভাঙা, দাগ, ঝাপসা ছবি ঠিক করুন</small>
+      </div>
+
+      <!-- 3. Photo Retouch -->
+      <div class="sc-card coming-soon">
+        <span class="sc-badge soon">SOON</span>
+        <span class="sc-icon">💄</span>
+        <strong>ফটো রিটাচ</strong>
+        <small>ত্বক মসৃণ, দাগ দূর করুন</small>
+      </div>
+
+      <!-- 4. Photo Colorize -->
+      <div class="sc-card coming-soon">
+        <span class="sc-badge soon">SOON</span>
+        <span class="sc-icon">🌈</span>
+        <strong>সাদা-কালো রঙিন</strong>
+        <small>পুরোনো ছবিতে রঙ যোগ করুন</small>
+      </div>
+
+      <!-- 5. Photo to Cartoon -->
+      <div class="sc-card coming-soon">
+        <span class="sc-badge soon">SOON</span>
+        <span class="sc-icon">🎭</span>
+        <strong>ফটো কার্টুন</strong>
+        <small>ছবিকে কার্টুন স্টাইলে রূপান্তর</small>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ========== PHOTO MAKER ========== -->
+  <div class="card-box">
+
+    <div class="divider">📷 Passport Photo Maker</div>
+
+    <!-- ========== UPLOAD SECTION ========== -->
+    <div id="uploadSection">
+      <div class="upload-box" onclick="document.getElementById('photoInput').click()">
+        <div class="upload-icon">📷</div>
+        <h3>আপনার ছবি আপলোড করুন</h3>
+        <p>এখানে ক্লিক করুন অথবা ছবি ড্র্যাগ করুন<br>সরাসরি মুখের ছবি হলে সবচেয়ে ভালো হয়</p>
+        <span class="file-types">JPG • PNG • JPEG • WEBP</span>
+        <input type="file" id="photoInput" accept="image/*" onchange="handlePhotoUpload(event)">
+      </div>
+    </div>
+
+    <!-- ========== EDITOR SECTION ========== -->
+    <div class="editor-section" id="editorSection">
+
+      <div class="editor-title">
+        <div class="et-icon">✂️</div>
+        <div>
+          <h2>আপনার পাসপোর্ট সাইজ ছবি</h2>
+          <p>ছবি টেনে সরান, জুম করুন এবং ব্যাকগ্রাউন্ড বদলান</p>
+        </div>
+      </div>
+
+      <!-- Live Preview Canvas -->
+      <div class="canvas-area">
+        <div class="canvas-wrap">
+          <canvas id="previewCanvas" width="300" height="400"></canvas>
+        </div>
+        <p class="canvas-hint">👉 ছবি টেনে সরান (drag), দু-আঙুল দিয়ে জুম করুন</p>
+      </div>
+
+      <!-- Size -->
+      <div class="control-group">
+        <div class="control-label"><span class="ci">📐</span> Photo Size</div>
+        <div class="size-grid" id="sizeGrid">
+          <button class="size-btn active" data-size="25x35" onclick="selectSize('25x35', this)">
+            <strong>২৫×৩৫ mm</strong>
+            <small>India Standard</small>
+          </button>
+          <button class="size-btn" data-size="35x45" onclick="selectSize('35x45', this)">
+            <strong>৩৫×৪৫ mm</strong>
+            <small>Passport / Visa</small>
+          </button>
+          <button class="size-btn" data-size="51x51" onclick="selectSize('51x51', this)">
+            <strong>২×২ inch</strong>
+            <small>US Visa</small>
+          </button>
+        </div>
+      </div>
+
+      <!-- Background -->
+      <div class="control-group">
+        <div class="control-label"><span class="ci">🎨</span> Background Color</div>
+        <div class="bg-grid" id="bgGrid">
+          <button class="bg-btn bg-white active" data-bg="#ffffff" onclick="selectBg('#ffffff', this)">White</button>
+          <button class="bg-btn bg-blue" data-bg="#1e40af" onclick="selectBg('#1e40af', this)">Blue</button>
+          <button class="bg-btn bg-lightblue" data-bg="#93c5fd" onclick="selectBg('#93c5fd', this)">Sky</button>
+          <button class="bg-btn bg-red" data-bg="#dc2626" onclick="selectBg('#dc2626', this)">Red</button>
+          <button class="bg-btn bg-gray" data-bg="#94a3b8" onclick="selectBg('#94a3b8', this)">Gray</button>
+          <button class="bg-btn bg-green" data-bg="#16a34a" onclick="selectBg('#16a34a', this)">Green</button>
+          <button class="bg-btn bg-none" data-bg="none" onclick="selectBg('none', this)">Original</button>
+        </div>
+      </div>
+
+      <!-- Zoom -->
+      <div class="control-group">
+        <div class="control-label"><span class="ci">🔍</span> Zoom &amp; Position</div>
+        <div class="zoom-row">
+          <input type="range" id="zoomSlider" min="50" max="200" value="100" oninput="updateZoom(this.value)">
+          <span class="zoom-value" id="zoomValue">100%</span>
+        </div>
+      </div>
+
+      <!-- Preview Sheet -->
+      <div class="preview-sheet">
+        <h4>🖨️ প্রিন্ট প্রিভিউ (4×6 inch — ২৫টি ছবি)</h4>
+        <canvas id="sheetCanvas" width="600" height="900"></canvas>
+      </div>
+
+      <!-- Actions -->
+      <div class="action-buttons">
+        <button class="action-btn action-btn-outline" onclick="resetPhoto()">
+          🔄 নতুন ছবি
+        </button>
+        <button class="action-btn action-btn-secondary" onclick="downloadSingle()">
+          ⬇️ Single Photo
+        </button>
+        <button class="action-btn action-btn-primary" onclick="downloadSheet()">
+          🖨️ Download Sheet
+        </button>
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+<!-- ================= FOOTER ================= -->
+<footer>
+  <p>🖥️ <strong>Azad Digital Seva</strong> — সরকারি ও বেসরকারি অনলাইন পরিষেবা</p>
+  <div class="footer-links">
+    <a href="index.html">Home</a>
+    <a href="online-service.html">Services</a>
+    <a href="pvc-card.html">PVC Card</a>
+    <a href="gov-service.html">Govt Services</a>
+  </div>
+  <p class="footer-copyright">© ২০২৫ Azad Digital Seva | সর্বস্বত্ব সংরক্ষিত</p>
+</footer>
+
+<!-- ================= BOTTOM NAV ================= -->
+<nav class="bottom-nav">
+  <div class="bottom-nav-inner">
+    <a href="index.html" class="bn-item">
+      <span class="bn-icon">🏠</span>
+      <span>Home</span>
+    </a>
+    <a href="online-service.html" class="bn-item">
+      <span class="bn-icon">🌐</span>
+      <span>Services</span>
+    </a>
+    <a href="pvc-card.html" class="bn-item">
+      <span class="bn-icon">💳</span>
+      <span>PVC</span>
+    </a>
+    <a href="passport-photo.html" class="bn-item active">
+      <span class="bn-icon">📸</span>
+      <span>Photo</span>
+    </a>
+  </div>
+</nav>
+
+<!-- ================= SCROLL TO TOP ================= -->
+<button class="scroll-top" id="scrollTop" aria-label="Scroll to top">↑</button>
+
+<!-- ================= TOAST ================= -->
+<div class="toast" id="toast"></div>
+
+<!-- ================= SCRIPT ================= -->
+<script>
+(function() {
+
+  var state = {
+    image: null,
+    sizeKey: '25x35',
+    bgColor: '#ffffff',
+    zoom: 100,
+    offsetX: 0,
+    offsetY: 0,
+    dragStart: null
+  };
+
+  var SIZES = {
+    '25x35': { w: 25, h: 35, label: '25×35 mm' },
+    '35x45': { w: 35, h: 45, label: '35×45 mm' },
+    '51x51': { w: 51, h: 51, label: '51×51 mm' }
+  };
+
+  var DPI = 300;
+  var MM_TO_PX = DPI / 25.4;
+
+  var uploadSection = document.getElementById('uploadSection');
+  var editorSection = document.getElementById('editorSection');
+  var photoInput = document.getElementById('photoInput');
+  var previewCanvas = document.getElementById('previewCanvas');
+  var previewCtx = previewCanvas.getContext('2d');
+  var sheetCanvas = document.getElementById('sheetCanvas');
+  var sheetCtx = sheetCanvas.getContext('2d');
+  var zoomSlider = document.getElementById('zoomSlider');
+  var zoomValue = document.getElementById('zoomValue');
+  var scrollBtn = document.getElementById('scrollTop');
+  var toast = document.getElementById('toast');
+
+  function showToast(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    setTimeout(function() { toast.classList.remove('show'); }, 2500);
+  }
+
+  window.handlePhotoUpload = function(event) {
+    var file = event.target.files[0];
+    if (!file) return;
+
+    if (!file.type.startsWith('image/')) {
+      showToast('❌ শুধু ছবি আপলোড করুন');
+      return;
+    }
+
+    if (file.size > 15 * 1024 * 1024) {
+      showToast('❌ ছবি ১৫MB এর কম হতে হবে');
+      return;
+    }
+
+    var reader = new FileReader();
+    reader.onload = function(e) {
+      var img = new Image();
+      img.onload = function() {
+        state.image = img;
+        state.offsetX = 0;
+        state.offsetY = 0;
+        state.zoom = 100;
+        zoomSlider.value = 100;
+        zoomValue.textContent = '100%';
+
+        uploadSection.style.display = 'none';
+        editorSection.classList.add('active');
+
+        updateCanvasSize();
+        drawPreview();
+        drawSheet();
+
+        showToast('✅ ছবি লোড হয়েছে');
+        setTimeout(function() {
+          editorSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }, 100);
+      };
+      img.src = e.target.result;
+    };
+    reader.readAsDataURL(file);
+  };
+
+  window.selectSize = function(key, btn) {
+    state.sizeKey = key;
+    document.querySelectorAll('.size-btn').forEach(function(b) {
+      b.classList.remove('active');
+    });
+    btn.classList.add('active');
+
+    updateCanvasSize();
+    drawPreview();
+    drawSheet();
+    showToast('📐 সাইজ: ' + SIZES[key].label);
+  };
+
+  window.selectBg = function(color, btn) {
+    state.bgColor = color;
+    document.querySelectorAll('.bg-btn').forEach(function(b) {
+      b.classList.remove('active');
+    });
+    btn.classList.add('active');
+
+    drawPreview();
+    drawSheet();
+    showToast('🎨 ব্যাকগ্রাউন্ড পরিবর্তন হয়েছে');
+  };
+
+  window.updateZoom = function(val) {
+    state.zoom = parseInt(val);
+    zoomValue.textContent = val + '%';
+    drawPreview();
+    drawSheet();
+  };
+
+  function updateCanvasSize() {
+    var size = SIZES[state.sizeKey];
+    var aspect = size.w / size.h;
+
+    var displayW = 300;
+    var displayH = Math.round(displayW / aspect);
+
+    if (displayH > 400) {
+      displayH = 400;
+      displayW = Math.round(displayH * aspect);
+    }
+
+    previewCanvas.width = displayW * 2;
+    previewCanvas.height = displayH * 2;
+    previewCanvas.style.width = displayW + 'px';
+    previewCanvas.style.height = displayH + 'px';
+  }
+
+  function drawPreview() {
+    if (!state.image) return;
+
+    var cw = previewCanvas.width;
+    var ch = previewCanvas.height;
+
+    previewCtx.fillStyle = state.bgColor === 'none' ? '#ffffff' : state.bgColor;
+    previewCtx.fillRect(0, 0, cw, ch);
+
+    var img = state.image;
+    var scale = Math.max(cw / img.width, ch / img.height) * (state.zoom / 100);
+    var dw = img.width * scale;
+    var dh = img.height * scale;
+
+    var dx = (cw - dw) / 2 + (state.offsetX * 2);
+    var dy = (ch - dh) / 2 + (state.offsetY * 2);
+
+    previewCtx.drawImage(img, dx, dy, dw, dh);
+
+    previewCtx.strokeStyle = 'rgba(255,255,255,.4)';
+    previewCtx.lineWidth = 2;
+    previewCtx.strokeRect(1, 1, cw - 2, ch - 2);
+  }
+
+  function drawSheet() {
+    if (!state.image) return;
+
+    var sheetW = 4 * DPI;
+    var sheetH = 6 * DPI;
+
+    sheetCanvas.width = sheetW;
+    sheetCanvas.height = sheetH;
+
+    sheetCtx.fillStyle = '#ffffff';
+    sheetCtx.fillRect(0, 0, sheetW, sheetH);
+
+    var size = SIZES[state.sizeKey];
+    var photoW = size.w * MM_TO_PX;
+    var photoH = size.h * MM_TO_PX;
+
+    var gap = 2 * MM_TO_PX;
+    var totalW = photoW + gap;
+    var totalH = photoH + gap;
+
+    var cols = Math.floor((sheetW - gap) / totalW);
+    var rows = Math.floor((sheetH - gap) / totalH);
+    var maxPhotos = Math.min(cols * rows, 25);
+
+    var gridW = cols * totalW - gap;
+    var gridH = rows * totalH - gap;
+    var startX = (sheetW - gridW) / 2;
+    var startY = (sheetH - gridH) / 2;
+
+    var count = 0;
+
+    for (var r = 0; r < rows && count < maxPhotos; r++) {
+      for (var c = 0; c < cols && count < maxPhotos; c++) {
+        var x = startX + c * totalW;
+        var y = startY + r * totalH;
+
+        drawPhotoOnSheet(x, y, photoW, photoH);
+
+        sheetCtx.strokeStyle = '#e5e7eb';
+        sheetCtx.lineWidth = 1;
+        sheetCtx.strokeRect(x, y, photoW, photoH);
+
+        count++;
+      }
+    }
+
+    sheetCtx.fillStyle = '#94a3b8';
+    sheetCtx.font = '600 20px Arial';
+    sheetCtx.textAlign = 'center';
+    sheetCtx.fillText('Azad Digital Seva • ' + count + ' photos @ ' + size.label, sheetW / 2, sheetH - 20);
+  }
+
+  function drawPhotoOnSheet(x, y, w, h) {
+    sheetCtx.fillStyle = state.bgColor === 'none' ? '#ffffff' : state.bgColor;
+    sheetCtx.fillRect(x, y, w, h);
+
+    var img = state.image;
+    var scale = Math.max(w / img.width, h / img.height) * (state.zoom / 100);
+    var dw = img.width * scale;
+    var dh = img.height * scale;
+
+    var dx = x + (w - dw) / 2 + (state.offsetX / 300 * w * 2);
+    var dy = y + (h - dh) / 2 + (state.offsetY / 400 * h * 2);
+
+    sheetCtx.save();
+    sheetCtx.beginPath();
+    sheetCtx.rect(x, y, w, h);
+    sheetCtx.clip();
+    sheetCtx.drawImage(img, dx, dy, dw, dh);
+    sheetCtx.restore();
+  }
+
+  function startDrag(e) {
+    if (!state.image) return;
+    var point = getPoint(e);
+    state.dragStart = {
+      x: point.x,
+      y: point.y,
+      offsetX: state.offsetX,
+      offsetY: state.offsetY
+    };
+    previewCanvas.style.cursor = 'grabbing';
+  }
+
+  function moveDrag(e) {
+    if (!state.dragStart) return;
+    e.preventDefault();
+
+    var point = getPoint(e);
+    var dx = point.x - state.dragStart.x;
+    var dy = point.y - state.dragStart.y;
+
+    state.offsetX = state.dragStart.offsetX + dx;
+    state.offsetY = state.dragStart.offsetY + dy;
+
+    drawPreview();
+    drawSheet();
+  }
+
+  function endDrag() {
+    state.dragStart = null;
+    previewCanvas.style.cursor = 'move';
+  }
+
+  function getPoint(e) {
+    if (e.touches && e.touches[0]) {
+      return { x: e.touches[0].clientX, y: e.touches[0].clientY };
+    }
+    return { x: e.clientX, y: e.clientY };
+  }
+
+  previewCanvas.addEventListener('mousedown', startDrag);
+  document.addEventListener('mousemove', moveDrag);
+  document.addEventListener('mouseup', endDrag);
+
+  previewCanvas.addEventListener('touchstart', startDrag, { passive: true });
+  document.addEventListener('touchmove', moveDrag, { passive: false });
+  document.addEventListener('touchend', endDrag);
+
+  window.downloadSingle = function() {
+    if (!state.image) return;
+
+    var size = SIZES[state.sizeKey];
+    var w = Math.round(size.w * MM_TO_PX);
+    var h = Math.round(size.h * MM_TO_PX);
+
+    var off = document.createElement('canvas');
+    off.width = w;
+    off.height = h;
+    var ctx = off.getContext('2d');
+
+    ctx.fillStyle = state.bgColor === 'none' ? '#ffffff' : state.bgColor;
+    ctx.fillRect(0, 0, w, h);
+
+    var img = state.image;
+    var scale = Math.max(w / img.width, h / img.height) * (state.zoom / 100);
+    var dw = img.width * scale;
+    var dh = img.height * scale;
+
+    var dx = (w - dw) / 2 + (state.offsetX / 300 * w * 2);
+    var dy = (h - dh) / 2 + (state.offsetY / 400 * h * 2);
+
+    ctx.drawImage(img, dx, dy, dw, dh);
+
+    off.toBlob(function(blob) {
+      var url = URL.createObjectURL(blob);
+      var a = document.createElement('a');
+      a.href = url;
+      a.download = 'passport-photo-' + Date.now() + '.png';
+      a.click();
+      URL.revokeObjectURL(url);
+      showToast('⬇️ Single Photo ডাউনলোড হয়েছে');
+    }, 'image/png');
+  };
+
+  window.downloadSheet = function() {
+    if (!state.image) return;
+
+    sheetCanvas.toBlob(function(blob) {
+      var url = URL.createObjectURL(blob);
+      var a = document.createElement('a');
+      a.href = url;
+      a.download = 'passport-photo-sheet-' + Date.now() + '.png';
+      a.click();
+      URL.revokeObjectURL(url);
+      showToast('🖨️ প্রিন্ট শিট ডাউনলোড হয়েছে');
+    }, 'image/png');
+  };
+
+  window.resetPhoto = function() {
+    state.image = null;
+    state.offsetX = 0;
+    state.offsetY = 0;
+    state.zoom = 100;
+    state.sizeKey = '25x35';
+    state.bgColor = '#ffffff';
+
+    photoInput.value = '';
+    editorSection.classList.remove('active');
+    uploadSection.style.display = 'block';
+
+    document.querySelectorAll('.size-btn').forEach(function(b, i) {
+      b.classList.toggle('active', i === 0);
+    });
+    document.querySelectorAll('.bg-btn').forEach(function(b, i) {
+      b.classList.toggle('active', i === 0);
+    });
+    zoomSlider.value = 100;
+    zoomValue.textContent = '100%';
+
+    showToast('🔄 নতুন ছবি আপলোড করুন');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  window.addEventListener('scroll', function() {
+    if (window.scrollY > 400) {
+      scrollBtn.classList.add('show');
+    } else {
+      scrollBtn.classList.remove('show');
+    }
+  }, { passive: true });
+
+  scrollBtn.addEventListener('click', function() {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+
+  updateCanvasSize();
+
+})();
+</script>
+
+</body>
+</html>

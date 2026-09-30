@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
-<title>Passport Size Photo | Azad Digital Seva</title>
-<meta name="description" content="পাসপোর্ট সাইজ ছবি, ব্যাকগ্রাউন্ড চেঞ্জ, রেস্টোরেশন — সব সেবা এক জায়গায়।">
+<title>Photo Enhance | Azad Digital Seva</title>
+<meta name="description" content="পুরোনো ছবি HD করুন — AI দিয়ে মুহূর্তেই প্রফেশনাল মানের পোর্ট্রেট">
 <meta name="theme-color" content="#075e54">
 <link rel="icon" type="image/png" href="assets/azad-logo.png">
 <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&family=Noto+Sans+Bengali:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -33,14 +33,12 @@
     overflow-x: hidden;
   }
 
-  /* ============ TOP FLAG STRIP ============ */
   .flag-strip { height: 3px; display: flex; position: fixed; top: 0; left: 0; right: 0; z-index: 10000; }
   .flag-strip div { flex: 1; }
   .flag-strip .s { background: var(--saffron); }
   .flag-strip .w { background: #fff; }
   .flag-strip .g { background: var(--success); }
 
-  /* ============ HEADER ============ */
   header {
     background: linear-gradient(135deg, #075e54 0%, #128c7e 100%);
     color: #fff;
@@ -58,27 +56,17 @@
   }
   .header-wrap { width: min(1280px,100%); margin: auto; display: flex; align-items: center; justify-content: space-between; gap: 10px; width: 100%; }
   .brand { display: flex; align-items: center; gap: 9px; text-decoration: none; color: #fff; }
-  .brand-logo {
-    width: 40px; height: 40px; border-radius: 11px;
-    background: linear-gradient(135deg, var(--saffron), var(--gold));
-    display: flex; align-items: center; justify-content: center;
-    font-size: 1.25rem; border: 1.5px solid rgba(255,255,255,.25);
-  }
+  .brand-logo { width: 40px; height: 40px; border-radius: 11px; background: linear-gradient(135deg,var(--saffron),var(--gold)); display: flex; align-items: center; justify-content: center; font-size: 1.25rem; border: 1.5px solid rgba(255,255,255,.25); }
   .brand-text { display: flex; flex-direction: column; line-height: 1.1; }
   .brand-text strong { color: #fff; font-size: 15px; font-weight: 800; }
   .brand-text strong em { color: var(--gold); font-style: normal; }
   .brand-text small { margin-top: 2px; color: #bfe9ce; font-size: 9px; font-weight: 600; }
   .nav-links { display: flex; gap: 4px; }
-  .nav-links a { padding: 6px 12px; border-radius: 18px; color: #eaf8ef; font-size: 11.5px; font-weight: 700; text-decoration: none; transition: .22s; }
+  .nav-links a { padding: 6px 12px; border-radius: 18px; color: #eaf8ef; font-size: 11.5px; font-weight: 700; text-decoration: none; }
   .nav-links a:hover { background: rgba(255,255,255,.15); }
-  .nav-links a.active { background: var(--gold); color: #075e54; }
 
-  /* ============ HERO ============ */
   .hero {
-    background:
-      radial-gradient(circle at 15% 20%, rgba(255,153,51,.18), transparent 30%),
-      radial-gradient(circle at 85% 80%, rgba(19,136,8,.15), transparent 30%),
-      linear-gradient(135deg, #0a2540 0%, #1e3a5f 50%, #0a2540 100%);
+    background: radial-gradient(circle at 15% 20%, rgba(255,153,51,.18), transparent 30%), radial-gradient(circle at 85% 80%, rgba(19,136,8,.15), transparent 30%), linear-gradient(135deg, #0a2540 0%, #1e3a5f 50%, #0a2540 100%);
     color: #fff;
     padding: 90px 16px 55px;
     text-align: center;
@@ -86,264 +74,139 @@
     margin-top: 60px;
   }
   .hero-content { max-width: 750px; margin: 0 auto; position: relative; z-index: 1; }
-  .hero-icon {
-    width: 62px; height: 62px; margin: 0 auto 12px;
-    background: linear-gradient(135deg, var(--saffron), var(--gold));
-    border-radius: 18px; display: flex; align-items: center; justify-content: center;
-    font-size: 1.8rem; border: 2px solid rgba(255,255,255,.2);
-    animation: float 3s ease-in-out infinite;
-  }
+  .hero-icon { width: 62px; height: 62px; margin: 0 auto 12px; background: linear-gradient(135deg,var(--saffron),var(--gold)); border-radius: 18px; display: flex; align-items: center; justify-content: center; font-size: 1.8rem; border: 2px solid rgba(255,255,255,.2); animation: float 3s ease-in-out infinite; }
   @keyframes float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-5px); } }
   .hero h1 { font-size: 1.55rem; font-weight: 800; margin-bottom: 8px; line-height: 1.2; }
-  .hero h1 span {
-    background: linear-gradient(90deg, var(--saffron), var(--gold));
-    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
+  .hero h1 span { background: linear-gradient(90deg,var(--saffron),var(--gold)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
   .hero p { font-size: .88rem; color: rgba(255,255,255,.85); max-width: 560px; margin: 0 auto; }
   .hero-badges { display: flex; justify-content: center; gap: 6px; margin-top: 14px; flex-wrap: wrap; }
-  .hero-badge {
-    display: inline-flex; align-items: center; gap: 5px;
-    background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.2);
-    padding: 4px 11px; border-radius: 20px; font-size: .68rem; font-weight: 600;
-  }
-  .hero-badge .dot {
-    width: 5px; height: 5px; background: #4ade80; border-radius: 50%;
-    box-shadow: 0 0 8px #4ade80; animation: pulse 2s infinite;
-  }
+  .hero-badge { display: inline-flex; align-items: center; gap: 5px; background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.2); padding: 4px 11px; border-radius: 20px; font-size: .68rem; font-weight: 600; }
+  .hero-badge .dot { width: 5px; height: 5px; background: #4ade80; border-radius: 50%; box-shadow: 0 0 8px #4ade80; animation: pulse 2s infinite; }
   @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: .4; } }
 
-  /* ============ CONTAINER ============ */
   .container { max-width: 950px; margin: -28px auto 0; padding: 0 12px 40px; position: relative; z-index: 5; }
-  .card-box {
-    background: #fff;
-    border-radius: 18px;
-    box-shadow: 0 15px 40px rgba(10,37,64,.15);
-    border-top: 4px solid var(--saffron);
-    padding: 22px 18px;
-  }
+  .card-box { background: #fff; border-radius: 18px; box-shadow: 0 15px 40px rgba(10,37,64,.15); border-top: 4px solid var(--saffron); padding: 24px 20px; }
 
-  /* ============ SERVICE CARDS ============ */
-  .service-cards-title {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 1.05rem;
-    color: var(--dark);
-    font-weight: 800;
-    margin-bottom: 16px;
-    padding-bottom: 12px;
-    border-bottom: 2px solid #f0e6d2;
-  }
-  .service-cards-title .st-icon {
-    width: 34px;
-    height: 34px;
-    border-radius: 9px;
-    background: linear-gradient(135deg, #6a11cb, #2575fc);
-    display: flex;
+  .steps { display: flex; justify-content: center; gap: 8px; margin-bottom: 24px; flex-wrap: wrap; }
+  .step { display: flex; align-items: center; gap: 6px; padding: 6px 14px; border-radius: 20px; background: #f1f5f9; color: #64748b; font-size: .72rem; font-weight: 700; border: 1.5px solid transparent; transition: .3s; }
+  .step.active { background: linear-gradient(135deg, #075e54, #128c7e); color: #fff; }
+  .step.done { background: #d1fae5; color: #065f46; }
+  .step-num { width: 20px; height: 20px; border-radius: 50%; background: rgba(255,255,255,.3); display: flex; align-items: center; justify-content: center; font-size: .68rem; font-weight: 900; }
+  .step.active .step-num { background: var(--gold); color: #075e54; }
+  .step.done .step-num { background: #065f46; color: #fff; }
+
+  .upload-box { border: 3px dashed #cbd5e1; border-radius: 18px; padding: 40px 20px; text-align: center; background: linear-gradient(145deg, #f8fbff, #fff); cursor: pointer; transition: all .3s; }
+  .upload-box:hover { border-color: var(--saffron); background: linear-gradient(145deg, #fff8e7, #fff); transform: translateY(-2px); }
+  .upload-box input { display: none; }
+  .upload-icon { width: 70px; height: 70px; margin: 0 auto 14px; background: linear-gradient(135deg, #e0f2fe, #bae6fd); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.8rem; animation: uploadPulse 2s ease-in-out infinite; }
+  @keyframes uploadPulse { 0%,100% { transform: scale(1); } 50% { transform: scale(1.05); } }
+  .upload-box h3 { font-size: 1.1rem; color: var(--dark); font-weight: 800; margin-bottom: 6px; }
+  .upload-box p { font-size: .82rem; color: var(--text-muted); font-weight: 600; }
+  .upload-box .file-types { display: inline-block; margin-top: 12px; padding: 5px 12px; border-radius: 20px; background: #f0fdf4; color: #065f46; font-size: .68rem; font-weight: 700; border: 1px solid #bbf7d0; }
+
+  .features { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 22px; }
+  .feature { background: linear-gradient(145deg, #f8fbff, #fff); border: 1px solid #e1ebf5; border-radius: 12px; padding: 14px 10px; text-align: center; }
+  .feature-icon { font-size: 1.4rem; margin-bottom: 6px; display: block; }
+  .feature strong { display: block; font-size: .74rem; color: var(--dark); font-weight: 800; }
+  .feature small { display: block; font-size: .62rem; color: var(--text-muted); font-weight: 600; margin-top: 2px; }
+
+  /* ============ PROCESSING SCREEN ============ */
+  .processing-screen {
+    display: none;
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: linear-gradient(135deg, #0a2540 0%, #1e3a5f 50%, #075e54 100%);
+    color: #fff;
+    z-index: 99999;
     align-items: center;
     justify-content: center;
-    font-size: 1rem;
-    flex-shrink: 0;
-    box-shadow: 0 5px 12px rgba(106,17,203,.3);
-  }
-
-  .service-cards {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-    gap: 12px;
-  }
-
-  .sc-card {
-    --c1: #6a11cb;
-    --c2: #2575fc;
-    --shadow-color: rgba(106,17,203,.3);
-    position: relative;
-    overflow: hidden;
-    display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 22px 14px;
-    border-radius: 16px;
-    text-decoration: none;
-    background: linear-gradient(145deg, #ffffff, #f8fbff);
-    border: 2px solid #e1ebf5;
-    box-shadow: 0 4px 14px rgba(10,37,64,.06);
-    transition: all .3s cubic-bezier(.4,0,.2,1);
-    min-height: 160px;
+    padding: 20px;
     text-align: center;
-    cursor: pointer;
   }
+  .processing-screen.active { display: flex; }
+  .processing-content { position: relative; z-index: 1; max-width: 500px; }
 
-  .sc-card::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 5px;
-    background: linear-gradient(90deg, var(--c1), var(--c2));
-    transition: height .3s;
-  }
+  .ai-loader { width: 120px; height: 120px; margin: 0 auto 24px; position: relative; }
+  .ai-ring { position: absolute; inset: 0; border-radius: 50%; border: 3px solid transparent; border-top-color: var(--gold); animation: spin 1.5s linear infinite; }
+  .ai-ring:nth-child(2) { inset: 12px; border-top-color: var(--saffron); animation: spin 2s linear infinite reverse; }
+  .ai-ring:nth-child(3) { inset: 24px; border-top-color: var(--success); animation: spin 2.5s linear infinite; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .ai-center { position: absolute; inset: 36px; background: linear-gradient(135deg,var(--saffron),var(--gold)); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; }
 
-  .sc-card:hover {
-    transform: translateY(-6px);
-    border-color: transparent;
-    box-shadow: 0 18px 36px var(--shadow-color);
-  }
+  .processing-screen h2 { font-size: 1.5rem; font-weight: 800; margin-bottom: 10px; color: #fff; }
+  .processing-screen h2 span { background: linear-gradient(90deg,var(--saffron),var(--gold)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+  .processing-screen p { font-size: .9rem; color: rgba(255,255,255,.8); margin-bottom: 24px; }
 
-  .sc-card:hover::before { height: 7px; }
+  .progress-bar { width: 100%; max-width: 400px; height: 8px; background: rgba(255,255,255,.15); border-radius: 20px; overflow: hidden; margin: 0 auto 18px; }
+  .progress-fill { height: 100%; background: linear-gradient(90deg,var(--saffron),var(--gold)); border-radius: 20px; width: 0%; transition: width .3s ease; }
 
-  .sc-card.coming-soon {
-    opacity: .75;
-    cursor: not-allowed;
-  }
+  .processing-checklist { display: flex; flex-direction: column; gap: 8px; max-width: 400px; margin: 0 auto 24px; text-align: left; }
+  .check-item { display: flex; align-items: center; gap: 10px; padding: 10px 14px; background: rgba(255,255,255,.06); border-radius: 10px; font-size: .82rem; font-weight: 600; color: rgba(255,255,255,.5); border: 1px solid rgba(255,255,255,.08); }
+  .check-item.active { color: #fff; background: rgba(255,153,51,.12); border-color: rgba(255,153,51,.3); }
+  .check-item.done { color: #86efac; background: rgba(34,197,94,.12); border-color: rgba(34,197,94,.3); }
+  .check-icon { width: 20px; height: 20px; border-radius: 50%; border: 2px solid rgba(255,255,255,.3); display: flex; align-items: center; justify-content: center; font-size: .7rem; flex-shrink: 0; }
+  .check-item.active .check-icon { border-color: var(--gold); background: var(--gold); color: #0a2540; }
+  .check-item.done .check-icon { border-color: #22c55e; background: #22c55e; color: #fff; }
 
-  .sc-card.coming-soon:hover {
-    transform: none;
-    box-shadow: 0 4px 14px rgba(10,37,64,.06);
-  }
+  .processing-timer { display: inline-flex; align-items: center; gap: 6px; padding: 6px 14px; border-radius: 20px; background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.15); font-size: .78rem; font-weight: 700; color: #fff; margin-bottom: 20px; }
 
-  .sc-icon {
-    width: 60px;
-    height: 60px;
-    border-radius: 16px;
-    display: flex;
+  .cancel-btn { background: rgba(255,255,255,.1); color: #fff; border: 1.5px solid rgba(255,255,255,.2); padding: 10px 24px; border-radius: 25px; font-size: .85rem; font-weight: 700; cursor: pointer; font-family: inherit; }
+
+  /* ============ READY OVERLAY ============ */
+  .ready-overlay {
+    display: none;
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(10,37,64,.78);
+    backdrop-filter: blur(8px);
+    z-index: 99998;
     align-items: center;
     justify-content: center;
-    font-size: 1.8rem;
-    background: linear-gradient(135deg, var(--c1), var(--c2));
-    box-shadow: 0 8px 20px var(--shadow-color);
-    margin-bottom: 12px;
-    color: #fff;
-    transition: transform .3s;
+    padding: 16px;
   }
+  .ready-overlay.active { display: flex; }
 
-  .sc-card:hover .sc-icon {
-    transform: scale(1.08) rotate(-3deg);
-  }
+  .ready-modal { background: #fff; border-radius: 22px; max-width: 420px; width: 100%; padding: 30px 24px; text-align: center; box-shadow: 0 30px 70px rgba(0,0,0,.4); max-height: 92vh; overflow-y: auto; animation: modalIn .4s cubic-bezier(.2,.9,.3,1.3); }
+  @keyframes modalIn { from { opacity: 0; transform: scale(.85) translateY(20px); } to { opacity: 1; transform: scale(1) translateY(0); } }
 
-  .sc-card strong {
-    display: block;
-    font-size: .88rem;
-    font-weight: 800;
-    color: var(--dark);
-    line-height: 1.3;
-    margin-bottom: 4px;
-  }
+  .ready-icon { width: 70px; height: 70px; margin: 0 auto 16px; border-radius: 50%; background: linear-gradient(135deg, #d1fae5, #a7f3d0); display: flex; align-items: center; justify-content: center; font-size: 2rem; animation: successPop .6s ease; }
+  @keyframes successPop { 0% { transform: scale(0); } 50% { transform: scale(1.15); } 100% { transform: scale(1); } }
 
-  .sc-card small {
-    display: block;
-    font-size: .68rem;
-    color: var(--text-muted);
-    font-weight: 600;
-    line-height: 1.4;
-  }
+  .ready-modal h3 { font-size: 1.4rem; color: var(--dark); font-weight: 800; margin-bottom: 8px; }
+  .ready-modal > p { font-size: .88rem; color: var(--text-muted); margin-bottom: 20px; line-height: 1.6; }
+  .ready-modal > p b { color: var(--primary); }
 
-  .sc-arrow {
-    position: absolute;
-    bottom: 8px;
-    right: 10px;
-    width: 24px;
-    height: 24px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: .72rem;
-    font-weight: 900;
-    color: #fff;
-    background: linear-gradient(135deg, var(--c1), var(--c2));
-    box-shadow: 0 3px 8px var(--shadow-color);
-  }
+  .copy-status { display: flex; align-items: center; justify-content: center; gap: 8px; padding: 14px 16px; border-radius: 12px; background: linear-gradient(135deg, #dcfce7, #bbf7d0); color: #065f46; font-size: .85rem; font-weight: 700; margin-bottom: 22px; border: 1.5px solid #86efac; }
+  .check-circle { width: 22px; height: 22px; background: #22c55e; color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: .75rem; font-weight: 900; flex-shrink: 0; }
 
-  .sc-badge {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    background: linear-gradient(135deg, #22c55e, #16a34a);
-    color: #fff;
-    padding: 3px 9px;
-    border-radius: 20px;
-    font-size: .56rem;
-    font-weight: 900;
-    letter-spacing: .3px;
-    box-shadow: 0 3px 10px rgba(34,197,94,.4);
-  }
-  .sc-badge.soon {
-    background: linear-gradient(135deg, #94a3b8, #64748b);
-    box-shadow: 0 3px 10px rgba(100,116,139,.3);
-  }
-
-  /* Color variations */
-  .sc-card:nth-child(1) { --c1: #6a11cb; --c2: #2575fc; --shadow-color: rgba(106,17,203,.35); }
-  .sc-card:nth-child(2) { --c1: #059669; --c2: #10b981; --shadow-color: rgba(5,150,105,.35); }
-  .sc-card:nth-child(3) { --c1: #ea580c; --c2: #f97316; --shadow-color: rgba(234,88,12,.35); }
-  .sc-card:nth-child(4) { --c1: #dc2626; --c2: #ef4444; --shadow-color: rgba(220,38,38,.35); }
-  .sc-card:nth-child(5) { --c1: #0d47a1; --c2: #1976d2; --shadow-color: rgba(13,71,161,.35); }
+  .modal-buttons { display: flex; gap: 10px; flex-wrap: wrap; }
+  .modal-btn { flex: 1; min-width: 120px; padding: 14px 20px; border-radius: 12px; border: none; font-family: inherit; font-size: .9rem; font-weight: 800; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; gap: 6px; text-decoration: none; transition: .3s; }
+  .modal-btn-primary { background: linear-gradient(135deg, #075e54, #128c7e); color: #fff; box-shadow: 0 6px 18px rgba(7,94,84,.35); }
+  .modal-btn-primary:hover { transform: translateY(-2px); box-shadow: 0 10px 24px rgba(7,94,84,.45); }
+  .modal-btn-secondary { background: #f1f5f9; color: #475569; border: 1.5px solid #e2e8f0; }
+  .modal-btn-secondary:hover { background: #e2e8f0; }
 
   /* ============ FOOTER ============ */
-  footer {
-    background: linear-gradient(135deg, #0a2540, #1e3a5f);
-    color: #d4e6e3;
-    text-align: center;
-    padding: 22px 14px 90px;
-    border-top: 3px solid var(--gold);
-    margin-top: 30px;
-    font-size: .78rem;
-  }
-  footer p { max-width: 750px; margin: 0 auto 8px; line-height: 1.6; }
+  footer { background: linear-gradient(135deg, #0a2540, #1e3a5f); color: #d4e6e3; text-align: center; padding: 22px 14px 90px; border-top: 3px solid var(--gold); margin-top: 30px; font-size: .78rem; }
+  footer p { max-width: 750px; margin: 0 auto 8px; }
   .footer-links { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; margin: 10px 0; }
-  .footer-links a { color: var(--gold); text-decoration: none; font-size: .75rem; font-weight: 700; transition: .2s; }
-  .footer-links a:hover { color: #fff; text-decoration: underline; }
+  .footer-links a { color: var(--gold); text-decoration: none; font-size: .75rem; font-weight: 700; }
+  .footer-links a:hover { text-decoration: underline; }
   .footer-copyright { font-size: .68rem; opacity: .7; margin-top: 10px; }
 
-  /* ============ BOTTOM NAV ============ */
-  .bottom-nav {
-    display: none;
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background: #fff;
-    border-top: 1px solid var(--border);
-    box-shadow: 0 -4px 20px rgba(10,37,64,.08);
-    z-index: 998;
-    padding: 6px 4px;
-    padding-bottom: calc(6px + env(safe-area-inset-bottom));
-  }
+  .bottom-nav { display: none; position: fixed; bottom: 0; left: 0; right: 0; background: #fff; border-top: 1px solid var(--border); padding: 6px 4px calc(6px + env(safe-area-inset-bottom)); z-index: 998; }
   .bottom-nav-inner { max-width: 500px; margin: auto; display: grid; grid-template-columns: repeat(4, 1fr); gap: 4px; }
-  .bn-item {
-    display: flex; flex-direction: column; align-items: center; justify-content: center;
-    gap: 2px; padding: 7px 4px; border-radius: 12px; text-decoration: none;
-    color: #64748b; font-size: 10px; font-weight: 700; transition: .22s; min-height: 48px;
-  }
-  .bn-item .bn-icon { font-size: 1.25rem; line-height: 1; }
+  .bn-item { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; padding: 7px 4px; border-radius: 12px; text-decoration: none; color: #64748b; font-size: 10px; font-weight: 700; min-height: 48px; }
   .bn-item.active { color: var(--primary); background: linear-gradient(135deg, #e8f7ee, #d1f0dd); }
+  .bn-icon { font-size: 1.25rem; line-height: 1; }
 
-  /* ============ SCROLL TOP ============ */
-  .scroll-top {
-    position: fixed;
-    bottom: 76px;
-    right: 16px;
-    width: 42px;
-    height: 42px;
-    border-radius: 50%;
-    background: linear-gradient(135deg, var(--saffron), #e67e22);
-    color: #fff;
-    border: none;
-    font-size: 1.15rem;
-    cursor: pointer;
-    box-shadow: 0 6px 18px rgba(255,153,51,.5);
-    display: none;
-    align-items: center;
-    justify-content: center;
-    z-index: 997;
-    transition: all .3s;
-    font-weight: 900;
-  }
+  .scroll-top { position: fixed; bottom: 76px; right: 16px; width: 42px; height: 42px; border-radius: 50%; background: linear-gradient(135deg,var(--saffron),#e67e22); color: #fff; border: none; font-size: 1.15rem; cursor: pointer; box-shadow: 0 6px 18px rgba(255,153,51,.5); display: none; align-items: center; justify-content: center; z-index: 997; font-weight: 900; }
   .scroll-top.show { display: flex; }
 
-  /* ============ MOBILE ============ */
+  .toast { position: fixed; bottom: 90px; left: 50%; transform: translateX(-50%) translateY(100px); background: #1e293b; color: #fff; padding: 11px 22px; border-radius: 30px; font-size: .82rem; font-weight: 700; box-shadow: 0 10px 30px rgba(0,0,0,.3); opacity: 0; transition: all .4s; z-index: 9999; white-space: nowrap; max-width: 90vw; overflow: hidden; text-overflow: ellipsis; pointer-events: none; }
+  .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
   @media (max-width: 768px) {
     body { padding-bottom: 70px; }
     .nav-links { display: none; }
@@ -351,18 +214,14 @@
     .hero h1 { font-size: 1.3rem; }
     .container { padding: 0 10px 30px; margin-top: -24px; }
     .card-box { padding: 18px 14px; border-radius: 16px; }
-    .service-cards { grid-template-columns: repeat(2, 1fr); gap: 10px; }
-    .sc-card { padding: 18px 10px; min-height: 140px; }
-    .sc-icon { width: 52px; height: 52px; font-size: 1.5rem; border-radius: 14px; }
-    .sc-card strong { font-size: .78rem; }
-    .sc-card small { font-size: .62rem; }
+    .features { grid-template-columns: 1fr; }
+    .feature { display: flex; align-items: center; gap: 10px; text-align: left; padding: 10px 14px; }
+    .feature-icon { margin: 0; }
     .bottom-nav { display: block; }
-    .scroll-top { bottom: 78px; right: 12px; width: 38px; height: 38px; font-size: 1rem; }
-    footer { padding: 18px 12px 86px; margin-top: 24px; }
-  }
-
-  @media (max-width: 400px) {
-    .service-cards { grid-template-columns: 1fr; }
+    .modal-btn { min-width: 100%; }
+    .ready-modal { padding: 24px 18px; }
+    .ready-modal h3 { font-size: 1.2rem; }
+    .ready-modal > p { font-size: .82rem; }
   }
 </style>
 </head>
@@ -382,7 +241,7 @@
     </a>
     <nav class="nav-links">
       <a href="index.html">🏠 Home</a>
-      <a href="passport-photo.html" class="active">📸 Photo</a>
+      <a href="passport-photo.html">📸 Photo</a>
     </nav>
   </div>
 </header>
@@ -390,13 +249,14 @@
 <!-- ================= HERO ================= -->
 <section class="hero">
   <div class="hero-content">
-    <div class="hero-icon">📸</div>
-    <h1>Photo <span>Studio</span></h1>
-    <p>পাসপোর্ট ছবি, ব্যাকগ্রাউন্ড চেঞ্জ, রেস্টোরেশন — সব সেবা এক জায়গায়। সম্পূর্ণ ফ্রি।</p>
+    <div class="hero-icon">✨</div>
+    <h1>পুরোনো ছবি <span>HD করুন</span></h1>
+    <p>AI দিয়ে মুহূর্তেই আপনার পুরোনো ছবিকে প্রফেশনাল স্টুডিও মানের HD পোর্ট্রেটে রূপান্তর করুন।</p>
     <div class="hero-badges">
-      <span class="hero-badge"><span class="dot"></span> 100% Free</span>
-      <span class="hero-badge">🎨 AI Powered</span>
+      <span class="hero-badge"><span class="dot"></span> AI Powered</span>
       <span class="hero-badge">⚡ Instant</span>
+      <span class="hero-badge">🎨 Blue BG</span>
+      <span class="hero-badge">💯 Free</span>
     </div>
   </div>
 </section>
@@ -405,55 +265,108 @@
 <div class="container">
   <div class="card-box">
 
-    <div class="service-cards-title">
-      <span class="st-icon">🎯</span>
-      ফটো সার্ভিস সমূহ
+    <!-- Steps -->
+    <div class="steps">
+      <div class="step active" id="step1">
+        <span class="step-num">1</span> ছবি আপলোড
+      </div>
+      <div class="step" id="step2">
+        <span class="step-num">2</span> কপি Prompt
+      </div>
+      <div class="step" id="step3">
+        <span class="step-num">3</span> Gemini তে Paste
+      </div>
+      <div class="step" id="step4">
+        <span class="step-num">4</span> ডাউনলোড
+      </div>
     </div>
 
-    <div class="service-cards">
+    <!-- Upload Box -->
+    <div class="upload-box" onclick="document.getElementById('photoInput').click()">
+      <div class="upload-icon">📸</div>
+      <h3>আপনার ছবি আপলোড করুন</h3>
+      <p>এখানে ক্লিক করুন অথবা ছবি ড্র্যাগ করুন<br>পুরোনো, ঝাপসা বা কম আলোর ছবি হলেও চলবে</p>
+      <span class="file-types">JPG • PNG • WEBP • JPEG</span>
+      <input type="file" id="photoInput" accept="image/*">
+    </div>
 
-      <!-- 1. Photo Background Change (Active) -->
-      <a href="photo-enhance.html" class="sc-card">
-        <span class="sc-badge">POPULAR</span>
-        <span class="sc-icon">🎨</span>
-        <strong>ফটো ব্যাকগ্রাউন্ড চেঞ্জ</strong>
-        <small>পুরোনো ছবি HD + নীল ব্যাকগ্রাউন্ড</small>
-        <span class="sc-arrow">→</span>
+    <!-- Features -->
+    <div class="features">
+      <div class="feature">
+        <span class="feature-icon">🔍</span>
+        <div><strong>HD Restoration</strong><small>ঝাপসা ছবি স্পষ্ট</small></div>
+      </div>
+      <div class="feature">
+        <span class="feature-icon">🎨</span>
+        <div><strong>Blue Background</strong><small>স্টুডিও স্টাইল</small></div>
+      </div>
+      <div class="feature">
+        <span class="feature-icon">👤</span>
+        <div><strong>Face Safe</strong><small>মুখ অপরিবর্তিত</small></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ================= PROCESSING SCREEN ================= -->
+<div class="processing-screen" id="processingScreen">
+  <div class="processing-content">
+
+    <div class="ai-loader">
+      <div class="ai-ring"></div>
+      <div class="ai-ring"></div>
+      <div class="ai-ring"></div>
+      <div class="ai-center">✨</div>
+    </div>
+
+    <h2>AI প্রসেস হচ্ছে... <span>অপেক্ষা করুন</span></h2>
+    <p>অনুগ্রহ করে কয়েক সেকেন্ড অপেক্ষা করুন</p>
+
+    <div class="processing-timer">
+      ⏱️ <span id="timer">0.0</span> সেকেন্ড
+    </div>
+
+    <div class="progress-bar">
+      <div class="progress-fill" id="progressFill"></div>
+    </div>
+
+    <div class="processing-checklist">
+      <div class="check-item" id="check1">
+        <span class="check-icon">✓</span>
+        <span>ছবি প্রসেস করা হচ্ছে</span>
+      </div>
+      <div class="check-item" id="check2">
+        <span class="check-icon">✓</span>
+        <span>Prompt কপি করা হচ্ছে</span>
+      </div>
+    </div>
+
+    <button class="cancel-btn" onclick="cancelProcessing()">বাতিল করুন</button>
+
+  </div>
+</div>
+
+<!-- ================= READY MODAL (English) ================= -->
+<div class="ready-overlay" id="readyOverlay">
+  <div class="ready-modal">
+
+    <div class="ready-icon">✅</div>
+    <h3>Ready!</h3>
+    <p>Your prompt has been copied. Click <b>Submit</b> to continue.</p>
+
+    <div class="copy-status">
+      <span class="check-circle">✓</span>
+      <span>Prompt copied successfully</span>
+    </div>
+
+    <div class="modal-buttons">
+      <button class="modal-btn modal-btn-secondary" onclick="closeReady()">
+        ✕ Close
+      </button>
+      <a class="modal-btn modal-btn-primary" href="https://gemini.google.com/app" target="_blank" rel="noopener" onclick="onGeminiClick()">
+        Submit →
       </a>
-
-      <!-- 2. Background Remove (Active) -->
-      <a href="background-remove.html" class="sc-card">
-        <span class="sc-badge">NEW</span>
-        <span class="sc-icon">✂️</span>
-        <strong>ব্যাকগ্রাউন্ড রিমুভ</strong>
-        <small>AI দিয়ে ছবির BG মুছুন</small>
-        <span class="sc-arrow">→</span>
-      </a>
-
-      <!-- 3. Photo Retouch -->
-      <div class="sc-card coming-soon">
-        <span class="sc-badge soon">SOON</span>
-        <span class="sc-icon">💄</span>
-        <strong>ফটো রিটাচ</strong>
-        <small>ত্বক মসৃণ, দাগ দূর করুন</small>
-      </div>
-
-      <!-- 4. Photo Colorize -->
-      <div class="sc-card coming-soon">
-        <span class="sc-badge soon">SOON</span>
-        <span class="sc-icon">🌈</span>
-        <strong>সাদা-কালো রঙিন</strong>
-        <small>পুরোনো ছবিতে রঙ যোগ করুন</small>
-      </div>
-
-      <!-- 5. Photo to Cartoon -->
-      <div class="sc-card coming-soon">
-        <span class="sc-badge soon">SOON</span>
-        <span class="sc-icon">🎭</span>
-        <strong>ফটো কার্টুন</strong>
-        <small>ছবিকে কার্টুন স্টাইলে রূপান্তর</small>
-      </div>
-
     </div>
 
   </div>
@@ -464,8 +377,7 @@
   <p>🖥️ <strong>Azad Digital Seva</strong> — সরকারি ও বেসরকারি অনলাইন পরিষেবা</p>
   <div class="footer-links">
     <a href="index.html">Home</a>
-    <a href="online-service.html">Services</a>
-    <a href="photo-enhance.html">Photo Enhance</a>
+    <a href="passport-photo.html">Photo Studio</a>
     <a href="background-remove.html">BG Remove</a>
   </div>
   <p class="footer-copyright">© ২০২৫ Azad Digital Seva | সর্বস্বত্ব সংরক্ষিত</p>
@@ -478,15 +390,15 @@
       <span class="bn-icon">🏠</span>
       <span>Home</span>
     </a>
-    <a href="online-service.html" class="bn-item">
-      <span class="bn-icon">🌐</span>
-      <span>Services</span>
-    </a>
-    <a href="passport-photo.html" class="bn-item active">
+    <a href="passport-photo.html" class="bn-item">
       <span class="bn-icon">📸</span>
       <span>Photo</span>
     </a>
-    <a href="photo-enhance.html" class="bn-item">
+    <a href="background-remove.html" class="bn-item">
+      <span class="bn-icon">🎨</span>
+      <span>BG</span>
+    </a>
+    <a href="photo-enhance.html" class="bn-item active">
       <span class="bn-icon">✨</span>
       <span>Enhance</span>
     </a>
@@ -496,13 +408,235 @@
 <!-- ================= SCROLL TOP ================= -->
 <button class="scroll-top" id="scrollTop" aria-label="Scroll to top">↑</button>
 
+<!-- ================= TOAST ================= -->
+<div class="toast" id="toast"></div>
+
 <!-- ================= SCRIPT ================= -->
 <script>
 (function() {
   'use strict';
 
-  var scrollBtn = document.getElementById('scrollTop');
+  var PROMPT_TEXT = 'Enhance and restore this old photograph into a high-quality, realistic HD portrait.\n\n' +
+    'Keep the person\'s original face, facial features, identity, skin tone, hairstyle, expression, and natural appearance exactly the same. Do not change or beautify the face unnaturally.\n\n' +
+    'Remove old-photo damage, blur, noise, scratches, stains, grain, and compression artifacts. Restore missing details carefully and improve facial and clothing details while keeping the photo realistic.\n\n' +
+    'Increase sharpness, clarity, and resolution to a professional studio-quality HD/Ultra HD photograph. Make the skin look natural with realistic texture, not plastic or overly smooth.\n\n' +
+    'Replace the existing background with a clean, elegant solid blue studio-style background. Use a professional medium/deep blue tone with a subtle natural gradient, without any objects, patterns, text, or distractions.\n\n' +
+    'Maintain realistic lighting on the person and create a clean separation between the subject and the blue background.\n\n' +
+    'Final result should look like a professionally photographed modern HD portrait, while preserving the original person\'s appearance and authenticity.';
 
+  var photoInput = document.getElementById('photoInput');
+  var processingScreen = document.getElementById('processingScreen');
+  var readyOverlay = document.getElementById('readyOverlay');
+  var progressFill = document.getElementById('progressFill');
+  var timerEl = document.getElementById('timer');
+  var check1 = document.getElementById('check1');
+  var check2 = document.getElementById('check2');
+  var step1 = document.getElementById('step1');
+  var step2 = document.getElementById('step2');
+  var step3 = document.getElementById('step3');
+  var step4 = document.getElementById('step4');
+  var scrollBtn = document.getElementById('scrollTop');
+  var toast = document.getElementById('toast');
+
+  var elapsedTimer = null;
+  var elapsed = 0;
+  var processingActive = false;
+
+  /* ==================== HELPERS ==================== */
+  function showToast(msg) {
+    if (!toast) return;
+    toast.textContent = msg;
+    toast.classList.add('show');
+    setTimeout(function() { toast.classList.remove('show'); }, 2500);
+  }
+
+  function copyToClipboard(text) {
+    if (navigator.clipboard && window.isSecureContext) {
+      return navigator.clipboard.writeText(text).catch(function() {
+        return Promise.resolve(fallbackCopy(text));
+      });
+    }
+    return Promise.resolve(fallbackCopy(text));
+  }
+
+  function fallbackCopy(text) {
+    try {
+      var ta = document.createElement('textarea');
+      ta.value = text;
+      ta.style.position = 'fixed';
+      ta.style.left = '-9999px';
+      ta.style.top = '0';
+      ta.setAttribute('readonly', '');
+      document.body.appendChild(ta);
+      ta.select();
+      ta.setSelectionRange(0, 99999);
+      document.execCommand('copy');
+      document.body.removeChild(ta);
+      return true;
+    } catch(e) {
+      console.warn('Copy failed:', e);
+      return false;
+    }
+  }
+
+  /* ==================== UPLOAD ==================== */
+  photoInput.addEventListener('change', function(e) {
+    var file = e.target.files[0];
+    if (!file) return;
+
+    if (!file.type.startsWith('image/')) {
+      showToast('❌ শুধু ছবি আপলোড করুন');
+      photoInput.value = '';
+      return;
+    }
+
+    if (file.size > 20 * 1024 * 1024) {
+      showToast('❌ ছবি ২০MB এর কম হতে হবে');
+      photoInput.value = '';
+      return;
+    }
+
+    startProcessing();
+  });
+
+  /* ==================== PROCESSING ==================== */
+  function startProcessing() {
+    if (processingActive) return;
+    processingActive = true;
+
+    progressFill.style.width = '0%';
+    elapsed = 0;
+    timerEl.textContent = '0.0';
+    check1.className = 'check-item';
+    check2.className = 'check-item';
+
+    processingScreen.classList.add('active');
+    document.body.style.overflow = 'hidden';
+
+    if (elapsedTimer) clearInterval(elapsedTimer);
+    elapsedTimer = setInterval(function() {
+      elapsed += 0.1;
+      if (timerEl) timerEl.textContent = elapsed.toFixed(1);
+    }, 100);
+
+    // Step 1
+    setTimeout(function() {
+      check1.classList.add('active');
+      progressFill.style.width = '30%';
+    }, 200);
+
+    setTimeout(function() {
+      check1.classList.remove('active');
+      check1.classList.add('done');
+    }, 1000);
+
+    // Step 2 — Copy prompt
+    setTimeout(function() {
+      check2.classList.add('active');
+      progressFill.style.width = '70%';
+      copyToClipboard(PROMPT_TEXT).then(function() {
+        console.log('✅ Prompt copied');
+      });
+    }, 1100);
+
+    setTimeout(function() {
+      check2.classList.remove('active');
+      check2.classList.add('done');
+      progressFill.style.width = '100%';
+    }, 1800);
+
+    // Finish
+    setTimeout(function() {
+      try {
+        if (elapsedTimer) {
+          clearInterval(elapsedTimer);
+          elapsedTimer = null;
+        }
+
+        processingScreen.classList.remove('active');
+        document.body.style.overflow = '';
+        readyOverlay.classList.add('active');
+
+        step1.classList.remove('active');
+        step1.classList.add('done');
+        step2.classList.add('done');
+        step3.classList.add('active');
+
+        setTimeout(function() {
+          copyToClipboard(PROMPT_TEXT);
+        }, 300);
+
+      } catch(err) {
+        console.error('Finish error:', err);
+        try {
+          processingScreen.classList.remove('active');
+          document.body.style.overflow = '';
+          readyOverlay.classList.add('active');
+        } catch(e2) {
+          alert('Ready. Open Gemini and paste the prompt.');
+        }
+      } finally {
+        processingActive = false;
+      }
+    }, 3000);
+  }
+
+  /* ==================== CANCEL ==================== */
+  window.cancelProcessing = function() {
+    if (elapsedTimer) {
+      clearInterval(elapsedTimer);
+      elapsedTimer = null;
+    }
+    processingActive = false;
+    processingScreen.classList.remove('active');
+    document.body.style.overflow = '';
+    photoInput.value = '';
+    showToast('❌ বাতিল করা হয়েছে');
+  };
+
+  /* ==================== CLOSE READY ==================== */
+  window.closeReady = function() {
+    readyOverlay.classList.remove('active');
+    document.body.style.overflow = '';
+    photoInput.value = '';
+
+    step1.classList.remove('done');
+    step2.classList.remove('done');
+    step3.classList.remove('active');
+    step3.classList.add('done');
+    step4.classList.add('active');
+
+    setTimeout(function() {
+      step3.classList.remove('done');
+      step4.classList.remove('active');
+      step1.classList.add('active');
+    }, 3000);
+  };
+
+  /* ==================== ON SUBMIT CLICK ==================== */
+  window.onGeminiClick = function() {
+    copyToClipboard(PROMPT_TEXT).then(function() {
+      showToast('📋 Prompt copied again');
+    });
+    setTimeout(function() {
+      closeReady();
+    }, 500);
+  };
+
+  /* ==================== RE-COPY ON FOCUS ==================== */
+  window.addEventListener('focus', function() {
+    if (readyOverlay.classList.contains('active')) {
+      copyToClipboard(PROMPT_TEXT);
+    }
+  });
+
+  document.addEventListener('visibilitychange', function() {
+    if (!document.hidden && readyOverlay.classList.contains('active')) {
+      copyToClipboard(PROMPT_TEXT);
+    }
+  });
+
+  /* ==================== SCROLL TOP ==================== */
   if (scrollBtn) {
     window.addEventListener('scroll', function() {
       if (window.scrollY > 400) {

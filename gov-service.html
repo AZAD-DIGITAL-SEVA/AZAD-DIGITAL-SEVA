@@ -1,544 +1,1543 @@
 <!DOCTYPE html>
 <html lang="bn">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Government Services - Azad Digital Seva</title>
-    <style>
-        * { box-sizing: border-box; margin: 0; padding: 0; }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+<title>প্রয়োজনীয় সরকারি ওয়েবসাইট | Azad Digital Seva</title>
+<meta name="description" content="Cyber Cafe ও সাধারণ ব্যবহারকারীদের জন্য দরকারি সব সরকারি portal এক জায়গায়। সার্টিফিকেট, স্কলারশিপ, জমি, গাড়ি, চাকরি, স্বাস্থ্য, ব্যবসা — সব সেবা।">
+<meta name="theme-color" content="#075e54">
+<link rel="icon" type="image/png" href="assets/azad-logo.png">
+<link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&family=Noto+Sans+Bengali:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
 
-        body {
-            font-family: 'Segoe UI', Arial, 'Noto Sans Bengali', sans-serif;
-            background: #f0f4f8;
-            color: #1e2b3c;
-            line-height: 1.5;
-        }
+  :root {
+    --primary: #075e54;
+    --secondary: #128c7e;
+    --accent: #25d366;
+    --gold: #f9a826;
+    --dark: #0a2540;
+    --light: #f0f4f8;
+    --saffron: #FF9933;
+    --success: #138808;
+    --card-bg: #ffffff;
+    --text: #1e2b3c;
+    --text-muted: #64748b;
+    --border: #e5e7eb;
+    --shadow-sm: 0 2px 8px rgba(10,37,64,.06);
+    --shadow-md: 0 6px 20px rgba(10,37,64,.1);
+    --shadow-lg: 0 15px 40px rgba(10,37,64,.15);
+  }
 
-        /* ==================================================
-           হেডার — অতি স্লিম (উচ্চতা মাত্র 38px)
-           ================================================== */
-        header {
-            background: linear-gradient(135deg, #075e54, #128c7e);
-            color: #fff;
-            height: 38px;
-            padding: 0 10px;
-            border-bottom: 2px solid #f9a826;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 6px;
-            box-shadow: 0 2px 6px rgba(7, 94, 84, 0.2);
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-        }
+  html { scroll-behavior: smooth; }
 
-        .header-left {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            flex: 1;
-            min-width: 0;
-            position: relative;
-        }
+  body {
+    font-family: 'Hind Siliguri', 'Noto Sans Bengali', sans-serif;
+    background: var(--light);
+    color: var(--text);
+    line-height: 1.55;
+    min-height: 100vh;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    padding-bottom: 0;
+  }
 
-        /* ৩-ডট বাটন */
-        .menu-toggle {
-            width: 22px;
-            height: 22px;
-            border-radius: 5px;
-            background: rgba(255,255,255,0.15);
-            border: 1px solid rgba(255,255,255,0.35);
-            cursor: pointer;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            gap: 2px;
-            flex-shrink: 0;
-            padding: 0;
-        }
-        .menu-toggle:hover { background: rgba(255,255,255,0.28); }
-        .menu-toggle.active { background: #f9a826; border-color: #f9a826; }
-        .menu-toggle span { width: 2.5px; height: 2.5px; border-radius: 50%; background: #fff; }
-        .menu-toggle.active span { background: #1e2b3c; }
+  /* ============ TOP FLAG STRIP ============ */
+  .flag-strip {
+    height: 3px;
+    display: flex;
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 10000;
+  }
+  .flag-strip div { flex: 1; }
+  .flag-strip .s { background: var(--saffron); }
+  .flag-strip .w { background: #fff; }
+  .flag-strip .g { background: var(--success); }
 
-        /* ব্র্যান্ড — লোগো + নাম + সাবটাইটেল (একই লাইনে) */
-        .header-brand {
-            display: flex;
-            align-items: baseline;
-            gap: 5px;
-            min-width: 0;
-            overflow: hidden;
-            flex-wrap: nowrap;
-        }
+  /* ============ HEADER ============ */
+  header {
+    background: linear-gradient(135deg, #075e54 0%, #128c7e 100%);
+    color: #fff;
+    padding: 10px 14px;
+    padding-top: 13px;
+    border-bottom: 2px solid var(--gold);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    box-shadow: 0 4px 14px rgba(7,94,84,.25);
+    position: fixed;
+    top: 3px;
+    left: 0;
+    right: 0;
+    z-index: 999;
+    height: 60px;
+  }
 
-        .header-logo-icon {
-            font-size: 0.95rem;
-            line-height: 1;
-            flex-shrink: 0;
-            align-self: center;
-        }
+  .header-wrap {
+    width: min(1280px, 100%);
+    margin: auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    width: 100%;
+  }
 
-        .brand-name {
-            font-size: 0.78rem;
-            font-weight: 700;
-            white-space: nowrap;
-            flex-shrink: 0;
-        }
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    text-decoration: none;
+    color: #fff;
+    flex-shrink: 0;
+    min-width: 0;
+  }
 
-        .brand-name span { color: #f9a826; }
+  .brand-logo {
+    width: 40px;
+    height: 40px;
+    border-radius: 11px;
+    background: linear-gradient(135deg, var(--saffron), var(--gold));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.25rem;
+    flex-shrink: 0;
+    box-shadow: 0 4px 12px rgba(255,153,51,.35);
+    border: 1.5px solid rgba(255,255,255,.25);
+  }
 
-        .brand-sub {
-            font-size: 0.58rem;
-            font-weight: 400;
-            color: #d4ece8;
-            opacity: 0.85;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            padding-left: 2px;
-            border-left: 1px solid rgba(255,255,255,0.3);
-            margin-left: 2px;
-            padding-left: 6px;
-        }
+  .brand-text {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.1;
+    min-width: 0;
+    overflow: hidden;
+  }
 
-        /* ড্রপডাউন মেনু */
-        .header-dropdown {
-            position: absolute;
-            top: calc(100% + 8px);
-            left: 0;
-            background: #fff;
-            border-radius: 10px;
-            box-shadow: 0 12px 32px rgba(0,0,0,0.25);
-            padding: 6px;
-            display: none;
-            flex-direction: column;
-            gap: 1px;
-            min-width: 180px;
-            z-index: 1002;
-            border-top: 3px solid #f9a826;
-        }
-        .header-dropdown.open { display: flex; }
-        .header-dropdown a {
-            color: #1e2b3c;
-            text-decoration: none;
-            padding: 7px 11px;
-            border-radius: 6px;
-            font-weight: 500;
-            font-size: 0.8rem;
-            display: flex;
-            align-items: center;
-            gap: 7px;
-            transition: background 0.15s;
-        }
-        .header-dropdown a:hover { background: #e3f2ef; color: #075e54; }
+  .brand-text strong {
+    color: #fff;
+    font-size: 15px;
+    font-weight: 800;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
 
-        /* ডান অংশ */
-        .header-actions {
-            display: flex;
-            align-items: center;
-            gap: 4px;
-            flex-shrink: 0;
-        }
+  .brand-text strong em {
+    color: var(--gold);
+    font-style: normal;
+  }
 
-        .btn-donate, .btn-subscribe {
-            border: 1px solid rgba(255,255,255,0.65);
-            background: transparent;
-            color: #fff;
-            font-size: 0.62rem;
-            font-weight: 600;
-            padding: 3px 8px;
-            border-radius: 14px;
-            cursor: pointer;
-            font-family: inherit;
-            white-space: nowrap;
-            line-height: 1.2;
-        }
-        .btn-donate:hover { background: #f9a826; border-color: #f9a826; color: #1e2b3c; }
-        .btn-subscribe { background: #e74c3c; border-color: #e74c3c; }
-        .btn-subscribe:hover { background: #c0392b; }
+  .brand-text small {
+    margin-top: 2px;
+    color: #bfe9ce;
+    font-size: 9px;
+    font-weight: 600;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
 
-        .btn-login {
-            background: #fff;
-            color: #075e54;
-            border: none;
-            font-size: 0.64rem;
-            font-weight: 700;
-            padding: 4px 10px;
-            border-radius: 14px;
-            cursor: pointer;
-            font-family: inherit;
-            white-space: nowrap;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.15);
-            line-height: 1.2;
-        }
-        .btn-login:hover { background: #f9a826; color: #1e2b3c; }
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    flex-wrap: wrap;
+  }
 
-        /* ================= পেজ হিরো ================= */
-        .page-hero {
-            background: linear-gradient(135deg, #1a6b5e, #0e8a75);
-            color: white;
-            padding: 30px 18px 40px;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
-        .page-hero::before {
-            content: '';
-            position: absolute;
-            top: -70px; right: -70px;
-            width: 200px; height: 200px;
-            background: rgba(255,255,255,0.08);
-            border-radius: 50%;
-        }
-        .page-hero-icon {
-            font-size: 2.5rem;
-            margin-bottom: 8px;
-            position: relative;
-            z-index: 1;
-        }
-        .page-hero h1 {
-            font-size: 1.5rem;
-            font-weight: 700;
-            margin-bottom: 6px;
-            position: relative;
-            z-index: 1;
-        }
-        .page-hero p {
-            font-size: 0.9rem;
-            opacity: 0.95;
-            max-width: 600px;
-            margin: 0 auto;
-            position: relative;
-            z-index: 1;
-        }
-        .breadcrumb {
-            position: relative;
-            z-index: 1;
-            margin-top: 10px;
-            font-size: 0.75rem;
-            opacity: 0.9;
-        }
-        .breadcrumb a { color: #f9a826; text-decoration: none; }
-        .breadcrumb a:hover { text-decoration: underline; }
+  .nav-links a {
+    padding: 6px 12px;
+    border-radius: 18px;
+    color: #eaf8ef;
+    font-size: 11.5px;
+    font-weight: 700;
+    text-decoration: none;
+    transition: .22s;
+    border: 1px solid transparent;
+    white-space: nowrap;
+  }
 
-        /* ================= কনটেন্ট ================= */
-        .inner-container {
-            max-width: 1100px;
-            margin: -22px auto 0;
-            padding: 0 18px 45px;
-            position: relative;
-            z-index: 5;
-        }
+  .nav-links a:hover { background: rgba(255,255,255,.15); }
+  .nav-links a.active {
+    background: var(--gold);
+    color: #075e54;
+    border-color: var(--gold);
+  }
 
-        .content-card {
-            background: #fff;
-            border-radius: 16px;
-            padding: 24px 22px;
-            box-shadow: 0 15px 40px -15px rgba(0,50,40,0.18);
-            border-top: 4px solid #f9a826;
-        }
+  /* ============ HERO ============ */
+  .hero {
+    background:
+      radial-gradient(circle at 15% 20%, rgba(255,153,51,.18), transparent 30%),
+      radial-gradient(circle at 85% 80%, rgba(19,136,8,.15), transparent 30%),
+      linear-gradient(135deg, #0a2540 0%, #1e3a5f 50%, #0a2540 100%);
+    color: #fff;
+    padding: 90px 16px 55px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    margin-top: 60px;
+  }
 
-        .content-card h2 {
-            font-size: 1.2rem;
-            color: #075e54;
-            margin-bottom: 12px;
-            padding-bottom: 8px;
-            border-bottom: 2px solid #e3f2ef;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -70px; right: -70px;
+    width: 220px; height: 220px;
+    background: radial-gradient(circle, rgba(255,153,51,.25), transparent 70%);
+    border-radius: 50%;
+    pointer-events: none;
+  }
 
-        .content-card > p {
-            font-size: 0.9rem;
-            color: #3a4d5e;
-            margin-bottom: 12px;
-        }
+  .hero::after {
+    content: '';
+    position: absolute;
+    bottom: -60px; left: -60px;
+    width: 180px; height: 180px;
+    background: radial-gradient(circle, rgba(19,136,8,.2), transparent 70%);
+    border-radius: 50%;
+    pointer-events: none;
+  }
 
-        /* ================= সার্ভিস লিস্ট ================= */
-        .service-list {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
-            gap: 14px;
-            margin: 18px 0;
-        }
+  .hero-content {
+    position: relative;
+    z-index: 1;
+    max-width: 750px;
+    margin: 0 auto;
+  }
 
-        .service-item {
-            background: #f8fbfa;
-            border-radius: 12px;
-            padding: 15px 17px;
-            border-left: 4px solid #128c7e;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            transition: transform 0.2s, box-shadow 0.2s, background 0.2s;
-            text-decoration: none;
-            color: inherit;
-            cursor: pointer;
-        }
+  .hero-icon {
+    width: 62px;
+    height: 62px;
+    margin: 0 auto 12px;
+    background: linear-gradient(135deg, var(--saffron), var(--gold));
+    border-radius: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.8rem;
+    box-shadow: 0 10px 26px rgba(255,153,51,.4);
+    border: 2px solid rgba(255,255,255,.2);
+    animation: float 3s ease-in-out infinite;
+  }
 
-        .service-item:hover {
-            background: #e3f2ef;
-            transform: translateY(-3px);
-            box-shadow: 0 8px 18px -8px rgba(18,140,126,0.3);
-        }
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-5px); }
+  }
 
-        .service-item-icon {
-            font-size: 1.7rem;
-            flex-shrink: 0;
-        }
+  .hero h1 {
+    font-size: 1.55rem;
+    font-weight: 800;
+    margin-bottom: 8px;
+    letter-spacing: .3px;
+    line-height: 1.2;
+  }
 
-        .service-item-text strong {
-            display: block;
-            font-size: 0.95rem;
-            color: #075e54;
-            margin-bottom: 2px;
-        }
+  .hero h1 span {
+    background: linear-gradient(90deg, var(--saffron), var(--gold));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
 
-        .service-item-text span {
-            font-size: 0.78rem;
-            color: #4a6075;
-        }
+  .hero p {
+    font-size: .88rem;
+    color: rgba(255,255,255,.85);
+    max-width: 560px;
+    margin: 0 auto;
+    line-height: 1.5;
+  }
 
-        /* ================= বাটন ================= */
-        .btn-back {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            background: #128c7e;
-            color: white;
-            text-decoration: none;
-            padding: 8px 22px;
-            border-radius: 30px;
-            font-weight: 600;
-            font-size: 0.85rem;
-            transition: background 0.2s;
-            box-shadow: 0 5px 14px rgba(18,140,126,0.3);
-            margin-top: 10px;
-        }
-        .btn-back:hover { background: #075e54; }
+  .hero-badges {
+    display: flex;
+    justify-content: center;
+    gap: 6px;
+    margin-top: 14px;
+    flex-wrap: wrap;
+  }
 
-        /* ================= ফুটার ================= */
-        footer {
-            background: #0b2e2a;
-            color: #d4e6e3;
-            text-align: center;
-            padding: 18px 14px;
-            border-top: 3px solid #f9a826;
-        }
-        footer p { max-width: 700px; margin: 0 auto 6px; font-size: 0.82rem; }
-        .footer-links {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 8px 16px;
-            margin: 8px 0 5px;
-        }
-        .footer-links a {
-            color: #c2e5df;
-            text-decoration: none;
-            font-size: 0.78rem;
-            transition: color 0.2s;
-        }
-        .footer-links a:hover { color: #f9a826; }
-        .copyright { font-size: 0.68rem; opacity: 0.75; margin-top: 8px; }
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    background: rgba(255,255,255,.1);
+    border: 1px solid rgba(255,255,255,.2);
+    padding: 4px 11px;
+    border-radius: 20px;
+    font-size: .68rem;
+    font-weight: 600;
+    backdrop-filter: blur(8px);
+  }
 
-        /* ================= ওভারলে ================= */
-        .menu-overlay {
-            position: fixed; inset: 0;
-            background: rgba(0,0,0,0.4);
-            z-index: 999;
-            display: none;
-        }
-        .menu-overlay.show { display: block; }
+  .hero-badge .dot {
+    width: 5px; height: 5px;
+    background: #4ade80;
+    border-radius: 50%;
+    box-shadow: 0 0 8px #4ade80;
+    animation: pulse 2s infinite;
+  }
 
-        /* ================= রেসপন্সিভ ================= */
-        @media (max-width: 768px) {
-            header { height: 36px; padding: 0 8px; }
-            .menu-toggle { width: 20px; height: 20px; }
-            .menu-toggle span { width: 2px; height: 2px; }
-            .header-logo-icon { font-size: 0.85rem; }
-            .brand-name { font-size: 0.72rem; }
-            .brand-sub { display: none; }              /* মোবাইলে সাবটাইটেল হাইড */
-            .btn-donate, .btn-subscribe { display: none; }
-            .btn-login { font-size: 0.58rem; padding: 3px 8px; }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: .4; }
+  }
 
-            .page-hero { padding: 22px 14px 30px; }
-            .page-hero-icon { font-size: 2rem; }
-            .page-hero h1 { font-size: 1.15rem; }
-            .page-hero p { display: none; }
-            .breadcrumb { font-size: 0.7rem; margin-top: 6px; }
+  /* ============ CONTAINER ============ */
+  .container {
+    max-width: 1150px;
+    margin: -28px auto 0;
+    padding: 0 12px 40px;
+    position: relative;
+    z-index: 5;
+  }
 
-            .inner-container { padding: 0 12px 35px; }
-            .content-card { padding: 18px 14px; }
-            .content-card h2 { font-size: 1rem; }
-            .content-card > p { display: none; }
+  .card-box {
+    background: var(--card-bg);
+    border-radius: 18px;
+    box-shadow: var(--shadow-lg);
+    overflow: hidden;
+    border-top: 4px solid var(--saffron);
+    padding: 20px 16px;
+  }
 
-            .service-list { grid-template-columns: 1fr; gap: 8px; margin: 12px 0; }
-            .service-item { padding: 11px 13px; gap: 10px; }
-            .service-item-icon { font-size: 1.3rem; }
-            .service-item-text strong { font-size: 0.85rem; }
-            .service-item-text span { display: none; }
+  /* ============ TOOLBAR ============ */
+  .toolbar {
+    margin-bottom: 20px;
+    padding: 14px;
+    border-radius: 16px;
+    background: linear-gradient(145deg, #f8fbff, #fff);
+    border: 1px solid #e1ebf5;
+    box-shadow: var(--shadow-sm);
+    position: sticky;
+    top: 66px;
+    z-index: 100;
+    backdrop-filter: blur(10px);
+  }
 
-            .btn-back { padding: 7px 16px; font-size: 0.75rem; }
+  .search-box {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 15px;
+    border-radius: 12px;
+    background: #fff;
+    border: 2px solid var(--border);
+    transition: .22s;
+  }
 
-            footer { padding: 12px 10px; }
-            footer p { font-size: 0.72rem; }
-            .footer-links { gap: 5px 10px; }
-            .footer-links a { font-size: 0.7rem; }
-            .copyright { font-size: 0.6rem; }
-        }
+  .search-box:focus-within {
+    border-color: var(--saffron);
+    box-shadow: 0 0 0 4px rgba(255,153,51,.12);
+  }
 
-        @media (max-width: 400px) {
-            header { height: 34px; padding: 0 6px; }
-            .menu-toggle { width: 18px; height: 18px; }
-            .brand-name { font-size: 0.66rem; }
-            .header-logo-icon { font-size: 0.78rem; }
-            .btn-login { font-size: 0.54rem; padding: 2px 7px; }
-        }
-    </style>
+  .search-box .search-icon {
+    font-size: 1.1rem;
+    flex-shrink: 0;
+  }
+
+  .search-box input {
+    width: 100%;
+    border: 0;
+    outline: 0;
+    background: transparent;
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--dark);
+    font-family: inherit;
+  }
+
+  .search-box input::placeholder {
+    color: #98a2b3;
+    font-weight: 500;
+    font-size: 14px;
+  }
+
+  /* ============ CATEGORIES (Horizontal Scroll on Mobile) ============ */
+  .cats-wrap {
+    position: relative;
+    margin-top: 12px;
+    overflow: hidden;
+  }
+
+  .cats-wrap::after {
+    content: '';
+    position: absolute;
+    top: 0; right: 0; bottom: 0;
+    width: 30px;
+    background: linear-gradient(90deg, transparent, rgba(248,251,255,.95));
+    pointer-events: none;
+    border-radius: 0 12px 12px 0;
+  }
+
+  .cats {
+    display: flex;
+    gap: 7px;
+    overflow-x: auto;
+    padding: 4px 30px 6px 2px;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+    scroll-behavior: smooth;
+  }
+
+  .cats::-webkit-scrollbar { display: none; }
+
+  .cat {
+    white-space: nowrap;
+    border: 1.5px solid var(--border);
+    background: #fff;
+    color: #475569;
+    border-radius: 22px;
+    padding: 8px 15px;
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    font-family: inherit;
+    transition: .22s;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    flex-shrink: 0;
+    min-height: 36px;
+    user-select: none;
+    -webkit-user-select: none;
+  }
+
+  .cat:active {
+    transform: scale(.96);
+  }
+
+  .cat.active {
+    background: linear-gradient(135deg, var(--saffron), #e67e22);
+    color: #fff;
+    border-color: transparent;
+    box-shadow: 0 5px 14px rgba(255,153,51,.4);
+  }
+
+  /* ============ SECTIONS ============ */
+  .section {
+    margin-bottom: 22px;
+    padding: 14px;
+    border-radius: 16px;
+    background: linear-gradient(145deg, #ffffff, #f8fbff);
+    border: 1px solid #e1ebf5;
+    box-shadow: var(--shadow-sm);
+    scroll-margin-top: 130px;
+    animation: sectionIn .35s ease;
+  }
+
+  @keyframes sectionIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .section-head {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    padding: 13px 14px;
+    border-radius: 13px;
+    margin-bottom: 14px;
+    background:
+      radial-gradient(circle at 12% 20%, rgba(255,255,255,.18), transparent 30%),
+      linear-gradient(120deg, var(--dark) 0%, #1e3a5f 48%, #075e54 100%);
+    box-shadow: 0 8px 20px rgba(10,37,64,.18);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .section-head::before {
+    content: '';
+    position: absolute;
+    top: 0; right: 0;
+    width: 70px; height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,215,0,.15));
+    pointer-events: none;
+  }
+
+  .section-icon {
+    width: 42px;
+    height: 42px;
+    border-radius: 11px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.15rem;
+    flex-shrink: 0;
+    background: rgba(255,255,255,.15);
+    border: 1px solid rgba(255,255,255,.2);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.2);
+  }
+
+  .section-title { min-width: 0; flex: 1; }
+
+  .section-title h2 {
+    color: #fff;
+    font-size: .98rem;
+    font-weight: 800;
+    line-height: 1.25;
+    text-shadow: 0 2px 6px rgba(0,0,0,.2);
+  }
+
+  .section-title h3 {
+    color: var(--gold);
+    font-size: .68rem;
+    font-weight: 700;
+    margin-top: 2px;
+    letter-spacing: .2px;
+  }
+
+  .section-title p {
+    color: rgba(255,255,255,.8);
+    font-size: .68rem;
+    margin-top: 3px;
+    line-height: 1.4;
+    display: none;
+  }
+
+  /* ============ CARD GRID ============ */
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 10px;
+  }
+
+  .g-card {
+    --c1: #075e54;
+    --c2: #128c7e;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    padding: 13px;
+    border-radius: 14px;
+    text-decoration: none;
+    background: #fff;
+    border: 1.5px solid var(--border);
+    box-shadow: var(--shadow-sm);
+    transition: all .25s cubic-bezier(.4,0,.2,1);
+    min-height: 72px;
+    will-change: transform;
+  }
+
+  .g-card::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 4px;
+    background: linear-gradient(180deg, var(--c1), var(--c2));
+    transition: width .25s;
+  }
+
+  .g-card:hover,
+  .g-card:active {
+    border-color: var(--c1);
+    transform: translateY(-2px);
+    box-shadow: 0 10px 22px rgba(10,37,64,.12);
+  }
+
+  .g-card:hover::before { width: 6px; }
+
+  .g-card:nth-child(4n+1) { --c1: #075e54; --c2: #128c7e; }
+  .g-card:nth-child(4n+2) { --c1: #8B0000; --c2: #dc2626; }
+  .g-card:nth-child(4n+3) { --c1: #6a1b9a; --c2: #a855f7; }
+  .g-card:nth-child(4n+4) { --c1: #1a237e; --c2: #3f51b5; }
+
+  .g-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    font-size: 1.2rem;
+    color: #fff;
+    background: linear-gradient(135deg, var(--c1), var(--c2));
+    box-shadow: 0 3px 8px rgba(0,0,0,.15);
+  }
+
+  .g-info { min-width: 0; flex: 1; }
+
+  .g-info strong {
+    display: block;
+    color: var(--dark);
+    font-size: .84rem;
+    font-weight: 800;
+    line-height: 1.3;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .g-info small {
+    display: block;
+    color: var(--text-muted);
+    font-size: .68rem;
+    font-weight: 600;
+    margin-top: 3px;
+    line-height: 1.3;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .g-info em {
+    display: inline-block;
+    margin-top: 4px;
+    padding: 2px 7px;
+    border-radius: 999px;
+    color: var(--c1);
+    background: rgba(10,37,64,.06);
+    border: 1px solid rgba(10,37,64,.08);
+    font-size: .55rem;
+    font-weight: 700;
+    font-style: normal;
+  }
+
+  .g-open {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    color: #fff;
+    font-size: .72rem;
+    font-weight: 900;
+    background: linear-gradient(135deg, var(--c1), var(--c2));
+    box-shadow: 0 3px 8px rgba(0,0,0,.12);
+  }
+
+  /* ============ EMPTY & NOTE ============ */
+  .empty {
+    display: none;
+    padding: 40px 20px;
+    text-align: center;
+    border: 2px dashed #cbd5e1;
+    border-radius: 16px;
+    background: #fff;
+    color: var(--text-muted);
+    font-weight: 700;
+    margin: 20px 0;
+  }
+
+  .empty .big {
+    font-size: 3rem;
+    display: block;
+    margin-bottom: 10px;
+    opacity: .4;
+  }
+
+  .empty p { font-size: .88rem; line-height: 1.5; }
+
+  .note {
+    margin-top: 10px;
+    padding: 12px 14px;
+    border-radius: 12px;
+    color: #334155;
+    background: linear-gradient(135deg, #fff8e7, #fff);
+    border: 1px solid #f0e6d2;
+    border-left: 4px solid var(--saffron);
+    font-size: .78rem;
+    font-weight: 600;
+    line-height: 1.55;
+  }
+
+  .note strong { color: #8B0000; }
+
+  /* ============ FOOTER ============ */
+  footer {
+    background: linear-gradient(135deg, #0a2540, #1e3a5f);
+    color: #d4e6e3;
+    text-align: center;
+    padding: 22px 14px 90px;
+    border-top: 3px solid var(--gold);
+    margin-top: 30px;
+    font-size: .78rem;
+  }
+
+  footer p {
+    max-width: 750px;
+    margin: 0 auto 8px;
+    line-height: 1.6;
+  }
+
+  .footer-links {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin: 10px 0;
+  }
+
+  .footer-links a {
+    color: var(--gold);
+    text-decoration: none;
+    font-size: .75rem;
+    font-weight: 700;
+    transition: .2s;
+  }
+
+  .footer-links a:hover { color: #fff; text-decoration: underline; }
+
+  .footer-copyright {
+    font-size: .68rem;
+    opacity: .7;
+    margin-top: 10px;
+  }
+
+  /* ============ BOTTOM NAVIGATION (Mobile Only) ============ */
+  .bottom-nav {
+    display: none;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: #fff;
+    border-top: 1px solid var(--border);
+    box-shadow: 0 -4px 20px rgba(10,37,64,.08);
+    z-index: 998;
+    padding: 6px 4px;
+    padding-bottom: calc(6px + env(safe-area-inset-bottom));
+  }
+
+  .bottom-nav-inner {
+    max-width: 500px;
+    margin: auto;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 4px;
+  }
+
+  .bn-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2px;
+    padding: 7px 4px;
+    border-radius: 12px;
+    text-decoration: none;
+    color: #64748b;
+    font-size: 10px;
+    font-weight: 700;
+    transition: .22s;
+    min-height: 48px;
+  }
+
+  .bn-item .bn-icon {
+    font-size: 1.25rem;
+    line-height: 1;
+  }
+
+  .bn-item.active {
+    color: var(--primary);
+    background: linear-gradient(135deg, #e8f7ee, #d1f0dd);
+  }
+
+  /* ============ SCROLL TO TOP ============ */
+  .scroll-top {
+    position: fixed;
+    bottom: 76px;
+    right: 16px;
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--saffron), #e67e22);
+    color: #fff;
+    border: none;
+    font-size: 1.15rem;
+    cursor: pointer;
+    box-shadow: 0 6px 18px rgba(255,153,51,.5);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 997;
+    transition: all .3s;
+    font-weight: 900;
+  }
+
+  .scroll-top.show {
+    display: flex;
+    animation: popIn .3s ease;
+  }
+
+  @keyframes popIn {
+    from { opacity: 0; transform: scale(.5); }
+    to { opacity: 1; transform: scale(1); }
+  }
+
+  .scroll-top:active { transform: scale(.9); }
+
+  /* ============ RESPONSIVE - TABLET ============ */
+  @media (max-width: 900px) {
+    .grid {
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    }
+  }
+
+  /* ============ RESPONSIVE - MOBILE ============ */
+  @media (max-width: 768px) {
+    body { padding-bottom: 70px; }
+
+    header {
+      height: 56px;
+      padding: 8px 12px;
+      padding-top: 11px;
+    }
+
+    .brand-logo {
+      width: 36px;
+      height: 36px;
+      font-size: 1.1rem;
+      border-radius: 10px;
+    }
+
+    .brand-text strong { font-size: 14px; }
+    .brand-text small { font-size: 8.5px; }
+
+    .nav-links { display: none; }
+
+    .hero {
+      padding: 82px 14px 48px;
+      margin-top: 56px;
+    }
+
+    .hero-icon {
+      width: 56px;
+      height: 56px;
+      font-size: 1.6rem;
+      border-radius: 16px;
+    }
+
+    .hero h1 { font-size: 1.3rem; }
+    .hero p { font-size: .82rem; }
+
+    .hero-badge {
+      font-size: .64rem;
+      padding: 3px 9px;
+    }
+
+    .container {
+      padding: 0 10px 30px;
+      margin-top: -24px;
+    }
+
+    .card-box {
+      padding: 14px 12px;
+      border-radius: 16px;
+      border-top-width: 3px;
+    }
+
+    .toolbar {
+      padding: 10px;
+      border-radius: 14px;
+      top: 62px;
+      margin-bottom: 16px;
+    }
+
+    .search-box {
+      padding: 10px 13px;
+      border-radius: 11px;
+    }
+
+    .search-box input {
+      font-size: 15px;
+    }
+
+    .search-box input::placeholder {
+      font-size: 12.5px;
+    }
+
+    .cats {
+      gap: 6px;
+      padding: 4px 24px 4px 0;
+    }
+
+    .cat {
+      padding: 7px 13px;
+      font-size: 11.5px;
+      min-height: 34px;
+      border-radius: 20px;
+    }
+
+    .section {
+      padding: 12px;
+      border-radius: 14px;
+      margin-bottom: 16px;
+    }
+
+    .section-head {
+      padding: 11px 12px;
+      border-radius: 11px;
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+
+    .section-icon {
+      width: 38px;
+      height: 38px;
+      font-size: 1.05rem;
+      border-radius: 10px;
+    }
+
+    .section-title h2 { font-size: .9rem; }
+    .section-title h3 { font-size: .63rem; }
+
+    .grid {
+      grid-template-columns: 1fr;
+      gap: 8px;
+    }
+
+    .g-card {
+      padding: 11px;
+      gap: 10px;
+      min-height: 68px;
+      border-radius: 12px;
+      border-left-width: 0;
+    }
+
+    .g-card::before { width: 3px; }
+
+    .g-icon {
+      width: 38px;
+      height: 38px;
+      font-size: 1.1rem;
+      border-radius: 9px;
+    }
+
+    .g-info strong {
+      font-size: .82rem;
+      white-space: normal;
+      overflow: visible;
+      text-overflow: clip;
+      line-height: 1.25;
+    }
+
+    .g-info small {
+      font-size: .66rem;
+      white-space: normal;
+      overflow: visible;
+      text-overflow: clip;
+    }
+
+    .g-info em {
+      font-size: .56rem;
+      padding: 2px 6px;
+    }
+
+    .g-open {
+      width: 22px;
+      height: 22px;
+      font-size: .68rem;
+    }
+
+    .bottom-nav { display: block; }
+
+    .scroll-top {
+      bottom: 78px;
+      right: 12px;
+      width: 38px;
+      height: 38px;
+      font-size: 1rem;
+    }
+
+    footer {
+      padding: 18px 12px 86px;
+      margin-top: 24px;
+    }
+
+    .footer-links { gap: 10px; }
+    .footer-links a { font-size: .72rem; }
+  }
+
+  @media (max-width: 400px) {
+    .brand-text strong { font-size: 13px; }
+    .brand-text small { font-size: 8px; }
+
+    .hero h1 { font-size: 1.15rem; }
+    .hero p { font-size: .78rem; }
+
+    .section-title h2 { font-size: .85rem; }
+
+    .g-info strong { font-size: .78rem; }
+  }
+
+  /* Reduced motion */
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: .01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: .01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+</style>
 </head>
 <body>
 
-    <!-- ==================================================
-         হেডার — অতি স্লিম (38px ডেস্কটপ / 36px মোবাইল)
-         এক লাইনে: [⋮] 🖥️ নাম | সাবটাইটেল    [বাটন]
-         ================================================== -->
-    <header>
-        <div class="header-left">
-            <button class="menu-toggle" id="menuToggle" aria-label="Menu">
-                <span></span><span></span><span></span>
-            </button>
+<!-- Flag Strip -->
+<div class="flag-strip">
+  <div class="s"></div>
+  <div class="w"></div>
+  <div class="g"></div>
+</div>
 
-            <div class="header-brand">
-                <span class="header-logo-icon">🖥️</span>
-                <span class="brand-name">Azad <span>Digital Seva</span></span>
-                <span class="brand-sub">সরকারি ও বেসরকারি অনলাইন পরিষেবা</span>
-            </div>
+<!-- ================= HEADER ================= -->
+<header>
+  <div class="header-wrap">
+    <a class="brand" href="index.html">
+      <span class="brand-logo">🖥️</span>
+      <span class="brand-text">
+        <strong>Azad <em>Digital Seva</em></strong>
+        <small>সরকারি ও বেসরকারি অনলাইন পরিষেবা</small>
+      </span>
+    </a>
+    <nav class="nav-links">
+      <a href="index.html">🏠 Home</a>
+      <a href="pvc-card.html">💳 PVC Card</a>
+      <a href="gov-service.html" class="active">📋 Govt Services</a>
+      <a href="contact.html">📞 Contact</a>
+    </nav>
+  </div>
+</header>
 
-            <nav class="header-dropdown" id="headerDropdown">
-                <a href="index.html">🏠 Home</a>
-                <a href="blog.html">📝 Blog</a>
-                <a href="youtube.html">📺 YouTube</a>
-                <a href="facebook.html">📘 Facebook</a>
-                <a href="contact.html">📞 Contact</a>
-                <a href="about.html">ℹ️ About</a>
-            </nav>
+<!-- ================= HERO ================= -->
+<section class="hero">
+  <div class="hero-content">
+    <div class="hero-icon">🏛️</div>
+    <h1>প্রয়োজনীয় <span>সরকারি ওয়েবসাইট</span></h1>
+    <p>Cyber Cafe ও সাধারণ ব্যবহারকারীদের জন্য দরকারি সব সরকারি portal — এখন সুন্দরভাবে category অনুযায়ী সাজানো।</p>
+    <div class="hero-badges">
+      <span class="hero-badge"><span class="dot"></span> ৬০+ সেবা</span>
+      <span class="hero-badge">🇮🇳 পশ্চিমবঙ্গ</span>
+      <span class="hero-badge">✅ যাচাইকৃত</span>
+      <span class="hero-badge">⚡ দ্রুত সার্চ</span>
+    </div>
+  </div>
+</section>
+
+<!-- ================= CONTAINER ================= -->
+<div class="container">
+  <div class="card-box">
+
+    <!-- Toolbar -->
+    <div class="toolbar">
+      <div class="search-box">
+        <span class="search-icon">🔎</span>
+        <input type="search" id="azSearch" autocomplete="off" placeholder="Scholarship, PAN, Job Card, Challan...">
+      </div>
+      <div class="cats-wrap">
+        <div class="cats">
+          <button type="button" class="cat active" data-target="all">✨ সব পরিষেবা</button>
+          <button type="button" class="cat" data-target="certificate">📜 সার্টিফিকেট</button>
+          <button type="button" class="cat" data-target="education">🎓 শিক্ষা</button>
+          <button type="button" class="cat" data-target="land">🌾 জমি ও কৃষি</button>
+          <button type="button" class="cat" data-target="vehicle">🚘 গাড়ি</button>
+          <button type="button" class="cat" data-target="jobs">💼 চাকরি</button>
+          <button type="button" class="cat" data-target="health">❤️ স্বাস্থ্য</button>
+          <button type="button" class="cat" data-target="business">🏢 ব্যবসা ও Tax</button>
         </div>
+      </div>
+    </div>
 
-        <div class="header-actions">
-            <button class="btn-donate" onclick="location.href='donate.html'">❤️ ডোনেশন</button>
-            <button class="btn-subscribe" onclick="location.href='subscribe.html'">🔔 সাবস্ক্রাইব</button>
-            <button class="btn-login" onclick="location.href='login.html'">লগ ইন</button>
+    <!-- ================= SECTIONS ================= -->
+    <div id="azSections">
+
+      <!-- CERTIFICATE -->
+      <section class="section" data-group="certificate">
+        <div class="section-head">
+          <div class="section-icon">📜</div>
+          <div class="section-title">
+            <h2>সার্টিফিকেট ও নাগরিক পরিষেবা</h2>
+            <h3>Certificates &amp; Citizen Services</h3>
+            <p>পঞ্চায়েত সার্টিফিকেট, জন্ম-মৃত্যু, e-District ও পরিচয় সংক্রান্ত</p>
+          </div>
         </div>
-    </header>
-
-    <div class="menu-overlay" id="menuOverlay"></div>
-
-    <!-- ================= পেজ হিরো ================= -->
-    <section class="page-hero">
-        <div class="page-hero-icon">🏛️</div>
-        <h1>Government Services</h1>
-        <p>জাতীয় পরিচয়পত্র, জন্ম নিবন্ধন, অনলাইন আবেদন ও ডাউনলোড — সব সেবা এক জায়গায়।</p>
-        <div class="breadcrumb">
-            <a href="index.html">Home</a> › <span>Government Services</span>
+        <div class="grid">
+          <a class="g-card" target="_blank" rel="noopener noreferrer" data-search="wb e-district citizen services" href="https://edistrict.wb.gov.in/">
+            <div class="g-icon">🏛️</div>
+            <div class="g-info"><strong>WB e-District</strong><small>Citizen Services</small><em>Certificates</em></div>
+            <span class="g-open">↗</span>
+          </a>
+          <a class="g-card" target="_blank" rel="noopener noreferrer" data-search="wbpms gram panchayat certificate residence income" href="https://wbpms.in/citizen/index.html">
+            <div class="g-icon">📜</div>
+            <div class="g-info"><strong>WBPMS Panchayat</strong><small>Residence / Income / Character</small><em>Certificates</em></div>
+            <span class="g-open">↗</span>
+          </a>
+          <a class="g-card" target="_blank" rel="noopener noreferrer" data-search="birth death registration wb janma mrityu" href="https://janma-mrityutathya.wb.gov.in/">
+            <div class="g-icon">👶</div>
+            <div class="g-info"><strong>Birth &amp; Death Reg.</strong><small>WB Janma-Mrityu Tathya</small><em>Certificates</em></div>
+            <span class="g-open">↗</span>
+          </a>
+          <a class="g-card" target="_blank" rel="noopener noreferrer" data-search="aadhaar uidai services" href="https://uidai.gov.in/">
+            <div class="g-icon">🪪</div>
+            <div class="g-info"><strong>Aadhaar / UIDAI</strong><small>Aadhaar Services</small><em>Certificates</em></div>
+            <span class="g-open">↗</span>
+          </a>
+          <a class="g-card" target="_blank" rel="noopener noreferrer" data-search="pan services protean tinpan" href="https://www.protean-tinpan.com/services/pan/">
+            <div class="g-icon">💳</div>
+            <div class="g-info"><strong>PAN Services</strong><small>Application / Services</small><em>Certificates</em></div>
+            <span class="g-open">↗</span>
+          </a>
+          <a class="g-card" target="_blank" rel="noopener noreferrer" data-search="voter services election eci" href="https://voters.eci.gov.in/">
+            <div class="g-icon">🗳️</div>
+            <div class="g-info"><strong>Voter Services</strong><small>Election / Voter Portal</small><em>Certificates</em></div>
+            <span class="g-open">↗</span>
+          </a>
+          <a class="g-card" target="_blank" rel="noopener noreferrer" data-search="passport seva" href="https://www.passportindia.gov.in/">
+            <div class="g-icon">📘</div>
+            <div class="g-info"><strong>Passport Seva</strong><small>Passport Services</small><em>Certificates</em></div>
+            <span class="g-open">↗</span>
+          </a>
+          <a class="g-card" target="_blank" rel="noopener noreferrer" data-search="caa indian citizenship online" href="https://indiancitizenshiponline.nic.in/">
+            <div class="g-icon">🇮🇳</div>
+            <div class="g-info"><strong>CAA / Citizenship</strong><small>Citizenship Application</small><em>Certificates</em></div>
+            <span class="g-open">↗</span>
+          </a>
         </div>
-    </section>
+      </section>
 
-    <!-- ================= মূল কনটেন্ট ================= -->
-    <main class="inner-container">
-        <div class="content-card">
-            <h2>📋 উপলব্ধ সেবাসমূহ</h2>
-            <p>নিচের যেকোনো সেবার ওপর ক্লিক করুন — সরাসরি সেই সেবার বিস্তারিত পেজে চলে যাবেন।</p>
-
-            <div class="service-list">
-                <a href="nid-service.html" class="service-item">
-                    <span class="service-item-icon">🆔</span>
-                    <div class="service-item-text">
-                        <strong>জাতীয় পরিচয়পত্র</strong>
-                        <span>NID আবেদন, সংশোধন ও ডাউনলোড</span>
-                    </div>
-                </a>
-                <a href="birth-certificate.html" class="service-item">
-                    <span class="service-item-icon">📄</span>
-                    <div class="service-item-text">
-                        <strong>জন্ম নিবন্ধন</strong>
-                        <span>অনলাইন জন্ম নিবন্ধন ও সার্টিফিকেট</span>
-                    </div>
-                </a>
-                <a href="passport.html" class="service-item">
-                    <span class="service-item-icon">🛂</span>
-                    <div class="service-item-text">
-                        <strong>পাসপোর্ট সেবা</strong>
-                        <span>নতুন পাসপোর্ট ও রিনিউ আবেদন</span>
-                    </div>
-                </a>
-                <a href="land-service.html" class="service-item">
-                    <span class="service-item-icon">🏞️</span>
-                    <div class="service-item-text">
-                        <strong>ভূমি সেবা</strong>
-                        <span>খতিয়ান, দলিল যাচাই ও নামজারি</span>
-                    </div>
-                </a>
-                <a href="tax-service.html" class="service-item">
-                    <span class="service-item-icon">💰</span>
-                    <div class="service-item-text">
-                        <strong>ট্যাক্স সেবা</strong>
-                        <span>আয়কর রিটার্ন ও VAT সেবা</span>
-                    </div>
-                </a>
-                <a href="certificate-service.html" class="service-item">
-                    <span class="service-item-icon">🎓</span>
-                    <div class="service-item-text">
-                        <strong>সার্টিফিকেট সেবা</strong>
-                        <span>শিক্ষা সনদ ও ট্রান্সক্রিপ্ট</span>
-                    </div>
-                </a>
-            </div>
-
-            <a href="index.html" class="btn-back">← Back to Home</a>
+      <!-- EDUCATION -->
+      <section class="section" data-group="education">
+        <div class="section-head">
+          <div class="section-icon">🎓</div>
+          <div class="section-title">
+            <h2>শিক্ষা ও স্কলারশিপ</h2>
+            <h3>Education &amp; Scholarships</h3>
+            <p>পশ্চিমবঙ্গের ছাত্রছাত্রীদের জন্য সরকারি ও বেসরকারি Scholarship</p>
+          </div>
         </div>
-    </main>
-
-    <!-- ================= ফুটার ================= -->
-    <footer>
-        <p>🏢 Azad Digital Seva — আপনার বিশ্বস্ত অনলাইন সেবা প্রদানকারী</p>
-        <div class="footer-links">
-            <a href="index.html">Home</a>
-            <a href="services.html">Services</a>
-            <a href="tools.html">Tools</a>
-            <a href="notice.html">Notice</a>
-            <a href="contact.html">Contact</a>
+        <div class="grid">
+          <a class="g-card" target="_blank" rel="noopener noreferrer" data-search="svmcm scholarship vivekananda merit" href="https://svmcm.wb.gov.in/">
+            <div class="g-icon">🎓</div>
+            <div class="g-info"><strong>SVMCM Scholarship</strong><small>Vivekananda Merit-cum-Means</small><em>Scholarship</em></div>
+            <span class="g-open">↗</span>
+          </a>
+          <a class="g-card" target="_blank" rel="noopener noreferrer" data-search="aikyashree minority scholarship" href="https://www.wbmdfcscholarship.in/">
+            <div class="g-icon">☪️</div>
+            <div class="g-info"><strong>Aikyashree</strong><small>Minority Students WB</small><em>Scholarship</em></div>
+            <span class="g-open">↗</span>
+          </a>
+          <a class="g-card" target="_blank" rel="noopener noreferrer" data-search="oasis scholarship sc st obc" href="https://oasis.gov.in/">
+            <div class="g-icon">📚</div>
+            <div class="g-info"><strong>OASIS Scholarship</strong><small>SC / ST / OBC WB</small><em>Scholarship</em></div>
+            <span class="g-open">↗</span>
+          </a>
+          <a class="g-card" target="_blank" rel="noopener noreferrer" data-search="nabanna scholarship cmrf" href="https://cmrf.wb.gov.in/">
+            <div class="g-icon">🏛️</div>
+            <div class="g-info"><strong>Nabanna Scholarship</strong><small>CMRF Educational Assist.</small><em>Scholarship</em></div>
+            <span class="g-open">↗</span>
+          </a>
+          <a class="g-card" target="_blank" rel="noopener noreferrer" data-search="national scholarship portal nsp" href="https://scholarships.gov.in/">
+            <div class="g-icon">🏅</div>
+            <div class="g-info"><strong>NSP</strong><small>National Scholarship</small><em>Scholarship</em></div>
+            <span class="g-open">↗</span>
+          </a>
+          <a class="g-card" target="_blank" rel="noopener noreferrer" data-search="nmms scholarship wb means merit" href="https://banglarshiksha.wb.gov.in/scholarships/">
+            <div class="g-icon">📝</div>
+            <div class="g-info"><strong>NMMS Scholarship</strong><small>Means-cum-Merit WB</small><em>Scholarship</em></div>
+            <span class="g-open">↗</span>
+          </a>
+          <a class="g-card" target="_blank" rel="noopener noreferrer" data-search="west bengal freeship scheme" href="https://wbfs.wb.gov.in/">
+            <div class="g-icon">🎒</div>
+            <div class="g-info"><strong>WB Freeship</strong><small>Tuition Fee Waiver</small><em>Scholarship</em></div>
+            <span class="g-open">↗</span>
+          </a>
+          <a class="g-card" target="_blank" rel="noopener noreferrer" data-search="kanyashree k1 k2 girls education" href="https://admin-kanyashree.wb.gov.in/admin/login">
+            <div class="g-icon">👩‍🎓</div>
+            <div class="g-info"><strong>Kanyashree</strong><small>K1 / K2 WB Girls</small><em>Scholarship</em></div>
+            <span class="g-open">↗</span>
+          </a>
+          <a class="g-card" target="_blank" rel="noopener noreferrer" data-search="banglar shiksha school education wb" href="https://banglarshiksha.wb.gov.in/">
+            <div class="g-icon">🏫</div>
+            <div class="g-info"><strong>Banglar Shiksha</strong><small>WB School Education</small><em>Education</em></div>
+            <span class="g-open">↗</span>
+          </a>
+          <a class="g-card" target="_blank" rel="noopener noreferrer" data-search="wbchse scholarship directory" href="https://wbchse.wb.gov.in/student/scholarship/">
+            <div class="g-icon">📑</div>
+            <div class="g-info"><strong>WBCHSE Directory</strong><small>Official Scholarship List</small><em>Scholarship</em></div>
+            <span class="g-open">↗</span>
+          </a>
+          <a class="g-card" target="_blank" rel="noopener noreferrer" data-search="lic golden jubilee foundation scholarship" href="https://licindia.in/en/web/guest/golden-jubilee-foundation">
+            <div class="g-icon">🏆</div>
+            <div class="g-info"><strong>LIC Golden Jubilee</strong><small>Foundation Scholarship</small><em>Scholarship</em></div>
+            <span class="g-open">↗</span>
+          </a>
+          <a class="g-card" target="_blank" rel="noopener noreferrer" data-search="g p birla scholarship foundation" href="https://gpbirlaedufoundation.com/scholarship/">
+            <div class="g-icon">🎖️</div>
+            <div class="g-info"><strong>G P Birla Scholarship</strong><small>Merit-cum-Means</small><em>Scholarship</em></div>
+            <span class="g-open">↗</span>
+          </a>
+          <a class="g-card" target="_blank" rel="noopener noreferrer" data-search="sitaram jindal foundation scholarship" href="https://app.sitaramjindalfoundation.org/Student/ApplyStudentScholarship/0">
+            <div class="g-icon">📘</div>
+            <div class="g-info"><strong>Sitaram Jindal</strong><small>Foundation Scholarship</small><em>Scholarship</em></div>
+            <span class="g-open">↗</span>
+          </a>
         </div>
-        <p class="copyright">© ২০২৫ Azad Digital Seva | সর্বস্বত্ব সংরক্ষিত</p>
-    </footer>
+      </section>
 
-    <script>
-        (function () {
-            const toggle = document.getElementById('menuToggle');
-            const dropdown = document.getElementById('headerDropdown');
-            const overlay = document.getElementById('menuOverlay');
-            function openMenu() {
-                dropdown.classList.add('open');
-                toggle.classList.add('active');
-                overlay.classList.add('show');
-            }
-            function closeMenu() {
-                dropdown.classList.remove('open');
-                toggle.classList.remove('active');
-                overlay.classList.remove('show');
-            }
-            toggle.addEventListener('click', (e) => {
-                e.stopPropagation();
-                dropdown.classList.contains('open') ? closeMenu() : openMenu();
-            });
-            overlay.addEventListener('click', closeMenu);
-            document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeMenu(); });
-            dropdown.addEventListener('click', (e) => e.stopPropagation());
-        })();
-    </script>
+      <!-- LAND -->
+      <section class="section" data-group="land">
+        <div class="section-head">
+          <div class="section-icon">🌾</div>
+          <div class="section-title">
+            <h2>জমি, কৃষি ও গ্রামীণ পরিষেবা</h2>
+            <h3>Land, Agriculture &amp; Rural Services</h3>
+            <p>জমি, Job Card, কৃষক, রেশন ও পঞ্চায়েত পরিষেবা</p>
+          </div>
+        </div>
+        <div class="grid">
+          <a class="g-card" target="_blank" rel="noopener noreferrer" data-search="banglarbhumi land mutation জমি" href="https://banglarbhumi.gov.in/">
+            <div class="g-icon">🗺️</div>
+            <div class="g-info"><strong>Banglarbhumi</strong><small>Land &amp; Mutation</small><em>Land</em></div>
+            <span class="g-open">↗</span>
+          </a>
+          <a class="g-card" target="_blank" rel="noopener noreferrer" data-search="mgnrega job card worker information" href="https://mnregaweb4.nic.in/netnrega/workers/wrkinfo.aspx?lang=en">
+            <div class="g-icon">🧑‍🌾</div>
+            <div class="g-info"><strong>MGNREGA Job Card</strong><small>Worker Information</small><em>Rural</em></div>
+            <span class="g-open">↗</span>
+          </a>
+          <a class="g-card" target="_blank" rel="noopener noreferrer" data-search="pm-kisan farmer services kisan" href="https://pmkisan.gov.in/">
+            <div class="g-icon">🌱</div>
+            <div class="g-info"><strong>PM-KISAN</strong><small>Farmer Services</small><em>Agriculture</em></div>
+            <span class="g-open">↗</span>
+          </a>
+          <a class="g-card" target="_blank" rel="noopener noreferrer" data-search="ration card food wb supplies" href="https://food.wb.gov.in/">
+            <div class="g-icon">🌾</div>
+            <div class="g-info"><strong>Ration Card WB</strong><small>Food &amp; Supplies</small><em>Ration</em></div>
+            <span class="g-open">↗</span>
+          </a>
+          <a class="g-card" target="_blank" rel="noopener noreferrer" data-search="nfsa national food security act" href="https://nfsa.gov.in/">
+            <div class="g-icon">📗</div>
+            <div class="g-info"><strong>NFSA</strong><small>National Food Security</small><em>Ration</em></div>
+            <span class="g-open">↗</span>
+          </a>
+          <a class="g-card" target="_blank" rel="noopener noreferrer" data-search="wbprd property tax panchayat online" href="https://prdtax.wb.gov.in/">
+            <div class="g-icon">🏠</div>
+            <div class="g-info"><strong>WBPRD Property Tax</strong><small>Panchayat Online Tax</small><em>Panchayat</em></div>
+            <span class="g-open">↗</span>
+          </a>
+        </div>
+      </section>
+
+      <!-- VEHICLE -->
+      <section class="section" data-group="vehicle">
+        <div class="section-head">
+          <div class="section-icon">🚘</div>
+          <div class="section-title">
+            <h2>গাড়ি, লাইসেন্স ও চালান</h2>
+            <h3>Vehicle, Driving Licence &amp; Challan</h3>
+            <p>Driving Licence, vehicle service ও traffic challan</p>
+          </div>
+        </div>
+        <div class="grid">
+          <a class="g-card" target="_blank" rel="noopener noreferrer" data-search="parivahan sewa driving vehicle" href="https://parivahan.gov.in/">
+            <div class="g-icon">🚘</div>
+            <div class="g-info"><strong>Parivahan Sewa</strong><small>Driving / Vehicle</small><em>Vehicle</em></div>
+            <span class="g-open">↗</span>
+          </a>
+          <a class="g-card" target="_blank" rel="noopener noreferrer" data-search="sarathi parivahan driving learner licence" href="https://sarathi.parivahan.gov.in/">
+            <div class="g-icon">🪪</div>
+            <div class="g-info"><strong>Sarathi Parivahan</strong><small>Driving / Learner Licence</small><em>Licence</em></div>
+            <span class="g-open">↗</span>
+          </a>
+          <a class="g-card" target="_blank" rel="noopener noreferrer" data-search="vahan vehicle related services" href="https://vahan.parivahan.gov.in/">
+            <div class="g-icon">🚙</div>
+            <div class="g-info"><strong>Vahan</strong><small>Vehicle Services</small><em>Vehicle</em></div>
+            <span class="g-open">↗</span>
+          </a>
+          <a class="g-card" target="_blank" rel="noopener noreferrer" data-search="e-challan traffic challan check payment" href="https://echallan.parivahan.gov.in/">
+            <div class="g-icon">🚦</div>
+            <div class="g-info"><strong>e-Challan</strong><small>Challan Check / Payment</small><em>Challan</em></div>
+            <span class="g-open">↗</span>
+          </a>
+        </div>
+      </section>
+
+      <!-- JOBS -->
+      <section class="section" data-group="jobs">
+        <div class="section-head">
+          <div class="section-icon">💼</div>
+          <div class="section-title">
+            <h2>সরকারি চাকরি ও Employment</h2>
+            <h3>Government Jobs &amp; Employment</h3>
+            <p>Railway, Bank, SSC, UPSC, West Bengal সহ সব portal</p>
+          </div>
+        </div>
+        <div class="grid">
+          <a class="g-card" target="_blank" rel="noopener noreferrer" data-search="employment bank wb job seeker" href="https://employmentbankwb.gov.in/">
+            <div class="g-icon">💼</div>
+            <div class="g-info"><strong>Employment Bank WB</strong><small>Job Seeker Services</small><em>Jobs</em></div>
+            <span class="g-open">↗</span>
+          </a>
+          <a class="g-card" target="_blank" rel="noopener noreferrer" data-search="wbpsc wbcs clerkship psc" href="https://psc.wb.gov.in/">
+            <div class="g-icon">🏛️</div>
+            <div class="g-info"><strong>WBPSC</strong><small>WBCS / Clerkship</small><em>Jobs</em></div>
+            <span class="g-open">↗</span>
+          </a>
+          <a class="g-card" target="_blank" rel="noopener noreferrer" data-search="west bengal school service commission teacher" href="https://www.westbengalssc.com/">
+            <div class="g-icon">🏫</div>
+            <div class="g-info"><strong>WB SSC</strong><small>Teacher Recruitment</small><em>Jobs</em></div>
+            <span class="g-open">↗</span>
+          </a>
+          <a class="g-card" target="_blank" rel="noopener noreferrer" data-search="west bengal police recruitment wbp kolkata" href="https://www.wbpolice.gov.in/wbp/common/WBP_RecruitmentNew.aspx">
+            <div class="g-icon">👮</div>
+            <div class="g-info"><strong>WB Police</strong><small>Recruitment</small><em>Jobs</em></div>
+            <span class="g-open">↗</span>
+          </a>
+          <a class="g-card" target="_blank" rel="noopener noreferrer" data-search="ssc cgl chsl mts gd je staff selection" href="https://ssc.gov.in/">
+            <div class="g-icon">📋</div>
+            <div class="g-info"><strong>SSC</strong><small>CGL / CHSL / MTS / GD</small><em>Jobs</em></div>
+            <span class="g-open">↗</span>
+          </a>
+          <a class="g-card" target="_blank" rel="noopener noreferrer" data-search="upsc civil services nda cds" href="https://www.upsc.gov.in/">
+            <div class="g-icon">🇮🇳</div>
+            <div class="g-info"><strong>UPSC</strong><small>Civil Services / NDA / CDS</small><em>Jobs</em></div>
+            <span class="g-open">↗</span>
+          </a>
+          <a class="g-card" target="_blank" rel="noopener noreferrer" data-search="rrb kolkata railway recruitment" href="https://www.rrbkolkata.gov.in/">
+            <div class="g-icon">🚆</div>
+            <div class="g-info"><strong>RRB Kolkata</strong><small>Railway Recruitment</small><em>Jobs</em></div>
+            <span class="g-open">↗</span>
+          </a>
+          <a class="g-card" target="_blank" rel="noopener noreferrer" data-search="ibps bank po clerk specialist officer" href="https://www.ibps.in/">
+            <div class="g-icon">🏦</div>
+            <div class="g-info"><strong>IBPS</strong><small>Bank PO / Clerk / SO</small><em>Jobs</em></div>
+            <span class="g-open">↗</span>
+          </a>
+          <a class="g-card" target="_blank" rel="noopener noreferrer" data-search="sbi careers po clerk specialist" href="https://sbi.co.in/web/careers/">
+            <div class="g-icon">🏦</div>
+            <div class="g-info"><strong>SBI Careers</strong><small>PO / Clerk / SO</small><em>Jobs</em></div>
+            <span class="g-open">↗</span>
+          </a>
+          <a class="g-card" target="_blank" rel="noopener noreferrer" data-search="rbi opportunities reserve bank recruitment" href="https://opportunities.rbi.org.in/">
+            <div class="g-icon">💰</div>
+            <div class="g-info"><strong>RBI Opportunities</strong><small>Recruitment</small><em>Jobs</em></div>
+            <span class="g-open">↗</span>
+          </a>
+          <a class="g-card" target="_blank" rel="noopener noreferrer" data-search="india post gds gramin dak sevak" href="https://indiapostgdsonline.gov.in/">
+            <div class="g-icon">📮</div>
+            <div class="g-info"><strong>India Post GDS</strong><small>Gramin Dak Sevak</small><em>Jobs</em></div>
+            <span class="g-open">↗</span>
+          </a>
+          <a class="g-card" target="_blank" rel="noopener noreferrer" data-search="indian army recruitment join" href="https://joinindianarmy.nic.in/">
+            <div class="g-icon">🪖</div>
+            <div class="g-info"><strong>Indian Army</strong><small>Recruitment</small><em>Defence</em></div>
+            <span class="g-open">↗</span>
+          </a>
+          <a class="g-card" target="_blank" rel="noopener noreferrer" data-search="indian navy recruitment join" href="https://www.joinindiannavy.gov.in/">
+            <div class="g-icon">⚓</div>
+            <div class="g-info"><strong>Indian Navy</strong><small>Recruitment</small><em>Defence</em></div>
+            <span class="g-open">↗</span>
+          </a>
+          <a class="g-card" target="_blank" rel="noopener noreferrer" data-search="indian air force agnipath vayu recruitment" href="https://agnipathvayu.cdac.in/">
+            <div class="g-icon">✈️</div>
+            <div class="g-info"><strong>Indian Air Force</strong><small>Agniveervayu Recruitment</small><em>Defence</em></div>
+            <span class="g-open">↗</span>
+          </a>
+          <a class="g-card" target="_blank" rel="noopener noreferrer" data-search="coast guard recruitment join" href="https://joinindiancoastguard.cdac.in/">
+            <div class="g-icon">🛟</div>
+            <div class="g-info"><strong>Coast Guard</strong><small>Recruitment</small><em>Defence</em></div>
+            <span class="g-open">↗</span>
+          </a>
+          <a class="g-card" target="_blank" rel="noopener noreferrer" data-search="national career service ncs jobs" href="https://www.ncs.gov.in/">
+            <div class="g-icon">👔</div>
+            <div class="g-info"><strong>National Career Service</strong><small>Govt Jobs &amp; Career</small><em>Jobs</em></div>
+            <span class="g-open">↗</span>
+          </a>
+        </div>
+      </section>
+
+      <!-- HEALTH -->
+      <section class="section" data-group="health">
+        <div class="section-head">
+          <div class="section-icon">❤️</div>
+          <div class="section-title">
+            <h2>স্বাস্থ্য ও সামাজিক প্রকল্প</h2>
+            <h3>Health &amp; Social Welfare</h3>
+            <p>স্বাস্থ্য কার্ড ও গুরুত্বপূর্ণ সামাজিক প্রকল্প</p>
+          </div>
+        </div>
+        <div class="grid">
+          <a class="g-card" target="_blank" rel="noopener noreferrer" data-search="ayushman bharat pmjay health" href="https://pmjay.gov.in/">
+            <div class="g-icon">❤️</div>
+            <div class="g-info"><strong>Ayushman Bharat</strong><small>PM-JAY Services</small><em>Health</em></div>
+            <span class="g-open">↗</span>
+          </a>
+          <a class="g-card" target="_blank" rel="noopener noreferrer" data-search="swasthya sathi west bengal health" href="https://swasthyasathi.gov.in/">
+            <div class="g-icon">🩺</div>
+            <div class="g-info"><strong>Swasthya Sathi</strong><small>WB Health Scheme</small><em>Health</em></div>
+            <span class="g-open">↗</span>
+          </a>
+          <a class="g-card" target="_blank" rel="noopener noreferrer" data-search="kanyashree west bengal scheme girls" href="https://www.wbkanyashree.gov.in/">
+            <div class="g-icon">👩‍🎓</div>
+            <div class="g-info"><strong>Kanyashree</strong><small>WB Scheme</small><em>Welfare</em></div>
+            <span class="g-open">↗</span>
+          </a>
+        </div>
+      </section>
+
+      <!-- BUSINESS -->
+      <section class="section" data-group="business">
+        <div class="section-head">
+          <div class="section-icon">🏢</div>
+          <div class="section-title">
+            <h2>ব্যবসা, Tax ও Licence</h2>
+            <h3>Business, Tax &amp; Licence</h3>
+            <p>Business registration, tax, PF ও licence services</p>
+          </div>
+        </div>
+        <div class="grid">
+          <a class="g-card" target="_blank" rel="noopener noreferrer" data-search="silpa sathi west bengal single window" href="https://silpasathi.wb.gov.in/">
+            <div class="g-icon">🏭</div>
+            <div class="g-info"><strong>Silpa Sathi</strong><small>WB Single Window</small><em>Business</em></div>
+            <span class="g-open">↗</span>
+          </a>
+          <a class="g-card" target="_blank" rel="noopener noreferrer" data-search="income tax e-filing portal itr" href="https://www.incometax.gov.in/">
+            <div class="g-icon">🧾</div>
+            <div class="g-info"><strong>Income Tax</strong><small>e-Filing Portal</small><em>Tax</em></div>
+            <span class="g-open">↗</span>
+          </a>
+          <a class="g-card" target="_blank" rel="noopener noreferrer" data-search="gst portal services" href="https://www.gst.gov.in/">
+            <div class="g-icon">🧮</div>
+            <div class="g-info"><strong>GST Portal</strong><small>GST Services</small><em>Tax</em></div>
+            <span class="g-open">↗</span>
+          </a>
+          <a class="g-card" target="_blank" rel="noopener noreferrer" data-search="epfo pf provident fund" href="https://www.epfindia.gov.in/">
+            <div class="g-icon">🏦</div>
+            <div class="g-info"><strong>EPFO</strong><small>PF Services</small><em>PF</em></div>
+            <span class="g-open">↗</span>
+          </a>
+          <a class="g-card" target="_blank" rel="noopener noreferrer" data-search="udyam registration msme" href="https://udyamregistration.gov.in/">
+            <div class="g-icon">🏪</div>
+            <div class="g-info"><strong>Udyam Registration</strong><small>MSME Registration</small><em>Business</em></div>
+            <span class="g-open">↗</span>
+          </a>
+          <a class="g-card" target="_blank" rel="noopener noreferrer" data-search="fssai foscos food licence" href="https://foscos.fssai.gov.in/">
+            <div class="g-icon">🍽️</div>
+            <div class="g-info"><strong>FSSAI / FoSCoS</strong><small>Food Licence</small><em>Licence</em></div>
+            <span class="g-open">↗</span>
+          </a>
+        </div>
+      </section>
+
+    </div>
+
+    <div class="empty" id="azEmpty">
+      <span class="big">🔎</span>
+      <p>এই নামে কোনো portal পাওয়া যায়নি।<br>অন্য নাম দিয়ে Search করুন।</p>
+    </div>
+
+    <div class="note">
+      <strong>✓ নির্দেশনা:</strong> যেকোনো card-এ tap করলে সংশ্লিষ্ট সরকারি website নতুন tab-এ খুলবে। গুরুত্বপূর্ণ কাজের আগে URL ও service details যাচাই করে নিন।
+    </div>
+
+  </div>
+</div>
+
+<!-- ================= FOOTER ================= -->
+<footer>
+  <p>🖥️ <strong>Azad Digital Seva</strong> — সরকারি ও বেসরকারি অনলাইন পরিষেবা</p>
+  <div class="footer-links">
+    <a href="index.html">🏠 Home</a>
+    <a href="pvc-card.html">💳 PVC Card</a>
+    <a href="gov-service.html">📋 Govt Services</a>
+    <a href="contact.html">📞 Contact</a>
+  </div>
+  <p class="footer-copyright">© ২০২৫ Azad Digital Seva | সর্বস্বত্ব সংরক্ষিত</p>
+</footer>
+
+<!-- ================= BOTTOM NAVIGATION (Mobile) ================= -->
+<nav class="bottom-nav">
+  <div class="bottom-nav-inner">
+    <a href="index.html" class="bn-item">
+      <span class="bn-icon">🏠</span>
+      <span>Home</span>
+    </a>
+    <a href="pvc-card.html" class="bn-item">
+      <span class="bn-icon">💳</span>
+      <span>PVC Card</span>
+    </a>
+    <a href="gov-service.html" class="bn-item active">
+      <span class="bn-icon">📋</span>
+      <span>Govt</span>
+    </a>
+    <a href="contact.html" class="bn-item">
+      <span class="bn-icon">📞</span>
+      <span>Contact</span>
+    </a>
+  </div>
+</nav>
+
+<!-- ================= SCROLL TO TOP ================= -->
+<button class="scroll-top" id="scrollTop" aria-label="Scroll to top">↑</button>
+
+<!-- ================= SCRIPT ================= -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  var search = document.getElementById('azSearch');
+  var cats = document.querySelectorAll('.cat');
+  var sections = document.querySelectorAll('.section');
+  var empty = document.getElementById('azEmpty');
+  var scrollBtn = document.getElementById('scrollTop');
+  var selected = 'all';
+
+  function filter() {
+    var v = (search.value || '').toLowerCase().trim();
+    var total = 0;
+
+    sections.forEach(function(section) {
+      var allowed = selected === 'all' || selected === section.dataset.group;
+      var n = 0;
+
+      section.querySelectorAll('.g-card').forEach(function(card) {
+        var show = allowed && (!v || (card.dataset.search || '').toLowerCase().includes(v));
+        card.style.display = show ? 'flex' : 'none';
+        if (show) { n++; total++; }
+      });
+
+      section.style.display = n ? 'block' : 'none';
+    });
+
+    empty.style.display = total ? 'none' : 'block';
+  }
+
+  search.addEventListener('input', filter);
+
+  cats.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      selected = this.dataset.target || 'all';
+      cats.forEach(function(b) { b.classList.remove('active'); });
+      this.classList.add('active');
+      filter();
+      // Scroll to top of sections smoothly
+      var top = document.getElementById('azSections').offsetTop - 130;
+      window.scrollTo({ top: top, behavior: 'smooth' });
+    });
+  });
+
+  // Scroll to top button
+  window.addEventListener('scroll', function() {
+    if (window.scrollY > 400) {
+      scrollBtn.classList.add('show');
+    } else {
+      scrollBtn.classList.remove('show');
+    }
+  }, { passive: true });
+
+  scrollBtn.addEventListener('click', function() {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+
+  filter();
+});
+</script>
 
 </body>
 </html>

@@ -25,6 +25,7 @@
     --shadow-sm: 0 2px 8px rgba(10,37,64,.06);
     --shadow-md: 0 6px 20px rgba(10,37,64,.1);
     --shadow-lg: 0 15px 40px rgba(10,37,64,.15);
+    --favorite: #f59e0b;
   }
 
   html { scroll-behavior: smooth; }
@@ -300,7 +301,7 @@
     padding: 20px 16px;
   }
 
-  /* ============ TOOLBAR (NON-STICKY, FIXED PROBLEM) ============ */
+  /* ============ TOOLBAR ============ */
   .toolbar {
     margin-bottom: 22px;
     padding: 14px;
@@ -350,7 +351,35 @@
     font-size: 14px;
   }
 
-  /* ============ CATEGORY CHIPS ============ */
+  .fav-counter {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    margin-left: auto;
+    padding: 4px 10px;
+    border-radius: 20px;
+    background: linear-gradient(135deg, #fef3c7, #fde68a);
+    color: #92400e;
+    font-size: 11px;
+    font-weight: 800;
+    border: 1px solid #fcd34d;
+    flex-shrink: 0;
+  }
+
+  .fav-counter .count {
+    background: #f59e0b;
+    color: #fff;
+    border-radius: 50%;
+    width: 18px;
+    height: 18px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    font-weight: 900;
+    min-width: 18px;
+  }
+
   .cats-wrap {
     position: relative;
     margin-top: 12px;
@@ -407,6 +436,19 @@
     box-shadow: 0 5px 14px rgba(255,153,51,.4);
   }
 
+  .cat-fav {
+    background: linear-gradient(135deg, #fef3c7, #fde68a);
+    color: #92400e;
+    border-color: #fcd34d;
+    font-weight: 800;
+  }
+
+  .cat-fav.active {
+    background: linear-gradient(135deg, #f59e0b, #d97706);
+    color: #fff;
+    box-shadow: 0 5px 14px rgba(245,158,11,.5);
+  }
+
   /* ============ SECTIONS ============ */
   .section {
     margin-bottom: 24px;
@@ -425,7 +467,6 @@
     to { opacity: 1; transform: translateY(0); }
   }
 
-  /* Section Header - Clean & Colorful */
   .section-head {
     display: flex;
     align-items: center;
@@ -445,7 +486,6 @@
     background: linear-gradient(180deg, var(--saffron), var(--gold));
   }
 
-  /* Digital Colorful Icon */
   .section-icon {
     width: 42px;
     height: 42px;
@@ -486,7 +526,6 @@
     letter-spacing: .2px;
   }
 
-  /* Grid */
   .grid {
     padding: 14px;
     display: grid;
@@ -494,7 +533,7 @@
     gap: 10px;
   }
 
-  /* ============ CARD - DIGITAL COLORFUL ============ */
+  /* ============ CARDS ============ */
   .g-card {
     --grad: linear-gradient(135deg, #1565c0, #42a5f5);
     --shadow-color: rgba(21,101,192,.35);
@@ -532,7 +571,6 @@
 
   .g-card:hover::before { width: 6px; }
 
-  /* Digital Colorful Icon (No emoji, pure CSS colored icons with letters) */
   .g-icon {
     width: 42px;
     height: 42px;
@@ -589,13 +627,283 @@
     box-shadow: 0 3px 8px var(--shadow-color);
   }
 
-  /* Color variations - Repeating every 6 cards */
   .g-card:nth-child(6n+1) { --grad: linear-gradient(135deg, #1565c0, #42a5f5); --shadow-color: rgba(21,101,192,.35); }
   .g-card:nth-child(6n+2) { --grad: linear-gradient(135deg, #c62828, #ef5350); --shadow-color: rgba(198,40,40,.35); }
   .g-card:nth-child(6n+3) { --grad: linear-gradient(135deg, #6a1b9a, #a855f7); --shadow-color: rgba(106,27,154,.35); }
   .g-card:nth-child(6n+4) { --grad: linear-gradient(135deg, #1b5e20, #43a047); --shadow-color: rgba(27,94,32,.35); }
   .g-card:nth-child(6n+5) { --grad: linear-gradient(135deg, #b45309, #f59e0b); --shadow-color: rgba(180,83,9,.35); }
   .g-card:nth-child(6n+6) { --grad: linear-gradient(135deg, #00695c, #26a69a); --shadow-color: rgba(0,105,92,.35); }
+
+  /* ============ FAVORITE STAR BUTTON ============ */
+  .fav-btn {
+    position: absolute;
+    top: 6px;
+    right: 6px;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    border: none;
+    background: rgba(255,255,255,.95);
+    box-shadow: 0 2px 8px rgba(0,0,0,.1);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    color: #cbd5e1;
+    transition: all .25s ease;
+    z-index: 10;
+    padding: 0;
+    font-family: inherit;
+  }
+
+  .fav-btn:hover {
+    transform: scale(1.15);
+    background: #fff;
+    color: #f59e0b;
+  }
+
+  .fav-btn.active {
+    color: #f59e0b;
+    background: #fef3c7;
+    box-shadow: 0 3px 10px rgba(245,158,11,.4);
+    animation: starPop .3s ease;
+  }
+
+  @keyframes starPop {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.4); }
+    100% { transform: scale(1); }
+  }
+
+  .fav-btn.active::before {
+    content: '★';
+  }
+
+  .fav-btn:not(.active)::before {
+    content: '☆';
+  }
+
+  .g-card { padding-right: 42px; }
+
+  /* ============ FAVORITE SECTION ============ */
+  .section-fav {
+    background: linear-gradient(135deg, #fffbf0, #fff8e1) !important;
+    border-color: #fcd34d !important;
+    display: none;
+  }
+
+  .section-fav.active { display: block; }
+
+  .section-fav .section-head {
+    background: linear-gradient(135deg, #fef3c7, #fde68a) !important;
+    border-bottom-color: #fcd34d !important;
+  }
+
+  .section-fav .section-head::before {
+    background: linear-gradient(180deg, #f59e0b, #d97706) !important;
+    width: 5px !important;
+  }
+
+  .section-fav .section-icon {
+    background: linear-gradient(135deg, #f59e0b, #d97706) !important;
+    animation: starPulse 2s ease-in-out infinite;
+  }
+
+  @keyframes starPulse {
+    0%, 100% { transform: scale(1); box-shadow: 0 5px 14px rgba(245,158,11,.4); }
+    50% { transform: scale(1.05); box-shadow: 0 8px 20px rgba(245,158,11,.6); }
+  }
+
+  .section-fav .section-title h2 {
+    color: #78350f !important;
+    font-weight: 900 !important;
+  }
+
+  .section-fav .section-title h3 {
+    color: #b45309 !important;
+    font-weight: 700 !important;
+  }
+
+  .fav-empty {
+    padding: 30px 20px;
+    text-align: center;
+    color: #92400e;
+    font-weight: 700;
+    font-size: .88rem;
+    line-height: 1.6;
+  }
+
+  .fav-empty .big {
+    display: block;
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+    opacity: .6;
+  }
+
+  /* ============ SPECIAL SERVICES ============ */
+  .special-head {
+    background: linear-gradient(135deg, #fff8e1, #fff3cd) !important;
+    border-bottom: 2px solid #ffd54f !important;
+  }
+
+  .special-head::before {
+    background: linear-gradient(180deg, #f9a826, #e67e22) !important;
+    width: 5px !important;
+  }
+
+  .special-icon {
+    background: linear-gradient(135deg, #f9a826, #e67e22) !important;
+    box-shadow: 0 6px 18px rgba(249,168,38,.45) !important;
+    color: #fff !important;
+    font-weight: 900 !important;
+    animation: specialPulse 2s ease-in-out infinite;
+  }
+
+  @keyframes specialPulse {
+    0%, 100% { transform: scale(1); box-shadow: 0 6px 18px rgba(249,168,38,.45); }
+    50% { transform: scale(1.05); box-shadow: 0 8px 24px rgba(249,168,38,.6); }
+  }
+
+  .special-head .section-title h2 {
+    color: #7a4f00 !important;
+    font-weight: 900 !important;
+  }
+
+  .special-head .section-title h3 {
+    color: #a8731a !important;
+    font-weight: 700 !important;
+  }
+
+  .special-grid {
+    background: linear-gradient(135deg, #fffdf5, #fff8e1);
+  }
+
+  .special-card {
+    position: relative;
+    overflow: visible !important;
+    border: 2px solid transparent !important;
+    background-clip: padding-box;
+    min-height: 88px !important;
+    padding: 16px 42px 16px 14px !important;
+    transition: all .3s cubic-bezier(.4,0,.2,1) !important;
+  }
+
+  .special-card::before {
+    width: 5px !important;
+  }
+
+  .special-badge {
+    position: absolute;
+    top: -8px;
+    right: 34px;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    background: linear-gradient(135deg, #ffd700, #f9a826);
+    box-shadow: 0 4px 12px rgba(249,168,38,.5);
+    z-index: 5;
+    animation: badgeFloat 2.5s ease-in-out infinite;
+    pointer-events: none;
+  }
+
+  @keyframes badgeFloat {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(-3px) rotate(8deg); }
+  }
+
+  .special-icon-box {
+    width: 46px !important;
+    height: 46px !important;
+    font-size: 1.05rem !important;
+    font-weight: 900 !important;
+    border-radius: 12px !important;
+    letter-spacing: -.5px;
+    position: relative;
+    z-index: 2;
+  }
+
+  .special-annapurna {
+    --grad: linear-gradient(135deg, #d84315, #ff7043) !important;
+    --shadow-color: rgba(216,67,21,.4) !important;
+  }
+
+  .special-annapurna:hover {
+    box-shadow: 0 14px 30px rgba(216,67,21,.35), 0 0 0 3px rgba(216,67,21,.15) !important;
+  }
+
+  .special-yubashakti {
+    --grad: linear-gradient(135deg, #1565c0, #42a5f5) !important;
+    --shadow-color: rgba(21,101,192,.4) !important;
+  }
+
+  .special-yubashakti:hover {
+    box-shadow: 0 14px 30px rgba(21,101,192,.35), 0 0 0 3px rgba(21,101,192,.15) !important;
+  }
+
+  .special-krishak {
+    --grad: linear-gradient(135deg, #1b5e20, #43a047) !important;
+    --shadow-color: rgba(27,94,32,.4) !important;
+  }
+
+  .special-krishak:hover {
+    box-shadow: 0 14px 30px rgba(27,94,32,.35), 0 0 0 3px rgba(27,94,32,.15) !important;
+  }
+
+  .special-ration {
+    --grad: linear-gradient(135deg, #6a1b9a, #a855f7) !important;
+    --shadow-color: rgba(106,27,154,.4) !important;
+  }
+
+  .special-ration:hover {
+    box-shadow: 0 14px 30px rgba(106,27,154,.35), 0 0 0 3px rgba(106,27,154,.15) !important;
+  }
+
+  .special-card:hover {
+    transform: translateY(-5px) scale(1.01);
+    border-color: transparent;
+  }
+
+  .special-card:hover::before {
+    width: 7px !important;
+  }
+
+  .special-card .g-info strong {
+    font-size: .9rem !important;
+    font-weight: 800 !important;
+    color: #1a1a1a !important;
+  }
+
+  .special-card .g-info small {
+    font-size: .7rem !important;
+    color: #6b6b6b !important;
+  }
+
+  .special-card .g-open {
+    width: 30px !important;
+    height: 30px !important;
+    font-size: .85rem !important;
+    box-shadow: 0 4px 12px var(--shadow-color) !important;
+  }
+
+  .special-card::after {
+    content: '';
+    position: absolute;
+    top: 0; left: -100%;
+    width: 100%; height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,.4), transparent);
+    transition: left .6s ease;
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  .special-card:hover::after {
+    left: 100%;
+  }
 
   /* ============ EMPTY & NOTE ============ */
   .empty {
@@ -758,6 +1066,42 @@
 
   .scroll-top:active { transform: scale(.9); }
 
+  /* ============ TOAST ============ */
+  .toast {
+    position: fixed;
+    bottom: 90px;
+    left: 50%;
+    transform: translateX(-50%) translateY(100px);
+    background: #1e293b;
+    color: #fff;
+    padding: 11px 22px;
+    border-radius: 30px;
+    font-size: .82rem;
+    font-weight: 700;
+    box-shadow: 0 10px 30px rgba(0,0,0,.3);
+    opacity: 0;
+    transition: all .4s cubic-bezier(.4,0,.2,1);
+    z-index: 9999;
+    white-space: nowrap;
+    max-width: 90vw;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    pointer-events: none;
+  }
+
+  .toast.show {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+
+  .toast.toast-fav {
+    background: linear-gradient(135deg, #f59e0b, #d97706);
+  }
+
+  .toast.toast-remove {
+    background: linear-gradient(135deg, #64748b, #475569);
+  }
+
   /* ============ MOBILE ============ */
   @media (max-width: 768px) {
     body { padding-bottom: 70px; }
@@ -862,13 +1206,21 @@
     }
 
     .g-card {
-      padding: 12px;
+      padding: 12px 40px 12px 12px;
       gap: 11px;
       min-height: 70px;
       border-radius: 12px;
     }
 
     .g-card::before { width: 3px; }
+
+    .fav-btn {
+      width: 26px;
+      height: 26px;
+      font-size: 13px;
+      top: 5px;
+      right: 5px;
+    }
 
     .g-icon {
       width: 40px;
@@ -912,6 +1264,39 @@
       padding: 18px 12px 86px;
       margin-top: 24px;
     }
+
+    .special-card {
+      padding: 14px 42px 14px 12px !important;
+      min-height: 82px !important;
+    }
+
+    .special-icon-box {
+      width: 42px !important;
+      height: 42px !important;
+      font-size: .95rem !important;
+    }
+
+    .special-card .g-info strong {
+      font-size: .86rem !important;
+    }
+
+    .special-card .g-info small {
+      font-size: .66rem !important;
+    }
+
+    .special-badge {
+      width: 24px;
+      height: 24px;
+      font-size: 12px;
+      top: -6px;
+      right: 32px;
+    }
+
+    .toast {
+      bottom: 80px;
+      font-size: .76rem;
+      padding: 10px 18px;
+    }
   }
 
   @media (max-width: 400px) {
@@ -921,6 +1306,11 @@
     .hero p { font-size: .78rem; }
     .section-title h2 { font-size: .88rem; }
     .g-info strong { font-size: .8rem; }
+    .special-icon-box {
+      width: 38px !important;
+      height: 38px !important;
+      font-size: .88rem !important;
+    }
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -954,8 +1344,6 @@
     <nav class="nav-links">
       <a href="index.html">🏠 Home</a>
       <a href="pvc-card.html">💳 PVC Card</a>
-      <a href="gov-service.html" class="active">📋 Govt Services</a>
-      <a href="contact.html">📞 Contact</a>
     </nav>
   </div>
 </header>
@@ -969,7 +1357,7 @@
     <div class="hero-badges">
       <span class="hero-badge"><span class="dot"></span> ৬০+ সেবা</span>
       <span class="hero-badge">🇮🇳 পশ্চিমবঙ্গ</span>
-      <span class="hero-badge">✅ যাচাইকৃত</span>
+      <span class="hero-badge">⭐ ফেভারিট সিস্টেম</span>
     </div>
   </div>
 </section>
@@ -987,6 +1375,8 @@
       <div class="cats-wrap">
         <div class="cats">
           <button type="button" class="cat active" data-target="all">সব পরিষেবা</button>
+          <button type="button" class="cat cat-fav" data-target="favorites">⭐ আমার ফেভারিট <span class="fav-counter" id="favCounter" style="display:none;"><span class="count" id="favCount">0</span></span></button>
+          <button type="button" class="cat" data-target="special">⭐ স্পেশাল পরিষেবা</button>
           <button type="button" class="cat" data-target="certificate">সার্টিফিকেট</button>
           <button type="button" class="cat" data-target="education">শিক্ষা ও স্কলারশিপ</button>
           <button type="button" class="cat" data-target="land">জমি ও কৃষি</button>
@@ -1001,7 +1391,98 @@
     <!-- ================= SECTIONS ================= -->
     <div id="azSections">
 
-      <!-- CERTIFICATE -->
+      <!-- ========== FAVORITES ========== -->
+      <section class="section section-fav" data-group="favorites" id="favSection">
+        <div class="section-head">
+          <div class="section-icon">⭐</div>
+          <div class="section-title">
+            <h2>আমার ফেভারিট</h2>
+            <h3>My Favorites — শুধু আপনার জন্য</h3>
+          </div>
+        </div>
+        <div class="grid" id="favGrid"></div>
+        <div class="fav-empty" id="favEmpty">
+          <span class="big">⭐</span>
+          এখনো কোনো ফেভারিট নেই।<br>
+          যেকোনো কার্ডে <b>☆</b> চিহ্নে ক্লিক করে ফেভারিট যোগ করুন।
+        </div>
+      </section>
+
+      <!-- ========== SPECIAL SERVICES ========== -->
+      <section class="section" data-group="special">
+        <div class="section-head special-head">
+          <div class="section-icon special-icon">SP</div>
+          <div class="section-title">
+            <h2>স্পেশাল পরিষেবা</h2>
+            <h3>Special Government Services</h3>
+          </div>
+        </div>
+        <div class="grid special-grid">
+
+          <a class="g-card special-card special-annapurna" 
+             target="_blank" rel="noopener noreferrer" 
+             data-search="annapurna yojana social registry west bengal অন্নপূর্ণা যোজনা" 
+             data-title="অন্নপূর্ণা যোজনা"
+             href="https://socialregistry.wb.gov.in/">
+            <div class="special-badge">⭐</div>
+            <button class="fav-btn" aria-label="Add to favorites" type="button"></button>
+            <div class="g-icon special-icon-box">AY</div>
+            <div class="g-info">
+              <strong>অন্নপূর্ণা যোজনা</strong>
+              <small>Annapurna Yojana — Social Registry WB</small>
+            </div>
+            <span class="g-open">↗</span>
+          </a>
+
+          <a class="g-card special-card special-yubashakti" 
+             target="_blank" rel="noopener noreferrer" 
+             data-search="yubashakti yojana west bengal youth scheme যুবশক্তি প্রকল্প" 
+             data-title="যুবশক্তি প্রকল্প"
+             href="https://yubashakti.co.in/">
+            <div class="special-badge">⭐</div>
+            <button class="fav-btn" aria-label="Add to favorites" type="button"></button>
+            <div class="g-icon special-icon-box">YS</div>
+            <div class="g-info">
+              <strong>যুবশক্তি প্রকল্প</strong>
+              <small>Yubashakti Yojana — Youth Scheme WB</small>
+            </div>
+            <span class="g-open">↗</span>
+          </a>
+
+          <a class="g-card special-card special-krishak" 
+             target="_blank" rel="noopener noreferrer" 
+             data-search="krishak bandhu west bengal farmer scheme কৃষক বন্ধু প্রকল্প" 
+             data-title="কৃষক বন্ধু প্রকল্প"
+             href="https://krishakbandhu.wb.gov.in/">
+            <div class="special-badge">⭐</div>
+            <button class="fav-btn" aria-label="Add to favorites" type="button"></button>
+            <div class="g-icon special-icon-box">KB</div>
+            <div class="g-info">
+              <strong>কৃষক বন্ধু প্রকল্প</strong>
+              <small>Krishak Bandhu — Farmer Support WB</small>
+            </div>
+            <span class="g-open">↗</span>
+          </a>
+
+          <a class="g-card special-card special-ration" 
+             target="_blank" rel="noopener noreferrer" 
+             data-search="digital ration card west bengal food supplies ডিজিটাল রেশন কার্ড" 
+             data-title="ডিজিটাল রেশন কার্ড"
+             href="https://food.wb.gov.in/">
+            <div class="special-badge">⭐</div>
+            <button class="fav-btn" aria-label="Add to favorites" type="button"></button>
+            <div class="g-icon special-icon-box">DR</div>
+            <div class="g-info">
+              <strong>ডিজিটাল রেশন কার্ড</strong>
+              <small>Digital Ration Card — Food &amp; Supplies WB</small>
+            </div>
+            <span class="g-open">↗</span>
+          </a>
+
+        </div>
+      </section>
+
+      <!-- ========== CERTIFICATE ========== -->
       <section class="section" data-group="certificate">
         <div class="section-head">
           <div class="section-icon">CS</div>
@@ -1011,42 +1492,50 @@
           </div>
         </div>
         <div class="grid">
-          <a class="g-card" target="_blank" rel="noopener noreferrer" data-search="wb e-district citizen services" href="https://edistrict.wb.gov.in/">
+          <a class="g-card" target="_blank" rel="noopener noreferrer" data-search="wb e-district citizen services" data-title="WB e-District" href="https://edistrict.wb.gov.in/">
+            <button class="fav-btn" aria-label="Add to favorites" type="button"></button>
             <div class="g-icon">WB</div>
             <div class="g-info"><strong>WB e-District</strong><small>Citizen Services</small></div>
             <span class="g-open">↗</span>
           </a>
-          <a class="g-card" target="_blank" rel="noopener noreferrer" data-search="wbpms gram panchayat certificate residence income" href="https://wbpms.in/citizen/index.html">
+          <a class="g-card" target="_blank" rel="noopener noreferrer" data-search="wbpms gram panchayat certificate residence income" data-title="WBPMS Panchayat" href="https://wbpms.in/citizen/index.html">
+            <button class="fav-btn" aria-label="Add to favorites" type="button"></button>
             <div class="g-icon">GP</div>
             <div class="g-info"><strong>WBPMS Panchayat</strong><small>Residence / Income / Character</small></div>
             <span class="g-open">↗</span>
           </a>
-          <a class="g-card" target="_blank" rel="noopener noreferrer" data-search="birth death registration wb janma mrityu" href="https://janma-mrityutathya.wb.gov.in/">
+          <a class="g-card" target="_blank" rel="noopener noreferrer" data-search="birth death registration wb janma mrityu" data-title="Birth & Death Registration" href="https://janma-mrityutathya.wb.gov.in/">
+            <button class="fav-btn" aria-label="Add to favorites" type="button"></button>
             <div class="g-icon">BD</div>
             <div class="g-info"><strong>Birth &amp; Death Reg.</strong><small>WB Janma-Mrityu Tathya</small></div>
             <span class="g-open">↗</span>
           </a>
-          <a class="g-card" target="_blank" rel="noopener noreferrer" data-search="aadhaar uidai services" href="https://uidai.gov.in/">
+          <a class="g-card" target="_blank" rel="noopener noreferrer" data-search="aadhaar uidai services" data-title="Aadhaar / UIDAI" href="https://uidai.gov.in/">
+            <button class="fav-btn" aria-label="Add to favorites" type="button"></button>
             <div class="g-icon">AD</div>
             <div class="g-info"><strong>Aadhaar / UIDAI</strong><small>Aadhaar Services</small></div>
             <span class="g-open">↗</span>
           </a>
-          <a class="g-card" target="_blank" rel="noopener noreferrer" data-search="pan services protean tinpan" href="https://www.protean-tinpan.com/services/pan/">
+          <a class="g-card" target="_blank" rel="noopener noreferrer" data-search="pan services protean tinpan" data-title="PAN Services" href="https://www.protean-tinpan.com/services/pan/">
+            <button class="fav-btn" aria-label="Add to favorites" type="button"></button>
             <div class="g-icon">PN</div>
             <div class="g-info"><strong>PAN Services</strong><small>Application / Services</small></div>
             <span class="g-open">↗</span>
           </a>
-          <a class="g-card" target="_blank" rel="noopener noreferrer" data-search="voter services election eci" href="https://voters.eci.gov.in/">
+          <a class="g-card" target="_blank" rel="noopener noreferrer" data-search="voter services election eci" data-title="Voter Services" href="https://voters.eci.gov.in/">
+            <button class="fav-btn" aria-label="Add to favorites" type="button"></button>
             <div class="g-icon">VT</div>
             <div class="g-info"><strong>Voter Services</strong><small>Election / Voter Portal</small></div>
             <span class="g-open">↗</span>
           </a>
-          <a class="g-card" target="_blank" rel="noopener noreferrer" data-search="passport seva" href="https://www.passportindia.gov.in/">
+          <a class="g-card" target="_blank" rel="noopener noreferrer" data-search="passport seva" data-title="Passport Seva" href="https://www.passportindia.gov.in/">
+            <button class="fav-btn" aria-label="Add to favorites" type="button"></button>
             <div class="g-icon">PS</div>
             <div class="g-info"><strong>Passport Seva</strong><small>Passport Services</small></div>
             <span class="g-open">↗</span>
           </a>
-          <a class="g-card" target="_blank" rel="noopener noreferrer" data-search="caa indian citizenship online" href="https://indiancitizenshiponline.nic.in/">
+          <a class="g-card" target="_blank" rel="noopener noreferrer" data-search="caa indian citizenship online" data-title="CAA / Citizenship" href="https://indiancitizenshiponline.nic.in/">
+            <button class="fav-btn" aria-label="Add to favorites" type="button"></button>
             <div class="g-icon">CT</div>
             <div class="g-info"><strong>CAA / Citizenship</strong><small>Citizenship Application</small></div>
             <span class="g-open">↗</span>
@@ -1054,7 +1543,7 @@
         </div>
       </section>
 
-      <!-- EDUCATION -->
+      <!-- ========== EDUCATION ========== -->
       <section class="section" data-group="education">
         <div class="section-head">
           <div class="section-icon">ED</div>
@@ -1064,67 +1553,80 @@
           </div>
         </div>
         <div class="grid">
-          <a class="g-card" target="_blank" rel="noopener noreferrer" data-search="svmcm scholarship vivekananda merit" href="https://svmcm.wb.gov.in/">
+          <a class="g-card" target="_blank" rel="noopener noreferrer" data-search="svmcm scholarship vivekananda merit" data-title="SVMCM Scholarship" href="https://svmcm.wb.gov.in/">
+            <button class="fav-btn" aria-label="Add to favorites" type="button"></button>
             <div class="g-icon">SV</div>
             <div class="g-info"><strong>SVMCM Scholarship</strong><small>Vivekananda Merit-cum-Means</small></div>
             <span class="g-open">↗</span>
           </a>
-          <a class="g-card" target="_blank" rel="noopener noreferrer" data-search="aikyashree minority scholarship" href="https://www.wbmdfcscholarship.in/">
+          <a class="g-card" target="_blank" rel="noopener noreferrer" data-search="aikyashree minority scholarship" data-title="Aikyashree" href="https://www.wbmdfcscholarship.in/">
+            <button class="fav-btn" aria-label="Add to favorites" type="button"></button>
             <div class="g-icon">AK</div>
             <div class="g-info"><strong>Aikyashree</strong><small>Minority Students WB</small></div>
             <span class="g-open">↗</span>
           </a>
-          <a class="g-card" target="_blank" rel="noopener noreferrer" data-search="oasis scholarship sc st obc" href="https://oasis.gov.in/">
+          <a class="g-card" target="_blank" rel="noopener noreferrer" data-search="oasis scholarship sc st obc" data-title="OASIS Scholarship" href="https://oasis.gov.in/">
+            <button class="fav-btn" aria-label="Add to favorites" type="button"></button>
             <div class="g-icon">OS</div>
             <div class="g-info"><strong>OASIS Scholarship</strong><small>SC / ST / OBC WB</small></div>
             <span class="g-open">↗</span>
           </a>
-          <a class="g-card" target="_blank" rel="noopener noreferrer" data-search="nabanna scholarship cmrf" href="https://cmrf.wb.gov.in/">
+          <a class="g-card" target="_blank" rel="noopener noreferrer" data-search="nabanna scholarship cmrf" data-title="Nabanna Scholarship" href="https://cmrf.wb.gov.in/">
+            <button class="fav-btn" aria-label="Add to favorites" type="button"></button>
             <div class="g-icon">NB</div>
             <div class="g-info"><strong>Nabanna Scholarship</strong><small>CMRF Educational Assist.</small></div>
             <span class="g-open">↗</span>
           </a>
-          <a class="g-card" target="_blank" rel="noopener noreferrer" data-search="national scholarship portal nsp" href="https://scholarships.gov.in/">
+          <a class="g-card" target="_blank" rel="noopener noreferrer" data-search="national scholarship portal nsp" data-title="NSP" href="https://scholarships.gov.in/">
+            <button class="fav-btn" aria-label="Add to favorites" type="button"></button>
             <div class="g-icon">NS</div>
             <div class="g-info"><strong>NSP</strong><small>National Scholarship</small></div>
             <span class="g-open">↗</span>
           </a>
-          <a class="g-card" target="_blank" rel="noopener noreferrer" data-search="nmms scholarship wb means merit" href="https://banglarshiksha.wb.gov.in/scholarships/">
+          <a class="g-card" target="_blank" rel="noopener noreferrer" data-search="nmms scholarship wb means merit" data-title="NMMS Scholarship" href="https://banglarshiksha.wb.gov.in/scholarships/">
+            <button class="fav-btn" aria-label="Add to favorites" type="button"></button>
             <div class="g-icon">NM</div>
             <div class="g-info"><strong>NMMS Scholarship</strong><small>Means-cum-Merit WB</small></div>
             <span class="g-open">↗</span>
           </a>
-          <a class="g-card" target="_blank" rel="noopener noreferrer" data-search="west bengal freeship scheme" href="https://wbfs.wb.gov.in/">
+          <a class="g-card" target="_blank" rel="noopener noreferrer" data-search="west bengal freeship scheme" data-title="WB Freeship" href="https://wbfs.wb.gov.in/">
+            <button class="fav-btn" aria-label="Add to favorites" type="button"></button>
             <div class="g-icon">FS</div>
             <div class="g-info"><strong>WB Freeship</strong><small>Tuition Fee Waiver</small></div>
             <span class="g-open">↗</span>
           </a>
-          <a class="g-card" target="_blank" rel="noopener noreferrer" data-search="kanyashree k1 k2 girls education" href="https://admin-kanyashree.wb.gov.in/admin/login">
+          <a class="g-card" target="_blank" rel="noopener noreferrer" data-search="kanyashree k1 k2 girls education" data-title="Kanyashree" href="https://admin-kanyashree.wb.gov.in/admin/login">
+            <button class="fav-btn" aria-label="Add to favorites" type="button"></button>
             <div class="g-icon">KS</div>
             <div class="g-info"><strong>Kanyashree</strong><small>K1 / K2 WB Girls</small></div>
             <span class="g-open">↗</span>
           </a>
-          <a class="g-card" target="_blank" rel="noopener noreferrer" data-search="banglar shiksha school education wb" href="https://banglarshiksha.wb.gov.in/">
+          <a class="g-card" target="_blank" rel="noopener noreferrer" data-search="banglar shiksha school education wb" data-title="Banglar Shiksha" href="https://banglarshiksha.wb.gov.in/">
+            <button class="fav-btn" aria-label="Add to favorites" type="button"></button>
             <div class="g-icon">BS</div>
             <div class="g-info"><strong>Banglar Shiksha</strong><small>WB School Education</small></div>
             <span class="g-open">↗</span>
           </a>
-          <a class="g-card" target="_blank" rel="noopener noreferrer" data-search="wbchse scholarship directory" href="https://wbchse.wb.gov.in/student/scholarship/">
+          <a class="g-card" target="_blank" rel="noopener noreferrer" data-search="wbchse scholarship directory" data-title="WBCHSE Directory" href="https://wbchse.wb.gov.in/student/scholarship/">
+            <button class="fav-btn" aria-label="Add to favorites" type="button"></button>
             <div class="g-icon">WC</div>
             <div class="g-info"><strong>WBCHSE Directory</strong><small>Official Scholarship List</small></div>
             <span class="g-open">↗</span>
           </a>
-          <a class="g-card" target="_blank" rel="noopener noreferrer" data-search="lic golden jubilee foundation scholarship" href="https://licindia.in/en/web/guest/golden-jubilee-foundation">
+          <a class="g-card" target="_blank" rel="noopener noreferrer" data-search="lic golden jubilee foundation scholarship" data-title="LIC Golden Jubilee" href="https://licindia.in/en/web/guest/golden-jubilee-foundation">
+            <button class="fav-btn" aria-label="Add to favorites" type="button"></button>
             <div class="g-icon">LC</div>
             <div class="g-info"><strong>LIC Golden Jubilee</strong><small>Foundation Scholarship</small></div>
             <span class="g-open">↗</span>
           </a>
-          <a class="g-card" target="_blank" rel="noopener noreferrer" data-search="g p birla scholarship foundation" href="https://gpbirlaedufoundation.com/scholarship/">
+          <a class="g-card" target="_blank" rel="noopener noreferrer" data-search="g p birla scholarship foundation" data-title="G P Birla Scholarship" href="https://gpbirlaedufoundation.com/scholarship/">
+            <button class="fav-btn" aria-label="Add to favorites" type="button"></button>
             <div class="g-icon">GP</div>
             <div class="g-info"><strong>G P Birla Scholarship</strong><small>Merit-cum-Means</small></div>
             <span class="g-open">↗</span>
           </a>
-          <a class="g-card" target="_blank" rel="noopener noreferrer" data-search="sitaram jindal foundation scholarship" href="https://app.sitaramjindalfoundation.org/Student/ApplyStudentScholarship/0">
+          <a class="g-card" target="_blank" rel="noopener noreferrer" data-search="sitaram jindal foundation scholarship" data-title="Sitaram Jindal" href="https://app.sitaramjindalfoundation.org/Student/ApplyStudentScholarship/0">
+            <button class="fav-btn" aria-label="Add to favorites" type="button"></button>
             <div class="g-icon">SJ</div>
             <div class="g-info"><strong>Sitaram Jindal</strong><small>Foundation Scholarship</small></div>
             <span class="g-open">↗</span>
@@ -1132,7 +1634,7 @@
         </div>
       </section>
 
-      <!-- LAND -->
+      <!-- ========== LAND ========== -->
       <section class="section" data-group="land">
         <div class="section-head">
           <div class="section-icon">LD</div>
@@ -1142,32 +1644,38 @@
           </div>
         </div>
         <div class="grid">
-          <a class="g-card" target="_blank" rel="noopener noreferrer" data-search="banglarbhumi land mutation জমি" href="https://banglarbhumi.gov.in/">
+          <a class="g-card" target="_blank" rel="noopener noreferrer" data-search="banglarbhumi land mutation জমি" data-title="Banglarbhumi" href="https://banglarbhumi.gov.in/">
+            <button class="fav-btn" aria-label="Add to favorites" type="button"></button>
             <div class="g-icon">BB</div>
             <div class="g-info"><strong>Banglarbhumi</strong><small>Land &amp; Mutation</small></div>
             <span class="g-open">↗</span>
           </a>
-          <a class="g-card" target="_blank" rel="noopener noreferrer" data-search="mgnrega job card worker information" href="https://mnregaweb4.nic.in/netnrega/workers/wrkinfo.aspx?lang=en">
+          <a class="g-card" target="_blank" rel="noopener noreferrer" data-search="mgnrega job card worker information" data-title="MGNREGA Job Card" href="https://mnregaweb4.nic.in/netnrega/workers/wrkinfo.aspx?lang=en">
+            <button class="fav-btn" aria-label="Add to favorites" type="button"></button>
             <div class="g-icon">MN</div>
             <div class="g-info"><strong>MGNREGA Job Card</strong><small>Worker Information</small></div>
             <span class="g-open">↗</span>
           </a>
-          <a class="g-card" target="_blank" rel="noopener noreferrer" data-search="pm-kisan farmer services kisan" href="https://pmkisan.gov.in/">
+          <a class="g-card" target="_blank" rel="noopener noreferrer" data-search="pm-kisan farmer services kisan" data-title="PM-KISAN" href="https://pmkisan.gov.in/">
+            <button class="fav-btn" aria-label="Add to favorites" type="button"></button>
             <div class="g-icon">PK</div>
             <div class="g-info"><strong>PM-KISAN</strong><small>Farmer Services</small></div>
             <span class="g-open">↗</span>
           </a>
-          <a class="g-card" target="_blank" rel="noopener noreferrer" data-search="ration card food wb supplies" href="https://food.wb.gov.in/">
+          <a class="g-card" target="_blank" rel="noopener noreferrer" data-search="ration card food wb supplies" data-title="Ration Card WB" href="https://food.wb.gov.in/">
+            <button class="fav-btn" aria-label="Add to favorites" type="button"></button>
             <div class="g-icon">RC</div>
             <div class="g-info"><strong>Ration Card WB</strong><small>Food &amp; Supplies</small></div>
             <span class="g-open">↗</span>
           </a>
-          <a class="g-card" target="_blank" rel="noopener noreferrer" data-search="nfsa national food security act" href="https://nfsa.gov.in/">
+          <a class="g-card" target="_blank" rel="noopener noreferrer" data-search="nfsa national food security act" data-title="NFSA" href="https://nfsa.gov.in/">
+            <button class="fav-btn" aria-label="Add to favorites" type="button"></button>
             <div class="g-icon">NF</div>
             <div class="g-info"><strong>NFSA</strong><small>National Food Security</small></div>
             <span class="g-open">↗</span>
           </a>
-          <a class="g-card" target="_blank" rel="noopener noreferrer" data-search="wbprd property tax panchayat online" href="https://prdtax.wb.gov.in/">
+          <a class="g-card" target="_blank" rel="noopener noreferrer" data-search="wbprd property tax panchayat online" data-title="WBPRD Property Tax" href="https://prdtax.wb.gov.in/">
+            <button class="fav-btn" aria-label="Add to favorites" type="button"></button>
             <div class="g-icon">PT</div>
             <div class="g-info"><strong>WBPRD Property Tax</strong><small>Panchayat Online Tax</small></div>
             <span class="g-open">↗</span>
@@ -1175,7 +1683,7 @@
         </div>
       </section>
 
-      <!-- VEHICLE -->
+      <!-- ========== VEHICLE ========== -->
       <section class="section" data-group="vehicle">
         <div class="section-head">
           <div class="section-icon">VH</div>
@@ -1185,22 +1693,26 @@
           </div>
         </div>
         <div class="grid">
-          <a class="g-card" target="_blank" rel="noopener noreferrer" data-search="parivahan sewa driving vehicle" href="https://parivahan.gov.in/">
+          <a class="g-card" target="_blank" rel="noopener noreferrer" data-search="parivahan sewa driving vehicle" data-title="Parivahan Sewa" href="https://parivahan.gov.in/">
+            <button class="fav-btn" aria-label="Add to favorites" type="button"></button>
             <div class="g-icon">PV</div>
             <div class="g-info"><strong>Parivahan Sewa</strong><small>Driving / Vehicle</small></div>
             <span class="g-open">↗</span>
           </a>
-          <a class="g-card" target="_blank" rel="noopener noreferrer" data-search="sarathi parivahan driving learner licence" href="https://sarathi.parivahan.gov.in/">
+          <a class="g-card" target="_blank" rel="noopener noreferrer" data-search="sarathi parivahan driving learner licence" data-title="Sarathi Parivahan" href="https://sarathi.parivahan.gov.in/">
+            <button class="fav-btn" aria-label="Add to favorites" type="button"></button>
             <div class="g-icon">SR</div>
             <div class="g-info"><strong>Sarathi Parivahan</strong><small>Driving / Learner Licence</small></div>
             <span class="g-open">↗</span>
           </a>
-          <a class="g-card" target="_blank" rel="noopener noreferrer" data-search="vahan vehicle related services" href="https://vahan.parivahan.gov.in/">
+          <a class="g-card" target="_blank" rel="noopener noreferrer" data-search="vahan vehicle related services" data-title="Vahan" href="https://vahan.parivahan.gov.in/">
+            <button class="fav-btn" aria-label="Add to favorites" type="button"></button>
             <div class="g-icon">VN</div>
             <div class="g-info"><strong>Vahan</strong><small>Vehicle Services</small></div>
             <span class="g-open">↗</span>
           </a>
-          <a class="g-card" target="_blank" rel="noopener noreferrer" data-search="e-challan traffic challan check payment" href="https://echallan.parivahan.gov.in/">
+          <a class="g-card" target="_blank" rel="noopener noreferrer" data-search="e-challan traffic challan check payment" data-title="e-Challan" href="https://echallan.parivahan.gov.in/">
+            <button class="fav-btn" aria-label="Add to favorites" type="button"></button>
             <div class="g-icon">EC</div>
             <div class="g-info"><strong>e-Challan</strong><small>Challan Check / Payment</small></div>
             <span class="g-open">↗</span>
@@ -1208,7 +1720,7 @@
         </div>
       </section>
 
-      <!-- JOBS -->
+      <!-- ========== JOBS ========== -->
       <section class="section" data-group="jobs">
         <div class="section-head">
           <div class="section-icon">JB</div>
@@ -1218,82 +1730,98 @@
           </div>
         </div>
         <div class="grid">
-          <a class="g-card" target="_blank" rel="noopener noreferrer" data-search="employment bank wb job seeker" href="https://employmentbankwb.gov.in/">
+          <a class="g-card" target="_blank" rel="noopener noreferrer" data-search="employment bank wb job seeker" data-title="Employment Bank WB" href="https://employmentbankwb.gov.in/">
+            <button class="fav-btn" aria-label="Add to favorites" type="button"></button>
             <div class="g-icon">EB</div>
             <div class="g-info"><strong>Employment Bank WB</strong><small>Job Seeker Services</small></div>
             <span class="g-open">↗</span>
           </a>
-          <a class="g-card" target="_blank" rel="noopener noreferrer" data-search="wbpsc wbcs clerkship psc" href="https://psc.wb.gov.in/">
+          <a class="g-card" target="_blank" rel="noopener noreferrer" data-search="wbpsc wbcs clerkship psc" data-title="WBPSC" href="https://psc.wb.gov.in/">
+            <button class="fav-btn" aria-label="Add to favorites" type="button"></button>
             <div class="g-icon">WP</div>
             <div class="g-info"><strong>WBPSC</strong><small>WBCS / Clerkship</small></div>
             <span class="g-open">↗</span>
           </a>
-          <a class="g-card" target="_blank" rel="noopener noreferrer" data-search="west bengal school service commission teacher" href="https://www.westbengalssc.com/">
+          <a class="g-card" target="_blank" rel="noopener noreferrer" data-search="west bengal school service commission teacher" data-title="WB SSC" href="https://www.westbengalssc.com/">
+            <button class="fav-btn" aria-label="Add to favorites" type="button"></button>
             <div class="g-icon">WS</div>
             <div class="g-info"><strong>WB SSC</strong><small>Teacher Recruitment</small></div>
             <span class="g-open">↗</span>
           </a>
-          <a class="g-card" target="_blank" rel="noopener noreferrer" data-search="west bengal police recruitment wbp kolkata" href="https://www.wbpolice.gov.in/wbp/common/WBP_RecruitmentNew.aspx">
+          <a class="g-card" target="_blank" rel="noopener noreferrer" data-search="west bengal police recruitment wbp kolkata" data-title="WB Police" href="https://www.wbpolice.gov.in/wbp/common/WBP_RecruitmentNew.aspx">
+            <button class="fav-btn" aria-label="Add to favorites" type="button"></button>
             <div class="g-icon">PL</div>
             <div class="g-info"><strong>WB Police</strong><small>Recruitment</small></div>
             <span class="g-open">↗</span>
           </a>
-          <a class="g-card" target="_blank" rel="noopener noreferrer" data-search="ssc cgl chsl mts gd je staff selection" href="https://ssc.gov.in/">
+          <a class="g-card" target="_blank" rel="noopener noreferrer" data-search="ssc cgl chsl mts gd je staff selection" data-title="SSC" href="https://ssc.gov.in/">
+            <button class="fav-btn" aria-label="Add to favorites" type="button"></button>
             <div class="g-icon">SC</div>
             <div class="g-info"><strong>SSC</strong><small>CGL / CHSL / MTS / GD</small></div>
             <span class="g-open">↗</span>
           </a>
-          <a class="g-card" target="_blank" rel="noopener noreferrer" data-search="upsc civil services nda cds" href="https://www.upsc.gov.in/">
+          <a class="g-card" target="_blank" rel="noopener noreferrer" data-search="upsc civil services nda cds" data-title="UPSC" href="https://www.upsc.gov.in/">
+            <button class="fav-btn" aria-label="Add to favorites" type="button"></button>
             <div class="g-icon">UP</div>
             <div class="g-info"><strong>UPSC</strong><small>Civil Services / NDA / CDS</small></div>
             <span class="g-open">↗</span>
           </a>
-          <a class="g-card" target="_blank" rel="noopener noreferrer" data-search="rrb kolkata railway recruitment" href="https://www.rrbkolkata.gov.in/">
+          <a class="g-card" target="_blank" rel="noopener noreferrer" data-search="rrb kolkata railway recruitment" data-title="RRB Kolkata" href="https://www.rrbkolkata.gov.in/">
+            <button class="fav-btn" aria-label="Add to favorites" type="button"></button>
             <div class="g-icon">RR</div>
             <div class="g-info"><strong>RRB Kolkata</strong><small>Railway Recruitment</small></div>
             <span class="g-open">↗</span>
           </a>
-          <a class="g-card" target="_blank" rel="noopener noreferrer" data-search="ibps bank po clerk specialist officer" href="https://www.ibps.in/">
+          <a class="g-card" target="_blank" rel="noopener noreferrer" data-search="ibps bank po clerk specialist officer" data-title="IBPS" href="https://www.ibps.in/">
+            <button class="fav-btn" aria-label="Add to favorites" type="button"></button>
             <div class="g-icon">IB</div>
             <div class="g-info"><strong>IBPS</strong><small>Bank PO / Clerk / SO</small></div>
             <span class="g-open">↗</span>
           </a>
-          <a class="g-card" target="_blank" rel="noopener noreferrer" data-search="sbi careers po clerk specialist" href="https://sbi.co.in/web/careers/">
+          <a class="g-card" target="_blank" rel="noopener noreferrer" data-search="sbi careers po clerk specialist" data-title="SBI Careers" href="https://sbi.co.in/web/careers/">
+            <button class="fav-btn" aria-label="Add to favorites" type="button"></button>
             <div class="g-icon">SB</div>
             <div class="g-info"><strong>SBI Careers</strong><small>PO / Clerk / SO</small></div>
             <span class="g-open">↗</span>
           </a>
-          <a class="g-card" target="_blank" rel="noopener noreferrer" data-search="rbi opportunities reserve bank recruitment" href="https://opportunities.rbi.org.in/">
+          <a class="g-card" target="_blank" rel="noopener noreferrer" data-search="rbi opportunities reserve bank recruitment" data-title="RBI Opportunities" href="https://opportunities.rbi.org.in/">
+            <button class="fav-btn" aria-label="Add to favorites" type="button"></button>
             <div class="g-icon">RB</div>
             <div class="g-info"><strong>RBI Opportunities</strong><small>Recruitment</small></div>
             <span class="g-open">↗</span>
           </a>
-          <a class="g-card" target="_blank" rel="noopener noreferrer" data-search="india post gds gramin dak sevak" href="https://indiapostgdsonline.gov.in/">
+          <a class="g-card" target="_blank" rel="noopener noreferrer" data-search="india post gds gramin dak sevak" data-title="India Post GDS" href="https://indiapostgdsonline.gov.in/">
+            <button class="fav-btn" aria-label="Add to favorites" type="button"></button>
             <div class="g-icon">IP</div>
             <div class="g-info"><strong>India Post GDS</strong><small>Gramin Dak Sevak</small></div>
             <span class="g-open">↗</span>
           </a>
-          <a class="g-card" target="_blank" rel="noopener noreferrer" data-search="indian army recruitment join" href="https://joinindianarmy.nic.in/">
+          <a class="g-card" target="_blank" rel="noopener noreferrer" data-search="indian army recruitment join" data-title="Indian Army" href="https://joinindianarmy.nic.in/">
+            <button class="fav-btn" aria-label="Add to favorites" type="button"></button>
             <div class="g-icon">AR</div>
             <div class="g-info"><strong>Indian Army</strong><small>Recruitment</small></div>
             <span class="g-open">↗</span>
           </a>
-          <a class="g-card" target="_blank" rel="noopener noreferrer" data-search="indian navy recruitment join" href="https://www.joinindiannavy.gov.in/">
+          <a class="g-card" target="_blank" rel="noopener noreferrer" data-search="indian navy recruitment join" data-title="Indian Navy" href="https://www.joinindiannavy.gov.in/">
+            <button class="fav-btn" aria-label="Add to favorites" type="button"></button>
             <div class="g-icon">NV</div>
             <div class="g-info"><strong>Indian Navy</strong><small>Recruitment</small></div>
             <span class="g-open">↗</span>
           </a>
-          <a class="g-card" target="_blank" rel="noopener noreferrer" data-search="indian air force agnipath vayu recruitment" href="https://agnipathvayu.cdac.in/">
+          <a class="g-card" target="_blank" rel="noopener noreferrer" data-search="indian air force agnipath vayu recruitment" data-title="Indian Air Force" href="https://agnipathvayu.cdac.in/">
+            <button class="fav-btn" aria-label="Add to favorites" type="button"></button>
             <div class="g-icon">AF</div>
             <div class="g-info"><strong>Indian Air Force</strong><small>Agniveervayu Recruitment</small></div>
             <span class="g-open">↗</span>
           </a>
-          <a class="g-card" target="_blank" rel="noopener noreferrer" data-search="coast guard recruitment join" href="https://joinindiancoastguard.cdac.in/">
+          <a class="g-card" target="_blank" rel="noopener noreferrer" data-search="coast guard recruitment join" data-title="Coast Guard" href="https://joinindiancoastguard.cdac.in/">
+            <button class="fav-btn" aria-label="Add to favorites" type="button"></button>
             <div class="g-icon">CG</div>
             <div class="g-info"><strong>Coast Guard</strong><small>Recruitment</small></div>
             <span class="g-open">↗</span>
           </a>
-          <a class="g-card" target="_blank" rel="noopener noreferrer" data-search="national career service ncs jobs" href="https://www.ncs.gov.in/">
+          <a class="g-card" target="_blank" rel="noopener noreferrer" data-search="national career service ncs jobs" data-title="National Career Service" href="https://www.ncs.gov.in/">
+            <button class="fav-btn" aria-label="Add to favorites" type="button"></button>
             <div class="g-icon">NC</div>
             <div class="g-info"><strong>National Career Service</strong><small>Govt Jobs &amp; Career</small></div>
             <span class="g-open">↗</span>
@@ -1301,7 +1829,7 @@
         </div>
       </section>
 
-      <!-- HEALTH -->
+      <!-- ========== HEALTH ========== -->
       <section class="section" data-group="health">
         <div class="section-head">
           <div class="section-icon">HL</div>
@@ -1311,17 +1839,20 @@
           </div>
         </div>
         <div class="grid">
-          <a class="g-card" target="_blank" rel="noopener noreferrer" data-search="ayushman bharat pmjay health" href="https://pmjay.gov.in/">
+          <a class="g-card" target="_blank" rel="noopener noreferrer" data-search="ayushman bharat pmjay health" data-title="Ayushman Bharat" href="https://pmjay.gov.in/">
+            <button class="fav-btn" aria-label="Add to favorites" type="button"></button>
             <div class="g-icon">AY</div>
             <div class="g-info"><strong>Ayushman Bharat</strong><small>PM-JAY Services</small></div>
             <span class="g-open">↗</span>
           </a>
-          <a class="g-card" target="_blank" rel="noopener noreferrer" data-search="swasthya sathi west bengal health" href="https://swasthyasathi.gov.in/">
+          <a class="g-card" target="_blank" rel="noopener noreferrer" data-search="swasthya sathi west bengal health" data-title="Swasthya Sathi" href="https://swasthyasathi.gov.in/">
+            <button class="fav-btn" aria-label="Add to favorites" type="button"></button>
             <div class="g-icon">SS</div>
             <div class="g-info"><strong>Swasthya Sathi</strong><small>WB Health Scheme</small></div>
             <span class="g-open">↗</span>
           </a>
-          <a class="g-card" target="_blank" rel="noopener noreferrer" data-search="kanyashree west bengal scheme girls" href="https://www.wbkanyashree.gov.in/">
+          <a class="g-card" target="_blank" rel="noopener noreferrer" data-search="kanyashree west bengal scheme girls" data-title="Kanyashree" href="https://www.wbkanyashree.gov.in/">
+            <button class="fav-btn" aria-label="Add to favorites" type="button"></button>
             <div class="g-icon">KY</div>
             <div class="g-info"><strong>Kanyashree</strong><small>WB Scheme</small></div>
             <span class="g-open">↗</span>
@@ -1329,7 +1860,7 @@
         </div>
       </section>
 
-      <!-- BUSINESS -->
+      <!-- ========== BUSINESS ========== -->
       <section class="section" data-group="business">
         <div class="section-head">
           <div class="section-icon">BZ</div>
@@ -1339,32 +1870,38 @@
           </div>
         </div>
         <div class="grid">
-          <a class="g-card" target="_blank" rel="noopener noreferrer" data-search="silpa sathi west bengal single window" href="https://silpasathi.wb.gov.in/">
+          <a class="g-card" target="_blank" rel="noopener noreferrer" data-search="silpa sathi west bengal single window" data-title="Silpa Sathi" href="https://silpasathi.wb.gov.in/">
+            <button class="fav-btn" aria-label="Add to favorites" type="button"></button>
             <div class="g-icon">SL</div>
             <div class="g-info"><strong>Silpa Sathi</strong><small>WB Single Window</small></div>
             <span class="g-open">↗</span>
           </a>
-          <a class="g-card" target="_blank" rel="noopener noreferrer" data-search="income tax e-filing portal itr" href="https://www.incometax.gov.in/">
+          <a class="g-card" target="_blank" rel="noopener noreferrer" data-search="income tax e-filing portal itr" data-title="Income Tax" href="https://www.incometax.gov.in/">
+            <button class="fav-btn" aria-label="Add to favorites" type="button"></button>
             <div class="g-icon">IT</div>
             <div class="g-info"><strong>Income Tax</strong><small>e-Filing Portal</small></div>
             <span class="g-open">↗</span>
           </a>
-          <a class="g-card" target="_blank" rel="noopener noreferrer" data-search="gst portal services" href="https://www.gst.gov.in/">
+          <a class="g-card" target="_blank" rel="noopener noreferrer" data-search="gst portal services" data-title="GST Portal" href="https://www.gst.gov.in/">
+            <button class="fav-btn" aria-label="Add to favorites" type="button"></button>
             <div class="g-icon">GS</div>
             <div class="g-info"><strong>GST Portal</strong><small>GST Services</small></div>
             <span class="g-open">↗</span>
           </a>
-          <a class="g-card" target="_blank" rel="noopener noreferrer" data-search="epfo pf provident fund" href="https://www.epfindia.gov.in/">
+          <a class="g-card" target="_blank" rel="noopener noreferrer" data-search="epfo pf provident fund" data-title="EPFO" href="https://www.epfindia.gov.in/">
+            <button class="fav-btn" aria-label="Add to favorites" type="button"></button>
             <div class="g-icon">EP</div>
             <div class="g-info"><strong>EPFO</strong><small>PF Services</small></div>
             <span class="g-open">↗</span>
           </a>
-          <a class="g-card" target="_blank" rel="noopener noreferrer" data-search="udyam registration msme" href="https://udyamregistration.gov.in/">
+          <a class="g-card" target="_blank" rel="noopener noreferrer" data-search="udyam registration msme" data-title="Udyam Registration" href="https://udyamregistration.gov.in/">
+            <button class="fav-btn" aria-label="Add to favorites" type="button"></button>
             <div class="g-icon">UD</div>
             <div class="g-info"><strong>Udyam Registration</strong><small>MSME Registration</small></div>
             <span class="g-open">↗</span>
           </a>
-          <a class="g-card" target="_blank" rel="noopener noreferrer" data-search="fssai foscos food licence" href="https://foscos.fssai.gov.in/">
+          <a class="g-card" target="_blank" rel="noopener noreferrer" data-search="fssai foscos food licence" data-title="FSSAI / FoSCoS" href="https://foscos.fssai.gov.in/">
+            <button class="fav-btn" aria-label="Add to favorites" type="button"></button>
             <div class="g-icon">FS</div>
             <div class="g-info"><strong>FSSAI / FoSCoS</strong><small>Food Licence</small></div>
             <span class="g-open">↗</span>
@@ -1380,7 +1917,7 @@
     </div>
 
     <div class="note">
-      <strong>✓ নির্দেশনা:</strong> যেকোনো card-এ tap করলে সংশ্লিষ্ট সরকারি website নতুন tab-এ খুলবে।
+      <strong>✓ নির্দেশনা:</strong> যেকোনো card-এ tap করলে সংশ্লিষ্ট সরকারি website নতুন tab-এ খুলবে। ⭐ চিহ্নে ক্লিক করে পছন্দের কার্ড ফেভারিটে যোগ করুন।
     </div>
 
   </div>
@@ -1423,36 +1960,234 @@
 <!-- ================= SCROLL TO TOP ================= -->
 <button class="scroll-top" id="scrollTop" aria-label="Scroll to top">↑</button>
 
+<!-- ================= TOAST ================= -->
+<div class="toast" id="toast"></div>
+
 <!-- ================= SCRIPT ================= -->
 <script>
 document.addEventListener('DOMContentLoaded', function() {
+
+  var STORAGE_KEY = 'azad_favorites_v1';
   var search = document.getElementById('azSearch');
   var cats = document.querySelectorAll('.cat');
   var sections = document.querySelectorAll('.section');
   var empty = document.getElementById('azEmpty');
   var scrollBtn = document.getElementById('scrollTop');
+  var favSection = document.getElementById('favSection');
+  var favGrid = document.getElementById('favGrid');
+  var favEmpty = document.getElementById('favEmpty');
+  var favCounter = document.getElementById('favCounter');
+  var favCount = document.getElementById('favCount');
+  var toast = document.getElementById('toast');
   var selected = 'all';
 
+  /* ==================== FAVORITES ==================== */
+  function getFavorites() {
+    try {
+      var data = localStorage.getItem(STORAGE_KEY);
+      return data ? JSON.parse(data) : [];
+    } catch(e) {
+      return [];
+    }
+  }
+
+  function saveFavorites(favs) {
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(favs));
+    } catch(e) {}
+  }
+
+  function isFavorite(cardUrl) {
+    return getFavorites().indexOf(cardUrl) !== -1;
+  }
+
+  function addFavorite(cardUrl, cardTitle) {
+    var favs = getFavorites();
+    if (favs.indexOf(cardUrl) === -1) {
+      favs.push(cardUrl);
+      saveFavorites(favs);
+      showToast('⭐ "' + cardTitle + '" ফেভারিটে যোগ হয়েছে', 'fav');
+      return true;
+    }
+    return false;
+  }
+
+  function removeFavorite(cardUrl, cardTitle) {
+    var favs = getFavorites();
+    var idx = favs.indexOf(cardUrl);
+    if (idx !== -1) {
+      favs.splice(idx, 1);
+      saveFavorites(favs);
+      showToast('✓ "' + cardTitle + '" ফেভারিট থেকে সরানো হয়েছে', 'remove');
+      return true;
+    }
+    return false;
+  }
+
+  /* ==================== TOAST ==================== */
+  var toastTimer;
+  function showToast(msg, type) {
+    toast.textContent = msg;
+    toast.className = 'toast show';
+    if (type === 'fav') toast.classList.add('toast-fav');
+    if (type === 'remove') toast.classList.add('toast-remove');
+
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function() {
+      toast.classList.remove('show');
+    }, 2500);
+  }
+
+  /* ==================== UPDATE STARS ==================== */
+  function updateAllStars() {
+    document.querySelectorAll('.g-card').forEach(function(card) {
+      var url = card.getAttribute('href');
+      var btn = card.querySelector('.fav-btn');
+      if (!btn || !url) return;
+
+      if (isFavorite(url)) {
+        btn.classList.add('active');
+        btn.setAttribute('title', 'ফেভারিট থেকে সরান');
+      } else {
+        btn.classList.remove('active');
+        btn.setAttribute('title', 'ফেভারিটে যোগ করুন');
+      }
+    });
+    updateCounter();
+  }
+
+  function updateCounter() {
+    var count = getFavorites().length;
+    favCount.textContent = count;
+    favCounter.style.display = count > 0 ? 'inline-flex' : 'none';
+  }
+
+  /* ==================== FAVORITE CARD CLONE ==================== */
+  function createFavCard(originalCard) {
+    var clone = originalCard.cloneNode(true);
+    var oldBtn = clone.querySelector('.fav-btn');
+    if (oldBtn) oldBtn.remove();
+
+    var removeBtn = document.createElement('button');
+    removeBtn.className = 'fav-btn active';
+    removeBtn.setAttribute('aria-label', 'Remove from favorites');
+    removeBtn.setAttribute('type', 'button');
+    removeBtn.setAttribute('title', 'ফেভারিট থেকে সরান');
+    clone.appendChild(removeBtn);
+
+    return clone;
+  }
+
+  /* ==================== RENDER FAVORITES ==================== */
+  function renderFavorites() {
+    var favs = getFavorites();
+    favGrid.innerHTML = '';
+
+    if (favs.length === 0) {
+      favGrid.style.display = 'none';
+      favEmpty.style.display = 'block';
+      return;
+    }
+
+    favGrid.style.display = 'grid';
+    favEmpty.style.display = 'none';
+
+    favs.forEach(function(url) {
+      var originalCard = document.querySelector('.g-card[href="' + url + '"]');
+      if (originalCard) {
+        favGrid.appendChild(createFavCard(originalCard));
+      }
+    });
+
+    favGrid.querySelectorAll('.fav-btn').forEach(function(btn) {
+      btn.addEventListener('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        var card = this.closest('.g-card');
+        var url = card.getAttribute('href');
+        var title = card.getAttribute('data-title') || 'কার্ড';
+        removeFavorite(url, title);
+        updateAllStars();
+        renderFavorites();
+        if (selected === 'favorites') filter();
+      });
+    });
+  }
+
+  /* ==================== BIND FAVORITE BUTTONS ==================== */
+  document.querySelectorAll('.fav-btn').forEach(function(btn) {
+    if (btn.closest('#favGrid')) return;
+
+    btn.addEventListener('click', function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+
+      var card = this.closest('.g-card');
+      var url = card.getAttribute('href');
+      var title = card.getAttribute('data-title') || 'কার্ড';
+
+      if (isFavorite(url)) {
+        removeFavorite(url, title);
+        this.classList.remove('active');
+      } else {
+        addFavorite(url, title);
+        this.classList.add('active');
+      }
+
+      updateCounter();
+      renderFavorites();
+      if (selected === 'favorites') filter();
+    });
+  });
+
+  /* ==================== FILTER ==================== */
   function filter() {
     var v = (search.value || '').toLowerCase().trim();
     var total = 0;
 
     sections.forEach(function(section) {
-      var allowed = selected === 'all' || selected === section.dataset.group;
-      var n = 0;
+      var sectionGroup = section.dataset.group;
+      var allowed;
 
+      if (selected === 'all') {
+        if (sectionGroup === 'favorites') {
+          section.style.display = 'none';
+          return;
+        }
+        allowed = true;
+      } else if (selected === 'favorites') {
+        if (sectionGroup !== 'favorites') {
+          section.style.display = 'none';
+          return;
+        }
+        allowed = true;
+      } else {
+        allowed = (selected === sectionGroup);
+      }
+
+      var n = 0;
       section.querySelectorAll('.g-card').forEach(function(card) {
         var show = allowed && (!v || (card.dataset.search || '').toLowerCase().includes(v));
         card.style.display = show ? 'flex' : 'none';
         if (show) { n++; total++; }
       });
 
-      section.style.display = n ? 'block' : 'none';
+      if (sectionGroup === 'favorites' && selected === 'favorites') {
+        var favTotal = getFavorites().length;
+        section.style.display = favTotal > 0 || !v ? 'block' : 'none';
+      } else {
+        section.style.display = n ? 'block' : 'none';
+      }
     });
 
-    empty.style.display = total ? 'none' : 'block';
+    if (selected !== 'favorites') {
+      empty.style.display = total ? 'none' : 'block';
+    } else {
+      empty.style.display = 'none';
+    }
   }
 
+  /* ==================== EVENTS ==================== */
   search.addEventListener('input', filter);
 
   cats.forEach(function(btn) {
@@ -1460,7 +2195,19 @@ document.addEventListener('DOMContentLoaded', function() {
       selected = this.dataset.target || 'all';
       cats.forEach(function(b) { b.classList.remove('active'); });
       this.classList.add('active');
+
+      if (selected === 'favorites') {
+        renderFavorites();
+      }
+
       filter();
+
+      var target = document.getElementById('azSections');
+      if (target && window.innerWidth < 768) {
+        setTimeout(function() {
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }, 100);
+      }
     });
   });
 
@@ -1476,7 +2223,11 @@ document.addEventListener('DOMContentLoaded', function() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   });
 
+  /* ==================== INIT ==================== */
+  updateAllStars();
+  renderFavorites();
   filter();
+
 });
 </script>
 

@@ -3,11 +3,15 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
-<title>Photo Enhance | Azad Digital Seva</title>
-<meta name="description" content="পুরোনো ছবি HD করুন — AI দিয়ে মুহূর্তেই প্রফেশনাল মানের পোর্ট্রেট">
+<title>Background Remove | Azad Digital Seva</title>
+<meta name="description" content="ছবির ব্যাকগ্রাউন্ড মুছে ফেলুন সম্পূর্ণ ফ্রিতে — ব্রাউজারেই AI কাজ করে, ছবি কোথাও যায় না।">
 <meta name="theme-color" content="#075e54">
 <link rel="icon" type="image/png" href="assets/azad-logo.png">
 <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&family=Noto+Sans+Bengali:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<!-- ========== AI Background Removal Library ========== -->
+<script src="https://cdn.jsdelivr.net/npm/@imgly/background-removal@1.4.5/dist/browser.js"></script>
+
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
 
@@ -22,12 +26,7 @@
     --text: #1e2b3c;
     --text-muted: #64748b;
     --border: #e5e7eb;
-    --shadow-sm: 0 2px 8px rgba(10,37,64,.06);
-    --shadow-md: 0 6px 20px rgba(10,37,64,.1);
-    --shadow-lg: 0 15px 40px rgba(10,37,64,.15);
   }
-
-  html { scroll-behavior: smooth; }
 
   body {
     font-family: 'Hind Siliguri', 'Noto Sans Bengali', sans-serif;
@@ -36,23 +35,14 @@
     line-height: 1.55;
     min-height: 100vh;
     overflow-x: hidden;
-    -webkit-font-smoothing: antialiased;
   }
 
-  /* ============ TOP FLAG STRIP ============ */
-  .flag-strip {
-    height: 3px;
-    display: flex;
-    position: fixed;
-    top: 0; left: 0; right: 0;
-    z-index: 10000;
-  }
+  .flag-strip { height: 3px; display: flex; position: fixed; top: 0; left: 0; right: 0; z-index: 10000; }
   .flag-strip div { flex: 1; }
   .flag-strip .s { background: var(--saffron); }
   .flag-strip .w { background: #fff; }
   .flag-strip .g { background: var(--success); }
 
-  /* ============ HEADER ============ */
   header {
     background: linear-gradient(135deg, #075e54 0%, #128c7e 100%);
     color: #fff;
@@ -62,301 +52,46 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 10px;
     box-shadow: 0 4px 14px rgba(7,94,84,.25);
     position: fixed;
-    top: 3px;
-    left: 0;
-    right: 0;
+    top: 3px; left: 0; right: 0;
     z-index: 999;
     height: 60px;
   }
-
-  .header-wrap {
-    width: min(1280px, 100%);
-    margin: auto;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 10px;
-    width: 100%;
-  }
-
-  .brand {
-    display: flex;
-    align-items: center;
-    gap: 9px;
-    text-decoration: none;
-    color: #fff;
-    flex-shrink: 0;
-    min-width: 0;
-  }
-
-  .brand-logo {
-    width: 40px;
-    height: 40px;
-    border-radius: 11px;
-    background: linear-gradient(135deg, var(--saffron), var(--gold));
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.25rem;
-    flex-shrink: 0;
-    box-shadow: 0 4px 12px rgba(255,153,51,.35);
-    border: 1.5px solid rgba(255,255,255,.25);
-  }
-
-  .brand-text {
-    display: flex;
-    flex-direction: column;
-    line-height: 1.1;
-    min-width: 0;
-    overflow: hidden;
-  }
-
-  .brand-text strong {
-    color: #fff;
-    font-size: 15px;
-    font-weight: 800;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-
-  .brand-text strong em {
-    color: var(--gold);
-    font-style: normal;
-  }
-
-  .brand-text small {
-    margin-top: 2px;
-    color: #bfe9ce;
-    font-size: 9px;
-    font-weight: 600;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-
-  .nav-links {
-    display: flex;
-    align-items: center;
-    gap: 4px;
-    flex-wrap: wrap;
-  }
-
-  .nav-links a {
-    padding: 6px 12px;
-    border-radius: 18px;
-    color: #eaf8ef;
-    font-size: 11.5px;
-    font-weight: 700;
-    text-decoration: none;
-    transition: .22s;
-    border: 1px solid transparent;
-    white-space: nowrap;
-  }
-
+  .header-wrap { width: min(1280px,100%); margin: auto; display: flex; align-items: center; justify-content: space-between; gap: 10px; width: 100%; }
+  .brand { display: flex; align-items: center; gap: 9px; text-decoration: none; color: #fff; }
+  .brand-logo { width: 40px; height: 40px; border-radius: 11px; background: linear-gradient(135deg,var(--saffron),var(--gold)); display: flex; align-items: center; justify-content: center; font-size: 1.25rem; border: 1.5px solid rgba(255,255,255,.25); }
+  .brand-text { display: flex; flex-direction: column; line-height: 1.1; }
+  .brand-text strong { color: #fff; font-size: 15px; font-weight: 800; }
+  .brand-text strong em { color: var(--gold); font-style: normal; }
+  .brand-text small { margin-top: 2px; color: #bfe9ce; font-size: 9px; font-weight: 600; }
+  .nav-links { display: flex; gap: 4px; }
+  .nav-links a { padding: 6px 12px; border-radius: 18px; color: #eaf8ef; font-size: 11.5px; font-weight: 700; text-decoration: none; }
   .nav-links a:hover { background: rgba(255,255,255,.15); }
-  .nav-links a.active {
-    background: var(--gold);
-    color: #075e54;
-    border-color: var(--gold);
-  }
 
-  /* ============ HERO ============ */
   .hero {
-    background:
-      radial-gradient(circle at 15% 20%, rgba(255,153,51,.18), transparent 30%),
-      radial-gradient(circle at 85% 80%, rgba(19,136,8,.15), transparent 30%),
-      linear-gradient(135deg, #0a2540 0%, #1e3a5f 50%, #0a2540 100%);
+    background: radial-gradient(circle at 15% 20%, rgba(255,153,51,.18), transparent 30%), radial-gradient(circle at 85% 80%, rgba(19,136,8,.15), transparent 30%), linear-gradient(135deg, #0a2540 0%, #1e3a5f 50%, #0a2540 100%);
     color: #fff;
     padding: 90px 16px 55px;
     text-align: center;
     position: relative;
-    overflow: hidden;
     margin-top: 60px;
   }
+  .hero-content { max-width: 750px; margin: 0 auto; position: relative; z-index: 1; }
+  .hero-icon { width: 62px; height: 62px; margin: 0 auto 12px; background: linear-gradient(135deg,var(--saffron),var(--gold)); border-radius: 18px; display: flex; align-items: center; justify-content: center; font-size: 1.8rem; border: 2px solid rgba(255,255,255,.2); animation: float 3s ease-in-out infinite; }
+  @keyframes float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-5px); } }
+  .hero h1 { font-size: 1.55rem; font-weight: 800; margin-bottom: 8px; line-height: 1.2; }
+  .hero h1 span { background: linear-gradient(90deg,var(--saffron),var(--gold)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+  .hero p { font-size: .88rem; color: rgba(255,255,255,.85); max-width: 560px; margin: 0 auto; }
+  .hero-badges { display: flex; justify-content: center; gap: 6px; margin-top: 14px; flex-wrap: wrap; }
+  .hero-badge { display: inline-flex; align-items: center; gap: 5px; background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.2); padding: 4px 11px; border-radius: 20px; font-size: .68rem; font-weight: 600; }
+  .hero-badge .dot { width: 5px; height: 5px; background: #4ade80; border-radius: 50%; box-shadow: 0 0 8px #4ade80; animation: pulse 2s infinite; }
+  @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: .4; } }
 
-  .hero::before {
-    content: '';
-    position: absolute;
-    top: -70px; right: -70px;
-    width: 220px; height: 220px;
-    background: radial-gradient(circle, rgba(255,153,51,.25), transparent 70%);
-    border-radius: 50%;
-    pointer-events: none;
-  }
+  .container { max-width: 950px; margin: -28px auto 0; padding: 0 12px 40px; position: relative; z-index: 5; }
+  .card-box { background: #fff; border-radius: 18px; box-shadow: 0 15px 40px rgba(10,37,64,.15); border-top: 4px solid var(--saffron); padding: 24px 20px; }
 
-  .hero::after {
-    content: '';
-    position: absolute;
-    bottom: -60px; left: -60px;
-    width: 180px; height: 180px;
-    background: radial-gradient(circle, rgba(19,136,8,.2), transparent 70%);
-    border-radius: 50%;
-    pointer-events: none;
-  }
-
-  .hero-content {
-    position: relative;
-    z-index: 1;
-    max-width: 750px;
-    margin: 0 auto;
-  }
-
-  .hero-icon {
-    width: 62px;
-    height: 62px;
-    margin: 0 auto 12px;
-    background: linear-gradient(135deg, var(--saffron), var(--gold));
-    border-radius: 18px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.8rem;
-    box-shadow: 0 10px 26px rgba(255,153,51,.4);
-    border: 2px solid rgba(255,255,255,.2);
-    animation: float 3s ease-in-out infinite;
-  }
-
-  @keyframes float {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-5px); }
-  }
-
-  .hero h1 {
-    font-size: 1.55rem;
-    font-weight: 800;
-    margin-bottom: 8px;
-    letter-spacing: .3px;
-    line-height: 1.2;
-  }
-
-  .hero h1 span {
-    background: linear-gradient(90deg, var(--saffron), var(--gold));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
-
-  .hero p {
-    font-size: .88rem;
-    color: rgba(255,255,255,.85);
-    max-width: 560px;
-    margin: 0 auto;
-    line-height: 1.5;
-  }
-
-  .hero-badges {
-    display: flex;
-    justify-content: center;
-    gap: 6px;
-    margin-top: 14px;
-    flex-wrap: wrap;
-  }
-
-  .hero-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 5px;
-    background: rgba(255,255,255,.1);
-    border: 1px solid rgba(255,255,255,.2);
-    padding: 4px 11px;
-    border-radius: 20px;
-    font-size: .68rem;
-    font-weight: 600;
-    backdrop-filter: blur(8px);
-  }
-
-  .hero-badge .dot {
-    width: 5px; height: 5px;
-    background: #4ade80;
-    border-radius: 50%;
-    box-shadow: 0 0 8px #4ade80;
-    animation: pulse 2s infinite;
-  }
-
-  @keyframes pulse {
-    0%, 100% { opacity: 1; }
-    50% { opacity: .4; }
-  }
-
-  /* ============ CONTAINER ============ */
-  .container {
-    max-width: 950px;
-    margin: -28px auto 0;
-    padding: 0 12px 40px;
-    position: relative;
-    z-index: 5;
-  }
-
-  .card-box {
-    background: #fff;
-    border-radius: 18px;
-    box-shadow: var(--shadow-lg);
-    overflow: hidden;
-    border-top: 4px solid var(--saffron);
-    padding: 24px 20px;
-  }
-
-  /* ============ STEPS ============ */
-  .steps {
-    display: flex;
-    justify-content: center;
-    gap: 8px;
-    margin-bottom: 24px;
-    flex-wrap: wrap;
-  }
-
-  .step {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    padding: 6px 14px;
-    border-radius: 20px;
-    background: #f1f5f9;
-    color: #64748b;
-    font-size: .72rem;
-    font-weight: 700;
-    transition: .3s;
-    border: 1.5px solid transparent;
-  }
-
-  .step.active {
-    background: linear-gradient(135deg, #075e54, #128c7e);
-    color: #fff;
-    box-shadow: 0 4px 12px rgba(7,94,84,.3);
-  }
-
-  .step.done {
-    background: #d1fae5;
-    color: #065f46;
-  }
-
-  .step-num {
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
-    background: rgba(255,255,255,.3);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: .68rem;
-    font-weight: 900;
-  }
-
-  .step.active .step-num {
-    background: var(--gold);
-    color: #075e54;
-  }
-
-  .step.done .step-num {
-    background: #065f46;
-    color: #fff;
-  }
-
-  /* ============ UPLOAD BOX ============ */
+  /* ========== UPLOAD ========== */
   .upload-box {
     border: 3px dashed #cbd5e1;
     border-radius: 18px;
@@ -365,52 +100,28 @@
     background: linear-gradient(145deg, #f8fbff, #fff);
     cursor: pointer;
     transition: all .3s;
-    position: relative;
-    overflow: hidden;
   }
-
   .upload-box:hover {
     border-color: var(--saffron);
     background: linear-gradient(145deg, #fff8e7, #fff);
     transform: translateY(-2px);
-    box-shadow: 0 12px 30px rgba(255,153,51,.15);
   }
-
   .upload-box input { display: none; }
-
   .upload-icon {
-    width: 70px;
-    height: 70px;
+    width: 80px;
+    height: 80px;
     margin: 0 auto 14px;
     background: linear-gradient(135deg, #e0f2fe, #bae6fd);
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 1.8rem;
-    box-shadow: 0 8px 20px rgba(59,130,246,.2);
+    font-size: 2rem;
     animation: uploadPulse 2s ease-in-out infinite;
   }
-
-  @keyframes uploadPulse {
-    0%, 100% { transform: scale(1); }
-    50% { transform: scale(1.05); }
-  }
-
-  .upload-box h3 {
-    font-size: 1.1rem;
-    color: var(--dark);
-    font-weight: 800;
-    margin-bottom: 6px;
-  }
-
-  .upload-box p {
-    font-size: .82rem;
-    color: var(--text-muted);
-    font-weight: 600;
-    line-height: 1.5;
-  }
-
+  @keyframes uploadPulse { 0%,100% { transform: scale(1); } 50% { transform: scale(1.05); } }
+  .upload-box h3 { font-size: 1.15rem; color: var(--dark); font-weight: 800; margin-bottom: 6px; }
+  .upload-box p { font-size: .82rem; color: var(--text-muted); font-weight: 600; }
   .upload-box .file-types {
     display: inline-block;
     margin-top: 12px;
@@ -423,14 +134,8 @@
     border: 1px solid #bbf7d0;
   }
 
-  /* ============ FEATURES ============ */
-  .features {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 10px;
-    margin-top: 22px;
-  }
-
+  /* ========== FEATURES ========== */
+  .features { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 22px; }
   .feature {
     background: linear-gradient(145deg, #f8fbff, #fff);
     border: 1px solid #e1ebf5;
@@ -439,41 +144,16 @@
     text-align: center;
     transition: .3s;
   }
+  .feature:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(10,37,64,.08); }
+  .feature-icon { font-size: 1.4rem; margin-bottom: 6px; display: block; }
+  .feature strong { display: block; font-size: .74rem; color: var(--dark); font-weight: 800; }
+  .feature small { display: block; font-size: .62rem; color: var(--text-muted); font-weight: 600; margin-top: 2px; }
 
-  .feature:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 8px 20px rgba(10,37,64,.08);
-  }
-
-  .feature-icon {
-    font-size: 1.4rem;
-    margin-bottom: 6px;
-    display: block;
-  }
-
-  .feature strong {
-    display: block;
-    font-size: .74rem;
-    color: var(--dark);
-    font-weight: 800;
-  }
-
-  .feature small {
-    display: block;
-    font-size: .62rem;
-    color: var(--text-muted);
-    font-weight: 600;
-    margin-top: 2px;
-  }
-
-  /* ============ PROCESSING SCREEN ============ */
+  /* ========== PROCESSING SCREEN ========== */
   .processing-screen {
     display: none;
     position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
+    top: 0; left: 0; right: 0; bottom: 0;
     background: linear-gradient(135deg, #0a2540 0%, #1e3a5f 50%, #075e54 100%);
     color: #fff;
     z-index: 99999;
@@ -482,68 +162,19 @@
     flex-direction: column;
     padding: 20px;
     text-align: center;
-    overflow: hidden;
   }
+  .processing-screen.active { display: flex; }
+  .processing-content { position: relative; z-index: 1; max-width: 500px; }
 
-  .processing-screen.active {
-    display: flex;
-  }
-
-  .processing-screen::before {
-    content: '';
-    position: absolute;
-    top: -50%; left: -50%;
-    width: 200%; height: 200%;
-    background: radial-gradient(circle, rgba(255,153,51,.12) 0%, transparent 60%);
-    animation: rotateBg 20s linear infinite;
-  }
-
-  @keyframes rotateBg {
-    to { transform: rotate(360deg); }
-  }
-
-  .processing-content {
-    position: relative;
-    z-index: 1;
-    max-width: 500px;
-  }
-
-  .ai-loader {
-    width: 120px;
-    height: 120px;
-    margin: 0 auto 24px;
-    position: relative;
-  }
-
-  .ai-ring {
-    position: absolute;
-    inset: 0;
-    border-radius: 50%;
-    border: 3px solid transparent;
-    border-top-color: var(--gold);
-    animation: spin 1.5s linear infinite;
-  }
-
-  .ai-ring:nth-child(2) {
-    inset: 12px;
-    border-top-color: var(--saffron);
-    animation: spin 2s linear infinite reverse;
-  }
-
-  .ai-ring:nth-child(3) {
-    inset: 24px;
-    border-top-color: var(--success);
-    animation: spin 2.5s linear infinite;
-  }
-
-  @keyframes spin {
-    to { transform: rotate(360deg); }
-  }
-
+  .ai-loader { width: 120px; height: 120px; margin: 0 auto 24px; position: relative; }
+  .ai-ring { position: absolute; inset: 0; border-radius: 50%; border: 3px solid transparent; border-top-color: var(--gold); animation: spin 1.5s linear infinite; }
+  .ai-ring:nth-child(2) { inset: 12px; border-top-color: var(--saffron); animation: spin 2s linear infinite reverse; }
+  .ai-ring:nth-child(3) { inset: 24px; border-top-color: var(--success); animation: spin 2.5s linear infinite; }
+  @keyframes spin { to { transform: rotate(360deg); } }
   .ai-center {
     position: absolute;
     inset: 36px;
-    background: linear-gradient(135deg, var(--saffron), var(--gold));
+    background: linear-gradient(135deg,var(--saffron),var(--gold));
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -552,126 +183,44 @@
     box-shadow: 0 0 40px rgba(255,153,51,.6);
     animation: pulseCore 1.5s ease-in-out infinite;
   }
-
   @keyframes pulseCore {
-    0%, 100% { transform: scale(1); box-shadow: 0 0 40px rgba(255,153,51,.6); }
+    0%,100% { transform: scale(1); box-shadow: 0 0 40px rgba(255,153,51,.6); }
     50% { transform: scale(1.1); box-shadow: 0 0 60px rgba(255,153,51,.9); }
   }
 
-  .processing-screen h2 {
-    font-size: 1.5rem;
-    font-weight: 800;
-    margin-bottom: 10px;
-    color: #fff;
-  }
-
-  .processing-screen h2 span {
-    background: linear-gradient(90deg, var(--saffron), var(--gold));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
-
-  .processing-screen p {
-    font-size: .9rem;
-    color: rgba(255,255,255,.8);
-    margin-bottom: 24px;
-    line-height: 1.6;
-  }
+  .processing-screen h2 { font-size: 1.4rem; font-weight: 800; margin-bottom: 10px; }
+  .processing-screen h2 span { background: linear-gradient(90deg,var(--saffron),var(--gold)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+  .processing-screen p { font-size: .88rem; color: rgba(255,255,255,.8); margin-bottom: 22px; }
 
   .progress-bar {
     width: 100%;
     max-width: 400px;
-    height: 8px;
+    height: 10px;
     background: rgba(255,255,255,.15);
     border-radius: 20px;
     overflow: hidden;
     margin: 0 auto 18px;
-    position: relative;
   }
-
   .progress-fill {
     height: 100%;
-    background: linear-gradient(90deg, var(--saffron), var(--gold));
+    background: linear-gradient(90deg,var(--saffron),var(--gold));
     border-radius: 20px;
     width: 0%;
     transition: width .3s ease;
     box-shadow: 0 0 20px rgba(255,153,51,.6);
   }
 
-  .processing-checklist {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    max-width: 400px;
-    margin: 0 auto 24px;
-    text-align: left;
-  }
-
-  .check-item {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 10px 14px;
-    background: rgba(255,255,255,.06);
-    border-radius: 10px;
-    font-size: .82rem;
-    font-weight: 600;
-    color: rgba(255,255,255,.5);
-    transition: all .4s ease;
-    border: 1px solid rgba(255,255,255,.08);
-  }
-
-  .check-item.active {
-    color: #fff;
-    background: rgba(255,153,51,.12);
-    border-color: rgba(255,153,51,.3);
-  }
-
-  .check-item.done {
-    color: #86efac;
-    background: rgba(34,197,94,.12);
-    border-color: rgba(34,197,94,.3);
-  }
-
-  .check-item .check-icon {
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
-    border: 2px solid rgba(255,255,255,.3);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: .7rem;
-    flex-shrink: 0;
-    transition: all .3s;
-  }
-
-  .check-item.active .check-icon {
-    border-color: var(--gold);
-    background: var(--gold);
-    color: #0a2540;
-    animation: pulseCore 1s ease-in-out infinite;
-  }
-
-  .check-item.done .check-icon {
-    border-color: #22c55e;
-    background: #22c55e;
-    color: #fff;
-  }
-
-  .processing-timer {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    padding: 6px 14px;
-    border-radius: 20px;
+  .progress-status {
+    display: inline-block;
+    padding: 6px 16px;
     background: rgba(255,255,255,.1);
     border: 1px solid rgba(255,255,255,.15);
-    font-size: .78rem;
+    border-radius: 20px;
+    font-size: .8rem;
     font-weight: 700;
     color: #fff;
-    margin-bottom: 20px;
+    margin-bottom: 22px;
+    min-width: 200px;
   }
 
   .cancel-btn {
@@ -686,99 +235,162 @@
     font-family: inherit;
     transition: all .3s;
   }
+  .cancel-btn:hover { background: rgba(255,255,255,.2); }
 
-  .cancel-btn:hover {
-    background: rgba(255,255,255,.2);
-  }
-
-  /* ============ READY OVERLAY ============ */
-  .ready-overlay {
+  /* ========== RESULT AREA ========== */
+  .result-section {
     display: none;
-    position: fixed;
-    top: 0; left: 0; right: 0; bottom: 0;
-    background: rgba(10,37,64,.75);
-    backdrop-filter: blur(6px);
-    z-index: 99998;
-    align-items: center;
-    justify-content: center;
-    padding: 16px;
+    padding: 4px 0;
+  }
+  .result-section.active {
+    display: block;
+    animation: fadeIn .4s;
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
   }
 
-  .ready-overlay.active {
+  .result-title {
     display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 16px;
+    padding-bottom: 12px;
+    border-bottom: 2px solid #f0e6d2;
   }
-
-  .ready-modal {
-    background: #fff;
-    border-radius: 20px;
-    max-width: 460px;
-    width: 100%;
-    padding: 28px 22px;
-    text-align: center;
-    box-shadow: 0 30px 70px rgba(0,0,0,.4);
-    animation: modalIn .4s cubic-bezier(.2,.9,.3,1.3);
-    max-height: 90vh;
-    overflow-y: auto;
-  }
-
-  @keyframes modalIn {
-    from { opacity: 0; transform: scale(.85) translateY(20px); }
-    to { opacity: 1; transform: scale(1) translateY(0); }
-  }
-
-  .ready-icon {
-    width: 70px;
-    height: 70px;
-    margin: 0 auto 16px;
-    border-radius: 50%;
-    background: linear-gradient(135deg, #d1fae5, #a7f3d0);
+  .result-title .rt-icon {
+    width: 42px;
+    height: 42px;
+    border-radius: 11px;
+    background: linear-gradient(135deg, #138808, #0f6b06);
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 2rem;
-    box-shadow: 0 10px 25px rgba(34,197,94,.3);
-    animation: successPop .6s ease;
+    font-size: 1.2rem;
+    flex-shrink: 0;
+    box-shadow: 0 5px 14px rgba(19,136,8,.3);
   }
-
-  @keyframes successPop {
-    0% { transform: scale(0); }
-    50% { transform: scale(1.15); }
-    100% { transform: scale(1); }
-  }
-
-  .ready-modal h3 {
-    font-size: 1.3rem;
+  .result-title h2 {
+    font-size: 1.1rem;
     color: var(--dark);
     font-weight: 800;
-    margin-bottom: 8px;
   }
-
-  .ready-modal > p {
-    font-size: .85rem;
+  .result-title p {
+    font-size: .72rem;
     color: var(--text-muted);
-    margin-bottom: 18px;
-    line-height: 1.6;
+    font-weight: 600;
+    margin-top: 2px;
   }
 
-  .copy-status {
+  /* Image Comparison */
+  .compare-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 18px;
+  }
+  .compare-box {
+    background: linear-gradient(145deg, #f8fafc, #eef2f7);
+    border: 2px solid #e2e8f0;
+    border-radius: 14px;
+    padding: 12px;
+    text-align: center;
+  }
+  .compare-box .label {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: .68rem;
+    font-weight: 800;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    letter-spacing: .3px;
+  }
+  .compare-box.before .label {
+    background: #fee2e2;
+    color: #991b1b;
+    border: 1px solid #fecaca;
+  }
+  .compare-box.after .label {
+    background: #d1fae5;
+    color: #065f46;
+    border: 1px solid #86efac;
+  }
+
+  .compare-box .img-wrap {
+    position: relative;
+    display: inline-block;
+    max-width: 100%;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 6px 18px rgba(10,37,64,.12);
+    background-image:
+      linear-gradient(45deg, #e5e7eb 25%, transparent 25%),
+      linear-gradient(-45deg, #e5e7eb 25%, transparent 25%),
+      linear-gradient(45deg, transparent 75%, #e5e7eb 75%),
+      linear-gradient(-45deg, transparent 75%, #e5e7eb 75%);
+    background-size: 16px 16px;
+    background-position: 0 0, 0 8px, 8px -8px, -8px 0px;
+    background-color: #ffffff;
+  }
+  .compare-box .img-wrap img {
+    display: block;
+    max-width: 100%;
+    max-height: 340px;
+    width: auto;
+    height: auto;
+  }
+
+  /* Background Color Options */
+  .bg-color-section {
+    background: #fff;
+    border: 1.5px solid #e1ebf5;
+    border-radius: 14px;
+    padding: 14px;
+    margin-bottom: 16px;
+  }
+  .bg-color-title {
     display: flex;
     align-items: center;
-    justify-content: center;
-    gap: 8px;
-    padding: 12px 16px;
-    border-radius: 12px;
-    background: linear-gradient(135deg, #dcfce7, #bbf7d0);
-    color: #065f46;
-    font-size: .82rem;
-    font-weight: 700;
-    margin-bottom: 16px;
-    border: 1.5px solid #86efac;
+    gap: 6px;
+    font-size: .85rem;
+    font-weight: 800;
+    color: var(--dark);
+    margin-bottom: 12px;
   }
-
-  .copy-status .check-circle {
+  .bg-color-grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 8px;
+  }
+  .bg-color-btn {
+    aspect-ratio: 1;
+    border: 3px solid #e5e7eb;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all .25s;
+    position: relative;
+    padding: 0;
+    font-family: inherit;
+  }
+  .bg-color-btn:hover {
+    transform: scale(1.08);
+  }
+  .bg-color-btn.active {
+    border-color: var(--gold);
+    box-shadow: 0 0 0 3px rgba(249,168,38,.3), 0 6px 16px rgba(249,168,38,.25);
+    transform: scale(1.08);
+  }
+  .bg-color-btn.active::after {
+    content: '✓';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     width: 22px;
     height: 22px;
-    background: #22c55e;
+    background: var(--gold);
     color: #fff;
     border-radius: 50%;
     display: flex;
@@ -786,298 +398,63 @@
     justify-content: center;
     font-size: .75rem;
     font-weight: 900;
-    flex-shrink: 0;
+    box-shadow: 0 3px 10px rgba(0,0,0,.3);
+  }
+  .bg-transparent {
+    background-image:
+      linear-gradient(45deg, #ccc 25%, transparent 25%),
+      linear-gradient(-45deg, #ccc 25%, transparent 25%),
+      linear-gradient(45deg, transparent 75%, #ccc 75%),
+      linear-gradient(-45deg, transparent 75%, #ccc 75%);
+    background-size: 12px 12px;
+    background-position: 0 0, 0 6px, 6px -6px, -6px 0px;
+    background-color: #fff;
   }
 
-  .prompt-preview {
-    background: linear-gradient(145deg, #f8fafc, #f1f5f9);
-    border: 1.5px solid #e2e8f0;
-    border-radius: 12px;
-    padding: 12px 14px;
-    text-align: left;
-    margin-bottom: 18px;
-    max-height: 130px;
-    overflow-y: auto;
-    font-size: .72rem;
-    color: #475569;
-    line-height: 1.5;
-    font-family: 'Courier New', monospace;
-    position: relative;
-  }
-
-  .prompt-preview::before {
-    content: '📋 Prompt:';
-    display: block;
-    font-family: 'Hind Siliguri', sans-serif;
-    font-weight: 800;
-    color: var(--primary);
-    margin-bottom: 6px;
-    font-size: .75rem;
-  }
-
-  .modal-steps {
-    background: linear-gradient(135deg, #eff6ff, #dbeafe);
-    border-radius: 12px;
-    padding: 14px;
-    text-align: left;
-    margin-bottom: 18px;
-    border-left: 4px solid #3b82f6;
-  }
-
-  .modal-steps h4 {
-    font-size: .78rem;
-    color: #1e40af;
-    font-weight: 800;
-    margin-bottom: 8px;
+  /* Action Buttons */
+  .action-buttons {
     display: flex;
-    align-items: center;
-    gap: 5px;
-  }
-
-  .modal-steps ol {
-    padding-left: 18px;
-    font-size: .75rem;
-    color: #334155;
-    line-height: 1.7;
-    font-weight: 600;
-  }
-
-  .modal-steps li {
-    margin-bottom: 3px;
-  }
-
-  .modal-buttons {
-    display: flex;
-    gap: 8px;
+    gap: 10px;
     flex-wrap: wrap;
+    margin-top: 6px;
   }
-
-  .modal-btn {
+  .action-btn {
     flex: 1;
-    min-width: 130px;
-    padding: 12px 20px;
+    min-width: 140px;
+    padding: 14px 20px;
     border-radius: 12px;
     border: none;
     font-family: inherit;
-    font-size: .85rem;
+    font-size: .88rem;
     font-weight: 800;
     cursor: pointer;
     transition: all .3s;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: 6px;
-    text-decoration: none;
-  }
-
-  .modal-btn-primary {
-    background: linear-gradient(135deg, #075e54, #128c7e);
-    color: #fff;
-    box-shadow: 0 6px 18px rgba(7,94,84,.35);
-  }
-
-  .modal-btn-primary:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 10px 24px rgba(7,94,84,.45);
-  }
-
-  .modal-btn-secondary {
-    background: #f1f5f9;
-    color: #475569;
-    border: 1.5px solid #e2e8f0;
-  }
-
-  .modal-btn-secondary:hover {
-    background: #e2e8f0;
-  }
-
-  /* ============ HOW IT WORKS ============ */
-  .how-section {
-    margin-top: 20px;
-    padding: 16px;
-    border-radius: 14px;
-    background: linear-gradient(145deg, #f8fbff, #fff);
-    border: 1px solid #e1ebf5;
-  }
-
-  .how-title {
-    font-size: .9rem;
-    color: var(--dark);
-    font-weight: 800;
-    margin-bottom: 12px;
-    display: flex;
-    align-items: center;
-    gap: 6px;
-  }
-
-  .how-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
     gap: 8px;
-  }
-
-  .how-step {
-    text-align: center;
-    padding: 10px 6px;
-    background: #fff;
-    border-radius: 10px;
-    border: 1px solid #e1ebf5;
-    position: relative;
-    transition: .3s;
-  }
-
-  .how-step:hover {
-    transform: translateY(-3px);
-    border-color: var(--saffron);
-    box-shadow: 0 8px 18px rgba(255,153,51,.15);
-  }
-
-  .how-num {
-    width: 26px;
-    height: 26px;
-    margin: 0 auto 6px;
-    border-radius: 50%;
-    background: linear-gradient(135deg, var(--saffron), var(--gold));
-    color: #fff;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: .75rem;
-    font-weight: 900;
-    box-shadow: 0 4px 10px rgba(255,153,51,.3);
-  }
-
-  .how-step strong {
-    display: block;
-    font-size: .68rem;
-    color: var(--dark);
-    font-weight: 800;
-    line-height: 1.3;
-  }
-
-  /* ============ FOOTER ============ */
-  footer {
-    background: linear-gradient(135deg, #0a2540, #1e3a5f);
-    color: #d4e6e3;
-    text-align: center;
-    padding: 22px 14px 90px;
-    border-top: 3px solid var(--gold);
-    margin-top: 30px;
-    font-size: .78rem;
-  }
-
-  footer p {
-    max-width: 750px;
-    margin: 0 auto 8px;
-    line-height: 1.6;
-  }
-
-  .footer-links {
-    display: flex;
-    justify-content: center;
-    gap: 12px;
-    flex-wrap: wrap;
-    margin: 10px 0;
-  }
-
-  .footer-links a {
-    color: var(--gold);
     text-decoration: none;
-    font-size: .75rem;
-    font-weight: 700;
-    transition: .2s;
   }
-
-  .footer-links a:hover { color: #fff; text-decoration: underline; }
-
-  .footer-copyright {
-    font-size: .68rem;
-    opacity: .7;
-    margin-top: 10px;
-  }
-
-  /* ============ BOTTOM NAV ============ */
-  .bottom-nav {
-    display: none;
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background: #fff;
-    border-top: 1px solid var(--border);
-    box-shadow: 0 -4px 20px rgba(10,37,64,.08);
-    z-index: 998;
-    padding: 6px 4px;
-    padding-bottom: calc(6px + env(safe-area-inset-bottom));
-  }
-
-  .bottom-nav-inner {
-    max-width: 500px;
-    margin: auto;
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 4px;
-  }
-
-  .bn-item {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 2px;
-    padding: 7px 4px;
-    border-radius: 12px;
-    text-decoration: none;
-    color: #64748b;
-    font-size: 10px;
-    font-weight: 700;
-    transition: .22s;
-    min-height: 48px;
-  }
-
-  .bn-item .bn-icon {
-    font-size: 1.25rem;
-    line-height: 1;
-  }
-
-  .bn-item.active {
-    color: var(--primary);
-    background: linear-gradient(135deg, #e8f7ee, #d1f0dd);
-  }
-
-  /* ============ SCROLL TO TOP ============ */
-  .scroll-top {
-    position: fixed;
-    bottom: 76px;
-    right: 16px;
-    width: 42px;
-    height: 42px;
-    border-radius: 50%;
-    background: linear-gradient(135deg, var(--saffron), #e67e22);
+  .action-btn-primary {
+    background: linear-gradient(135deg, #138808, #0f6b06);
     color: #fff;
-    border: none;
-    font-size: 1.15rem;
-    cursor: pointer;
-    box-shadow: 0 6px 18px rgba(255,153,51,.5);
-    display: none;
-    align-items: center;
-    justify-content: center;
-    z-index: 997;
-    transition: all .3s;
-    font-weight: 900;
+    box-shadow: 0 6px 18px rgba(19,136,8,.35);
+  }
+  .action-btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 24px rgba(19,136,8,.45);
+  }
+  .action-btn-outline {
+    background: #fff;
+    color: #475569;
+    border: 2px solid #e2e8f0;
+  }
+  .action-btn-outline:hover {
+    background: #f1f5f9;
+    border-color: #cbd5e1;
   }
 
-  .scroll-top.show {
-    display: flex;
-    animation: popIn .3s ease;
-  }
-
-  @keyframes popIn {
-    from { opacity: 0; transform: scale(.5); }
-    to { opacity: 1; transform: scale(1); }
-  }
-
-  /* ============ TOAST ============ */
+  /* ========== TOAST ========== */
   .toast {
     position: fixed;
     bottom: 90px;
@@ -1099,162 +476,51 @@
     text-overflow: ellipsis;
     pointer-events: none;
   }
+  .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
 
-  .toast.show {
-    opacity: 1;
-    transform: translateX(-50%) translateY(0);
+  footer {
+    background: linear-gradient(135deg, #0a2540, #1e3a5f);
+    color: #d4e6e3;
+    text-align: center;
+    padding: 22px 14px 90px;
+    border-top: 3px solid var(--gold);
+    margin-top: 30px;
+    font-size: .78rem;
   }
+  footer p { max-width: 750px; margin: 0 auto 8px; }
+  .footer-links { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; margin: 10px 0; }
+  .footer-links a { color: var(--gold); text-decoration: none; font-size: .75rem; font-weight: 700; }
+  .footer-links a:hover { text-decoration: underline; }
+  .footer-copyright { font-size: .68rem; opacity: .7; margin-top: 10px; }
 
-  /* ============ MOBILE ============ */
+  .bottom-nav { display: none; position: fixed; bottom: 0; left: 0; right: 0; background: #fff; border-top: 1px solid var(--border); padding: 6px 4px calc(6px + env(safe-area-inset-bottom)); z-index: 998; }
+  .bottom-nav-inner { max-width: 500px; margin: auto; display: grid; grid-template-columns: repeat(4, 1fr); gap: 4px; }
+  .bn-item { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; padding: 7px 4px; border-radius: 12px; text-decoration: none; color: #64748b; font-size: 10px; font-weight: 700; min-height: 48px; }
+  .bn-item.active { color: var(--primary); background: linear-gradient(135deg, #e8f7ee, #d1f0dd); }
+  .bn-icon { font-size: 1.25rem; line-height: 1; }
+
   @media (max-width: 768px) {
     body { padding-bottom: 70px; }
-
-    header {
-      height: 56px;
-      padding: 8px 12px;
-      padding-top: 11px;
-    }
-
-    .brand-logo {
-      width: 36px;
-      height: 36px;
-      font-size: 1.1rem;
-      border-radius: 10px;
-    }
-
-    .brand-text strong { font-size: 14px; }
-    .brand-text small { font-size: 8.5px; }
     .nav-links { display: none; }
-
-    .hero {
-      padding: 82px 14px 48px;
-      margin-top: 56px;
-    }
-
-    .hero-icon {
-      width: 56px;
-      height: 56px;
-      font-size: 1.6rem;
-      border-radius: 16px;
-    }
-
+    .hero { padding: 82px 14px 48px; margin-top: 56px; }
     .hero h1 { font-size: 1.3rem; }
-    .hero p { font-size: .82rem; }
-
-    .container {
-      padding: 0 10px 30px;
-      margin-top: -24px;
-    }
-
-    .card-box {
-      padding: 18px 14px;
-      border-radius: 16px;
-      border-top-width: 3px;
-    }
-
-    .upload-box {
-      padding: 30px 16px;
-    }
-
-    .upload-icon {
-      width: 60px;
-      height: 60px;
-      font-size: 1.5rem;
-    }
-
-    .upload-box h3 { font-size: 1rem; }
-    .upload-box p { font-size: .76rem; }
-
-    .features {
-      grid-template-columns: 1fr;
-      gap: 8px;
-    }
-
-    .feature {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      text-align: left;
-      padding: 10px 14px;
-    }
-
-    .feature-icon {
-      font-size: 1.3rem;
-      margin: 0;
-    }
-
-    .how-grid {
-      grid-template-columns: repeat(2, 1fr);
-    }
-
+    .container { padding: 0 10px 30px; margin-top: -24px; }
+    .card-box { padding: 18px 14px; border-radius: 16px; }
+    .features { grid-template-columns: 1fr; }
+    .feature { display: flex; align-items: center; gap: 10px; text-align: left; padding: 10px 14px; }
+    .feature-icon { margin: 0; }
+    .compare-grid { grid-template-columns: 1fr; }
+    .bg-color-grid { grid-template-columns: repeat(4, 1fr); }
+    .action-btn { min-width: 100%; }
     .bottom-nav { display: block; }
-
-    .scroll-top {
-      bottom: 78px;
-      right: 12px;
-      width: 38px;
-      height: 38px;
-      font-size: 1rem;
-    }
-
-    footer {
-      padding: 18px 12px 86px;
-      margin-top: 24px;
-    }
-
-    .processing-screen h2 { font-size: 1.2rem; }
-    .processing-screen p { font-size: .82rem; }
-
-    .ai-loader {
-      width: 100px;
-      height: 100px;
-    }
-
-    .ai-center { inset: 30px; font-size: 1.25rem; }
-
-    .ready-modal { padding: 22px 18px; }
-    .ready-icon { width: 60px; height: 60px; font-size: 1.7rem; }
-    .ready-modal h3 { font-size: 1.15rem; }
-    .ready-modal > p { font-size: .78rem; }
-
-    .modal-btn { min-width: 100%; font-size: .8rem; }
-
-    .prompt-preview { font-size: .68rem; max-height: 100px; }
-
-    .step {
-      padding: 5px 10px;
-      font-size: .65rem;
-    }
-
-    .step-num { width: 16px; height: 16px; font-size: .6rem; }
-  }
-
-  @media (max-width: 400px) {
-    .brand-text strong { font-size: 13px; }
-    .brand-text small { font-size: 8px; }
-    .hero h1 { font-size: 1.15rem; }
-    .hero p { font-size: .78rem; }
-    .how-grid { grid-template-columns: 1fr; }
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    *, *::before, *::after {
-      animation-duration: .01ms !important;
-      transition-duration: .01ms !important;
-    }
+    .processing-screen h2 { font-size: 1.15rem; }
   }
 </style>
 </head>
 <body>
 
-<!-- Flag Strip -->
-<div class="flag-strip">
-  <div class="s"></div>
-  <div class="w"></div>
-  <div class="g"></div>
-</div>
+<div class="flag-strip"><div class="s"></div><div class="w"></div><div class="g"></div></div>
 
-<!-- ================= HEADER ================= -->
 <header>
   <div class="header-wrap">
     <a class="brand" href="index.html">
@@ -1271,96 +537,114 @@
   </div>
 </header>
 
-<!-- ================= HERO ================= -->
 <section class="hero">
   <div class="hero-content">
-    <div class="hero-icon">✨</div>
-    <h1>পুরোনো ছবি <span>HD করুন</span></h1>
-    <p>AI দিয়ে মুহূর্তেই আপনার পুরোনো ছবিকে প্রফেশনাল স্টুডিও মানের HD পোর্ট্রেটে রূপান্তর করুন — সম্পূর্ণ বিনামূল্যে।</p>
+    <div class="hero-icon">🎨</div>
+    <h1>ছবির <span>ব্যাকগ্রাউন্ড মুছুন</span></h1>
+    <p>AI দিয়ে মুহূর্তেই ছবির ব্যাকগ্রাউন্ড রিমুভ করুন — সম্পূর্ণ ফ্রি, ছবি কোথাও যায় না।</p>
     <div class="hero-badges">
-      <span class="hero-badge"><span class="dot"></span> AI Powered</span>
+      <span class="hero-badge"><span class="dot"></span> 100% Free</span>
+      <span class="hero-badge">🔒 Privacy Safe</span>
       <span class="hero-badge">⚡ Instant</span>
-      <span class="hero-badge">🎨 Blue BG</span>
-      <span class="hero-badge">💯 Free</span>
+      <span class="hero-badge">🎨 Any BG Color</span>
     </div>
   </div>
 </section>
 
-<!-- ================= CONTAINER ================= -->
 <div class="container">
   <div class="card-box">
 
-    <!-- Steps -->
-    <div class="steps">
-      <div class="step active" id="step1">
-        <span class="step-num">1</span> ছবি আপলোড
+    <!-- ========== UPLOAD SECTION ========== -->
+    <div id="uploadSection">
+      <div class="upload-box" onclick="document.getElementById('photoInput').click()">
+        <div class="upload-icon">📸</div>
+        <h3>আপনার ছবি আপলোড করুন</h3>
+        <p>এখানে ক্লিক করুন অথবা ছবি ড্র্যাগ করুন<br>সরাসরি মুখের ছবি হলে সবচেয়ে ভালো হয়</p>
+        <span class="file-types">JPG • PNG • JPEG • WEBP</span>
+        <input type="file" id="photoInput" accept="image/*">
       </div>
-      <div class="step" id="step2">
-        <span class="step-num">2</span> কপি Prompt
-      </div>
-      <div class="step" id="step3">
-        <span class="step-num">3</span> Gemini তে Paste
-      </div>
-      <div class="step" id="step4">
-        <span class="step-num">4</span> ডাউনলোড
+
+      <div class="features">
+        <div class="feature">
+          <span class="feature-icon">✂️</span>
+          <strong>Auto Remove BG</strong>
+          <small>এক ক্লিকে রিমুভ</small>
+        </div>
+        <div class="feature">
+          <span class="feature-icon">🎨</span>
+          <strong>Any Color BG</strong>
+          <small>সাদা/নীল/লাল ইত্যাদি</small>
+        </div>
+        <div class="feature">
+          <span class="feature-icon">🔒</span>
+          <strong>Privacy Safe</strong>
+          <small>ছবি কোথাও যায় না</small>
+        </div>
       </div>
     </div>
 
-    <!-- Upload Box -->
-    <div class="upload-box" id="uploadBox" onclick="document.getElementById('photoInput').click()">
-      <div class="upload-icon">📸</div>
-      <h3>আপনার ছবি আপলোড করুন</h3>
-      <p>এখানে ক্লিক করুন অথবা ছবি ড্র্যাগ করুন<br>পুরোনো, ঝাপসা বা কম আলোর ছবি হলেও চলবে</p>
-      <span class="file-types">JPG • PNG • WEBP • JPEG</span>
-      <input type="file" id="photoInput" accept="image/jpeg,image/png,image/webp,image/jpg" onchange="handlePhotoUpload(event)">
-    </div>
+    <!-- ========== RESULT SECTION ========== -->
+    <div class="result-section" id="resultSection">
 
-    <!-- Features -->
-    <div class="features">
-      <div class="feature">
-        <span class="feature-icon">🔍</span>
-        <strong>HD Restoration</strong>
-        <small>ঝাপসা ছবি স্পষ্ট</small>
+      <div class="result-title">
+        <div class="rt-icon">✅</div>
+        <div>
+          <h2>ব্যাকগ্রাউন্ড সফলভাবে রিমুভ হয়েছে!</h2>
+          <p>এখন ব্যাকগ্রাউন্ড কালার বেছে নিন অথবা ট্রান্সপারেন্ট রাখুন</p>
+        </div>
       </div>
-      <div class="feature">
-        <span class="feature-icon">🎨</span>
-        <strong>Blue Background</strong>
-        <small>স্টুডিও-স্টাইল ব্যাকগ্রাউন্ড</small>
-      </div>
-      <div class="feature">
-        <span class="feature-icon">👤</span>
-        <strong>Face Safe</strong>
-        <small>মুখ অপরিবর্তিত থাকে</small>
-      </div>
-    </div>
 
-    <!-- How it works -->
-    <div class="how-section">
-      <div class="how-title">📖 কীভাবে কাজ করে?</div>
-      <div class="how-grid">
-        <div class="how-step">
-          <div class="how-num">1</div>
-          <strong>ছবি আপলোড করুন</strong>
+      <!-- Comparison -->
+      <div class="compare-grid">
+        <div class="compare-box before">
+          <span class="label">আগে (Before)</span>
+          <div class="img-wrap">
+            <img id="beforeImg" src="" alt="Before">
+          </div>
         </div>
-        <div class="how-step">
-          <div class="how-num">2</div>
-          <strong>Prompt অটো কপি হবে</strong>
-        </div>
-        <div class="how-step">
-          <div class="how-num">3</div>
-          <strong>Gemini খুলবে → Paste</strong>
-        </div>
-        <div class="how-step">
-          <div class="how-num">4</div>
-          <strong>Generate → ডাউনলোড</strong>
+        <div class="compare-box after">
+          <span class="label">পরে (After)</span>
+          <div class="img-wrap">
+            <img id="afterImg" src="" alt="After">
+          </div>
         </div>
       </div>
+
+      <!-- BG Color -->
+      <div class="bg-color-section">
+        <div class="bg-color-title">🎨 ব্যাকগ্রাউন্ড কালার সিলেক্ট করুন</div>
+        <div class="bg-color-grid" id="bgColorGrid">
+          <button class="bg-color-btn bg-transparent active" data-color="transparent" onclick="selectBgColor('transparent', this)" title="Transparent"></button>
+          <button class="bg-color-btn" data-color="#ffffff" style="background:#ffffff" onclick="selectBgColor('#ffffff', this)" title="White"></button>
+          <button class="bg-color-btn" data-color="#1e40af" style="background:#1e40af" onclick="selectBgColor('#1e40af', this)" title="Dark Blue"></button>
+          <button class="bg-color-btn" data-color="#93c5fd" style="background:#93c5fd" onclick="selectBgColor('#93c5fd', this)" title="Sky Blue"></button>
+          <button class="bg-color-btn" data-color="#dc2626" style="background:#dc2626" onclick="selectBgColor('#dc2626', this)" title="Red"></button>
+          <button class="bg-color-btn" data-color="#16a34a" style="background:#16a34a" onclick="selectBgColor('#16a34a', this)" title="Green"></button>
+          <button class="bg-color-btn" data-color="#f9a826" style="background:#f9a826" onclick="selectBgColor('#f9a826', this)" title="Gold"></button>
+          <button class="bg-color-btn" data-color="#94a3b8" style="background:#94a3b8" onclick="selectBgColor('#94a3b8', this)" title="Gray"></button>
+          <button class="bg-color-btn" data-color="#0a2540" style="background:#0a2540" onclick="selectBgColor('#0a2540', this)" title="Navy"></button>
+          <button class="bg-color-btn" data-color="#fce7f3" style="background:#fce7f3" onclick="selectBgColor('#fce7f3', this)" title="Pink"></button>
+          <button class="bg-color-btn" data-color="#fef3c7" style="background:#fef3c7" onclick="selectBgColor('#fef3c7', this)" title="Cream"></button>
+          <button class="bg-color-btn" data-color="#000000" style="background:#000000" onclick="selectBgColor('#000000', this)" title="Black"></button>
+        </div>
+      </div>
+
+      <!-- Actions -->
+      <div class="action-buttons">
+        <button class="action-btn action-btn-outline" onclick="resetAll()">
+          🔄 নতুন ছবি
+        </button>
+        <button class="action-btn action-btn-primary" onclick="downloadResult()">
+          ⬇️ ডাউনলোড করুন
+        </button>
+      </div>
+
     </div>
 
   </div>
 </div>
 
-<!-- ================= PROCESSING SCREEN ================= -->
+<!-- ========== PROCESSING SCREEN ========== -->
 <div class="processing-screen" id="processingScreen">
   <div class="processing-content">
 
@@ -1372,410 +656,342 @@
     </div>
 
     <h2>AI প্রসেস হচ্ছে... <span>অপেক্ষা করুন</span></h2>
-    <p>অনুগ্রহ করে কয়েক সেকেন্ড অপেক্ষা করুন</p>
-
-    <div class="processing-timer">
-      ⏱️ <span id="timer">0.0</span> সেকেন্ড
-    </div>
+    <p>ব্রাউজারেই কাজ চলছে — ছবি কোথাও যায় না</p>
 
     <div class="progress-bar">
       <div class="progress-fill" id="progressFill"></div>
     </div>
 
-    <div class="processing-checklist">
-      <div class="check-item" id="check1">
-        <span class="check-icon">✓</span>
-        <span>ছবি প্রসেস করা হচ্ছে</span>
-      </div>
-      <div class="check-item" id="check2">
-        <span class="check-icon">✓</span>
-        <span>Prompt কপি করা হচ্ছে</span>
-      </div>
-    </div>
+    <div class="progress-status" id="progressStatus">⏳ মডেল লোড হচ্ছে...</div>
 
     <button class="cancel-btn" onclick="cancelProcessing()">বাতিল করুন</button>
 
   </div>
 </div>
 
-<!-- ================= READY OVERLAY ================= -->
-<div class="ready-overlay" id="readyOverlay">
-  <div class="ready-modal">
-
-    <div class="ready-icon">✅</div>
-    <h3>সব প্রস্তুত!</h3>
-    <p>Prompt কপি হয়ে গেছে। এখন <b>Gemini</b> তে Paste করে ছবিটি আপলোড করুন।</p>
-
-    <div class="copy-status">
-      <span class="check-circle">✓</span>
-      <span>Prompt কপি হয়েছে</span>
-    </div>
-
-    <div class="prompt-preview" id="promptPreview">
-      Enhance and restore this old photograph into a high-quality, realistic HD portrait...
-    </div>
-
-    <div class="modal-steps">
-      <h4>📌 Gemini-তে কী করবেন:</h4>
-      <ol>
-        <li>Gemini খোলার পর <b>ছবি আপলোড</b> করুন</li>
-        <li>নিচের টেক্সট বক্সে <b>Ctrl + V</b> চাপুন</li>
-        <li>Enter দিয়ে <b>Generate</b> করুন</li>
-        <li>ফলাফল <b>Download</b> করুন</li>
-      </ol>
-    </div>
-
-    <div class="modal-buttons">
-      <button class="modal-btn modal-btn-secondary" onclick="closeReady()">✕ বন্ধ করুন</button>
-      <a class="modal-btn modal-btn-primary" href="https://gemini.google.com/app" target="_blank" rel="noopener" onclick="closeReady()">
-        🚀 Gemini খুলুন
-      </a>
-    </div>
-
-  </div>
-</div>
-
-<!-- ================= FOOTER ================= -->
+<!-- ========== FOOTER ========== -->
 <footer>
   <p>🖥️ <strong>Azad Digital Seva</strong> — সরকারি ও বেসরকারি অনলাইন পরিষেবা</p>
   <div class="footer-links">
     <a href="index.html">Home</a>
     <a href="online-service.html">Services</a>
     <a href="passport-photo.html">Photo Studio</a>
-    <a href="gov-service.html">Govt Services</a>
+    <a href="photo-enhance.html">Photo Enhance</a>
   </div>
   <p class="footer-copyright">© ২০২৫ Azad Digital Seva | সর্বস্বত্ব সংরক্ষিত</p>
 </footer>
 
-<!-- ================= BOTTOM NAV ================= -->
 <nav class="bottom-nav">
   <div class="bottom-nav-inner">
-    <a href="index.html" class="bn-item">
-      <span class="bn-icon">🏠</span>
-      <span>Home</span>
-    </a>
-    <a href="online-service.html" class="bn-item">
-      <span class="bn-icon">🌐</span>
-      <span>Services</span>
-    </a>
-    <a href="passport-photo.html" class="bn-item">
-      <span class="bn-icon">📸</span>
-      <span>Photo</span>
-    </a>
-    <a href="photo-enhance.html" class="bn-item active">
-      <span class="bn-icon">✨</span>
-      <span>Enhance</span>
-    </a>
+    <a href="index.html" class="bn-item"><span class="bn-icon">🏠</span><span>Home</span></a>
+    <a href="online-service.html" class="bn-item"><span class="bn-icon">🌐</span><span>Services</span></a>
+    <a href="passport-photo.html" class="bn-item"><span class="bn-icon">📸</span><span>Photo</span></a>
+    <a href="background-remove.html" class="bn-item active"><span class="bn-icon">🎨</span><span>BG</span></a>
   </div>
 </nav>
 
-<!-- ================= SCROLL TO TOP ================= -->
-<button class="scroll-top" id="scrollTop" aria-label="Scroll to top">↑</button>
-
-<!-- ================= TOAST ================= -->
 <div class="toast" id="toast"></div>
 
-<!-- ================= SCRIPT ================= -->
 <script>
-(function() {
-  'use strict';
+// ==================== STATE ====================
+var state = {
+  originalFile: null,
+  originalUrl: null,
+  removedBlob: null,      // Transparent PNG blob
+  currentBg: 'transparent',
+  finalBlob: null,        // Final with BG
+  processingActive: false
+};
 
-  /* ==================== CONFIG ==================== */
-  var GEMINI_URL = 'https://gemini.google.com/app';
+// ==================== DOM ====================
+var photoInput = document.getElementById('photoInput');
+var uploadSection = document.getElementById('uploadSection');
+var resultSection = document.getElementById('resultSection');
+var processingScreen = document.getElementById('processingScreen');
+var progressFill = document.getElementById('progressFill');
+var progressStatus = document.getElementById('progressStatus');
+var beforeImg = document.getElementById('beforeImg');
+var afterImg = document.getElementById('afterImg');
+var toast = document.getElementById('toast');
 
-  var PROMPT_TEXT = 'Enhance and restore this old photograph into a high-quality, realistic HD portrait.\n\n' +
-    'Keep the person\'s original face, facial features, identity, skin tone, hairstyle, expression, and natural appearance exactly the same. Do not change or beautify the face unnaturally.\n\n' +
-    'Remove old-photo damage, blur, noise, scratches, stains, grain, and compression artifacts. Restore missing details carefully and improve facial and clothing details while keeping the photo realistic.\n\n' +
-    'Increase sharpness, clarity, and resolution to a professional studio-quality HD/Ultra HD photograph. Make the skin look natural with realistic texture, not plastic or overly smooth.\n\n' +
-    'Replace the existing background with a clean, elegant solid blue studio-style background. Use a professional medium/deep blue tone with a subtle natural gradient, without any objects, patterns, text, or distractions.\n\n' +
-    'Maintain realistic lighting on the person and create a clean separation between the subject and the blue background.\n\n' +
-    'Final result should look like a professionally photographed modern HD portrait, while preserving the original person\'s appearance and authenticity.';
+// ==================== HELPERS ====================
+function showToast(msg) {
+  toast.textContent = msg;
+  toast.classList.add('show');
+  setTimeout(function() { toast.classList.remove('show'); }, 2500);
+}
 
-  /* ==================== DOM ==================== */
-  var photoInput = document.getElementById('photoInput');
-  var processingScreen = document.getElementById('processingScreen');
-  var readyOverlay = document.getElementById('readyOverlay');
-  var progressFill = document.getElementById('progressFill');
-  var timerEl = document.getElementById('timer');
-  var check1 = document.getElementById('check1');
-  var check2 = document.getElementById('check2');
-  var step1 = document.getElementById('step1');
-  var step2 = document.getElementById('step2');
-  var step3 = document.getElementById('step3');
-  var step4 = document.getElementById('step4');
-  var promptPreview = document.getElementById('promptPreview');
-  var scrollBtn = document.getElementById('scrollTop');
-  var toast = document.getElementById('toast');
+function updateProgress(percent, status) {
+  progressFill.style.width = percent + '%';
+  if (status) progressStatus.textContent = status;
+}
 
-  var elapsedTimer = null;
-  var elapsed = 0;
-  var processingActive = false;
+// ==================== UPLOAD ====================
+photoInput.addEventListener('change', function(e) {
+  var file = e.target.files[0];
+  if (!file) return;
 
-  /* ==================== HELPERS ==================== */
-  function showToast(msg) {
-    if (!toast) return;
-    toast.textContent = msg;
-    toast.classList.add('show');
-    setTimeout(function() { toast.classList.remove('show'); }, 2500);
+  if (!file.type.startsWith('image/')) {
+    showToast('❌ শুধু ছবি আপলোড করুন');
+    return;
   }
 
-  function copyToClipboard(text) {
-    // Try modern API first
-    if (navigator.clipboard && window.isSecureContext) {
-      return navigator.clipboard.writeText(text);
-    }
-    // Fallback
-    try {
-      var textarea = document.createElement('textarea');
-      textarea.value = text;
-      textarea.style.position = 'fixed';
-      textarea.style.left = '-9999px';
-      textarea.style.top = '0';
-      textarea.setAttribute('readonly', '');
-      document.body.appendChild(textarea);
-      textarea.select();
-      textarea.setSelectionRange(0, 99999);
-      var success = document.execCommand('copy');
-      document.body.removeChild(textarea);
-      return success ? Promise.resolve() : Promise.reject(new Error('execCommand failed'));
-    } catch(e) {
-      return Promise.reject(e);
-    }
+  if (file.size > 20 * 1024 * 1024) {
+    showToast('❌ ছবি ২০MB এর কম হতে হবে');
+    return;
   }
 
-  /* ==================== HANDLE UPLOAD ==================== */
-  window.handlePhotoUpload = function(event) {
-    try {
-      var file = event.target.files[0];
-      if (!file) return;
+  state.originalFile = file;
+  state.originalUrl = URL.createObjectURL(file);
+  beforeImg.src = state.originalUrl;
 
-      if (!file.type.startsWith('image/')) {
-        showToast('❌ শুধু ছবি আপলোড করুন');
-        return;
-      }
+  processImage();
+});
 
-      if (file.size > 20 * 1024 * 1024) {
-        showToast('❌ ছবি ২০MB এর কম হতে হবে');
-        return;
-      }
+// ==================== PROCESS IMAGE ====================
+async function processImage() {
+  if (state.processingActive) return;
+  state.processingActive = true;
 
-      startProcessing();
-    } catch(err) {
-      console.error('Upload error:', err);
-      showToast('❌ ত্রুটি হয়েছে, আবার চেষ্টা করুন');
-      resetEverything();
+  // Show processing
+  processingScreen.classList.add('active');
+  document.body.style.overflow = 'hidden';
+  updateProgress(0, '⏳ মডেল লোড হচ্ছে...');
+
+  try {
+    // Check library loaded
+    if (!window.imglyBackgroundRemoval || !window.imglyBackgroundRemoval.removeBackground) {
+      throw new Error('AI library load হয়নি — ইন্টারনেট চেক করুন');
     }
-  };
 
-  /* ==================== START PROCESSING ==================== */
-  function startProcessing() {
-    if (processingActive) return;
-    processingActive = true;
+    updateProgress(15, '🤖 AI মডেল প্রস্তুত হচ্ছে...');
 
-    // Reset UI
-    progressFill.style.width = '0%';
-    elapsed = 0;
-    timerEl.textContent = '0.0';
-    check1.className = 'check-item';
-    check2.className = 'check-item';
+    // Progress callback if supported
+    var progressCallback = function(key, current, total) {
+      var percent = Math.round((current / total) * 70) + 15;
+      if (percent > 90) percent = 90;
+      updateProgress(percent, '📥 মডেল ডাউনলোড: ' + Math.round((current/total)*100) + '%');
+    };
 
-    // Show processing
-    processingScreen.classList.add('active');
-    document.body.style.overflow = 'hidden';
+    updateProgress(25, '✂️ ব্যাকগ্রাউন্ড রিমুভ হচ্ছে...');
 
-    // Start elapsed timer
-    if (elapsedTimer) clearInterval(elapsedTimer);
-    elapsedTimer = setInterval(function() {
-      elapsed += 0.1;
-      timerEl.textContent = elapsed.toFixed(1);
-    }, 100);
-
-    // ---------- STEP 1: Process photo ----------
-    setTimeout(function() {
-      check1.classList.add('active');
-      progressFill.style.width = '25%';
-    }, 200);
-
-    setTimeout(function() {
-      check1.classList.remove('active');
-      check1.classList.add('done');
-    }, 900);
-
-    // ---------- STEP 2: Copy prompt (SAFE — won't block) ----------
-    setTimeout(function() {
-      check2.classList.add('active');
-      progressFill.style.width = '60%';
-
-      // Copy prompt — even if it fails, continue
-      copyToClipboard(PROMPT_TEXT)
-        .then(function() {
-          console.log('✅ Prompt copied');
-        })
-        .catch(function(err) {
-          console.warn('Copy failed, using fallback on modal:', err);
-        });
-    }, 1000);
-
-    setTimeout(function() {
-      check2.classList.remove('active');
-      check2.classList.add('done');
-      progressFill.style.width = '100%';
-    }, 1700);
-
-    // ---------- Open Gemini in BACKGROUND (won't block if fails) ----------
-    setTimeout(function() {
-      try {
-        var win = window.open(GEMINI_URL, '_blank');
-        if (!win || win.closed || typeof win.closed === 'undefined') {
-          console.warn('Popup blocked by browser');
-          // Not fatal — user will see "Gemini খুলুন" button in modal
-        }
-      } catch(e) {
-        console.warn('window.open threw error:', e);
+    // === THE MAGIC — Runs entirely in browser ===
+    var blob = await window.imglyBackgroundRemoval.removeBackground(state.originalFile, {
+      progress: progressCallback,
+      output: {
+        format: 'image/png',
+        quality: 1.0
       }
-    }, 2000);
-
-    // ---------- FINISH — ALWAYS RUNS (this is the key fix) ----------
-    setTimeout(function() {
-      try {
-        // Stop timers
-        if (elapsedTimer) {
-          clearInterval(elapsedTimer);
-          elapsedTimer = null;
-        }
-
-        // Hide processing
-        processingScreen.classList.remove('active');
-        document.body.style.overflow = '';
-
-        // Show prompt preview in modal
-        if (promptPreview) {
-          promptPreview.textContent = PROMPT_TEXT.substring(0, 300) + '...';
-        }
-
-        // Show ready modal
-        if (readyOverlay) {
-          readyOverlay.classList.add('active');
-        }
-
-        // Update steps
-        step1.classList.remove('active');
-        step1.classList.add('done');
-        step2.classList.add('done');
-        step3.classList.add('active');
-
-        // Try re-copy (in case first attempt failed)
-        setTimeout(function() {
-          copyToClipboard(PROMPT_TEXT).catch(function() {});
-        }, 200);
-
-      } catch(err) {
-        console.error('Finish error:', err);
-        // ULTIMATE FALLBACK — force show modal
-        try {
-          processingScreen.classList.remove('active');
-          document.body.style.overflow = '';
-          readyOverlay.classList.add('active');
-        } catch(e2) {
-          alert('প্রসেসিং সম্পূর্ণ। Gemini-তে ছবি আপলোড করে Prompt পেস্ট করুন।');
-        }
-      } finally {
-        processingActive = false;
-      }
-    }, 3000);
-  }
-
-  /* ==================== CANCEL ==================== */
-  window.cancelProcessing = function() {
-    if (elapsedTimer) {
-      clearInterval(elapsedTimer);
-      elapsedTimer = null;
-    }
-    processingActive = false;
-
-    processingScreen.classList.remove('active');
-    document.body.style.overflow = '';
-    photoInput.value = '';
-    showToast('❌ বাতিল করা হয়েছে');
-  };
-
-  /* ==================== CLOSE READY ==================== */
-  window.closeReady = function() {
-    readyOverlay.classList.remove('active');
-    document.body.style.overflow = '';
-
-    step1.classList.remove('done');
-    step2.classList.remove('done');
-    step3.classList.remove('active');
-    step3.classList.add('done');
-    step4.classList.add('active');
-
-    photoInput.value = '';
-
-    setTimeout(function() {
-      step3.classList.remove('done');
-      step4.classList.remove('active');
-      step1.classList.add('active');
-    }, 3000);
-  };
-
-  /* ==================== RESET ==================== */
-  function resetEverything() {
-    if (elapsedTimer) {
-      clearInterval(elapsedTimer);
-      elapsedTimer = null;
-    }
-    processingActive = false;
-    processingScreen.classList.remove('active');
-    readyOverlay.classList.remove('active');
-    document.body.style.overflow = '';
-    photoInput.value = '';
-  }
-
-  /* ==================== SCROLL TO TOP ==================== */
-  if (scrollBtn) {
-    window.addEventListener('scroll', function() {
-      if (window.scrollY > 400) {
-        scrollBtn.classList.add('show');
-      } else {
-        scrollBtn.classList.remove('show');
-      }
-    }, { passive: true });
-
-    scrollBtn.addEventListener('click', function() {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
     });
+
+    updateProgress(95, '🎨 ফাইনাল ছবি তৈরি হচ্ছে...');
+
+    state.removedBlob = blob;
+    var removedUrl = URL.createObjectURL(blob);
+    afterImg.src = removedUrl;
+
+    updateProgress(100, '✅ সম্পন্ন!');
+
+    // Small delay to show 100%
+    setTimeout(function() {
+      finishProcessing();
+    }, 500);
+
+  } catch (err) {
+    console.error('Processing error:', err);
+    alert('❌ ত্রুটি: ' + (err.message || 'অজানা সমস্যা') + '\n\nআবার চেষ্টা করুন।');
+    cancelProcessing();
+  }
+}
+
+function finishProcessing() {
+  state.processingActive = false;
+  processingScreen.classList.remove('active');
+  document.body.style.overflow = '';
+
+  uploadSection.style.display = 'none';
+  resultSection.classList.add('active');
+
+  // Reset BG selection to transparent
+  state.currentBg = 'transparent';
+  document.querySelectorAll('.bg-color-btn').forEach(function(b) {
+    b.classList.toggle('active', b.dataset.color === 'transparent');
+  });
+
+  showToast('✅ ব্যাকগ্রাউন্ড রিমুভ হয়েছে!');
+
+  setTimeout(function() {
+    resultSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }, 200);
+}
+
+// ==================== CANCEL ====================
+function cancelProcessing() {
+  state.processingActive = false;
+  processingScreen.classList.remove('active');
+  document.body.style.overflow = '';
+  photoInput.value = '';
+}
+
+// ==================== SELECT BG COLOR ====================
+async function selectBgColor(color, btn) {
+  state.currentBg = color;
+
+  document.querySelectorAll('.bg-color-btn').forEach(function(b) {
+    b.classList.remove('active');
+  });
+  btn.classList.add('active');
+
+  // Update preview
+  await updateAfterPreview(color);
+
+  if (color === 'transparent') {
+    showToast('🎨 ট্রান্সপারেন্ট');
+  } else {
+    showToast('🎨 ব্যাকগ্রাউন্ড আপডেট হয়েছে');
+  }
+}
+
+async function updateAfterPreview(color) {
+  if (!state.removedBlob) return;
+
+  // If transparent, just show removed blob
+  if (color === 'transparent') {
+    var url = URL.createObjectURL(state.removedBlob);
+    afterImg.src = url;
+    state.finalBlob = state.removedBlob;
+    return;
   }
 
-  /* ==================== SAFETY NET — Modal stuck হলে ---------- */
-  // If somehow modal never shows, show it after 6s max
-  document.addEventListener('visibilitychange', function() {
-    if (!document.hidden && processingActive) {
-      // User came back, force finish
-      setTimeout(function() {
-        if (processingActive) {
-          processingActive = false;
-          if (elapsedTimer) clearInterval(elapsedTimer);
-          processingScreen.classList.remove('active');
-          document.body.style.overflow = '';
-          readyOverlay.classList.add('active');
-          step1.classList.remove('active');
-          step1.classList.add('done');
-          step2.classList.add('done');
-          step3.classList.add('active');
-        }
-      }, 500);
-    }
+  // Load removed image
+  var img = await loadImage(state.removedBlob);
+
+  // Create canvas with bg color
+  var canvas = document.createElement('canvas');
+  canvas.width = img.width;
+  canvas.height = img.height;
+  var ctx = canvas.getContext('2d');
+
+  // Fill with BG color
+  ctx.fillStyle = color;
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+  // Draw removed image on top
+  ctx.drawImage(img, 0, 0);
+
+  // Convert to blob
+  return new Promise(function(resolve) {
+    canvas.toBlob(function(blob) {
+      state.finalBlob = blob;
+      var url = URL.createObjectURL(blob);
+      afterImg.src = url;
+      resolve();
+    }, 'image/png');
+  });
+}
+
+function loadImage(blobOrUrl) {
+  return new Promise(function(resolve, reject) {
+    var img = new Image();
+    var url = blobOrUrl instanceof Blob ? URL.createObjectURL(blobOrUrl) : blobOrUrl;
+    img.onload = function() {
+      resolve(img);
+      if (blobOrUrl instanceof Blob) URL.revokeObjectURL(url);
+    };
+    img.onerror = reject;
+    img.src = url;
+  });
+}
+
+// ==================== DOWNLOAD ====================
+async function downloadResult() {
+  if (!state.removedBlob) {
+    showToast('❌ আগে ছবি আপলোড করুন');
+    return;
+  }
+
+  // If transparent, download blob directly
+  if (state.currentBg === 'transparent') {
+    downloadBlob(state.removedBlob, 'background-removed-transparent.png');
+    showToast('⬇️ ডাউনলোড হয়েছে');
+    return;
+  }
+
+  // Otherwise generate final with BG
+  try {
+    var img = await loadImage(state.removedBlob);
+    var canvas = document.createElement('canvas');
+    canvas.width = img.width;
+    canvas.height = img.height;
+    var ctx = canvas.getContext('2d');
+
+    ctx.fillStyle = state.currentBg;
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    ctx.drawImage(img, 0, 0);
+
+    canvas.toBlob(function(blob) {
+      downloadBlob(blob, 'background-removed.png');
+      showToast('⬇️ ডাউনলোড হয়েছে');
+    }, 'image/png');
+  } catch (err) {
+    console.error(err);
+    showToast('❌ ডাউনলোড ব্যর্থ');
+  }
+}
+
+function downloadBlob(blob, filename) {
+  var url = URL.createObjectURL(blob);
+  var a = document.createElement('a');
+  a.href = url;
+  a.download = filename;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  setTimeout(function() { URL.revokeObjectURL(url); }, 1000);
+}
+
+// ==================== RESET ====================
+function resetAll() {
+  state.originalFile = null;
+  state.originalUrl = null;
+  state.removedBlob = null;
+  state.finalBlob = null;
+  state.currentBg = 'transparent';
+
+  if (state.originalUrl) URL.revokeObjectURL(state.originalUrl);
+
+  photoInput.value = '';
+  beforeImg.src = '';
+  afterImg.src = '';
+
+  uploadSection.style.display = 'block';
+  resultSection.classList.remove('active');
+
+  document.querySelectorAll('.bg-color-btn').forEach(function(b, i) {
+    b.classList.toggle('active', i === 0);
   });
 
-  /* ==================== RECOPY ON FOCUS ==================== */
-  window.addEventListener('focus', function() {
-    if (readyOverlay && readyOverlay.classList.contains('active')) {
-      copyToClipboard(PROMPT_TEXT).catch(function() {});
-    }
-  });
+  showToast('🔄 নতুন ছবি আপলোড করুন');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
 
-})();
+// ==================== PRELOAD CHECK ====================
+window.addEventListener('load', function() {
+  // Check if library loaded after 3 seconds
+  setTimeout(function() {
+    if (!window.imglyBackgroundRemoval) {
+      console.warn('⚠️ Background removal library not loaded');
+    } else {
+      console.log('✅ Background removal library ready');
+    }
+  }, 3000);
+});
+
+// Expose for onclick
+window.cancelProcessing = cancelProcessing;
+window.selectBgColor = selectBgColor;
+window.downloadResult = downloadResult;
+window.resetAll = resetAll;
 </script>
 
 </body>

@@ -300,7 +300,7 @@
     padding: 24px 20px;
   }
 
-  /* ============ STEPS INDICATOR ============ */
+  /* ============ STEPS ============ */
   .steps {
     display: flex;
     justify-content: center;
@@ -601,7 +601,7 @@
     box-shadow: 0 0 20px rgba(255,153,51,.6);
   }
 
-  /* Check List */
+  /* Checklist */
   .processing-checklist {
     display: flex;
     flex-direction: column;
@@ -696,7 +696,7 @@
     background: rgba(255,255,255,.2);
   }
 
-  /* ============ READY SCREEN (Popup Overlay) ============ */
+  /* ============ READY OVERLAY ============ */
   .ready-overlay {
     display: none;
     position: fixed;
@@ -722,6 +722,8 @@
     text-align: center;
     box-shadow: 0 30px 70px rgba(0,0,0,.4);
     animation: modalIn .4s cubic-bezier(.2,.9,.3,1.3);
+    max-height: 90vh;
+    overflow-y: auto;
   }
 
   @keyframes modalIn {
@@ -793,7 +795,7 @@
     flex-shrink: 0;
   }
 
-  /* Prompt Box */
+  /* Prompt Preview */
   .prompt-preview {
     background: linear-gradient(145deg, #f8fafc, #f1f5f9);
     border: 1.5px solid #e2e8f0;
@@ -820,7 +822,7 @@
     font-size: .75rem;
   }
 
-  /* Steps in Modal */
+  /* Modal Steps */
   .modal-steps {
     background: linear-gradient(135deg, #eff6ff, #dbeafe);
     border-radius: 12px;
@@ -898,7 +900,7 @@
     background: #e2e8f0;
   }
 
-  /* ============ HOW IT WORKS SECTION ============ */
+  /* ============ HOW IT WORKS ============ */
   .how-section {
     margin-top: 20px;
     padding: 16px;
@@ -1380,7 +1382,7 @@
     </div>
 
     <h2>AI প্রসেস হচ্ছে... <span>অপেক্ষা করুন</span></h2>
-    <p>আপনার ছবির জন্য Prompt তৈরি করা হচ্ছে।<br>Gemini নতুন ট্যাবে খুলবে।</p>
+    <p>অনুগ্রহ করে কয়েক সেকেন্ড অপেক্ষা করুন</p>
 
     <!-- Timer -->
     <div class="processing-timer">
@@ -1392,7 +1394,7 @@
       <div class="progress-fill" id="progressFill"></div>
     </div>
 
-    <!-- Checklist -->
+    <!-- Checklist (শুধু ২টি) -->
     <div class="processing-checklist">
       <div class="check-item" id="check1">
         <span class="check-icon">✓</span>
@@ -1401,10 +1403,6 @@
       <div class="check-item" id="check2">
         <span class="check-icon">✓</span>
         <span>Prompt কপি করা হচ্ছে</span>
-      </div>
-      <div class="check-item" id="check3">
-        <span class="check-icon">✓</span>
-        <span>Gemini উইন্ডো খোলা হচ্ছে</span>
       </div>
     </div>
 
@@ -1521,7 +1519,6 @@ Final result should look like a professionally photographed modern HD portrait, 
   var timerEl = document.getElementById('timer');
   var check1 = document.getElementById('check1');
   var check2 = document.getElementById('check2');
-  var check3 = document.getElementById('check3');
   var step1 = document.getElementById('step1');
   var step2 = document.getElementById('step2');
   var step3 = document.getElementById('step3');
@@ -1548,7 +1545,6 @@ Final result should look like a professionally photographed modern HD portrait, 
     if (navigator.clipboard && window.isSecureContext) {
       return navigator.clipboard.writeText(text);
     } else {
-      // Fallback for older browsers
       var textarea = document.createElement('textarea');
       textarea.value = text;
       textarea.style.position = 'fixed';
@@ -1568,7 +1564,6 @@ Final result should look like a professionally photographed modern HD portrait, 
     var file = event.target.files[0];
     if (!file) return;
 
-    // Validate file
     if (!file.type.startsWith('image/')) {
       showToast('❌ শুধু ছবি আপলোড করুন');
       return;
@@ -1584,28 +1579,24 @@ Final result should look like a professionally photographed modern HD portrait, 
 
   /* ==================== START PROCESSING ==================== */
   function startProcessing() {
-    // Reset UI
     progressFill.style.width = '0%';
     elapsed = 0;
     timerEl.textContent = '0.0';
     check1.className = 'check-item';
     check2.className = 'check-item';
-    check3.className = 'check-item';
 
-    // Show processing screen (hides website)
     processingScreen.classList.add('active');
     document.body.style.overflow = 'hidden';
 
-    // Start elapsed timer
     elapsedTimer = setInterval(function() {
       elapsed += 0.1;
       timerEl.textContent = elapsed.toFixed(1);
     }, 100);
 
-    // Step 1: Process photo (0-1s)
+    // Step 1: Process photo
     setTimeout(function() {
       check1.classList.add('active');
-      progressFill.style.width = '25%';
+      progressFill.style.width = '30%';
     }, 200);
 
     setTimeout(function() {
@@ -1613,36 +1604,30 @@ Final result should look like a professionally photographed modern HD portrait, 
       check1.classList.add('done');
     }, 1000);
 
-    // Step 2: Copy prompt (1-2s)
+    // Step 2: Copy prompt
     setTimeout(function() {
       check2.classList.add('active');
-      progressFill.style.width = '55%';
+      progressFill.style.width = '65%';
 
-      // Copy prompt to clipboard
       copyToClipboard(PROMPT_TEXT).then(function() {
-        console.log('✅ Prompt copied to clipboard');
+        console.log('✅ Prompt copied');
       }).catch(function(err) {
-        console.warn('Copy failed, will retry on user action', err);
+        console.warn('Copy failed', err);
       });
     }, 1100);
 
     setTimeout(function() {
       check2.classList.remove('active');
       check2.classList.add('done');
+      progressFill.style.width = '100%';
     }, 1900);
 
-    // Step 3: Open Gemini (2-3s)
-    setTimeout(function() {
-      check3.classList.add('active');
-      progressFill.style.width = '85%';
-    }, 2000);
-
-    // Open Gemini in new tab
+    // Open Gemini silently (no UI text about it)
     setTimeout(function() {
       try {
         geminiWindow = window.open(GEMINI_URL, '_blank');
         if (!geminiWindow || geminiWindow.closed || typeof geminiWindow.closed === 'undefined') {
-          console.warn('Popup blocked by browser');
+          console.warn('Popup blocked');
           showToast('⚠️ Popup blocked — Gemini বাটনে ক্লিক করুন');
         }
       } catch(e) {
@@ -1650,22 +1635,14 @@ Final result should look like a professionally photographed modern HD portrait, 
       }
     }, 2200);
 
-    setTimeout(function() {
-      check3.classList.remove('active');
-      check3.classList.add('done');
-      progressFill.style.width = '100%';
-    }, 2900);
-
-    // Finish processing (3s total)
+    // Finish
     setTimeout(function() {
       clearInterval(elapsedTimer);
       stopProcessing();
 
-      // Show ready overlay
       promptPreview.textContent = PROMPT_TEXT.substring(0, 300) + '...';
       readyOverlay.classList.add('active');
 
-      // Update steps
       step1.classList.remove('active');
       step1.classList.add('done');
       step2.classList.add('done');
@@ -1679,7 +1656,7 @@ Final result should look like a professionally photographed modern HD portrait, 
     clearInterval(elapsedTimer);
   }
 
-  /* ==================== CANCEL PROCESSING ==================== */
+  /* ==================== CANCEL ==================== */
   window.cancelProcessing = function() {
     stopProcessing();
     processingScreen.classList.remove('active');
@@ -1693,17 +1670,14 @@ Final result should look like a professionally photographed modern HD portrait, 
     readyOverlay.classList.remove('active');
     document.body.style.overflow = '';
 
-    // Reset steps
     step1.classList.remove('done');
     step2.classList.remove('done');
     step3.classList.remove('active');
     step3.classList.add('done');
     step4.classList.add('active');
 
-    // Reset upload box
     photoInput.value = '';
 
-    // Reset
     setTimeout(function() {
       step3.classList.remove('done');
       step4.classList.remove('active');
@@ -1724,12 +1698,9 @@ Final result should look like a professionally photographed modern HD portrait, 
     window.scrollTo({ top: 0, behavior: 'smooth' });
   });
 
-  /* ==================== AUTO COPY ON FOCUS ==================== */
-  // If user comes back to this page and clicks paste-ready area,
-  // we ensure prompt is copied again
+  /* ==================== AUTO RE-COPY ==================== */
   document.addEventListener('visibilitychange', function() {
     if (!document.hidden && readyOverlay.classList.contains('active')) {
-      // Re-copy prompt when user returns
       copyToClipboard(PROMPT_TEXT).catch(function() {});
     }
   });

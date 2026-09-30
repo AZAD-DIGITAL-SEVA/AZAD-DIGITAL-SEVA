@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
-<title>Passport Size Photo Maker | Azad Digital Seva</title>
-<meta name="description" content="ফ্রি পাসপোর্ট সাইজ ছবি তৈরি করুন — একটি ছবি থেকে ২৫টি ছবি, সাদা/নীল ব্যাকগ্রাউন্ড, প্রিন্ট রেডি।">
+<title>Photo Enhance | Azad Digital Seva</title>
+<meta name="description" content="পুরোনো ছবি HD করুন — AI দিয়ে মুহূর্তেই প্রফেশনাল মানের পোর্ট্রেট">
 <meta name="theme-color" content="#075e54">
 <link rel="icon" type="image/png" href="assets/azad-logo.png">
 <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&family=Noto+Sans+Bengali:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -300,11 +300,67 @@
     padding: 24px 20px;
   }
 
+  /* ============ STEPS INDICATOR ============ */
+  .steps {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-bottom: 24px;
+    flex-wrap: wrap;
+  }
+
+  .step {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 14px;
+    border-radius: 20px;
+    background: #f1f5f9;
+    color: #64748b;
+    font-size: .72rem;
+    font-weight: 700;
+    transition: .3s;
+    border: 1.5px solid transparent;
+  }
+
+  .step.active {
+    background: linear-gradient(135deg, #075e54, #128c7e);
+    color: #fff;
+    box-shadow: 0 4px 12px rgba(7,94,84,.3);
+  }
+
+  .step.done {
+    background: #d1fae5;
+    color: #065f46;
+  }
+
+  .step-num {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: rgba(255,255,255,.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: .68rem;
+    font-weight: 900;
+  }
+
+  .step.active .step-num {
+    background: var(--gold);
+    color: #075e54;
+  }
+
+  .step.done .step-num {
+    background: #065f46;
+    color: #fff;
+  }
+
   /* ============ UPLOAD BOX ============ */
   .upload-box {
     border: 3px dashed #cbd5e1;
     border-radius: 18px;
-    padding: 45px 20px;
+    padding: 40px 20px;
     text-align: center;
     background: linear-gradient(145deg, #f8fbff, #fff);
     cursor: pointer;
@@ -323,15 +379,15 @@
   .upload-box input { display: none; }
 
   .upload-icon {
-    width: 80px;
-    height: 80px;
-    margin: 0 auto 16px;
+    width: 70px;
+    height: 70px;
+    margin: 0 auto 14px;
     background: linear-gradient(135deg, #e0f2fe, #bae6fd);
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 2rem;
+    font-size: 1.8rem;
     box-shadow: 0 8px 20px rgba(59,130,246,.2);
     animation: uploadPulse 2s ease-in-out infinite;
   }
@@ -342,14 +398,14 @@
   }
 
   .upload-box h3 {
-    font-size: 1.2rem;
+    font-size: 1.1rem;
     color: var(--dark);
     font-weight: 800;
-    margin-bottom: 8px;
+    margin-bottom: 6px;
   }
 
   .upload-box p {
-    font-size: .85rem;
+    font-size: .82rem;
     color: var(--text-muted);
     font-weight: 600;
     line-height: 1.5;
@@ -357,12 +413,12 @@
 
   .upload-box .file-types {
     display: inline-block;
-    margin-top: 14px;
-    padding: 6px 14px;
+    margin-top: 12px;
+    padding: 5px 12px;
     border-radius: 20px;
     background: #f0fdf4;
     color: #065f46;
-    font-size: .7rem;
+    font-size: .68rem;
     font-weight: 700;
     border: 1px solid #bbf7d0;
   }
@@ -410,372 +466,441 @@
     margin-top: 2px;
   }
 
-  /* ============ PHOTO EDITOR ============ */
-  .editor-section {
+  /* ============ PROCESSING SCREEN ============ */
+  .processing-screen {
     display: none;
-    padding: 4px 0;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, #0a2540 0%, #1e3a5f 50%, #075e54 100%);
+    color: #fff;
+    z-index: 99999;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding: 20px;
+    text-align: center;
+    overflow: hidden;
   }
 
-  .editor-section.active {
-    display: block;
-    animation: fadeIn .4s;
+  .processing-screen.active {
+    display: flex;
   }
 
-  @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
+  .processing-screen::before {
+    content: '';
+    position: absolute;
+    top: -50%; left: -50%;
+    width: 200%; height: 200%;
+    background: radial-gradient(circle, rgba(255,153,51,.12) 0%, transparent 60%);
+    animation: rotateBg 20s linear infinite;
   }
 
-  .editor-title {
+  @keyframes rotateBg {
+    to { transform: rotate(360deg); }
+  }
+
+  .processing-content {
+    position: relative;
+    z-index: 1;
+    max-width: 500px;
+  }
+
+  /* AI Loader */
+  .ai-loader {
+    width: 120px;
+    height: 120px;
+    margin: 0 auto 24px;
+    position: relative;
+  }
+
+  .ai-ring {
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    border: 3px solid transparent;
+    border-top-color: var(--gold);
+    animation: spin 1.5s linear infinite;
+  }
+
+  .ai-ring:nth-child(2) {
+    inset: 12px;
+    border-top-color: var(--saffron);
+    animation: spin 2s linear infinite reverse;
+  }
+
+  .ai-ring:nth-child(3) {
+    inset: 24px;
+    border-top-color: var(--success);
+    animation: spin 2.5s linear infinite;
+  }
+
+  @keyframes spin {
+    to { transform: rotate(360deg); }
+  }
+
+  .ai-center {
+    position: absolute;
+    inset: 36px;
+    background: linear-gradient(135deg, var(--saffron), var(--gold));
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    box-shadow: 0 0 40px rgba(255,153,51,.6);
+    animation: pulseCore 1.5s ease-in-out infinite;
+  }
+
+  @keyframes pulseCore {
+    0%, 100% { transform: scale(1); box-shadow: 0 0 40px rgba(255,153,51,.6); }
+    50% { transform: scale(1.1); box-shadow: 0 0 60px rgba(255,153,51,.9); }
+  }
+
+  .processing-screen h2 {
+    font-size: 1.5rem;
+    font-weight: 800;
+    margin-bottom: 10px;
+    color: #fff;
+  }
+
+  .processing-screen h2 span {
+    background: linear-gradient(90deg, var(--saffron), var(--gold));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .processing-screen p {
+    font-size: .9rem;
+    color: rgba(255,255,255,.8);
+    margin-bottom: 24px;
+    line-height: 1.6;
+  }
+
+  /* Progress Bar */
+  .progress-bar {
+    width: 100%;
+    max-width: 400px;
+    height: 8px;
+    background: rgba(255,255,255,.15);
+    border-radius: 20px;
+    overflow: hidden;
+    margin: 0 auto 18px;
+    position: relative;
+  }
+
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--saffron), var(--gold));
+    border-radius: 20px;
+    width: 0%;
+    transition: width .3s ease;
+    box-shadow: 0 0 20px rgba(255,153,51,.6);
+  }
+
+  /* Check List */
+  .processing-checklist {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    max-width: 400px;
+    margin: 0 auto 24px;
+    text-align: left;
+  }
+
+  .check-item {
     display: flex;
     align-items: center;
     gap: 10px;
-    margin-bottom: 16px;
-    padding-bottom: 12px;
-    border-bottom: 2px solid #f0e6d2;
-  }
-
-  .editor-title .et-icon {
-    width: 42px;
-    height: 42px;
-    border-radius: 11px;
-    background: linear-gradient(135deg, #6a11cb, #2575fc);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.2rem;
-    flex-shrink: 0;
-    box-shadow: 0 5px 14px rgba(106,17,203,.3);
-  }
-
-  .editor-title h2 {
-    font-size: 1.1rem;
-    color: var(--dark);
-    font-weight: 800;
-  }
-
-  .editor-title p {
-    font-size: .72rem;
-    color: var(--text-muted);
-    font-weight: 600;
-    margin-top: 2px;
-  }
-
-  /* Canvas Area */
-  .canvas-area {
-    background: linear-gradient(135deg, #f8fafc, #eef2f7);
-    border: 2px solid #e2e8f0;
-    border-radius: 14px;
-    padding: 16px;
-    margin-bottom: 16px;
-    text-align: center;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .canvas-wrap {
-    position: relative;
-    display: inline-block;
-    max-width: 100%;
-    box-shadow: 0 8px 24px rgba(10,37,64,.12);
-    border-radius: 8px;
-    overflow: hidden;
-    background: #000;
-  }
-
-  #previewCanvas {
-    display: block;
-    max-width: 100%;
-    height: auto;
-    cursor: move;
-    touch-action: none;
-    user-select: none;
-    -webkit-user-select: none;
-  }
-
-  .canvas-hint {
-    margin-top: 10px;
-    font-size: .72rem;
-    color: var(--text-muted);
-    font-weight: 600;
-  }
-
-  /* Controls */
-  .control-group {
-    background: #fff;
-    border: 1.5px solid #e1ebf5;
-    border-radius: 14px;
-    padding: 14px;
-    margin-bottom: 12px;
-  }
-
-  .control-label {
-    display: flex;
-    align-items: center;
-    gap: 6px;
+    padding: 10px 14px;
+    background: rgba(255,255,255,.06);
+    border-radius: 10px;
     font-size: .82rem;
-    font-weight: 800;
-    color: var(--dark);
-    margin-bottom: 10px;
-  }
-
-  .control-label .ci {
-    font-size: 1rem;
-  }
-
-  /* Size Buttons */
-  .size-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 8px;
-  }
-
-  .size-btn {
-    padding: 10px 8px;
-    border: 2px solid #e5e7eb;
-    background: #fff;
-    border-radius: 10px;
-    font-family: inherit;
-    font-size: .72rem;
-    font-weight: 700;
-    color: #475569;
-    cursor: pointer;
-    transition: all .25s;
-    text-align: center;
-    line-height: 1.3;
-  }
-
-  .size-btn:hover {
-    border-color: var(--saffron);
-    color: var(--saffron);
-  }
-
-  .size-btn.active {
-    background: linear-gradient(135deg, var(--saffron), #e67e22);
-    color: #fff;
-    border-color: transparent;
-    box-shadow: 0 5px 14px rgba(255,153,51,.35);
-  }
-
-  .size-btn strong {
-    display: block;
-    font-size: .78rem;
-    font-weight: 800;
-    margin-bottom: 2px;
-  }
-
-  .size-btn small {
-    display: block;
-    font-size: .58rem;
     font-weight: 600;
-    opacity: .8;
+    color: rgba(255,255,255,.5);
+    transition: all .4s ease;
+    border: 1px solid rgba(255,255,255,.08);
   }
 
-  /* Background Colors */
-  .bg-grid {
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    gap: 8px;
-  }
-
-  .bg-btn {
-    height: 44px;
-    border-radius: 10px;
-    border: 3px solid #e5e7eb;
-    cursor: pointer;
-    transition: all .25s;
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: .62rem;
-    font-weight: 800;
+  .check-item.active {
     color: #fff;
-    text-shadow: 0 1px 2px rgba(0,0,0,.3);
+    background: rgba(255,153,51,.12);
+    border-color: rgba(255,153,51,.3);
   }
 
-  .bg-btn:hover {
-    transform: scale(1.05);
+  .check-item.done {
+    color: #86efac;
+    background: rgba(34,197,94,.12);
+    border-color: rgba(34,197,94,.3);
   }
 
-  .bg-btn.active {
-    border-color: var(--gold);
-    box-shadow: 0 0 0 3px rgba(249,168,38,.3), 0 6px 16px rgba(249,168,38,.25);
-    transform: scale(1.05);
-  }
-
-  .bg-btn.active::after {
-    content: '✓';
-    position: absolute;
-    top: -8px;
-    right: -8px;
+  .check-item .check-icon {
     width: 20px;
     height: 20px;
-    background: var(--gold);
-    color: #fff;
     border-radius: 50%;
+    border: 2px solid rgba(255,255,255,.3);
     display: flex;
     align-items: center;
     justify-content: center;
     font-size: .7rem;
-    font-weight: 900;
-    box-shadow: 0 3px 8px rgba(249,168,38,.5);
+    flex-shrink: 0;
+    transition: all .3s;
   }
 
-  .bg-white { background: #ffffff; color: #333; text-shadow: none; border-color: #cbd5e1; }
-  .bg-blue  { background: linear-gradient(135deg, #1e40af, #3b82f6); }
-  .bg-lightblue { background: linear-gradient(135deg, #60a5fa, #93c5fd); }
-  .bg-red   { background: linear-gradient(135deg, #b91c1c, #ef4444); }
-  .bg-gray  { background: linear-gradient(135deg, #64748b, #94a3b8); }
-  .bg-green { background: linear-gradient(135deg, #15803d, #22c55e); }
-  .bg-none  { background: repeating-conic-gradient(#e5e7eb 0% 25%, #ffffff 0% 50%) 50% / 12px 12px; color: #333; text-shadow: none; border-color: #cbd5e1; font-size: .55rem; }
+  .check-item.active .check-icon {
+    border-color: var(--gold);
+    background: var(--gold);
+    color: #0a2540;
+    animation: pulseCore 1s ease-in-out infinite;
+  }
 
-  /* Zoom Slider */
-  .zoom-row {
-    display: flex;
+  .check-item.done .check-icon {
+    border-color: #22c55e;
+    background: #22c55e;
+    color: #fff;
+  }
+
+  /* Timer */
+  .processing-timer {
+    display: inline-flex;
     align-items: center;
-    gap: 12px;
-  }
-
-  .zoom-row input[type=range] {
-    flex: 1;
-    -webkit-appearance: none;
-    appearance: none;
-    height: 6px;
-    background: linear-gradient(90deg, var(--saffron), var(--gold));
+    gap: 6px;
+    padding: 6px 14px;
     border-radius: 20px;
-    outline: none;
+    background: rgba(255,255,255,.1);
+    border: 1px solid rgba(255,255,255,.15);
+    font-size: .78rem;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 20px;
   }
 
-  .zoom-row input[type=range]::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    appearance: none;
-    width: 22px;
-    height: 22px;
-    background: #fff;
-    border: 3px solid var(--saffron);
-    border-radius: 50%;
+  /* Cancel Button */
+  .cancel-btn {
+    background: rgba(255,255,255,.1);
+    color: #fff;
+    border: 1.5px solid rgba(255,255,255,.2);
+    padding: 10px 24px;
+    border-radius: 25px;
+    font-size: .85rem;
+    font-weight: 700;
     cursor: pointer;
-    box-shadow: 0 2px 8px rgba(255,153,51,.4);
-    transition: .2s;
+    font-family: inherit;
+    transition: all .3s;
   }
 
-  .zoom-row input[type=range]::-webkit-slider-thumb:hover {
-    transform: scale(1.15);
+  .cancel-btn:hover {
+    background: rgba(255,255,255,.2);
   }
 
-  .zoom-row input[type=range]::-moz-range-thumb {
-    width: 22px;
-    height: 22px;
-    background: #fff;
-    border: 3px solid var(--saffron);
-    border-radius: 50%;
-    cursor: pointer;
-    box-shadow: 0 2px 8px rgba(255,153,51,.4);
-  }
-
-  .zoom-value {
-    min-width: 48px;
-    text-align: center;
-    font-size: .75rem;
-    font-weight: 800;
-    color: var(--primary);
-    background: #f1f5f9;
-    padding: 5px 10px;
-    border-radius: 8px;
-    font-family: 'Poppins', monospace;
-  }
-
-  /* Preview Sheet */
-  .preview-sheet {
-    background: #fff;
-    border: 2px solid #e2e8f0;
-    border-radius: 14px;
+  /* ============ READY SCREEN (Popup Overlay) ============ */
+  .ready-overlay {
+    display: none;
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(10,37,64,.75);
+    backdrop-filter: blur(6px);
+    z-index: 99998;
+    align-items: center;
+    justify-content: center;
     padding: 16px;
-    margin-bottom: 16px;
-    text-align: center;
   }
 
-  .preview-sheet h4 {
-    font-size: .88rem;
-    color: var(--dark);
-    font-weight: 800;
-    margin-bottom: 12px;
+  .ready-overlay.active {
+    display: flex;
+  }
+
+  .ready-modal {
+    background: #fff;
+    border-radius: 20px;
+    max-width: 460px;
+    width: 100%;
+    padding: 28px 22px;
+    text-align: center;
+    box-shadow: 0 30px 70px rgba(0,0,0,.4);
+    animation: modalIn .4s cubic-bezier(.2,.9,.3,1.3);
+  }
+
+  @keyframes modalIn {
+    from { opacity: 0; transform: scale(.85) translateY(20px); }
+    to { opacity: 1; transform: scale(1) translateY(0); }
+  }
+
+  .ready-icon {
+    width: 70px;
+    height: 70px;
+    margin: 0 auto 16px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #d1fae5, #a7f3d0);
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 6px;
+    font-size: 2rem;
+    box-shadow: 0 10px 25px rgba(34,197,94,.3);
+    animation: successPop .6s ease;
   }
 
-  #sheetCanvas {
-    max-width: 100%;
-    height: auto;
-    border-radius: 6px;
-    box-shadow: 0 6px 18px rgba(10,37,64,.12);
-    border: 1px solid #e2e8f0;
+  @keyframes successPop {
+    0% { transform: scale(0); }
+    50% { transform: scale(1.15); }
+    100% { transform: scale(1); }
   }
 
-  /* Action Buttons */
-  .action-buttons {
+  .ready-modal h3 {
+    font-size: 1.3rem;
+    color: var(--dark);
+    font-weight: 800;
+    margin-bottom: 8px;
+  }
+
+  .ready-modal > p {
+    font-size: .85rem;
+    color: var(--text-muted);
+    margin-bottom: 18px;
+    line-height: 1.6;
+  }
+
+  /* Copy Status */
+  .copy-status {
     display: flex;
-    gap: 10px;
-    flex-wrap: wrap;
-    margin-top: 6px;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 12px 16px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #dcfce7, #bbf7d0);
+    color: #065f46;
+    font-size: .82rem;
+    font-weight: 700;
+    margin-bottom: 16px;
+    border: 1.5px solid #86efac;
   }
 
-  .action-btn {
+  .copy-status .check-circle {
+    width: 22px;
+    height: 22px;
+    background: #22c55e;
+    color: #fff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: .75rem;
+    font-weight: 900;
+    flex-shrink: 0;
+  }
+
+  /* Prompt Box */
+  .prompt-preview {
+    background: linear-gradient(145deg, #f8fafc, #f1f5f9);
+    border: 1.5px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 12px 14px;
+    text-align: left;
+    margin-bottom: 18px;
+    max-height: 130px;
+    overflow-y: auto;
+    font-size: .72rem;
+    color: #475569;
+    line-height: 1.5;
+    font-family: 'Courier New', monospace;
+    position: relative;
+  }
+
+  .prompt-preview::before {
+    content: '📋 Prompt:';
+    display: block;
+    font-family: 'Hind Siliguri', sans-serif;
+    font-weight: 800;
+    color: var(--primary);
+    margin-bottom: 6px;
+    font-size: .75rem;
+  }
+
+  /* Steps in Modal */
+  .modal-steps {
+    background: linear-gradient(135deg, #eff6ff, #dbeafe);
+    border-radius: 12px;
+    padding: 14px;
+    text-align: left;
+    margin-bottom: 18px;
+    border-left: 4px solid #3b82f6;
+  }
+
+  .modal-steps h4 {
+    font-size: .78rem;
+    color: #1e40af;
+    font-weight: 800;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+
+  .modal-steps ol {
+    padding-left: 18px;
+    font-size: .75rem;
+    color: #334155;
+    line-height: 1.7;
+    font-weight: 600;
+  }
+
+  .modal-steps li {
+    margin-bottom: 3px;
+  }
+
+  /* Buttons */
+  .modal-buttons {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .modal-btn {
     flex: 1;
-    min-width: 140px;
-    padding: 14px 20px;
+    min-width: 130px;
+    padding: 12px 20px;
     border-radius: 12px;
     border: none;
     font-family: inherit;
-    font-size: .88rem;
+    font-size: .85rem;
     font-weight: 800;
     cursor: pointer;
     transition: all .3s;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: 8px;
+    gap: 6px;
+    text-decoration: none;
   }
 
-  .action-btn-primary {
-    background: linear-gradient(135deg, #138808, #0f6b06);
+  .modal-btn-primary {
+    background: linear-gradient(135deg, #075e54, #128c7e);
     color: #fff;
-    box-shadow: 0 6px 18px rgba(19,136,8,.35);
+    box-shadow: 0 6px 18px rgba(7,94,84,.35);
   }
 
-  .action-btn-primary:hover {
+  .modal-btn-primary:hover {
     transform: translateY(-2px);
-    box-shadow: 0 10px 24px rgba(19,136,8,.45);
+    box-shadow: 0 10px 24px rgba(7,94,84,.45);
   }
 
-  .action-btn-secondary {
-    background: linear-gradient(135deg, #6a11cb, #2575fc);
-    color: #fff;
-    box-shadow: 0 6px 18px rgba(106,17,203,.35);
-  }
-
-  .action-btn-secondary:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 10px 24px rgba(106,17,203,.45);
-  }
-
-  .action-btn-outline {
-    background: #fff;
-    color: #475569;
-    border: 2px solid #e2e8f0;
-  }
-
-  .action-btn-outline:hover {
+  .modal-btn-secondary {
     background: #f1f5f9;
-    border-color: #cbd5e1;
+    color: #475569;
+    border: 1.5px solid #e2e8f0;
   }
 
-  /* ============ HOW IT WORKS ============ */
+  .modal-btn-secondary:hover {
+    background: #e2e8f0;
+  }
+
+  /* ============ HOW IT WORKS SECTION ============ */
   .how-section {
-    margin-top: 22px;
+    margin-top: 20px;
     padding: 16px;
     border-radius: 14px;
     background: linear-gradient(145deg, #f8fbff, #fff);
@@ -783,10 +908,10 @@
   }
 
   .how-title {
-    font-size: .95rem;
+    font-size: .9rem;
     color: var(--dark);
     font-weight: 800;
-    margin-bottom: 14px;
+    margin-bottom: 12px;
     display: flex;
     align-items: center;
     gap: 6px;
@@ -800,7 +925,7 @@
 
   .how-step {
     text-align: center;
-    padding: 12px 6px;
+    padding: 10px 6px;
     background: #fff;
     border-radius: 10px;
     border: 1px solid #e1ebf5;
@@ -815,23 +940,23 @@
   }
 
   .how-num {
-    width: 28px;
-    height: 28px;
-    margin: 0 auto 8px;
+    width: 26px;
+    height: 26px;
+    margin: 0 auto 6px;
     border-radius: 50%;
     background: linear-gradient(135deg, var(--saffron), var(--gold));
     color: #fff;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: .8rem;
+    font-size: .75rem;
     font-weight: 900;
     box-shadow: 0 4px 10px rgba(255,153,51,.3);
   }
 
   .how-step strong {
     display: block;
-    font-size: .7rem;
+    font-size: .68rem;
     color: var(--dark);
     font-weight: 800;
     line-height: 1.3;
@@ -1035,17 +1160,17 @@
     }
 
     .upload-box {
-      padding: 32px 16px;
+      padding: 30px 16px;
     }
 
     .upload-icon {
-      width: 65px;
-      height: 65px;
-      font-size: 1.6rem;
+      width: 60px;
+      height: 60px;
+      font-size: 1.5rem;
     }
 
-    .upload-box h3 { font-size: 1.05rem; }
-    .upload-box p { font-size: .78rem; }
+    .upload-box h3 { font-size: 1rem; }
+    .upload-box p { font-size: .76rem; }
 
     .features {
       grid-template-columns: 1fr;
@@ -1069,18 +1194,6 @@
       grid-template-columns: repeat(2, 1fr);
     }
 
-    .size-grid {
-      grid-template-columns: 1fr;
-    }
-
-    .bg-grid {
-      grid-template-columns: repeat(4, 1fr);
-    }
-
-    .action-btn {
-      min-width: 100%;
-    }
-
     .bottom-nav { display: block; }
 
     .scroll-top {
@@ -1095,6 +1208,32 @@
       padding: 18px 12px 86px;
       margin-top: 24px;
     }
+
+    .processing-screen h2 { font-size: 1.2rem; }
+    .processing-screen p { font-size: .82rem; }
+
+    .ai-loader {
+      width: 100px;
+      height: 100px;
+    }
+
+    .ai-center { inset: 30px; font-size: 1.25rem; }
+
+    .ready-modal { padding: 22px 18px; }
+    .ready-icon { width: 60px; height: 60px; font-size: 1.7rem; }
+    .ready-modal h3 { font-size: 1.15rem; }
+    .ready-modal > p { font-size: .78rem; }
+
+    .modal-btn { min-width: 100%; font-size: .8rem; }
+
+    .prompt-preview { font-size: .68rem; max-height: 100px; }
+
+    .step {
+      padding: 5px 10px;
+      font-size: .65rem;
+    }
+
+    .step-num { width: 16px; height: 16px; font-size: .6rem; }
   }
 
   @media (max-width: 400px) {
@@ -1103,7 +1242,6 @@
     .hero h1 { font-size: 1.15rem; }
     .hero p { font-size: .78rem; }
     .how-grid { grid-template-columns: 1fr; }
-    .bg-grid { grid-template-columns: repeat(3, 1fr); }
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -1135,7 +1273,7 @@
     </a>
     <nav class="nav-links">
       <a href="index.html">🏠 Home</a>
-      <a href="online-service.html">🌐 Services</a>
+      <a href="pvc-card.html">💳 PVC Card</a>
     </nav>
   </div>
 </header>
@@ -1143,14 +1281,14 @@
 <!-- ================= HERO ================= -->
 <section class="hero">
   <div class="hero-content">
-    <div class="hero-icon">📸</div>
-    <h1>Passport Size <span>Photo Maker</span></h1>
-    <p>একটি ছবি থেকে ২৫টি পাসপোর্ট সাইজ ছবি তৈরি করুন — ফ্রি, দ্রুত এবং প্রিন্ট রেডি।</p>
+    <div class="hero-icon">✨</div>
+    <h1>পুরোনো ছবি <span>HD করুন</span></h1>
+    <p>AI দিয়ে মুহূর্তেই আপনার পুরোনো ছবিকে প্রফেশনাল স্টুডিও মানের HD পোর্ট্রেটে রূপান্তর করুন — সম্পূর্ণ বিনামূল্যে।</p>
     <div class="hero-badges">
-      <span class="hero-badge"><span class="dot"></span> 100% Free</span>
-      <span class="hero-badge">🖼️ 25 Photos</span>
-      <span class="hero-badge">🎨 6 Backgrounds</span>
-      <span class="hero-badge">🖨️ Print Ready</span>
+      <span class="hero-badge"><span class="dot"></span> AI Powered</span>
+      <span class="hero-badge">⚡ Instant</span>
+      <span class="hero-badge">🎨 Blue BG</span>
+      <span class="hero-badge">💯 Free</span>
     </div>
   </div>
 </section>
@@ -1159,137 +1297,157 @@
 <div class="container">
   <div class="card-box">
 
-    <!-- ========== UPLOAD SECTION ========== -->
-    <div id="uploadSection">
-      <div class="upload-box" onclick="document.getElementById('photoInput').click()">
-        <div class="upload-icon">📷</div>
-        <h3>আপনার ছবি আপলোড করুন</h3>
-        <p>এখানে ক্লিক করুন অথবা ছবি ড্র্যাগ করুন<br>সরাসরি মুখের ছবি হলে সবচেয়ে ভালো হয়</p>
-        <span class="file-types">JPG • PNG • JPEG • WEBP</span>
-        <input type="file" id="photoInput" accept="image/*" onchange="handlePhotoUpload(event)">
+    <!-- Steps -->
+    <div class="steps">
+      <div class="step active" id="step1">
+        <span class="step-num">1</span> ছবি আপলোড
       </div>
-
-      <div class="features">
-        <div class="feature">
-          <span class="feature-icon">✂️</span>
-          <strong>Auto Crop</strong>
-          <small>ফ্রেমে বসান সহজে</small>
-        </div>
-        <div class="feature">
-          <span class="feature-icon">🎨</span>
-          <strong>BG Change</strong>
-          <small>৬টি ব্যাকগ্রাউন্ড</small>
-        </div>
-        <div class="feature">
-          <span class="feature-icon">🖨️</span>
-          <strong>Print Ready</strong>
-          <small>4×6 সিট প্রিন্ট</small>
-        </div>
+      <div class="step" id="step2">
+        <span class="step-num">2</span> কপি Prompt
       </div>
+      <div class="step" id="step3">
+        <span class="step-num">3</span> Gemini তে Paste
+      </div>
+      <div class="step" id="step4">
+        <span class="step-num">4</span> ডাউনলোড
+      </div>
+    </div>
 
-      <div class="how-section">
-        <div class="how-title">📖 কীভাবে ব্যবহার করবেন?</div>
-        <div class="how-grid">
-          <div class="how-step">
-            <div class="how-num">1</div>
-            <strong>ছবি আপলোড করুন</strong>
-          </div>
-          <div class="how-step">
-            <div class="how-num">2</div>
-            <strong>সাইজ সিলেক্ট করুন</strong>
-          </div>
-          <div class="how-step">
-            <div class="how-num">3</div>
-            <strong>ব্যাকগ্রাউন্ড বদলান</strong>
-          </div>
-          <div class="how-step">
-            <div class="how-num">4</div>
-            <strong>ডাউনলোড করুন</strong>
-          </div>
+    <!-- Upload Box -->
+    <div class="upload-box" id="uploadBox" onclick="document.getElementById('photoInput').click()">
+      <div class="upload-icon">📸</div>
+      <h3>আপনার ছবি আপলোড করুন</h3>
+      <p>এখানে ক্লিক করুন অথবা ছবি ড্র্যাগ করুন<br>পুরোনো, ঝাপসা বা কম আলোর ছবি হলেও চলবে</p>
+      <span class="file-types">JPG • PNG • WEBP • JPEG</span>
+      <input type="file" id="photoInput" accept="image/jpeg,image/png,image/webp,image/jpg" onchange="handlePhotoUpload(event)">
+    </div>
+
+    <!-- Features -->
+    <div class="features">
+      <div class="feature">
+        <span class="feature-icon">🔍</span>
+        <strong>HD Restoration</strong>
+        <small>ঝাপসা ছবি স্পষ্ট</small>
+      </div>
+      <div class="feature">
+        <span class="feature-icon">🎨</span>
+        <strong>Blue Background</strong>
+        <small>স্টুডিও-স্টাইল ব্যাকগ্রাউন্ড</small>
+      </div>
+      <div class="feature">
+        <span class="feature-icon">👤</span>
+        <strong>Face Safe</strong>
+        <small>মুখ অপরিবর্তিত থাকে</small>
+      </div>
+    </div>
+
+    <!-- How it works -->
+    <div class="how-section">
+      <div class="how-title">📖 কীভাবে কাজ করে?</div>
+      <div class="how-grid">
+        <div class="how-step">
+          <div class="how-num">1</div>
+          <strong>ছবি আপলোড করুন</strong>
+        </div>
+        <div class="how-step">
+          <div class="how-num">2</div>
+          <strong>Prompt অটো কপি হবে</strong>
+        </div>
+        <div class="how-step">
+          <div class="how-num">3</div>
+          <strong>Gemini খুলবে → Paste</strong>
+        </div>
+        <div class="how-step">
+          <div class="how-num">4</div>
+          <strong>Generate → ডাউনলোড</strong>
         </div>
       </div>
     </div>
 
-    <!-- ========== EDITOR SECTION ========== -->
-    <div class="editor-section" id="editorSection">
+  </div>
+</div>
 
-      <div class="editor-title">
-        <div class="et-icon">✂️</div>
-        <div>
-          <h2>আপনার পাসপোর্ট সাইজ ছবি</h2>
-          <p>ছবি টেনে সরান, জুম করুন এবং ব্যাকগ্রাউন্ড বদলান</p>
-        </div>
+<!-- ================= PROCESSING SCREEN ================= -->
+<div class="processing-screen" id="processingScreen">
+  <div class="processing-content">
+
+    <!-- AI Loader -->
+    <div class="ai-loader">
+      <div class="ai-ring"></div>
+      <div class="ai-ring"></div>
+      <div class="ai-ring"></div>
+      <div class="ai-center">✨</div>
+    </div>
+
+    <h2>AI প্রসেস হচ্ছে... <span>অপেক্ষা করুন</span></h2>
+    <p>আপনার ছবির জন্য Prompt তৈরি করা হচ্ছে।<br>Gemini নতুন ট্যাবে খুলবে।</p>
+
+    <!-- Timer -->
+    <div class="processing-timer">
+      ⏱️ <span id="timer">0.0</span> সেকেন্ড
+    </div>
+
+    <!-- Progress Bar -->
+    <div class="progress-bar">
+      <div class="progress-fill" id="progressFill"></div>
+    </div>
+
+    <!-- Checklist -->
+    <div class="processing-checklist">
+      <div class="check-item" id="check1">
+        <span class="check-icon">✓</span>
+        <span>ছবি প্রসেস করা হচ্ছে</span>
       </div>
-
-      <!-- Live Preview Canvas -->
-      <div class="canvas-area">
-        <div class="canvas-wrap">
-          <canvas id="previewCanvas" width="300" height="400"></canvas>
-        </div>
-        <p class="canvas-hint">👉 ছবি টেনে সরান (drag), দু-আঙুল দিয়ে জুম করুন</p>
+      <div class="check-item" id="check2">
+        <span class="check-icon">✓</span>
+        <span>Prompt কপি করা হচ্ছে</span>
       </div>
-
-      <!-- Step 1: Size -->
-      <div class="control-group">
-        <div class="control-label"><span class="ci">📐</span> Photo Size</div>
-        <div class="size-grid" id="sizeGrid">
-          <button class="size-btn active" data-size="25x35" onclick="selectSize('25x35', this)">
-            <strong>২৫×৩৫ mm</strong>
-            <small>India Standard</small>
-          </button>
-          <button class="size-btn" data-size="35x45" onclick="selectSize('35x45', this)">
-            <strong>৩৫×৪৫ mm</strong>
-            <small>Passport / Visa</small>
-          </button>
-          <button class="size-btn" data-size="51x51" onclick="selectSize('51x51', this)">
-            <strong>২×২ inch</strong>
-            <small>US Visa</small>
-          </button>
-        </div>
+      <div class="check-item" id="check3">
+        <span class="check-icon">✓</span>
+        <span>Gemini উইন্ডো খোলা হচ্ছে</span>
       </div>
+    </div>
 
-      <!-- Step 2: Background -->
-      <div class="control-group">
-        <div class="control-label"><span class="ci">🎨</span> Background Color</div>
-        <div class="bg-grid" id="bgGrid">
-          <button class="bg-btn bg-white active" data-bg="#ffffff" onclick="selectBg('#ffffff', this)">White</button>
-          <button class="bg-btn bg-blue" data-bg="#1e40af" onclick="selectBg('#1e40af', this)">Dark Blue</button>
-          <button class="bg-btn bg-lightblue" data-bg="#93c5fd" onclick="selectBg('#93c5fd', this)">Sky Blue</button>
-          <button class="bg-btn bg-red" data-bg="#dc2626" onclick="selectBg('#dc2626', this)">Red</button>
-          <button class="bg-btn bg-gray" data-bg="#94a3b8" onclick="selectBg('#94a3b8', this)">Gray</button>
-          <button class="bg-btn bg-green" data-bg="#16a34a" onclick="selectBg('#16a34a', this)">Green</button>
-          <button class="bg-btn bg-none" data-bg="none" onclick="selectBg('none', this)">Original</button>
-        </div>
-      </div>
+    <button class="cancel-btn" onclick="cancelProcessing()">বাতিল করুন</button>
 
-      <!-- Step 3: Zoom -->
-      <div class="control-group">
-        <div class="control-label"><span class="ci">🔍</span> Zoom &amp; Position</div>
-        <div class="zoom-row">
-          <input type="range" id="zoomSlider" min="50" max="200" value="100" oninput="updateZoom(this.value)">
-          <span class="zoom-value" id="zoomValue">100%</span>
-        </div>
-      </div>
+  </div>
+</div>
 
-      <!-- Preview Sheet -->
-      <div class="preview-sheet">
-        <h4>🖨️ প্রিন্ট প্রিভিউ (4×6 inch — ২৫টি ছবি)</h4>
-        <canvas id="sheetCanvas" width="600" height="900"></canvas>
-      </div>
+<!-- ================= READY OVERLAY ================= -->
+<div class="ready-overlay" id="readyOverlay">
+  <div class="ready-modal">
 
-      <!-- Actions -->
-      <div class="action-buttons">
-        <button class="action-btn action-btn-outline" onclick="resetPhoto()">
-          🔄 নতুন ছবি
-        </button>
-        <button class="action-btn action-btn-secondary" onclick="downloadSingle()">
-          ⬇️ Single Photo
-        </button>
-        <button class="action-btn action-btn-primary" onclick="downloadSheet()">
-          🖨️ Download Sheet (25 Photos)
-        </button>
-      </div>
+    <div class="ready-icon">✅</div>
+    <h3>সব প্রস্তুত!</h3>
+    <p>Prompt কপি হয়ে গেছে। এখন <b>Gemini</b> তে Paste করে ছবিটি আপলোড করুন।</p>
 
+    <!-- Copy Status -->
+    <div class="copy-status">
+      <span class="check-circle">✓</span>
+      <span>Prompt কপি হয়েছে</span>
+    </div>
+
+    <!-- Prompt Preview -->
+    <div class="prompt-preview" id="promptPreview">
+      Enhance and restore this old photograph into a high-quality, realistic HD portrait...
+    </div>
+
+    <!-- Steps -->
+    <div class="modal-steps">
+      <h4>📌 Gemini-তে কী করবেন:</h4>
+      <ol>
+        <li>Gemini খোলার পর <b>ছবি আপলোড</b> করুন</li>
+        <li>নিচের টেক্সট বক্সে <b>Ctrl + V</b> চাপুন</li>
+        <li>Enter দিয়ে <b>Generate</b> করুন</li>
+        <li>ফলাফল <b>Download</b> করুন</li>
+      </ol>
+    </div>
+
+    <div class="modal-buttons">
+      <button class="modal-btn modal-btn-secondary" onclick="closeReady()">✕ বন্ধ করুন</button>
+      <a class="modal-btn modal-btn-primary" href="https://gemini.google.com/app" target="_blank" rel="noopener" onclick="closeReady()">
+        🚀 Gemini খুলুন
+      </a>
     </div>
 
   </div>
@@ -1300,7 +1458,6 @@
   <p>🖥️ <strong>Azad Digital Seva</strong> — সরকারি ও বেসরকারি অনলাইন পরিষেবা</p>
   <div class="footer-links">
     <a href="index.html">Home</a>
-    <a href="online-service.html">Services</a>
     <a href="pvc-card.html">PVC Card</a>
     <a href="gov-service.html">Govt Services</a>
   </div>
@@ -1314,16 +1471,16 @@
       <span class="bn-icon">🏠</span>
       <span>Home</span>
     </a>
-    <a href="online-service.html" class="bn-item">
-      <span class="bn-icon">🌐</span>
-      <span>Services</span>
-    </a>
     <a href="pvc-card.html" class="bn-item">
       <span class="bn-icon">💳</span>
       <span>PVC</span>
     </a>
-    <a href="passport-photo.html" class="bn-item active">
-      <span class="bn-icon">📸</span>
+    <a href="gov-service.html" class="bn-item">
+      <span class="bn-icon">📋</span>
+      <span>Govt</span>
+    </a>
+    <a href="photo-enhance.html" class="bn-item active">
+      <span class="bn-icon">✨</span>
       <span>Photo</span>
     </a>
   </div>
@@ -1339,386 +1496,219 @@
 <script>
 (function() {
 
-  /* ==================== STATE ==================== */
-  var state = {
-    image: null,           // Original Image object
-    sizeKey: '25x35',      // Selected size
-    bgColor: '#ffffff',    // Selected background
-    zoom: 100,             // Zoom %
-    offsetX: 0,            // Pan offset X
-    offsetY: 0,            // Pan offset Y
-    dragStart: null
-  };
+  /* ==================== CONFIG ==================== */
+  var GEMINI_URL = 'https://gemini.google.com/app';
 
-  var SIZES = {
-    '25x35': { w: 25, h: 35, label: '25×35 mm' },
-    '35x45': { w: 35, h: 45, label: '35×45 mm' },
-    '51x51': { w: 51, h: 51, label: '51×51 mm' }
-  };
+  var PROMPT_TEXT = `Enhance and restore this old photograph into a high-quality, realistic HD portrait.
 
-  var DPI = 300;                     // Print DPI
-  var MM_TO_PX = DPI / 25.4;         // pixels per mm at 300dpi
+Keep the person's original face, facial features, identity, skin tone, hairstyle, expression, and natural appearance exactly the same. Do not change or beautify the face unnaturally.
+
+Remove old-photo damage, blur, noise, scratches, stains, grain, and compression artifacts. Restore missing details carefully and improve facial and clothing details while keeping the photo realistic.
+
+Increase sharpness, clarity, and resolution to a professional studio-quality HD/Ultra HD photograph. Make the skin look natural with realistic texture, not plastic or overly smooth.
+
+Replace the existing background with a clean, elegant solid blue studio-style background. Use a professional medium/deep blue tone with a subtle natural gradient, without any objects, patterns, text, or distractions.
+
+Maintain realistic lighting on the person and create a clean separation between the subject and the blue background.
+
+Final result should look like a professionally photographed modern HD portrait, while preserving the original person's appearance and authenticity.`;
 
   /* ==================== DOM ==================== */
-  var uploadSection = document.getElementById('uploadSection');
-  var editorSection = document.getElementById('editorSection');
   var photoInput = document.getElementById('photoInput');
-  var previewCanvas = document.getElementById('previewCanvas');
-  var previewCtx = previewCanvas.getContext('2d');
-  var sheetCanvas = document.getElementById('sheetCanvas');
-  var sheetCtx = sheetCanvas.getContext('2d');
-  var zoomSlider = document.getElementById('zoomSlider');
-  var zoomValue = document.getElementById('zoomValue');
+  var processingScreen = document.getElementById('processingScreen');
+  var readyOverlay = document.getElementById('readyOverlay');
+  var progressFill = document.getElementById('progressFill');
+  var timerEl = document.getElementById('timer');
+  var check1 = document.getElementById('check1');
+  var check2 = document.getElementById('check2');
+  var check3 = document.getElementById('check3');
+  var step1 = document.getElementById('step1');
+  var step2 = document.getElementById('step2');
+  var step3 = document.getElementById('step3');
+  var step4 = document.getElementById('step4');
+  var promptPreview = document.getElementById('promptPreview');
   var scrollBtn = document.getElementById('scrollTop');
   var toast = document.getElementById('toast');
+
+  var processingTimer = null;
+  var elapsedTimer = null;
+  var elapsed = 0;
+  var geminiWindow = null;
 
   /* ==================== HELPERS ==================== */
   function showToast(msg) {
     toast.textContent = msg;
     toast.classList.add('show');
-    setTimeout(function() { toast.classList.remove('show'); }, 2500);
+    setTimeout(function() {
+      toast.classList.remove('show');
+    }, 2500);
   }
 
-  /* ==================== HANDLE UPLOAD ==================== */
+  function copyToClipboard(text) {
+    if (navigator.clipboard && window.isSecureContext) {
+      return navigator.clipboard.writeText(text);
+    } else {
+      // Fallback for older browsers
+      var textarea = document.createElement('textarea');
+      textarea.value = text;
+      textarea.style.position = 'fixed';
+      textarea.style.left = '-9999px';
+      document.body.appendChild(textarea);
+      textarea.select();
+      try {
+        document.execCommand('copy');
+      } catch(e) {}
+      document.body.removeChild(textarea);
+      return Promise.resolve();
+    }
+  }
+
+  /* ==================== HANDLE PHOTO UPLOAD ==================== */
   window.handlePhotoUpload = function(event) {
     var file = event.target.files[0];
     if (!file) return;
 
+    // Validate file
     if (!file.type.startsWith('image/')) {
       showToast('❌ শুধু ছবি আপলোড করুন');
       return;
     }
 
-    if (file.size > 15 * 1024 * 1024) {
-      showToast('❌ ছবি ১৫MB এর কম হতে হবে');
+    if (file.size > 20 * 1024 * 1024) {
+      showToast('❌ ছবি ২০MB এর কম হতে হবে');
       return;
     }
 
-    var reader = new FileReader();
-    reader.onload = function(e) {
-      var img = new Image();
-      img.onload = function() {
-        state.image = img;
-        state.offsetX = 0;
-        state.offsetY = 0;
-        state.zoom = 100;
-        zoomSlider.value = 100;
-        zoomValue.textContent = '100%';
-
-        // Switch sections
-        uploadSection.style.display = 'none';
-        editorSection.classList.add('active');
-
-        // Draw everything
-        drawPreview();
-        drawSheet();
-
-        showToast('✅ ছবি লোড হয়েছে');
-        window.scrollTo({ top: 200, behavior: 'smooth' });
-      };
-      img.src = e.target.result;
-    };
-    reader.readAsDataURL(file);
+    startProcessing();
   };
 
-  /* ==================== SELECT SIZE ==================== */
-  window.selectSize = function(key, btn) {
-    state.sizeKey = key;
-    document.querySelectorAll('.size-btn').forEach(function(b) {
-      b.classList.remove('active');
-    });
-    btn.classList.add('active');
+  /* ==================== START PROCESSING ==================== */
+  function startProcessing() {
+    // Reset UI
+    progressFill.style.width = '0%';
+    elapsed = 0;
+    timerEl.textContent = '0.0';
+    check1.className = 'check-item';
+    check2.className = 'check-item';
+    check3.className = 'check-item';
 
-    // Update canvas aspect ratio
-    updateCanvasSize();
-    drawPreview();
-    drawSheet();
-    showToast('📐 সাইজ: ' + SIZES[key].label);
-  };
+    // Show processing screen (hides website)
+    processingScreen.classList.add('active');
+    document.body.style.overflow = 'hidden';
 
-  /* ==================== SELECT BACKGROUND ==================== */
-  window.selectBg = function(color, btn) {
-    state.bgColor = color;
-    document.querySelectorAll('.bg-btn').forEach(function(b) {
-      b.classList.remove('active');
-    });
-    btn.classList.add('active');
+    // Start elapsed timer
+    elapsedTimer = setInterval(function() {
+      elapsed += 0.1;
+      timerEl.textContent = elapsed.toFixed(1);
+    }, 100);
 
-    drawPreview();
-    drawSheet();
-    showToast('🎨 ব্যাকগ্রাউন্ড পরিবর্তন হয়েছে');
-  };
+    // Step 1: Process photo (0-1s)
+    setTimeout(function() {
+      check1.classList.add('active');
+      progressFill.style.width = '25%';
+    }, 200);
 
-  /* ==================== UPDATE ZOOM ==================== */
-  window.updateZoom = function(val) {
-    state.zoom = parseInt(val);
-    zoomValue.textContent = val + '%';
-    drawPreview();
-    drawSheet();
-  };
+    setTimeout(function() {
+      check1.classList.remove('active');
+      check1.classList.add('done');
+    }, 1000);
 
-  /* ==================== UPDATE CANVAS SIZE ==================== */
-  function updateCanvasSize() {
-    var size = SIZES[state.sizeKey];
-    var aspect = size.w / size.h;
+    // Step 2: Copy prompt (1-2s)
+    setTimeout(function() {
+      check2.classList.add('active');
+      progressFill.style.width = '55%';
 
-    // Display size (in CSS pixels) — max 300px
-    var displayW = 300;
-    var displayH = Math.round(displayW / aspect);
+      // Copy prompt to clipboard
+      copyToClipboard(PROMPT_TEXT).then(function() {
+        console.log('✅ Prompt copied to clipboard');
+      }).catch(function(err) {
+        console.warn('Copy failed, will retry on user action', err);
+      });
+    }, 1100);
 
-    if (displayH > 400) {
-      displayH = 400;
-      displayW = Math.round(displayH * aspect);
-    }
+    setTimeout(function() {
+      check2.classList.remove('active');
+      check2.classList.add('done');
+    }, 1900);
 
-    previewCanvas.width = displayW * 2;   // 2x for retina
-    previewCanvas.height = displayH * 2;
-    previewCanvas.style.width = displayW + 'px';
-    previewCanvas.style.height = displayH + 'px';
-  }
+    // Step 3: Open Gemini (2-3s)
+    setTimeout(function() {
+      check3.classList.add('active');
+      progressFill.style.width = '85%';
+    }, 2000);
 
-  /* ==================== DRAW PREVIEW ==================== */
-  function drawPreview() {
-    if (!state.image) return;
-
-    var cw = previewCanvas.width;
-    var ch = previewCanvas.height;
-
-    // Fill background
-    if (state.bgColor === 'none') {
-      previewCtx.fillStyle = '#ffffff';
-    } else {
-      previewCtx.fillStyle = state.bgColor;
-    }
-    previewCtx.fillRect(0, 0, cw, ch);
-
-    // Draw image
-    var img = state.image;
-    var scale = Math.max(cw / img.width, ch / img.height) * (state.zoom / 100);
-    var dw = img.width * scale;
-    var dh = img.height * scale;
-
-    var dx = (cw - dw) / 2 + (state.offsetX * 2);
-    var dy = (ch - dh) / 2 + (state.offsetY * 2);
-
-    previewCtx.drawImage(img, dx, dy, dw, dh);
-
-    // Border overlay
-    previewCtx.strokeStyle = 'rgba(255,255,255,.4)';
-    previewCtx.lineWidth = 2;
-    previewCtx.strokeRect(1, 1, cw - 2, ch - 2);
-  }
-
-  /* ==================== DRAW PRINT SHEET (4×6 inch) ==================== */
-  function drawSheet() {
-    if (!state.image) return;
-
-    var sheetW = 4 * DPI;    // 1200 px
-    var sheetH = 6 * DPI;    // 1800 px
-
-    sheetCanvas.width = sheetW;
-    sheetCanvas.height = sheetH;
-
-    // Fill white sheet
-    sheetCtx.fillStyle = '#ffffff';
-    sheetCtx.fillRect(0, 0, sheetW, sheetH);
-
-    // Photo actual size in px
-    var size = SIZES[state.sizeKey];
-    var photoW = size.w * MM_TO_PX;
-    var photoH = size.h * MM_TO_PX;
-
-    // Gap between photos (2mm)
-    var gap = 2 * MM_TO_PX;
-    var totalW = photoW + gap;
-    var totalH = photoH + gap;
-
-    var cols = Math.floor((sheetW - gap) / totalW);
-    var rows = Math.floor((sheetH - gap) / totalH);
-    var maxPhotos = Math.min(cols * rows, 25);
-
-    // Center the grid
-    var gridW = cols * totalW - gap;
-    var gridH = rows * totalH - gap;
-    var startX = (sheetW - gridW) / 2;
-    var startY = (sheetH - gridH) / 2;
-
-    var count = 0;
-
-    for (var r = 0; r < rows && count < maxPhotos; r++) {
-      for (var c = 0; c < cols && count < maxPhotos; c++) {
-        var x = startX + c * totalW;
-        var y = startY + r * totalH;
-
-        drawPhotoOnSheet(x, y, photoW, photoH);
-
-        // Cut border (light gray)
-        sheetCtx.strokeStyle = '#e5e7eb';
-        sheetCtx.lineWidth = 1;
-        sheetCtx.strokeRect(x, y, photoW, photoH);
-
-        count++;
+    // Open Gemini in new tab
+    setTimeout(function() {
+      try {
+        geminiWindow = window.open(GEMINI_URL, '_blank');
+        if (!geminiWindow || geminiWindow.closed || typeof geminiWindow.closed === 'undefined') {
+          console.warn('Popup blocked by browser');
+          showToast('⚠️ Popup blocked — Gemini বাটনে ক্লিক করুন');
+        }
+      } catch(e) {
+        console.warn('Window.open failed:', e);
       }
-    }
+    }, 2200);
 
-    // Footer text
-    sheetCtx.fillStyle = '#94a3b8';
-    sheetCtx.font = '600 20px Arial';
-    sheetCtx.textAlign = 'center';
-    sheetCtx.fillText('Generated by Azad Digital Seva • ' + count + ' photos @ ' + size.label, sheetW / 2, sheetH - 20);
+    setTimeout(function() {
+      check3.classList.remove('active');
+      check3.classList.add('done');
+      progressFill.style.width = '100%';
+    }, 2900);
+
+    // Finish processing (3s total)
+    setTimeout(function() {
+      clearInterval(elapsedTimer);
+      stopProcessing();
+
+      // Show ready overlay
+      promptPreview.textContent = PROMPT_TEXT.substring(0, 300) + '...';
+      readyOverlay.classList.add('active');
+
+      // Update steps
+      step1.classList.remove('active');
+      step1.classList.add('done');
+      step2.classList.add('done');
+      step3.classList.add('active');
+
+    }, 3200);
   }
 
-  /* ==================== DRAW SINGLE PHOTO ON SHEET ==================== */
-  function drawPhotoOnSheet(x, y, w, h) {
-    // Fill background
-    if (state.bgColor === 'none') {
-      sheetCtx.fillStyle = '#ffffff';
-    } else {
-      sheetCtx.fillStyle = state.bgColor;
-    }
-    sheetCtx.fillRect(x, y, w, h);
-
-    // Draw image with proper scaling
-    var img = state.image;
-    var scale = Math.max(w / img.width, h / img.height) * (state.zoom / 100);
-    var dw = img.width * scale;
-    var dh = img.height * scale;
-
-    var dx = x + (w - dw) / 2 + (state.offsetX / 300 * w * 2);
-    var dy = y + (h - dh) / 2 + (state.offsetY / 400 * h * 2);
-
-    sheetCtx.save();
-    sheetCtx.beginPath();
-    sheetCtx.rect(x, y, w, h);
-    sheetCtx.clip();
-    sheetCtx.drawImage(img, dx, dy, dw, dh);
-    sheetCtx.restore();
+  function stopProcessing() {
+    clearInterval(processingTimer);
+    clearInterval(elapsedTimer);
   }
 
-  /* ==================== DRAG TO PAN ==================== */
-  function startDrag(e) {
-    if (!state.image) return;
-    var point = getPoint(e);
-    state.dragStart = {
-      x: point.x,
-      y: point.y,
-      offsetX: state.offsetX,
-      offsetY: state.offsetY
-    };
-    previewCanvas.style.cursor = 'grabbing';
-  }
-
-  function moveDrag(e) {
-    if (!state.dragStart) return;
-    e.preventDefault();
-
-    var point = getPoint(e);
-    var dx = point.x - state.dragStart.x;
-    var dy = point.y - state.dragStart.y;
-
-    state.offsetX = state.dragStart.offsetX + dx;
-    state.offsetY = state.dragStart.offsetY + dy;
-
-    drawPreview();
-    drawSheet();
-  }
-
-  function endDrag() {
-    state.dragStart = null;
-    previewCanvas.style.cursor = 'move';
-  }
-
-  function getPoint(e) {
-    if (e.touches && e.touches[0]) {
-      return { x: e.touches[0].clientX, y: e.touches[0].clientY };
-    }
-    return { x: e.clientX, y: e.clientY };
-  }
-
-  previewCanvas.addEventListener('mousedown', startDrag);
-  document.addEventListener('mousemove', moveDrag);
-  document.addEventListener('mouseup', endDrag);
-
-  previewCanvas.addEventListener('touchstart', startDrag, { passive: true });
-  document.addEventListener('touchmove', moveDrag, { passive: false });
-  document.addEventListener('touchend', endDrag);
-
-  /* ==================== DOWNLOAD SINGLE PHOTO ==================== */
-  window.downloadSingle = function() {
-    if (!state.image) return;
-
-    var size = SIZES[state.sizeKey];
-    var w = Math.round(size.w * MM_TO_PX);
-    var h = Math.round(size.h * MM_TO_PX);
-
-    var off = document.createElement('canvas');
-    off.width = w;
-    off.height = h;
-    var ctx = off.getContext('2d');
-
-    ctx.fillStyle = state.bgColor === 'none' ? '#ffffff' : state.bgColor;
-    ctx.fillRect(0, 0, w, h);
-
-    var img = state.image;
-    var scale = Math.max(w / img.width, h / img.height) * (state.zoom / 100);
-    var dw = img.width * scale;
-    var dh = img.height * scale;
-
-    var dx = (w - dw) / 2 + (state.offsetX / 300 * w * 2);
-    var dy = (h - dh) / 2 + (state.offsetY / 400 * h * 2);
-
-    ctx.drawImage(img, dx, dy, dw, dh);
-
-    off.toBlob(function(blob) {
-      var url = URL.createObjectURL(blob);
-      var a = document.createElement('a');
-      a.href = url;
-      a.download = 'passport-photo-' + Date.now() + '.png';
-      a.click();
-      URL.revokeObjectURL(url);
-      showToast('⬇️ Single Photo ডাউনলোড হয়েছে');
-    }, 'image/png');
-  };
-
-  /* ==================== DOWNLOAD SHEET ==================== */
-  window.downloadSheet = function() {
-    if (!state.image) return;
-
-    sheetCanvas.toBlob(function(blob) {
-      var url = URL.createObjectURL(blob);
-      var a = document.createElement('a');
-      a.href = url;
-      a.download = 'passport-photo-sheet-4x6-' + Date.now() + '.png';
-      a.click();
-      URL.revokeObjectURL(url);
-      showToast('🖨️ প্রিন্ট শিট ডাউনলোড হয়েছে');
-    }, 'image/png');
-  };
-
-  /* ==================== RESET ==================== */
-  window.resetPhoto = function() {
-    state.image = null;
-    state.offsetX = 0;
-    state.offsetY = 0;
-    state.zoom = 100;
-    state.sizeKey = '25x35';
-    state.bgColor = '#ffffff';
-
+  /* ==================== CANCEL PROCESSING ==================== */
+  window.cancelProcessing = function() {
+    stopProcessing();
+    processingScreen.classList.remove('active');
+    document.body.style.overflow = '';
     photoInput.value = '';
-    editorSection.classList.remove('active');
-    uploadSection.style.display = 'block';
+    showToast('❌ বাতিল করা হয়েছে');
+  };
 
-    document.querySelectorAll('.size-btn').forEach(function(b, i) {
-      b.classList.toggle('active', i === 0);
-    });
-    document.querySelectorAll('.bg-btn').forEach(function(b, i) {
-      b.classList.toggle('active', i === 0);
-    });
-    zoomSlider.value = 100;
-    zoomValue.textContent = '100%';
+  /* ==================== CLOSE READY ==================== */
+  window.closeReady = function() {
+    readyOverlay.classList.remove('active');
+    document.body.style.overflow = '';
 
-    showToast('🔄 নতুন ছবি আপলোড করুন');
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    // Reset steps
+    step1.classList.remove('done');
+    step2.classList.remove('done');
+    step3.classList.remove('active');
+    step3.classList.add('done');
+    step4.classList.add('active');
+
+    // Reset upload box
+    photoInput.value = '';
+
+    // Reset
+    setTimeout(function() {
+      step3.classList.remove('done');
+      step4.classList.remove('active');
+      step1.classList.add('active');
+    }, 3000);
   };
 
   /* ==================== SCROLL TO TOP ==================== */
@@ -1734,8 +1724,15 @@
     window.scrollTo({ top: 0, behavior: 'smooth' });
   });
 
-  /* ==================== INIT ==================== */
-  updateCanvasSize();
+  /* ==================== AUTO COPY ON FOCUS ==================== */
+  // If user comes back to this page and clicks paste-ready area,
+  // we ensure prompt is copied again
+  document.addEventListener('visibilitychange', function() {
+    if (!document.hidden && readyOverlay.classList.contains('active')) {
+      // Re-copy prompt when user returns
+      copyToClipboard(PROMPT_TEXT).catch(function() {});
+    }
+  });
 
 })();
 </script>

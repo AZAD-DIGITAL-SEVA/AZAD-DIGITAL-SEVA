@@ -410,6 +410,123 @@
     margin-bottom: 14px;
   }
 
+  /* ============ AADHAAR PASSWORD BOX ============ */
+  .aadhaar-password-box {
+    background: linear-gradient(135deg, #f0f9ff, #e0f2fe);
+    border: 2px solid #0ea5e9;
+    border-left: 5px solid #0ea5e9;
+    border-radius: 14px;
+    padding: 16px;
+    margin-bottom: 16px;
+    animation: fadeIn .3s ease;
+  }
+
+  .aadhaar-password-box label {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: .85rem;
+    font-weight: 800;
+    color: #0369a1;
+    margin-bottom: 10px;
+  }
+
+  .pw-icon { font-size: 1rem; }
+
+  .aadhaar-password-row {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+  }
+
+  .aadhaar-password-row input {
+    flex: 1;
+    padding: 12px 14px;
+    border: 2px solid #bae6fd;
+    border-radius: 10px;
+    font-size: .9rem;
+    font-family: inherit;
+    background: #fff;
+    color: #0c4a6e;
+    font-weight: 600;
+    letter-spacing: .5px;
+    transition: .3s;
+  }
+
+  .aadhaar-password-row input:focus {
+    outline: none;
+    border-color: #0ea5e9;
+    box-shadow: 0 0 0 4px rgba(14,165,233,.15);
+  }
+
+  .pw-toggle {
+    padding: 11px 14px;
+    border: 2px solid #0ea5e9;
+    background: #fff;
+    color: #0369a1;
+    border-radius: 10px;
+    font-weight: 800;
+    font-size: .78rem;
+    cursor: pointer;
+    font-family: inherit;
+    white-space: nowrap;
+    transition: .2s;
+  }
+
+  .pw-toggle:hover {
+    background: #0ea5e9;
+    color: #fff;
+  }
+
+  .pw-hint {
+    margin-top: 10px;
+    padding: 8px 12px;
+    background: #fff;
+    border-radius: 8px;
+    font-size: .72rem;
+    color: #475569;
+    font-weight: 600;
+    line-height: 1.5;
+    border-left: 3px solid #f59e0b;
+  }
+
+  .pw-hint b {
+    color: #b45309;
+    background: #fef3c7;
+    padding: 1px 5px;
+    border-radius: 4px;
+  }
+
+  .unlock-btn {
+    width: 100%;
+    padding: 15px;
+    background: linear-gradient(135deg, #ea580c, #dc2626);
+    color: #fff;
+    border: none;
+    border-radius: 12px;
+    font-size: .95rem;
+    font-weight: 800;
+    cursor: pointer;
+    font-family: inherit;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    box-shadow: 0 6px 18px rgba(220,38,38,.35);
+    transition: .3s;
+    margin-bottom: 16px;
+  }
+
+  .unlock-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 24px rgba(220,38,38,.45);
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
   /* Results */
   .results-grid {
     display: none;
@@ -512,6 +629,8 @@
     .upload-area { padding: 26px 16px; }
     .upload-area strong { font-size: .92rem; }
     .up-icon { font-size: 2.4rem; }
+    .aadhaar-password-row { flex-direction: column; gap: 6px; }
+    .pw-toggle { width: 100%; }
   }
 
   @media (max-width: 400px) {
@@ -565,7 +684,6 @@
   </div>
 
   <div class="tool-grid">
-    <!-- Aadhaar -->
     <button type="button" class="tool-card" onclick="openTool('aadhaar')">
       <span class="tool-icon">आ</span>
       <div class="tool-info">
@@ -575,7 +693,6 @@
       <span class="tool-arrow">→</span>
     </button>
 
-    <!-- PAN -->
     <button type="button" class="tool-card" onclick="openTool('pan')">
       <span class="tool-icon">PAN</span>
       <div class="tool-info">
@@ -585,7 +702,6 @@
       <span class="tool-arrow">→</span>
     </button>
 
-    <!-- Voter -->
     <button type="button" class="tool-card" onclick="openTool('voter')">
       <span class="tool-icon">🗳️</span>
       <div class="tool-info">
@@ -595,7 +711,6 @@
       <span class="tool-arrow">→</span>
     </button>
 
-    <!-- Ration -->
     <button type="button" class="tool-card" onclick="openTool('ration')">
       <span class="tool-icon">🍚</span>
       <div class="tool-info">
@@ -605,7 +720,6 @@
       <span class="tool-arrow">→</span>
     </button>
 
-    <!-- Ayushman -->
     <button type="button" class="tool-card" onclick="openTool('ayushman')">
       <span class="tool-icon">🏥</span>
       <div class="tool-info">
@@ -615,7 +729,6 @@
       <span class="tool-arrow">→</span>
     </button>
 
-    <!-- ABHA -->
     <button type="button" class="tool-card" onclick="openTool('abha')">
       <span class="tool-icon">ABHA</span>
       <div class="tool-info">
@@ -625,7 +738,6 @@
       <span class="tool-arrow">→</span>
     </button>
 
-    <!-- ABC/APAAR -->
     <button type="button" class="tool-card" onclick="openTool('abc')">
       <span class="tool-icon">ABC</span>
       <div class="tool-info">
@@ -657,6 +769,27 @@
         <small>Only PDF • Maximum 15 MB</small>
         <input type="file" id="fileInput" accept=".pdf,application/pdf">
       </label>
+
+      <!-- Aadhaar Password Section -->
+      <div class="aadhaar-password-box" id="aadhaarPasswordBox" style="display: none;">
+        <label for="aadhaarPassword">
+          <span class="pw-icon">🔐</span>
+          <span>Aadhaar PDF Password</span>
+        </label>
+        <div class="aadhaar-password-row">
+          <input type="password" id="aadhaarPassword" autocomplete="off" placeholder="PDF password লিখুন">
+          <button type="button" class="pw-toggle" id="pwToggleBtn" onclick="togglePasswordVisibility()">
+            👁️ Show
+          </button>
+        </div>
+        <p class="pw-hint">
+          💡 Aadhaar PDF সাধারণত <b>8 অক্ষরের নাম (UPPERCASE) + জন্মসাল</b> — যেমন <b>RAMESH1990</b>
+        </p>
+      </div>
+
+      <button type="button" class="unlock-btn" id="unlockAadhaarBtn" onclick="unlockAadhaarPdf()" style="display: none;">
+        🔓 Unlock & Process PDF
+      </button>
 
       <div class="status-box" id="statusBox">
         কার্ড টুল ব্যবহার করতে উপরে PDF ফাইল সিলেক্ট করুন।
@@ -743,6 +876,7 @@
 
   // ==================== CONFIG ====================
   var CURRENT_TOOL = null;
+  var CURRENT_FILE = null;
   var FRONT_BLOB = null;
   var BACK_BLOB = null;
   var RENDERED_CANVAS = null;
@@ -797,10 +931,19 @@
     FRONT_BLOB = null;
     BACK_BLOB = null;
     RENDERED_CANVAS = null;
+    CURRENT_FILE = null;
     resultsGrid.classList.remove('active');
     actionRow.style.display = 'none';
     frontPreview.innerHTML = '';
     backPreview.innerHTML = '';
+    hideAadhaarPasswordBox();
+
+    var btn = document.getElementById('unlockAadhaarBtn');
+    if (btn) {
+      btn.disabled = false;
+      btn.innerHTML = '🔓 Unlock & Process PDF';
+    }
+
     setStatus('কার্ড টুল ব্যবহার করতে উপরে PDF ফাইল সিলেক্ট করুন।', 'info');
   };
 
@@ -810,6 +953,70 @@
     if (type === 'success') statusBox.classList.add('success');
     if (type === 'error') statusBox.classList.add('error');
   }
+
+  // ==================== AADHAAR PASSWORD ====================
+  function showAadhaarPasswordBox() {
+    document.getElementById('aadhaarPasswordBox').style.display = 'block';
+    document.getElementById('unlockAadhaarBtn').style.display = 'flex';
+    setStatus('🔐 এই Aadhaar PDF password protected। নিচে password লিখুন এবং Unlock চাপুন।', 'error');
+    setTimeout(function() {
+      document.getElementById('aadhaarPassword').focus();
+    }, 100);
+  }
+
+  function hideAadhaarPasswordBox() {
+    document.getElementById('aadhaarPasswordBox').style.display = 'none';
+    document.getElementById('unlockAadhaarBtn').style.display = 'none';
+    document.getElementById('aadhaarPassword').value = '';
+  }
+
+  window.togglePasswordVisibility = function() {
+    var input = document.getElementById('aadhaarPassword');
+    var btn = document.getElementById('pwToggleBtn');
+    if (input.type === 'password') {
+      input.type = 'text';
+      btn.textContent = '🙈 Hide';
+    } else {
+      input.type = 'password';
+      btn.textContent = '👁️ Show';
+    }
+  };
+
+  window.unlockAadhaarPdf = async function() {
+    var pw = document.getElementById('aadhaarPassword').value;
+    if (!pw) {
+      setStatus('⚠️ Aadhaar PDF password লিখুন।', 'error');
+      document.getElementById('aadhaarPassword').focus();
+      return;
+    }
+
+    if (!CURRENT_FILE) {
+      setStatus('❌ PDF ফাইল খুঁজে পাওয়া যায়নি। আবার সিলেক্ট করুন।', 'error');
+      return;
+    }
+
+    setStatus('🔓 Password দিয়ে PDF unlock হচ্ছে...');
+    var btn = document.getElementById('unlockAadhaarBtn');
+    btn.disabled = true;
+    btn.innerHTML = '⏳ Unlocking...';
+
+    try {
+      RENDERED_CANVAS = await renderPdfFirstPage(CURRENT_FILE, 4200, pw);
+      hideAadhaarPasswordBox();
+      await processAadhaarCrop();
+    } catch (err) {
+      console.error(err);
+      btn.disabled = false;
+      btn.innerHTML = '🔓 Unlock & Process PDF';
+
+      if (err && (err.name === 'PasswordException' || /password/i.test(String(err.message || '')))) {
+        setStatus('❌ Password ভুল! সঠিক password দিয়ে আবার চেষ্টা করুন।', 'error');
+        document.getElementById('aadhaarPassword').select();
+      } else {
+        setStatus('❌ PDF খোলা যায়নি: ' + (err.message || 'Unknown'), 'error');
+      }
+    }
+  };
 
   // ==================== UTILITIES ====================
   function canvasToJpeg(canvas, quality) {
@@ -846,7 +1053,7 @@
     }
   }
 
-  async function renderPdfFirstPage(file, renderWidth) {
+  async function renderPdfFirstPage(file, renderWidth, password) {
     if (!window.pdfjsLib) {
       throw new Error('PDF engine load হয়নি');
     }
@@ -854,7 +1061,14 @@
       'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
 
     var data = new Uint8Array(await file.arrayBuffer());
-    var pdf = await window.pdfjsLib.getDocument({ data: data, isEvalSupported: false }).promise;
+
+    var loadingTask = window.pdfjsLib.getDocument({
+      data: data,
+      password: password || undefined,
+      isEvalSupported: false
+    });
+
+    var pdf = await loadingTask.promise;
 
     if (pdf.numPages < 1) throw new Error('PDF-এ কোনো page নেই');
 
@@ -951,25 +1165,60 @@
       return;
     }
 
-    setStatus('PDF প্রসেস হচ্ছে... অনুগ্রহ করে অপেক্ষা করুন।');
+    if (CURRENT_TOOL === 'aadhaar') {
+      CURRENT_FILE = file;
+      try {
+        RENDERED_CANVAS = await renderPdfFirstPage(file, 4200, '');
+        await processAadhaarCrop();
+        return;
+      } catch (err) {
+        if (err && (err.name === 'PasswordException' || /password/i.test(String(err.message || '')))) {
+          showAadhaarPasswordBox();
+          return;
+        }
+        setStatus('❌ PDF লোড করা যায়নি: ' + (err.message || 'Unknown'), 'error');
+        return;
+      }
+    }
 
+    await processStandardPdf(file);
+  });
+
+  async function processAadhaarCrop() {
     try {
-      RENDERED_CANVAS = await renderPdfFirstPage(file);
+      var fCanvas = cropToExactPvc(RENDERED_CANVAS, CROP_RECTS.aadhaar.front, PVC_W_600, PVC_H_600);
+      var bCanvas = cropToExactPvc(RENDERED_CANVAS, CROP_RECTS.aadhaar.back, PVC_W_600, PVC_H_600);
+      FRONT_BLOB = await canvasToJpeg(fCanvas);
+      BACK_BLOB = await canvasToJpeg(bCanvas);
+
+      showPreview(frontPreview, fCanvas);
+      showPreview(backPreview, bCanvas);
+
+      resultsGrid.classList.add('active');
+      actionRow.style.display = 'block';
+      setStatus('✅ Aadhaar Front + Back Crop সম্পন্ন! এখন ডাউনলোড করুন।', 'success');
+    } catch (err) {
+      console.error(err);
+      setStatus('❌ Crop প্রসেস ব্যর্থ: ' + (err.message || 'Unknown'), 'error');
+    }
+  }
+
+  async function processStandardPdf(file) {
+    setStatus('PDF প্রসেস হচ্ছে... অনুগ্রহ করে অপেক্ষা করুন।');
+    try {
+      RENDERED_CANVAS = await renderPdfFirstPage(file, 4200);
 
       if (CURRENT_TOOL === 'abc') {
         var frontCanvas = cropToExactPvc(RENDERED_CANVAS, CROP_RECTS.abc.front, PVC_W_600, PVC_H_600);
         FRONT_BLOB = await canvasToJpeg(frontCanvas);
         BACK_BLOB = null;
-
         showPreview(frontPreview, frontCanvas);
         backPreview.innerHTML = '<div style="color:#94a3b8;font-size:.8rem;text-align:center;padding:20px;">ABC / APAAR শুধু Front থাকে</div>';
-
       } else {
         var fCanvas = cropToExactPvc(RENDERED_CANVAS, CROP_RECTS[CURRENT_TOOL].front, PVC_W_600, PVC_H_600);
         var bCanvas = cropToExactPvc(RENDERED_CANVAS, CROP_RECTS[CURRENT_TOOL].back, PVC_W_600, PVC_H_600);
         FRONT_BLOB = await canvasToJpeg(fCanvas);
         BACK_BLOB = await canvasToJpeg(bCanvas);
-
         showPreview(frontPreview, fCanvas);
         showPreview(backPreview, bCanvas);
       }
@@ -977,12 +1226,11 @@
       resultsGrid.classList.add('active');
       actionRow.style.display = 'block';
       setStatus('✅ Crop সম্পন্ন! এখন JPG বা Print Sheet ডাউনলোড করুন।', 'success');
-
     } catch (err) {
       console.error(err);
       setStatus('❌ PDF প্রসেস করা যায়নি: ' + (err.message || 'Unknown error'), 'error');
     }
-  });
+  }
 
   // ==================== DOWNLOADS ====================
   function downloadBlob(blob, filename) {
@@ -1036,30 +1284,50 @@
       var backImg = BACK_BLOB ? await blobToImage(BACK_BLOB) : null;
 
       var gap = Math.max(4, Math.round(dpi * 0.02));
-      var totalCards = backImg ? 2 : 1;
-      var startX = Math.round((canvas.width - pw) / 2);
-      var startY = Math.round((canvas.height - (ph * totalCards + gap * (totalCards - 1))) / 2);
+      var topMargin = Math.max(8, Math.round(dpi * 0.15));
 
       ctx.imageSmoothingEnabled = true;
       ctx.imageSmoothingQuality = 'high';
-
-      ctx.drawImage(frontImg, startX, startY, pw, ph);
       ctx.strokeStyle = '#000';
       ctx.lineWidth = Math.max(1, Math.round(dpi / 300));
-      ctx.strokeRect(startX, startY, pw, ph);
 
-      if (backImg) {
-        var backY = startY + ph + gap;
-        if (type === '4x6') {
+      // ============ 4×6 SHEET (Front উপরে, Back নিচে উল্টো) ============
+      if (type === '4x6') {
+        var startX6 = Math.round((canvas.width - pw) / 2);
+        var startY6 = topMargin;
+
+        // Front
+        ctx.drawImage(frontImg, startX6, startY6, pw, ph);
+        ctx.strokeRect(startX6, startY6, pw, ph);
+
+        // Back (180° rotated)
+        if (backImg) {
+          var backY6 = startY6 + ph + gap;
           ctx.save();
-          ctx.translate(startX + pw / 2, backY + ph / 2);
+          ctx.translate(startX6 + pw / 2, backY6 + ph / 2);
           ctx.rotate(Math.PI);
           ctx.drawImage(backImg, -pw / 2, -ph / 2, pw, ph);
           ctx.restore();
-        } else {
-          ctx.drawImage(backImg, startX, backY, pw, ph);
+          ctx.strokeRect(startX6, backY6, pw, ph);
         }
-        ctx.strokeRect(startX, backY, pw, ph);
+      }
+
+      // ============ A4 SHEET (Front + Back পাশাপাশি উপরে) ============
+      else {
+        var totalWidth = backImg ? (pw * 2 + gap) : pw;
+        var startX_A4 = Math.round((canvas.width - totalWidth) / 2);
+        var startY_A4 = topMargin;
+
+        // Front (বাম দিকে উপরে)
+        ctx.drawImage(frontImg, startX_A4, startY_A4, pw, ph);
+        ctx.strokeRect(startX_A4, startY_A4, pw, ph);
+
+        // Back (ডান দিকে উপরে)
+        if (backImg) {
+          var backX_A4 = startX_A4 + pw + gap;
+          ctx.drawImage(backImg, backX_A4, startY_A4, pw, ph);
+          ctx.strokeRect(backX_A4, startY_A4, pw, ph);
+        }
       }
 
       var blob = await canvasToJpeg(canvas, 0.97);

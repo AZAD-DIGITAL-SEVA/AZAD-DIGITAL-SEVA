@@ -881,6 +881,10 @@
   var BACK_BLOB = null;
   var RENDERED_CANVAS = null;
 
+  // Ayushman-এর জন্য আলাদা (Page 1 = Front, Page 2 = Back)
+  var AYUSHMAN_FRONT_CANVAS = null;
+  var AYUSHMAN_BACK_CANVAS = null;
+
   var PVC_W_600 = 2022;
   var PVC_H_600 = 1275;
 
@@ -932,6 +936,8 @@
     BACK_BLOB = null;
     RENDERED_CANVAS = null;
     CURRENT_FILE = null;
+    AYUSHMAN_FRONT_CANVAS = null;
+    AYUSHMAN_BACK_CANVAS = null;
     resultsGrid.classList.remove('active');
     actionRow.style.display = 'none';
     frontPreview.innerHTML = '';
@@ -1095,6 +1101,87 @@
     return canvas;
   }
 
+  // ==================== AYUSHMAN: MULTI-PAGE RENDER ====================
+  // প্রথম ফাইলের মতো: Page 1 = Front, Page 2 = Back আলাদাভাবে render
+  async function renderPdfPageByNumber(file, pageNumber, renderWidth, password) {
+    if (!window.pdfjsLib) {
+      throw new Error('PDF engine load হয়নি');
+    }
+    window.pdfjsLib.GlobalWorkerOptions.workerSrc =
+      'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+
+    var data = new Uint8Array(await file.arrayBuffer());
+
+    var loadingTask = window.pdfjsLib.getDocument({
+      data: data,
+      password: password || undefined,
+      isEvalSupported: false,
+      disableFontFace: false,
+      useSystemFonts: false,
+      cMapUrl: 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/cmaps/',
+      cMapPacked: true,
+      standardFontDataUrl: 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/standard_fonts/',
+      verbosity: 0
+    });
+
+    var pdf = await loadingTask.promise;
+
+    if (pdf.numPages < pageNumber) {
+      throw new Error('PDF-এ ' + pageNumber + ' নম্বর page নেই');
+    }
+
+    var page = await pdf.getPage(pageNumber);
+    var base = page.getViewport({ scale: 1 });
+    var width = renderWidth || 5000;
+    var scale = width / base.width;
+    var viewport = page.getViewport({ scale: scale });
+
+    var canvas = document.createElement('canvas');
+    canvas.width = Math.ceil(viewport.width);
+    canvas.height = Math.ceil(viewport.height);
+
+    var ctx = canvas.getContext('2d', { alpha: false });
+    ctx.fillStyle = '#ffffff';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    await page.render({
+      canvasContext: ctx,
+      viewport: viewport,
+      background: '#ffffff',
+      intent: 'print'
+    }).promise;
+
+    // Ayushman-এর জন্য font ready হওয়ার অপেক্ষা (গুরুত্বপূর্ণ)
+    if (document.fonts && document.fonts.ready) {
+      try { await document.fonts.ready; } catch (e) {}
+    }
+
+    return canvas;
+  }
+
+  // ==================== AYUSHMAN: FULL-FIT PVC (Crop ছাড়া) ====================
+  // প্রথম ফাইলের মতো: সম্পূর্ণ page edge-to-edge PVC-তে fit (কোনো crop নেই)
+  function fullFitToPvc(sourceCanvas, w, h) {
+    var out = document.createElement('canvas');
+    out.width = w;
+    out.height = h;
+
+    var ctx = out.getContext('2d', { alpha: false });
+    ctx.fillStyle = '#ffffff';
+    ctx.fillRect(0, 0, w, h);
+    ctx.imageSmoothingEnabled = true;
+    ctx.imageSmoothingQuality = 'high';
+
+    // সম্পূর্ণ source canvas → edge-to-edge PVC (কোনো অংশ কাটা যাবে না)
+    ctx.drawImage(
+      sourceCanvas,
+      0, 0, sourceCanvas.width, sourceCanvas.height,
+      0, 0, w, h
+    );
+
+    return out;
+  }
+
   // ==================== CROP DEFINITIONS ====================
   var CROP_RECTS = {
     aadhaar: {
@@ -1113,10 +1200,7 @@
       front: { x: 0.0710, y: 0.7860, w: 0.4220, h: 0.1810 },
       back:  { x: 0.5070, y: 0.7860, w: 0.4210, h: 0.1810 }
     },
-    ayushman: {
-      front: { x: 0.05, y: 0.05, w: 0.90, h: 0.90 },
-      back:  { x: 0.05, y: 0.05, w: 0.90, h: 0.90 }
-    },
+    // ayushman: এখানে নেই — Ayushman আলাদা ফাংশনে handle হয় (2-page PDF)
     abha: {
       front: { x: 0.0225, y: 0.0295, w: 0.9555, h: 0.4590 },
       back:  { x: 0.0225, y: 0.5215, w: 0.9555, h: 0.4590 }
@@ -1165,6 +1249,7 @@
       return;
     }
 
+    // ===== AADHAAR (password protected) =====
     if (CURRENT_TOOL === 'aadhaar') {
       CURRENT_FILE = file;
       try {
@@ -1181,6 +1266,14 @@
       }
     }
 
+    // ===== AYUSHMAN: 2-page PDF (Page 1 = Front, Page 2 = Back) =====
+    if (CURRENT_TOOL === 'ayushman') {
+      CURRENT_FILE = file;
+      await processAyushmanPdf(file);
+      return;
+    }
+
+    // ===== অন্যান্য সব টুল =====
     await processStandardPdf(file);
   });
 
@@ -1229,6 +1322,60 @@
     } catch (err) {
       console.error(err);
       setStatus('❌ PDF প্রসেস করা যায়নি: ' + (err.message || 'Unknown error'), 'error');
+    }
+  }
+
+  // ==================== AYUSHMAN PDF PROCESSING ====================
+  // প্রথম ফাইলের মতো: 2-page PDF, Page 1 = Front, Page 2 = Back
+  async function processAyushmanPdf(file) {
+    setStatus('আয়ুষ্মান PDF প্রসেস হচ্ছে... Page 1 = Front, Page 2 = Back');
+    try {
+      // প্রথমে PDF load করে page count যাচাই
+      window.pdfjsLib.GlobalWorkerOptions.workerSrc =
+        'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+
+      var data = new Uint8Array(await file.arrayBuffer());
+      var pdf = await window.pdfjsLib.getDocument({
+        data: data,
+        isEvalSupported: false,
+        disableFontFace: false,
+        useSystemFonts: false,
+        cMapUrl: 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/cmaps/',
+        cMapPacked: true,
+        standardFontDataUrl: 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/standard_fonts/',
+        verbosity: 0
+      }).promise;
+
+      if (pdf.numPages < 2) {
+        setStatus('❌ আয়ুষ্মান PDF-এ 2 page দরকার: Page 1 = Front, Page 2 = Back', 'error');
+        return;
+      }
+
+      setStatus('আয়ুষ্মান Page 1 (Front) render হচ্ছে...');
+      AYUSHMAN_FRONT_CANVAS = await renderPdfPageByNumber(file, 1, 5000);
+
+      setStatus('আয়ুষ্মান Page 2 (Back) render হচ্ছে...');
+      AYUSHMAN_BACK_CANVAS = await renderPdfPageByNumber(file, 2, 5000);
+
+      setStatus('Front + Back PVC size-এ fit হচ্ছে...');
+
+      // প্রথম ফাইলের মতো: edge-to-edge PVC fit (কোনো crop নেই)
+      var frontPvc = fullFitToPvc(AYUSHMAN_FRONT_CANVAS, PVC_W_600, PVC_H_600);
+      var backPvc  = fullFitToPvc(AYUSHMAN_BACK_CANVAS,  PVC_W_600, PVC_H_600);
+
+      FRONT_BLOB = await canvasToJpeg(frontPvc, 1.00);
+      BACK_BLOB  = await canvasToJpeg(backPvc,  1.00);
+
+      showPreview(frontPreview, frontPvc);
+      showPreview(backPreview, backPvc);
+
+      resultsGrid.classList.add('active');
+      actionRow.style.display = 'block';
+      setStatus('✅ আয়ুষ্মান Front + Back সম্পূর্ণ PVC size-এ তৈরি! কোনো লেখা crop হয়নি, কোনো white border নেই।', 'success');
+
+    } catch (err) {
+      console.error(err);
+      setStatus('❌ আয়ুষ্মান PDF প্রসেস করা যায়নি: ' + (err.message || 'Unknown'), 'error');
     }
   }
 

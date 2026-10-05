@@ -1529,7 +1529,9 @@
             });
         })();
 
-        /* ===== DONATION MODAL (Auto + Manual — মোট ৪ বার) ===== */
+        /* ========================================================= */
+        /* ===== DONATION MODAL (Auto ৪ বার + Manual Click) ======== */
+        /* ========================================================= */
         (function () {
             const overlay  = document.getElementById('donateModal');
             const openBtn  = document.getElementById('openDonate');
@@ -1539,10 +1541,22 @@
             const toast    = document.getElementById('toast');
             const UPI_ID   = 'BHARATPE.9K0K0G1X4A535991@unitype';
 
+            /* ====== LocalStorage Key ====== */
             const KEY_SHOWN_COUNT = 'ads_donate_shown_count';
-            const MAX_SHOW_COUNT  = 4;
-            const AUTO_DELAYS_MS  = [6000, 25000, 60000, 150000];
 
+            /* ====== কনফিগারেশন ====== */
+            const MAX_SHOW_COUNT = 4;
+
+            /* =====================================================
+               অটো পপ-আপের টাইমিং (মিলিসেকেন্ডে)
+               ১ম → ৩ মিনিট   (180,000 ms)
+               ২য় → ৫ মিনিট   (300,000 ms)
+               ৩য় → ৮ মিনিট   (480,000 ms)
+               ৪র্থ → ২০ মিনিট (1,200,000 ms)
+               ===================================================== */
+            const AUTO_DELAYS_MS = [180000, 300000, 480000, 1200000];
+
+            /* ====== Helper ফাংশন ====== */
             function getCount() {
                 try { return parseInt(localStorage.getItem(KEY_SHOWN_COUNT) || '0', 10) || 0; }
                 catch (e) { return 0; }
@@ -1559,6 +1573,7 @@
                 return getCount() >= MAX_SHOW_COUNT;
             }
 
+            /* ====== Open / Close ====== */
             function openModal() {
                 overlay.classList.add('active');
                 document.body.classList.add('modal-open');
@@ -1568,6 +1583,7 @@
                 document.body.classList.remove('modal-open');
             }
 
+            /* ====== মূল পপ-আপ ফাংশন ====== */
             function showDonatePopup(from) {
                 if (isLimitReached()) {
                     if (from === 'manual') {
@@ -1580,12 +1596,14 @@
                 return true;
             }
 
+            /* ====== ম্যানুয়াল ক্লিক ====== */
             if (openBtn) {
                 openBtn.addEventListener('click', function () {
                     showDonatePopup('manual');
                 });
             }
 
+            /* ====== ক্লোজ অ্যাকশন ====== */
             if (closeBtn) closeBtn.addEventListener('click', closeModal);
             if (overlay) {
                 overlay.addEventListener('click', function (e) {
@@ -1598,6 +1616,7 @@
                 }
             });
 
+            /* ====== Toast ====== */
             function showToast(msg) {
                 if (!toast) return;
                 toast.textContent = msg;
@@ -1608,7 +1627,7 @@
                 }, 2500);
             }
 
-            /* ========== 🟢 শক্তিশালী Copy Function ========== */
+            /* ========== শক্তিশালী Copy Function ========== */
             function copyText(text) {
                 return new Promise(function (resolve, reject) {
                     if (navigator.clipboard && navigator.clipboard.writeText && window.isSecureContext) {
@@ -1672,13 +1691,15 @@
                         });
                 });
 
-                /* টাচ ডিভাইসেও ভালো কাজ করবে */
                 modalUpi.addEventListener('touchend', function (e) {
                     e.preventDefault();
                     modalUpi.click();
                 }, { passive: false });
             }
 
+            /* ===================================================
+               অটো পপ-আপ সিস্টেম
+               =================================================== */
             function scheduleAutoPopups() {
                 const alreadyShown = getCount();
                 for (let i = alreadyShown; i < MAX_SHOW_COUNT; i++) {

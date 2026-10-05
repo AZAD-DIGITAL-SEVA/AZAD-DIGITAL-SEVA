@@ -189,11 +189,9 @@
             box-shadow: 0 0 0 3px rgba(214, 51, 132, 0.18), 0 18px 34px -12px rgba(166, 30, 107, 0.4);
         }
 
-        /* Coming soon কার্ড */
         .service-card.coming-soon {
             opacity: 0.65;
             cursor: not-allowed;
-            position: relative;
         }
 
         .service-card.coming-soon::after {
@@ -779,6 +777,273 @@
         .btn-order-final:hover::before { left: 120%; }
         .btn-order-final:hover { transform: translateY(-3px); box-shadow: 0 16px 34px rgba(37, 211, 102, 0.55); }
 
+        /* ================= ORDER FORM MODAL ================= */
+        .form-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(6, 14, 38, 0.85);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 16px;
+            z-index: 10000;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.35s ease, visibility 0.35s ease;
+            overflow-y: auto;
+        }
+
+        .form-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .form-modal {
+            width: 100%;
+            max-width: 540px;
+            background: #fff;
+            border-radius: 24px;
+            padding: 30px 26px 26px;
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.5);
+            transform: scale(0.9) translateY(30px);
+            opacity: 0;
+            transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.35s ease;
+            position: relative;
+            overflow: hidden;
+            margin: auto;
+            max-height: 92vh;
+            overflow-y: auto;
+        }
+
+        .form-overlay.active .form-modal {
+            transform: scale(1) translateY(0);
+            opacity: 1;
+        }
+
+        .form-modal::before {
+            content: "";
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 6px;
+            background: linear-gradient(90deg, #d63384, #a61e6b, #f9a826);
+            background-size: 300% 100%;
+            animation: slideGradient 6s linear infinite;
+        }
+
+        @keyframes slideGradient {
+            0%   { background-position: 0% 50%; }
+            100% { background-position: 300% 50%; }
+        }
+
+        .form-close {
+            position: absolute;
+            top: 14px;
+            right: 14px;
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            background: #f0f4ff;
+            border: none;
+            color: #d63384;
+            font-size: 20px;
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.22s;
+            line-height: 1;
+            z-index: 2;
+        }
+
+        .form-close:hover {
+            background: #d63384;
+            color: #fff;
+            transform: rotate(90deg);
+        }
+
+        .form-header {
+            text-align: center;
+            margin-bottom: 22px;
+            padding-top: 6px;
+        }
+
+        .form-header-icon {
+            width: 64px;
+            height: 64px;
+            margin: 0 auto 12px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #ffe0ef, #ffc9e0);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px;
+            box-shadow: 0 10px 24px rgba(214, 51, 132, 0.25);
+        }
+
+        .form-header h2 {
+            font-size: 1.3rem;
+            font-weight: 800;
+            color: #6b1345;
+            margin-bottom: 6px;
+        }
+
+        .form-header p {
+            font-size: 0.85rem;
+            color: #7b8cae;
+        }
+
+        /* ================= Form Fields ================= */
+        .form-fields {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            margin-bottom: 22px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .form-group label {
+            font-size: 0.88rem;
+            font-weight: 700;
+            color: #6b1345;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .form-group label .req {
+            color: #e74c3c;
+            font-size: 1rem;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px 14px;
+            border: 2px solid #e8dff0;
+            border-radius: 12px;
+            font-size: 0.95rem;
+            font-family: inherit;
+            color: #1e2b3c;
+            transition: all 0.25s;
+            background: #fafbfd;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #d63384;
+            background: #fff;
+            box-shadow: 0 0 0 4px rgba(214, 51, 132, 0.1);
+        }
+
+        .form-group textarea {
+            min-height: 80px;
+            resize: vertical;
+            line-height: 1.6;
+        }
+
+        .form-group input::placeholder,
+        .form-group textarea::placeholder {
+            color: #b0bdd3;
+        }
+
+        /* ================= Summary ================= */
+        .form-summary {
+            background: linear-gradient(135deg, #fff8fc, #fff0f7);
+            border: 1.5px solid #ffe0ef;
+            border-radius: 16px;
+            padding: 16px 18px;
+            margin-bottom: 18px;
+        }
+
+        .form-summary h4 {
+            font-size: 0.92rem;
+            font-weight: 700;
+            color: #6b1345;
+            margin-bottom: 12px;
+            padding-bottom: 10px;
+            border-bottom: 1px dashed #ffc9e0;
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 6px 0;
+            font-size: 0.86rem;
+            color: #6b7a99;
+        }
+
+        .summary-row strong {
+            color: #6b1345;
+            font-weight: 700;
+            font-family: 'Poppins', sans-serif;
+            max-width: 60%;
+            text-align: right;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .summary-row.total {
+            border-top: 2px dashed #ffc9e0;
+            margin-top: 8px;
+            padding-top: 12px;
+            font-size: 1rem;
+        }
+
+        .summary-row.total strong {
+            color: #d63384;
+            font-size: 1.25rem;
+            font-weight: 800;
+        }
+
+        /* ================= Submit Button ================= */
+        .btn-submit-order {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            width: 100%;
+            padding: 16px 22px;
+            background: linear-gradient(135deg, #25d366, #128c7e);
+            color: #fff;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.02rem;
+            font-weight: 700;
+            font-family: 'Noto Sans Bengali', sans-serif;
+            cursor: pointer;
+            transition: all 0.28s cubic-bezier(0.22, 1, 0.36, 1);
+            box-shadow: 0 10px 26px rgba(37, 211, 102, 0.4);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-submit-order::before {
+            content: "";
+            position: absolute;
+            top: 0; left: -80%;
+            width: 60%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.35), transparent);
+            transform: skewX(-20deg);
+            transition: left 0.7s;
+        }
+
+        .btn-submit-order:hover::before { left: 120%; }
+        .btn-submit-order:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 16px 34px rgba(37, 211, 102, 0.55);
+        }
+
         /* ================= ফুটার ================= */
         .page-footer {
             text-align: center;
@@ -852,6 +1117,12 @@
                 padding: 3px 28px;
                 right: -30px;
             }
+            .form-modal { padding: 24px 18px 22px; border-radius: 20px; }
+            .form-header h2 { font-size: 1.1rem; }
+            .form-header-icon { width: 54px; height: 54px; font-size: 26px; }
+            .form-group input,
+            .form-group textarea { font-size: 0.9rem; padding: 11px 12px; }
+            .btn-submit-order { font-size: 0.92rem; padding: 14px 18px; }
         }
     </style>
 </head>
@@ -883,9 +1154,7 @@
         <h2 class="section-title">🎨 ধাপ ১ — আপনার সার্ভিস বেছে নিন</h2>
         <p class="section-sub">যে সার্ভিসটি অর্ডার করতে চান সেটিতে ক্লিক করুন</p>
 
-        <div class="service-grid" id="serviceGrid">
-            <!-- JS থেকে অটো রেন্ডার হবে -->
-        </div>
+        <div class="service-grid" id="serviceGrid"></div>
 
         <!-- ===== ধাপ ২: ডিজাইন সেকশন ===== -->
         <div class="design-section" id="designSection">
@@ -900,9 +1169,7 @@
                 </button>
             </div>
 
-            <div class="design-grid" id="designGrid">
-                <!-- JS থেকে অটো রেন্ডার হবে -->
-            </div>
+            <div class="design-grid" id="designGrid"></div>
 
             <!-- ===== ধাপ ৩: প্রাইসিং সেকশন ===== -->
             <div class="pricing-section" id="pricingSection">
@@ -979,6 +1246,63 @@
 
     </main>
 
+    <!-- ================= ORDER FORM MODAL ================= -->
+    <div class="form-overlay" id="orderFormModal">
+        <div class="form-modal" role="dialog" aria-modal="true">
+
+            <button class="form-close" onclick="closeOrderForm()" aria-label="বন্ধ করুন">✕</button>
+
+            <div class="form-header">
+                <div class="form-header-icon">📝</div>
+                <h2 id="formTitle">অর্ডারের তথ্য দিন</h2>
+                <p>আপনার কার্ড প্রিন্ট করার জন্য নিচের তথ্যগুলো পূরণ করুন</p>
+            </div>
+
+            <form id="orderForm" onsubmit="submitOrderForm(event)">
+
+                <div class="form-fields" id="formFields"></div>
+
+                <div class="form-summary" id="formSummary">
+                    <h4>🧾 অর্ডার সামারি</h4>
+                    <div class="summary-row">
+                        <span>সার্ভিস</span>
+                        <strong id="sumService">—</strong>
+                    </div>
+                    <div class="summary-row">
+                        <span>ডিজাইন</span>
+                        <strong id="sumDesign">—</strong>
+                    </div>
+                    <div class="summary-row">
+                        <span>সাইজ</span>
+                        <strong id="sumSize">—</strong>
+                    </div>
+                    <div class="summary-row">
+                        <span>কোয়ান্টিটি</span>
+                        <strong id="sumQty">—</strong>
+                    </div>
+                    <div class="summary-row">
+                        <span>প্রতি পিস</span>
+                        <strong id="sumRate">—</strong>
+                    </div>
+                    <div class="summary-row">
+                        <span>DT P চার্জ</span>
+                        <strong id="sumDtp">—</strong>
+                    </div>
+                    <div class="summary-row total">
+                        <span>সর্বমোট</span>
+                        <strong id="sumTotal">—</strong>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn-submit-order">
+                    <span>💬</span> WhatsApp এ অর্ডার পাঠান
+                </button>
+
+            </form>
+
+        </div>
+    </div>
+
     <!-- ================= লাইটবক্স ================= -->
     <div class="lightbox" id="lightbox" onclick="closeLightbox(event)">
         <button class="lightbox-close" onclick="closeLightbox(event, true)">✕</button>
@@ -1004,18 +1328,18 @@
            🎨 সার্ভিস লিস্ট — ৩টি কাজ করবে, ৫টি Coming Soon
            ===================================================== */
         const SERVICES = [
-            { id: 'wedding',    name: 'বিয়ের কার্ড',           icon: '💒', desc: 'সুন্দর ডিজাইনের বিয়ের নিমন্ত্রণ পত্র',           active: true  },
-            { id: 'halakhata',  name: 'হালখাতার কার্ড',         icon: '🪔', desc: 'ব্যবসার হালখাতা অনুষ্ঠানের নিমন্ত্রণ',           active: true  },
-            { id: 'birthday',   name: 'জন্মদিনের কার্ড',         icon: '🎂', desc: 'শিশু ও বড়দের জন্মদিনের কার্ড',                 active: true  },
-            { id: 'visiting',   name: 'ভিজিটিং কার্ড',          icon: '💼', desc: 'প্রফেশনাল ভিজিটিং কার্ড ডিজাইন',                 active: false },
-            { id: 'rubber',     name: 'রাবার স্ট্যাম্প',        icon: '🔖', desc: 'অফিস ও ব্যক্তিগত রাবার স্ট্যাম্প',               active: false },
-            { id: 'cloth-bag',  name: 'কাপড়ের ব্যাগ',          icon: '👜', desc: 'কাস্টম ডিজাইনের কাপড়ের ব্যাগ',                 active: false },
-            { id: 'jersey',     name: 'জার্সি পেন্টিং',         icon: '👕', desc: 'নাম ও নম্বর সহ কাস্টম জার্সি',                  active: false },
-            { id: 'mug',        name: 'মগ প্রিন্টিং',           icon: '☕', desc: 'ছবি ও নাম সহ কাস্টম মগ',                       active: false }
+            { id: 'wedding',    name: 'বিয়ের কার্ড',      icon: '💒', desc: 'সুন্দর ডিজাইনের বিয়ের নিমন্ত্রণ পত্র',  active: true  },
+            { id: 'halakhata',  name: 'হালখাতার কার্ড',    icon: '🪔', desc: 'ব্যবসার হালখাতা অনুষ্ঠানের নিমন্ত্রণ',  active: true  },
+            { id: 'birthday',   name: 'জন্মদিনের কার্ড',   icon: '🎂', desc: 'শিশু ও বড়দের জন্মদিনের কার্ড',        active: true  },
+            { id: 'visiting',   name: 'ভিজিটিং কার্ড',     icon: '💼', desc: 'প্রফেশনাল ভিজিটিং কার্ড ডিজাইন',        active: false },
+            { id: 'rubber',     name: 'রাবার স্ট্যাম্প',   icon: '🔖', desc: 'অফিস ও ব্যক্তিগত রাবার স্ট্যাম্প',      active: false },
+            { id: 'cloth-bag',  name: 'কাপড়ের ব্যাগ',    icon: '👜', desc: 'কাস্টম ডিজাইনের কাপড়ের ব্যাগ',        active: false },
+            { id: 'jersey',     name: 'জার্সি পেন্টিং',   icon: '👕', desc: 'নাম ও নম্বর সহ কাস্টম জার্সি',         active: false },
+            { id: 'mug',        name: 'মগ প্রিন্টিং',     icon: '☕', desc: 'ছবি ও নাম সহ কাস্টম মগ',              active: false }
         ];
 
         /* =====================================================
-           📸 ছবির লিংক এখানে বসান — প্রতিটা ক্যাটাগরিতে ১০টি করে
+           📸 ছবির লিংক এখানে বসান
            ===================================================== */
         const DESIGNS = {
             wedding: [
@@ -1083,18 +1407,63 @@
         const DTP_CHARGE = 50;
 
         /* =====================================================
+           📋 প্রতিটি সার্ভিসের জন্য ফর্ম ফিল্ড
+           ===================================================== */
+        const SERVICE_FORMS = {
+            wedding: {
+                title: '💒 বিয়ের কার্ডের তথ্য',
+                fields: [
+                    { id: 'groomName',   label: 'বরের নাম',                type: 'text',     placeholder: 'বরের পূর্ণ নাম লিখুন',        required: true },
+                    { id: 'brideName',   label: 'কনের নাম',                type: 'text',     placeholder: 'কনের পূর্ণ নাম লিখুন',        required: true },
+                    { id: 'weddingDate', label: 'বিয়ের তারিখ',             type: 'date',     required: true },
+                    { id: 'weddingTime', label: 'বিয়ের সময়',              type: 'time',     required: true },
+                    { id: 'venue',       label: 'বিয়ের স্থান / ভেন্যু',     type: 'text',     placeholder: 'যেমন: রামকৃষ্ণ মঠ, কলকাতা',  required: true },
+                    { id: 'mobile',      label: 'মোবাইল নম্বর',             type: 'tel',      placeholder: '১০ ডিজিটের নম্বর',           required: true },
+                    { id: 'address',     label: 'সম্পূর্ণ ঠিকানা',           type: 'textarea', placeholder: 'গ্রাম/শহর, থানা, জেলা, পিন', required: true },
+                    { id: 'specialNote', label: 'বিশেষ নির্দেশনা (ঐচ্ছিক)',  type: 'textarea', placeholder: 'যেমন: ছবি যোগ করতে হবে',      required: false }
+                ]
+            },
+            halakhata: {
+                title: '🪔 হালখাতার কার্ডের তথ্য',
+                fields: [
+                    { id: 'businessName', label: 'প্রতিষ্ঠানের নাম',         type: 'text',     placeholder: 'ব্যবসার নাম লিখুন',          required: true },
+                    { id: 'ownerName',    label: 'মালিকের নাম',              type: 'text',     placeholder: 'মালিকের পূর্ণ নাম',          required: true },
+                    { id: 'eventDate',    label: 'হালখাতার তারিখ',            type: 'date',     required: true },
+                    { id: 'eventTime',    label: 'অনুষ্ঠানের সময়',           type: 'time',     required: true },
+                    { id: 'venue',        label: 'স্থান / ভেন্যু',             type: 'text',     placeholder: 'অনুষ্ঠানের স্থান',           required: true },
+                    { id: 'mobile',       label: 'মোবাইল নম্বর',             type: 'tel',      placeholder: '১০ ডিজিটের নম্বর',           required: true },
+                    { id: 'address',      label: 'সম্পূর্ণ ঠিকানা',           type: 'textarea', placeholder: 'গ্রাম/শহর, থানা, জেলা, পিন', required: true },
+                    { id: 'specialNote',  label: 'বিশেষ নির্দেশনা (ঐচ্ছিক)',  type: 'textarea', placeholder: 'যেমন: লোগো যোগ করতে হবে',    required: false }
+                ]
+            },
+            birthday: {
+                title: '🎂 জন্মদিনের কার্ডের তথ্য',
+                fields: [
+                    { id: 'personName',  label: 'যার জন্মদিন',              type: 'text',     placeholder: 'নাম লিখুন',                   required: true },
+                    { id: 'age',         label: 'বয়স',                     type: 'number',   placeholder: 'যেমন: ৫',                     required: true },
+                    { id: 'birthDate',   label: 'জন্মদিনের তারিখ',            type: 'date',     required: true },
+                    { id: 'eventTime',   label: 'অনুষ্ঠানের সময়',           type: 'time',     required: true },
+                    { id: 'venue',       label: 'স্থান / ভেন্যু',             type: 'text',     placeholder: 'অনুষ্ঠানের স্থান',           required: true },
+                    { id: 'mobile',      label: 'মোবাইল নম্বর',             type: 'tel',      placeholder: '১০ ডিজিটের নম্বর',           required: true },
+                    { id: 'address',     label: 'সম্পূর্ণ ঠিকানা',           type: 'textarea', placeholder: 'গ্রাম/শহর, থানা, জেলা, পিন', required: true },
+                    { id: 'specialNote', label: 'বিশেষ নির্দেশনা (ঐচ্ছিক)',  type: 'textarea', placeholder: 'যেমন: কার্টুন ছবি চাই',       required: false }
+                ]
+            }
+        };
+
+        /* =====================================================
            🌐 State
            ===================================================== */
         let currentService = null;
         let selectedDesign = null;
         let selectedSize   = null;
+        let currentOrderData = {};
 
         /* =====================================================
            🎨 সার্ভিস গ্রিড রেন্ডার
            ===================================================== */
         function renderServices() {
             const grid = document.getElementById('serviceGrid');
-
             grid.innerHTML = SERVICES.map(s => `
                 <div class="service-card ${s.active ? '' : 'coming-soon'}"
                      onclick="${s.active ? `selectService('${s.id}')` : `showComingSoon('${s.name}')`}">
@@ -1105,9 +1474,6 @@
             `).join('');
         }
 
-        /* =====================================================
-           ⚠️ Coming Soon
-           ===================================================== */
         function showComingSoon(name) {
             alert('⏳ "' + name + '" সার্ভিসটি খুব শীঘ্রই আসছে!\n\nআমরা এই সার্ভিসটি নিয়ে কাজ করছি। অনুগ্রহ করে কিছুদিন পরে আবার দেখুন।');
         }
@@ -1120,46 +1486,31 @@
             selectedDesign = null;
             selectedSize = null;
 
-            // সার্ভিস কার্ড হাইলাইট
-            document.querySelectorAll('.service-card').forEach(card => {
-                card.classList.remove('active');
-            });
+            document.querySelectorAll('.service-card').forEach(card => card.classList.remove('active'));
             const index = SERVICES.findIndex(s => s.id === serviceId);
-            if (index >= 0) {
-                const cards = document.querySelectorAll('.service-card');
-                if (cards[index]) cards[index].classList.add('active');
-            }
+            const cards = document.querySelectorAll('.service-card');
+            if (cards[index]) cards[index].classList.add('active');
 
-            // ডিজাইন সেকশন হেডার আপডেট
             const service = SERVICES.find(s => s.id === serviceId);
             document.getElementById('designSectionIcon').textContent = service.icon;
             document.getElementById('designSectionName').textContent = service.name;
 
-            // ডিজাইন গ্রিড রেন্ডার
             renderDesigns(serviceId);
 
-            // সেকশন দেখাও
             document.getElementById('designSection').classList.add('active');
             document.getElementById('pricingSection').classList.remove('active');
 
-            // স্ক্রল
             setTimeout(() => {
                 document.getElementById('designSection').scrollIntoView({ behavior: 'smooth', block: 'start' });
             }, 200);
         }
 
-        /* =====================================================
-           🔄 সার্ভিসে ফিরে যাওয়া
-           ===================================================== */
         function backToServices() {
             document.getElementById('designSection').classList.remove('active');
-            document.querySelectorAll('.service-card').forEach(card => {
-                card.classList.remove('active');
-            });
+            document.querySelectorAll('.service-card').forEach(card => card.classList.remove('active'));
             currentService = null;
             selectedDesign = null;
             selectedSize = null;
-
             document.getElementById('serviceGrid').scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
 
@@ -1199,7 +1550,6 @@
         function selectDesign(index) {
             const d = DESIGNS[currentService][index];
 
-            // দ্বিতীয়বার ক্লিক → লাইটবক্স
             if (selectedDesign === index) {
                 openLightbox(d.url);
                 return;
@@ -1317,7 +1667,7 @@
         document.getElementById('qtyInput').addEventListener('input', updateCalculation);
 
         /* =====================================================
-           💬 WhatsApp অর্ডার কনফার্ম
+           📝 ORDER FORM
            ===================================================== */
         function confirmOrder() {
             if (selectedDesign === null) {
@@ -1348,26 +1698,147 @@
 
             const service = SERVICES.find(s => s.id === currentService);
 
-            const message =
-`🙏 নমস্কার,
+            currentOrderData = {
+                service: service.name,
+                serviceIcon: service.icon,
+                design: d.name,
+                designUrl: d.url,
+                size: sizeText,
+                qty: qty,
+                rate: rate,
+                cardSubtotal: cardSubtotal,
+                dtp: DTP_CHARGE,
+                grandTotal: grandTotal
+            };
 
-আমি Invitation Card অর্ডার করতে চাই।
+            openOrderForm();
+        }
 
-📌 সার্ভিস: ${service.name}
-🎨 ডিজাইন: ${d.name}
-📏 সাইজ: ${sizeText}
-🔢 কোয়ান্টিটি: ${qty} পিস
-💰 প্রতি পিস দাম: ₹ ${rate.toFixed(2)}
-💵 কার্ডের দাম: ₹ ${cardSubtotal.toFixed(2)}
-➕ DT P চার্জ: ₹ ${DTP_CHARGE.toFixed(2)}
-━━━━━━━━━━━━━━━━
-✅ সর্বমোট: ₹ ${grandTotal.toFixed(2)}
+        function openOrderForm() {
+            const formConfig = SERVICE_FORMS[currentService];
+            if (!formConfig) {
+                alert('❌ এই সার্ভিসের ফর্ম এখনো তৈরি হয়নি।');
+                return;
+            }
 
-অনুগ্রহ করে কনফার্ম করুন।`;
+            document.getElementById('formTitle').textContent = formConfig.title;
+
+            const container = document.getElementById('formFields');
+            container.innerHTML = formConfig.fields.map(f => {
+                if (f.type === 'textarea') {
+                    return `
+                        <div class="form-group">
+                            <label for="${f.id}">${f.label}${f.required ? ' <span class="req">*</span>' : ''}</label>
+                            <textarea
+                                id="${f.id}"
+                                name="${f.id}"
+                                placeholder="${f.placeholder || ''}"
+                                ${f.required ? 'required' : ''}
+                            ></textarea>
+                        </div>
+                    `;
+                }
+
+                return `
+                    <div class="form-group">
+                        <label for="${f.id}">${f.label}${f.required ? ' <span class="req">*</span>' : ''}</label>
+                        <input
+                            type="${f.type}"
+                            id="${f.id}"
+                            name="${f.id}"
+                            placeholder="${f.placeholder || ''}"
+                            ${f.required ? 'required' : ''}
+                        >
+                    </div>
+                `;
+            }).join('');
+
+            document.getElementById('sumService').textContent = currentOrderData.service;
+            document.getElementById('sumDesign').textContent = currentOrderData.design;
+            document.getElementById('sumSize').textContent = currentOrderData.size;
+            document.getElementById('sumQty').textContent = currentOrderData.qty + ' পিস';
+            document.getElementById('sumRate').textContent = '₹ ' + currentOrderData.rate.toFixed(2);
+            document.getElementById('sumDtp').textContent = '₹ ' + currentOrderData.dtp.toFixed(2);
+            document.getElementById('sumTotal').textContent = '₹ ' + currentOrderData.grandTotal.toFixed(2);
+
+            document.getElementById('orderFormModal').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeOrderForm() {
+            document.getElementById('orderFormModal').classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        /* =====================================================
+           📤 ফর্ম সাবমিট → WhatsApp
+           ===================================================== */
+        function submitOrderForm(e) {
+            e.preventDefault();
+
+            const formConfig = SERVICE_FORMS[currentService];
+            const formData = {};
+
+            for (const f of formConfig.fields) {
+                const input = document.getElementById(f.id);
+                if (input) {
+                    formData[f.label] = input.value.trim() || '—';
+                }
+            }
+
+            let message = `🙏 *নমস্কার,*\n\n`;
+            message += `আমি একটি Invitation Card অর্ডার করতে চাই।\n\n`;
+            message += `━━━━━━━━━━━━━━━━━━\n`;
+            message += `📋 *অর্ডার তথ্য*\n`;
+            message += `━━━━━━━━━━━━━━━━━━\n`;
+            message += `📌 সার্ভিস: ${currentOrderData.service}\n`;
+            message += `🎨 ডিজাইন: ${currentOrderData.design}\n`;
+            message += `📏 সাইজ: ${currentOrderData.size}\n`;
+            message += `🔢 কোয়ান্টিটি: ${currentOrderData.qty} পিস\n\n`;
+
+            message += `━━━━━━━━━━━━━━━━━━\n`;
+            message += `📝 *${currentOrderData.service} তথ্য*\n`;
+            message += `━━━━━━━━━━━━━━━━━━\n`;
+
+            for (const [label, value] of Object.entries(formData)) {
+                message += `▪️ ${label}: ${value}\n`;
+            }
+
+            message += `\n━━━━━━━━━━━━━━━━━━\n`;
+            message += `💰 *দামের হিসাব*\n`;
+            message += `━━━━━━━━━━━━━━━━━━\n`;
+            message += `প্রতি পিস দাম: ₹ ${currentOrderData.rate.toFixed(2)}\n`;
+            message += `কার্ডের দাম: ₹ ${currentOrderData.cardSubtotal.toFixed(2)}\n`;
+            message += `DT P চার্জ: ₹ ${currentOrderData.dtp.toFixed(2)}\n`;
+            message += `━━━━━━━━━━━━━━━━━━\n`;
+            message += `✅ *সর্বমোট: ₹ ${currentOrderData.grandTotal.toFixed(2)}*\n`;
+            message += `━━━━━━━━━━━━━━━━━━\n\n`;
+            message += `অনুগ্রহ করে অর্ডার কনফার্ম করুন। 🙏`;
 
             const url = 'https://wa.me/' + WHATSAPP_NUMBER + '?text=' + encodeURIComponent(message);
             window.open(url, '_blank');
+
+            setTimeout(() => {
+                closeOrderForm();
+            }, 500);
         }
+
+        /* Esc চাপলে ফর্ম বন্ধ */
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'Escape') {
+                const modal = document.getElementById('orderFormModal');
+                if (modal && modal.classList.contains('active')) {
+                    closeOrderForm();
+                }
+            }
+        });
+
+        /* বাইরে ক্লিকে বন্ধ */
+        document.getElementById('orderFormModal').addEventListener('click', function (e) {
+            if (e.target === this) {
+                closeOrderForm();
+            }
+        });
 
         /* =====================================================
            🚀 ইনিশিয়াল রেন্ডার

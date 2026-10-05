@@ -544,6 +544,67 @@
             white-space: nowrap;
         }
 
+        /* ================= সব ডোনার দেখার বাটন ================= */
+        .view-all-donors-wrap {
+            text-align: center;
+            padding: 10px 20px 25px;
+            margin-top: 5px;
+            border-top: 2px dashed #e3ebf0;
+        }
+
+        .btn-view-all-donors {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: linear-gradient(135deg, #128c7e, #075e54);
+            color: #ffffff;
+            text-decoration: none;
+            padding: 13px 38px;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: 700;
+            letter-spacing: 0.3px;
+            box-shadow: 0 8px 22px rgba(18, 140, 126, 0.4);
+            transition: all 0.28s cubic-bezier(0.22, 1, 0.36, 1);
+            position: relative;
+            overflow: hidden;
+            font-family: 'Noto Sans Bengali', sans-serif;
+        }
+
+        .btn-view-all-donors::before {
+            content: "";
+            position: absolute;
+            top: 0; left: -80%;
+            width: 60%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.35), transparent);
+            transform: skewX(-20deg);
+            transition: left 0.7s;
+        }
+
+        .btn-view-all-donors:hover::before { left: 120%; }
+
+        .btn-view-all-donors:hover {
+            background: linear-gradient(135deg, #075e54, #0b2e2a);
+            transform: translateY(-3px);
+            box-shadow: 0 14px 30px rgba(18, 140, 126, 0.55);
+        }
+
+        .btn-view-all-donors:active {
+            transform: translateY(-1px);
+        }
+
+        .btn-view-all-donors span {
+            font-size: 1.1rem;
+        }
+
+        .view-all-note {
+            margin-top: 10px;
+            font-size: 0.82rem;
+            color: #7b8cae;
+            font-weight: 500;
+            font-style: italic;
+        }
+
         /* ================= ওভারলে ================= */
         .menu-overlay {
             position: fixed;
@@ -809,7 +870,6 @@
             font-weight: 500;
         }
 
-        /* ===== Name Section ===== */
         .modal-name {
             display: flex;
             flex-direction: column;
@@ -1089,6 +1149,14 @@
 
             .modal-qr { width: 150px; height: 150px; }
             .modal-name .name-value { font-size: 14px; }
+
+            .btn-view-all-donors {
+                padding: 11px 28px;
+                font-size: 0.9rem;
+            }
+            .view-all-note {
+                font-size: 0.75rem;
+            }
         }
     </style>
 </head>
@@ -1324,79 +1392,158 @@
         <div class="thankyou-track-wrap">
             <div class="thankyou-track" id="donorTrack">
                 <div class="donor-card">
-                    <div class="donor-avatar">র</div>
+                    <div class="donor-avatar">R</div>
                     <div class="donor-info">
-                        <strong>রহিম উদ্দিন</strong>
-                        <span>৳ ১০০০ ডোনেশন</span>
+                        <strong>Rahul Sharma</strong>
+                        <span>₹ 100 ডোনেশন</span>
                     </div>
                 </div>
                 <div class="donor-card">
-                    <div class="donor-avatar">ক</div>
+                    <div class="donor-avatar">A</div>
                     <div class="donor-info">
-                        <strong>করিম শেখ</strong>
-                        <span>৳ ৫০০ ডোনেশন</span>
+                        <strong>Abdul Karim</strong>
+                        <span>₹ 50 ডোনেশন</span>
                     </div>
                 </div>
                 <div class="donor-card">
-                    <div class="donor-avatar">স</div>
+                    <div class="donor-avatar">P</div>
                     <div class="donor-info">
-                        <strong>সাদিয়া আক্তার</strong>
-                        <span>৳ ২০০০ ডোনেশন</span>
+                        <strong>Priya Patel</strong>
+                        <span>₹ 500 ডোনেশন</span>
                     </div>
                 </div>
                 <div class="donor-card">
-                    <div class="donor-avatar">আ</div>
+                    <div class="donor-avatar">M</div>
                     <div class="donor-info">
-                        <strong>আব্দুল্লাহ</strong>
-                        <span>৳ ৭৫০ ডোনেশন</span>
+                        <strong>Mohammed Irfan</strong>
+                        <span>₹ 200 ডোনেশন</span>
                     </div>
                 </div>
                 <div class="donor-card">
-                    <div class="donor-avatar">ন</div>
+                    <div class="donor-avatar">S</div>
                     <div class="donor-info">
-                        <strong>নুসরাত জাহান</strong>
-                        <span>৳ ১৫০০ ডোনেশন</span>
+                        <strong>Sneha Verma</strong>
+                        <span>₹ 150 ডোনেশন</span>
+                    </div>
+                </div>
+                <div class="donor-card">
+                    <div class="donor-avatar">A</div>
+                    <div class="donor-info">
+                        <strong>Arjun Singh</strong>
+                        <span>₹ 20 ডোনেশন</span>
+                    </div>
+                </div>
+                <div class="donor-card">
+                    <div class="donor-avatar">F</div>
+                    <div class="donor-info">
+                        <strong>Fatima Khan</strong>
+                        <span>₹ 300 ডোনেশন</span>
+                    </div>
+                </div>
+                <div class="donor-card">
+                    <div class="donor-avatar">V</div>
+                    <div class="donor-info">
+                        <strong>Vikram Reddy</strong>
+                        <span>₹ 10 ডোনেশন</span>
+                    </div>
+                </div>
+                <div class="donor-card">
+                    <div class="donor-avatar">A</div>
+                    <div class="donor-info">
+                        <strong>Ayesha Siddiqui</strong>
+                        <span>₹ 250 ডোনেশন</span>
+                    </div>
+                </div>
+                <div class="donor-card">
+                    <div class="donor-avatar">K</div>
+                    <div class="donor-info">
+                        <strong>Kavita Joshi</strong>
+                        <span>₹ 100 ডোনেশন</span>
                     </div>
                 </div>
 
                 <!-- ডুপ্লিকেট (স্লাইড কন্টিনিউয়াস রাখার জন্য) -->
                 <div class="donor-card">
-                    <div class="donor-avatar">র</div>
+                    <div class="donor-avatar">R</div>
                     <div class="donor-info">
-                        <strong>রহিম উদ্দিন</strong>
-                        <span>৳ ১০০০ ডোনেশন</span>
+                        <strong>Rahul Sharma</strong>
+                        <span>₹ 100 ডোনেশন</span>
                     </div>
                 </div>
                 <div class="donor-card">
-                    <div class="donor-avatar">ক</div>
+                    <div class="donor-avatar">A</div>
                     <div class="donor-info">
-                        <strong>করিম শেখ</strong>
-                        <span>৳ ৫০০ ডোনেশন</span>
+                        <strong>Abdul Karim</strong>
+                        <span>₹ 50 ডোনেশন</span>
                     </div>
                 </div>
                 <div class="donor-card">
-                    <div class="donor-avatar">স</div>
+                    <div class="donor-avatar">P</div>
                     <div class="donor-info">
-                        <strong>সাদিয়া আক্তার</strong>
-                        <span>৳ ২০০০ ডোনেশন</span>
+                        <strong>Priya Patel</strong>
+                        <span>₹ 500 ডোনেশন</span>
                     </div>
                 </div>
                 <div class="donor-card">
-                    <div class="donor-avatar">আ</div>
+                    <div class="donor-avatar">M</div>
                     <div class="donor-info">
-                        <strong>আব্দুল্লাহ</strong>
-                        <span>৳ ৭৫০ ডোনেশন</span>
+                        <strong>Mohammed Irfan</strong>
+                        <span>₹ 200 ডোনেশন</span>
                     </div>
                 </div>
                 <div class="donor-card">
-                    <div class="donor-avatar">ন</div>
+                    <div class="donor-avatar">S</div>
                     <div class="donor-info">
-                        <strong>নুসরাত জাহান</strong>
-                        <span>৳ ১৫০০ ডোনেশন</span>
+                        <strong>Sneha Verma</strong>
+                        <span>₹ 150 ডোনেশন</span>
+                    </div>
+                </div>
+                <div class="donor-card">
+                    <div class="donor-avatar">A</div>
+                    <div class="donor-info">
+                        <strong>Arjun Singh</strong>
+                        <span>₹ 20 ডোনেশন</span>
+                    </div>
+                </div>
+                <div class="donor-card">
+                    <div class="donor-avatar">F</div>
+                    <div class="donor-info">
+                        <strong>Fatima Khan</strong>
+                        <span>₹ 300 ডোনেশন</span>
+                    </div>
+                </div>
+                <div class="donor-card">
+                    <div class="donor-avatar">V</div>
+                    <div class="donor-info">
+                        <strong>Vikram Reddy</strong>
+                        <span>₹ 10 ডোনেশন</span>
+                    </div>
+                </div>
+                <div class="donor-card">
+                    <div class="donor-avatar">A</div>
+                    <div class="donor-info">
+                        <strong>Ayesha Siddiqui</strong>
+                        <span>₹ 250 ডোনেশন</span>
+                    </div>
+                </div>
+                <div class="donor-card">
+                    <div class="donor-avatar">K</div>
+                    <div class="donor-info">
+                        <strong>Kavita Joshi</strong>
+                        <span>₹ 100 ডোনেশন</span>
                     </div>
                 </div>
             </div>
         </div>
+
+        <!-- ===== সব ডোনার দেখার বাটন ===== -->
+        <div class="view-all-donors-wrap">
+            <a href="all-donors.html" class="btn-view-all-donors">
+                <span>🙏</span> সব ডোনার দেখুন <span>→</span>
+            </a>
+            <p class="view-all-note">শেষ ৩০ দিনের সকল ডোনারের তালিকা</p>
+        </div>
+
     </section>
 
     <!-- ================= ফুটার ================= -->
@@ -1441,7 +1588,6 @@
             </div>
             <span class="modal-hint">👆 UPI আইডি কপি করতে ক্লিক করুন</span>
 
-            <!-- ===== পেমেন্ট গ্রহণকারীর নাম ===== -->
             <div class="modal-name">
                 <span class="name-label">💳 পেমেন্ট গ্রহণকারী</span>
                 <span class="name-value">HARUN AL RASID</span>
@@ -1541,22 +1687,16 @@
             const toast    = document.getElementById('toast');
             const UPI_ID   = 'BHARATPE.9K0K0G1X4A535991@unitype';
 
-            /* ====== LocalStorage Key ====== */
             const KEY_SHOWN_COUNT = 'ads_donate_shown_count';
+            const MAX_SHOW_COUNT  = 4;
 
-            /* ====== কনফিগারেশন ====== */
-            const MAX_SHOW_COUNT = 4;
-
-            /* =====================================================
-               অটো পপ-আপের টাইমিং (মিলিসেকেন্ডে)
-               ১ম → ৩ মিনিট   (180,000 ms)
-               ২য় → ৫ মিনিট   (300,000 ms)
-               ৩য় → ৮ মিনিট   (480,000 ms)
-               ৪র্থ → ২০ মিনিট (1,200,000 ms)
-               ===================================================== */
+            /* অটো পপ-আপ টাইমিং:
+               ১ম → ৩ মিনিট (180,000 ms)
+               ২য় → ৫ মিনিট (300,000 ms)
+               ৩য় → ৮ মিনিট (480,000 ms)
+               ৪র্থ → ২০ মিনিট (1,200,000 ms) */
             const AUTO_DELAYS_MS = [180000, 300000, 480000, 1200000];
 
-            /* ====== Helper ফাংশন ====== */
             function getCount() {
                 try { return parseInt(localStorage.getItem(KEY_SHOWN_COUNT) || '0', 10) || 0; }
                 catch (e) { return 0; }
@@ -1573,7 +1713,6 @@
                 return getCount() >= MAX_SHOW_COUNT;
             }
 
-            /* ====== Open / Close ====== */
             function openModal() {
                 overlay.classList.add('active');
                 document.body.classList.add('modal-open');
@@ -1583,7 +1722,6 @@
                 document.body.classList.remove('modal-open');
             }
 
-            /* ====== মূল পপ-আপ ফাংশন ====== */
             function showDonatePopup(from) {
                 if (isLimitReached()) {
                     if (from === 'manual') {
@@ -1596,14 +1734,12 @@
                 return true;
             }
 
-            /* ====== ম্যানুয়াল ক্লিক ====== */
             if (openBtn) {
                 openBtn.addEventListener('click', function () {
                     showDonatePopup('manual');
                 });
             }
 
-            /* ====== ক্লোজ অ্যাকশন ====== */
             if (closeBtn) closeBtn.addEventListener('click', closeModal);
             if (overlay) {
                 overlay.addEventListener('click', function (e) {
@@ -1616,7 +1752,6 @@
                 }
             });
 
-            /* ====== Toast ====== */
             function showToast(msg) {
                 if (!toast) return;
                 toast.textContent = msg;
@@ -1627,7 +1762,6 @@
                 }, 2500);
             }
 
-            /* ========== শক্তিশালী Copy Function ========== */
             function copyText(text) {
                 return new Promise(function (resolve, reject) {
                     if (navigator.clipboard && navigator.clipboard.writeText && window.isSecureContext) {
@@ -1697,9 +1831,6 @@
                 }, { passive: false });
             }
 
-            /* ===================================================
-               অটো পপ-আপ সিস্টেম
-               =================================================== */
             function scheduleAutoPopups() {
                 const alreadyShown = getCount();
                 for (let i = alreadyShown; i < MAX_SHOW_COUNT; i++) {

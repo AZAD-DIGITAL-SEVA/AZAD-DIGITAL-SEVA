@@ -589,13 +589,9 @@
             box-shadow: 0 14px 30px rgba(18, 140, 126, 0.55);
         }
 
-        .btn-view-all-donors:active {
-            transform: translateY(-1px);
-        }
+        .btn-view-all-donors:active { transform: translateY(-1px); }
 
-        .btn-view-all-donors span {
-            font-size: 1.1rem;
-        }
+        .btn-view-all-donors span { font-size: 1.1rem; }
 
         .view-all-note {
             margin-top: 10px;
@@ -975,6 +971,244 @@
 
         .modal-msg strong { color: #0b1e4b; font-weight: 700; }
 
+        /* ================= SUBSCRIBE MODAL ================= */
+        .sub-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(6, 14, 38, 0.75);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 16px;
+            z-index: 10000;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.35s ease, visibility 0.35s ease;
+            overflow-y: auto;
+        }
+
+        .sub-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .sub-modal {
+            width: 100%;
+            max-width: 430px;
+            background: #fff;
+            border-radius: 28px;
+            padding: 36px 26px 28px;
+            text-align: center;
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.55);
+            transform: scale(0.85) translateY(30px);
+            opacity: 0;
+            transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.35s ease;
+            position: relative;
+            overflow: hidden;
+            margin: auto;
+        }
+
+        .sub-overlay.active .sub-modal {
+            transform: scale(1) translateY(0);
+            opacity: 1;
+        }
+
+        .sub-modal::before {
+            content: "";
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 6px;
+            background: linear-gradient(90deg, #ff0000, #25d366, #ff0000, #25d366);
+            background-size: 400% 100%;
+            animation: subGradient 8s linear infinite;
+        }
+
+        @keyframes subGradient {
+            0%   { background-position: 0% 50%; }
+            100% { background-position: 400% 50%; }
+        }
+
+        .sub-close {
+            position: absolute;
+            top: 14px;
+            right: 14px;
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            background: #f0f4ff;
+            border: none;
+            color: #3b5bf0;
+            font-size: 20px;
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.22s;
+            line-height: 1;
+            z-index: 2;
+        }
+
+        .sub-close:hover {
+            background: #3b5bf0;
+            color: #fff;
+            transform: rotate(90deg);
+        }
+
+        .sub-icon-main {
+            width: 84px;
+            height: 84px;
+            margin: 0 auto 16px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #eef3ff, #dbe6ff);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+            box-shadow: 0 10px 25px rgba(91, 124, 250, 0.28), 0 0 0 8px rgba(91, 124, 250, 0.08);
+            animation: modalGentle 3s ease-in-out infinite;
+        }
+
+        .sub-modal h2 {
+            font-size: 23px;
+            font-weight: 800;
+            color: #0b1e4b;
+            margin-bottom: 8px;
+            letter-spacing: -0.3px;
+        }
+
+        .sub-modal .sub-desc {
+            font-size: 14px;
+            color: #6b7a99;
+            font-weight: 500;
+            line-height: 1.7;
+            margin-bottom: 22px;
+            padding: 0 6px;
+        }
+
+        .sub-modal .sub-desc strong {
+            color: #0b1e4b;
+            font-weight: 700;
+        }
+
+        .sub-actions {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 18px;
+        }
+
+        .btn-action {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            width: 100%;
+            padding: 14px 20px;
+            border-radius: 18px;
+            text-decoration: none;
+            color: #fff;
+            font-weight: 700;
+            font-family: 'Noto Sans Bengali', sans-serif;
+            transition: all 0.28s cubic-bezier(0.22, 1, 0.36, 1);
+            position: relative;
+            overflow: hidden;
+            text-align: left;
+        }
+
+        .btn-action::before {
+            content: "";
+            position: absolute;
+            top: 0; left: -80%;
+            width: 60%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transform: skewX(-20deg);
+            transition: left 0.7s;
+        }
+
+        .btn-action:hover::before { left: 120%; }
+
+        .btn-action:hover { transform: translateY(-3px); }
+        .btn-action:active { transform: translateY(-1px); }
+
+        .btn-youtube-action {
+            background: linear-gradient(135deg, #ff0000, #cc0000);
+            box-shadow: 0 10px 24px rgba(255, 0, 0, 0.35);
+        }
+        .btn-youtube-action:hover {
+            box-shadow: 0 16px 30px rgba(255, 0, 0, 0.5);
+        }
+
+        .btn-whatsapp-action {
+            background: linear-gradient(135deg, #25d366, #128c7e);
+            box-shadow: 0 10px 24px rgba(37, 211, 102, 0.35);
+        }
+        .btn-whatsapp-action:hover {
+            box-shadow: 0 16px 30px rgba(37, 211, 102, 0.5);
+        }
+
+        .btn-action .btn-icon-box {
+            width: 44px;
+            height: 44px;
+            background: rgba(255, 255, 255, 0.22);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            flex-shrink: 0;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .btn-action .btn-text {
+            display: flex;
+            flex-direction: column;
+            line-height: 1.25;
+            flex: 1;
+            min-width: 0;
+        }
+
+        .btn-action .btn-text small {
+            font-size: 11.5px;
+            font-weight: 500;
+            opacity: 0.92;
+            letter-spacing: 0.2px;
+        }
+
+        .btn-action .btn-text span {
+            font-size: 15.5px;
+            font-weight: 700;
+            letter-spacing: 0.2px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .btn-action .btn-arrow {
+            font-size: 18px;
+            opacity: 0.85;
+            flex-shrink: 0;
+            transition: transform 0.25s;
+        }
+
+        .btn-action:hover .btn-arrow {
+            transform: translateX(4px);
+        }
+
+        .sub-note {
+            margin-top: 6px;
+            padding-top: 16px;
+            border-top: 1px dashed #e3ebf0;
+            font-size: 13px;
+            color: #93a3c2;
+            font-weight: 500;
+            line-height: 1.6;
+        }
+
+        .sub-note strong { color: #0b1e4b; }
+
+        /* ================= TOAST ================= */
         .toast {
             position: fixed;
             bottom: 30px;
@@ -990,7 +1224,7 @@
             opacity: 0;
             pointer-events: none;
             transition: all 0.45s cubic-bezier(0.22, 1, 0.36, 1);
-            z-index: 10000;
+            z-index: 10001;
             white-space: nowrap;
             max-width: 90vw;
             overflow: hidden;
@@ -1116,7 +1350,6 @@
             }
 
             .thankyou-header { padding: 14px 12px 5px 12px; }
-
             .thankyou-header h2 { font-size: 1rem; }
 
             .thankyou-fixed {
@@ -1157,6 +1390,15 @@
             .view-all-note {
                 font-size: 0.75rem;
             }
+
+            .sub-modal { padding: 30px 20px 24px; border-radius: 24px; }
+            .sub-icon-main { width: 72px; height: 72px; font-size: 34px; }
+            .sub-modal h2 { font-size: 20px; }
+            .sub-modal .sub-desc { font-size: 13px; }
+            .btn-action { padding: 12px 16px; gap: 12px; }
+            .btn-action .btn-icon-box { width: 40px; height: 40px; font-size: 20px; }
+            .btn-action .btn-text span { font-size: 14px; }
+            .btn-action .btn-text small { font-size: 10.5px; }
         }
     </style>
 </head>
@@ -1191,7 +1433,7 @@
 
         <div class="header-actions">
             <button class="btn-donate" id="openDonate">❤️ ডোনেশন</button>
-            <button class="btn-subscribe" onclick="location.href='subscribe.html'">🔔 সাবস্ক্রাইব</button>
+            <button class="btn-subscribe" id="openSubscribe">🔔 সাবস্ক্রাইব</button>
             <button class="btn-login" onclick="location.href='login.html'">লগ ইন</button>
         </div>
     </header>
@@ -1201,7 +1443,6 @@
     <!-- ================= মূল কনটেন্ট ================= -->
     <main class="container">
 
-        <!-- ===== সার্ভিস কার্ড ===== -->
         <div class="service-grid">
 
             <a href="gov-service.html" class="card card-gov">
@@ -1248,7 +1489,6 @@
 
         </div>
 
-        <!-- ===== Latest Blog ===== -->
         <h2 class="section-title">📝 Latest Blog</h2>
 
         <div class="blog-grid">
@@ -1571,8 +1811,7 @@
             <p class="modal-subtitle">আপনার ভালোবাসায় এগিয়ে চলা</p>
 
             <div class="modal-badge">
-                <span>💙</span> যতটুকু পারেন, ততটুকুই
-            </div>
+                <span>💙</span> যতটুকু পারেন, ততটুকুই            </div>
 
             <div class="modal-qr">
                 <img
@@ -1616,6 +1855,58 @@
                     আগামীকাল আমরা হাজার মানুষের পাশে দাঁড়াতে পারব। 💙
                 </p>
             </div>
+
+        </div>
+    </div>
+
+    <!-- ================= SUBSCRIBE MODAL (YouTube + WhatsApp) ================= -->
+    <div class="sub-overlay" id="subscribeModal">
+        <div class="sub-modal" role="dialog" aria-modal="true" aria-labelledby="subTitle">
+
+            <button class="sub-close" id="closeSubscribe" aria-label="বন্ধ করুন">✕</button>
+
+            <div class="sub-icon-main">🔔</div>
+
+            <h2 id="subTitle">আমাদের সাথে যুক্ত হোন</h2>
+            <p class="sub-desc">
+                <strong>YouTube</strong> এ সাবস্ক্রাইব করুন এবং <strong>WhatsApp</strong> চ্যানেলে যোগ দিন — সব আপডেট সবার আগে পেতে।
+            </p>
+
+            <div class="sub-actions">
+
+                <a
+                    href="https://www.youtube.com/@JanteHoleOfficial"
+                    class="btn-action btn-youtube-action"
+                    target="_blank"
+                    rel="noopener"
+                >
+                    <div class="btn-icon-box">📺</div>
+                    <div class="btn-text">
+                        <small>YouTube এ</small>
+                        <span>সাবস্ক্রাইব করুন</span>
+                    </div>
+                    <div class="btn-arrow">→</div>
+                </a>
+
+                <a
+                    href="https://whatsapp.com/channel/0029Vb7YXIFK0IBl3AWaPH2v"
+                    class="btn-action btn-whatsapp-action"
+                    target="_blank"
+                    rel="noopener"
+                >
+                    <div class="btn-icon-box">💬</div>
+                    <div class="btn-text">
+                        <small>WhatsApp এ</small>
+                        <span>চ্যানেলে যোগ দিন</span>
+                    </div>
+                    <div class="btn-arrow">→</div>
+                </a>
+
+            </div>
+
+            <p class="sub-note">
+                💙 <strong>ধন্যবাদ!</strong> আপনার সাপোর্টই আমাদের এগিয়ে চলার শক্তি।
+            </p>
 
         </div>
     </div>
@@ -1676,7 +1967,9 @@
         })();
 
         /* ========================================================= */
-        /* ===== DONATION MODAL (Auto ৪ বার + Manual Click) ======== */
+        /* ===== DONATION MODAL ==================================== */
+        /* ===== ম্যানুয়াল ক্লিকে সবসময় পপ-আপ খুলবে =============== */
+        /* ===== অটো পপ-আপ ৪ বারের বেশি আসবে না =================== */
         /* ========================================================= */
         (function () {
             const overlay  = document.getElementById('donateModal');
@@ -1722,11 +2015,21 @@
                 document.body.classList.remove('modal-open');
             }
 
+            /* ============================================
+               ✅ মূল ফাংশন — এখানেই পরিবর্তন হয়েছে
+               👆 ম্যানুয়াল ক্লিকে → সবসময় পপ-আপ খুলবে
+               ⏰ অটো পপ-আপে   → ৪ বারের লিমিট থাকবে
+               ============================================ */
             function showDonatePopup(from) {
+
+                // ম্যানুয়াল ক্লিক — সবসময় খুলবে, লিমিট ছাড়া
+                if (from === 'manual') {
+                    openModal();
+                    return true;
+                }
+
+                // অটো পপ-আপ — ৪ বারের বেশি নয়
                 if (isLimitReached()) {
-                    if (from === 'manual') {
-                        showToast('🙏 ধন্যবাদ! আপনি ইতিমধ্যেই আমাদের সব দেখেছেন।');
-                    }
                     return false;
                 }
                 increaseCount();
@@ -1734,12 +2037,14 @@
                 return true;
             }
 
+            /* ===== ম্যানুয়াল ক্লিক ===== */
             if (openBtn) {
                 openBtn.addEventListener('click', function () {
                     showDonatePopup('manual');
                 });
             }
 
+            /* ===== ক্লোজ অ্যাকশন ===== */
             if (closeBtn) closeBtn.addEventListener('click', closeModal);
             if (overlay) {
                 overlay.addEventListener('click', function (e) {
@@ -1752,6 +2057,7 @@
                 }
             });
 
+            /* ===== Toast ===== */
             function showToast(msg) {
                 if (!toast) return;
                 toast.textContent = msg;
@@ -1762,6 +2068,7 @@
                 }, 2500);
             }
 
+            /* ========== শক্তিশালী Copy Function ========== */
             function copyText(text) {
                 return new Promise(function (resolve, reject) {
                     if (navigator.clipboard && navigator.clipboard.writeText && window.isSecureContext) {
@@ -1831,6 +2138,7 @@
                 }, { passive: false });
             }
 
+            /* ===== অটো পপ-আপ সিস্টেম ===== */
             function scheduleAutoPopups() {
                 const alreadyShown = getCount();
                 for (let i = alreadyShown; i < MAX_SHOW_COUNT; i++) {
@@ -1848,6 +2156,39 @@
                 setTimeout(scheduleAutoPopups, 1000);
             });
 
+        })();
+
+        /* ========================================================= */
+        /* ===== SUBSCRIBE MODAL (YouTube + WhatsApp) ============== */
+        /* ========================================================= */
+        (function () {
+            const subOverlay  = document.getElementById('subscribeModal');
+            const subOpenBtn  = document.getElementById('openSubscribe');
+            const subCloseBtn = document.getElementById('closeSubscribe');
+
+            if (!subOverlay || !subOpenBtn || !subCloseBtn) return;
+
+            function openSubModal() {
+                subOverlay.classList.add('active');
+                document.body.classList.add('modal-open');
+            }
+            function closeSubModal() {
+                subOverlay.classList.remove('active');
+                document.body.classList.remove('modal-open');
+            }
+
+            subOpenBtn.addEventListener('click', openSubModal);
+            subCloseBtn.addEventListener('click', closeSubModal);
+
+            subOverlay.addEventListener('click', function (e) {
+                if (e.target === subOverlay) closeSubModal();
+            });
+
+            document.addEventListener('keydown', function (e) {
+                if (e.key === 'Escape' && subOverlay.classList.contains('active')) {
+                    closeSubModal();
+                }
+            });
         })();
     </script>
 

@@ -198,6 +198,113 @@
             font-weight: 600;
         }
 
+        /* ================= কাস্টম অর্ডার কার্ড ================= */
+        .custom-order-banner-section {
+            max-width: 1200px;
+            margin: 24px auto 0;
+            padding: 0 20px;
+        }
+
+        .custom-order-card {
+            position: relative;
+            background: linear-gradient(135deg, #ec4899 0%, #a855f7 50%, #6366f1 100%);
+            border-radius: 24px;
+            padding: 28px 30px;
+            cursor: pointer;
+            overflow: hidden;
+            box-shadow: 0 20px 50px -15px rgba(236, 72, 153, 0.55), 0 0 0 2px rgba(255, 255, 255, 0.1) inset;
+            transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+            animation: customPulse 3s ease-in-out infinite;
+        }
+
+        @keyframes customPulse {
+            0%, 100% { box-shadow: 0 20px 50px -15px rgba(236, 72, 153, 0.55), 0 0 0 2px rgba(255, 255, 255, 0.1) inset; }
+            50%      { box-shadow: 0 25px 60px -15px rgba(236, 72, 153, 0.75), 0 0 0 2px rgba(255, 255, 255, 0.2) inset; }
+        }
+
+        .custom-order-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 30px 70px -15px rgba(236, 72, 153, 0.85), 0 0 0 2px rgba(255, 255, 255, 0.25) inset;
+        }
+
+        .custom-order-glow {
+            position: absolute;
+            top: -50%; right: -20%;
+            width: 300px; height: 300px;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.3), transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        .custom-order-inner {
+            display: flex;
+            align-items: center;
+            gap: 22px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .custom-order-icon {
+            width: 72px;
+            height: 72px;
+            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.22);
+            border: 2px solid rgba(255, 255, 255, 0.4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 38px;
+            flex-shrink: 0;
+            animation: micShake 2.5s ease-in-out infinite;
+        }
+
+        @keyframes micShake {
+            0%, 100% { transform: rotate(0deg); }
+            15%      { transform: rotate(-8deg); }
+            30%      { transform: rotate(8deg); }
+            45%      { transform: rotate(-4deg); }
+            60%      { transform: rotate(0deg); }
+        }
+
+        .custom-order-text {
+            flex: 1;
+            min-width: 0;
+            color: #fff;
+        }
+
+        .custom-order-text h2 {
+            font-size: 1.35rem;
+            font-weight: 800;
+            margin-bottom: 6px;
+            line-height: 1.35;
+            letter-spacing: -0.3px;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
+        }
+
+        .custom-order-text p {
+            font-size: 0.88rem;
+            opacity: 0.95;
+            line-height: 1.5;
+            font-weight: 500;
+        }
+
+        .custom-order-arrow {
+            font-size: 32px;
+            color: #fff;
+            flex-shrink: 0;
+            transition: transform 0.3s;
+            animation: arrowBounce 1.5s ease-in-out infinite;
+        }
+
+        @keyframes arrowBounce {
+            0%, 100% { transform: translateX(0); }
+            50%      { transform: translateX(6px); }
+        }
+
+        .custom-order-card:hover .custom-order-arrow {
+            transform: translateX(10px);
+        }
+
         /* ================= কনটেইনার ================= */
         .container { max-width: 1200px; margin: 0 auto; padding: 30px 20px 80px; }
 
@@ -635,8 +742,36 @@
             text-align: center;
             font-size: 11px;
             color: #a78bfa;
-            margin-bottom: 14px;
+            margin-bottom: 10px;
             font-weight: 500;
+        }
+
+        /* ===== নাম ভেরিফাই বক্স ===== */
+        .verify-name-box {
+            text-align: center;
+            font-size: 12.5px;
+            color: #fbbf24;
+            font-weight: 600;
+            background: linear-gradient(135deg, rgba(251, 191, 36, 0.12), rgba(245, 158, 11, 0.08));
+            padding: 11px 14px;
+            border-radius: 10px;
+            border: 1px solid rgba(251, 191, 36, 0.4);
+            margin-bottom: 16px;
+            line-height: 1.5;
+        }
+
+        .verify-name-box .verify-icon {
+            font-size: 14px;
+            margin-right: 4px;
+        }
+
+        .verify-name-box strong {
+            color: #f59e0b;
+            font-weight: 800;
+            font-size: 14px;
+            display: block;
+            margin-top: 3px;
+            letter-spacing: 0.3px;
         }
 
         .amount-display { text-align: center; margin-bottom: 16px; }
@@ -912,6 +1047,44 @@
             color: #fbbf24;
         }
 
+        /* ================= Custom Order Form Modal ================= */
+        .custom-form-info {
+            background: rgba(251, 191, 36, 0.1);
+            border: 1.5px solid rgba(251, 191, 36, 0.4);
+            border-radius: 12px;
+            padding: 12px 14px;
+            margin-bottom: 16px;
+            font-size: 0.82rem;
+            color: #fbbf24;
+            line-height: 1.55;
+            font-weight: 500;
+        }
+
+        .custom-form-info strong { color: #f59e0b; }
+
+        .custom-form-modal .form-group textarea {
+            width: 100%;
+            padding: 10px 13px;
+            background: rgba(255, 255, 255, 0.06);
+            border: 2px solid rgba(168, 85, 247, 0.3);
+            border-radius: 10px;
+            color: #fff;
+            font-size: 0.9rem;
+            font-family: inherit;
+            transition: all 0.25s;
+            outline: none;
+            min-height: 80px;
+            resize: vertical;
+            line-height: 1.5;
+        }
+
+        .custom-form-modal .form-group textarea:focus {
+            border-color: #ec4899;
+            box-shadow: 0 0 0 4px rgba(236, 72, 153, 0.12);
+        }
+
+        .custom-form-modal .form-group textarea::placeholder { color: #7c6fa8; }
+
         /* ================= Toast ================= */
         .toast {
             position: fixed;
@@ -945,6 +1118,13 @@
             .page-title { font-size: 0.9rem; }
             .page-title span { font-size: 1.1rem; }
             .back-btn, .admin-btn-small { padding: 6px 11px; font-size: 0.72rem; }
+
+            .custom-order-card { padding: 22px 20px; }
+            .custom-order-inner { gap: 16px; flex-wrap: wrap; }
+            .custom-order-icon { width: 60px; height: 60px; font-size: 30px; border-radius: 16px; }
+            .custom-order-text h2 { font-size: 1.1rem; }
+            .custom-order-text p { font-size: 0.78rem; }
+            .custom-order-arrow { font-size: 26px; }
         }
 
         @media (max-width: 480px) {
@@ -963,6 +1143,16 @@
             .amount-value { font-size: 1.9rem; }
             .btn-payment-done { font-size: 0.88rem; padding: 13px 16px; }
             .audio-title { font-size: 0.95rem; }
+            .verify-name-box { font-size: 11.5px; padding: 9px 11px; }
+            .verify-name-box strong { font-size: 13px; }
+
+            .custom-order-banner-section { padding: 0 14px; margin-top: 16px; }
+            .custom-order-card { padding: 18px 16px; border-radius: 20px; }
+            .custom-order-inner { gap: 12px; }
+            .custom-order-icon { width: 52px; height: 52px; font-size: 26px; }
+            .custom-order-text h2 { font-size: 1rem; }
+            .custom-order-text p { font-size: 0.72rem; }
+            .custom-order-arrow { display: none; }
         }
     </style>
 </head>
@@ -1005,6 +1195,21 @@
                     <span class="studio-badge"><span>🎵</span> HD কোয়ালিটি</span>
                     <span class="studio-badge"><span>📱</span> WhatsApp ডেলিভারি</span>
                 </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ================= কাস্টম অর্ডার কার্ড ================= -->
+    <section class="custom-order-banner-section">
+        <div class="custom-order-card" id="openCustomOrder">
+            <div class="custom-order-glow"></div>
+            <div class="custom-order-inner">
+                <div class="custom-order-icon">🎤</div>
+                <div class="custom-order-text">
+                    <h2>আপনার ব্যবসার মাইকিং প্রচার তৈরি করতে এখানে ক্লিক করুন</h2>
+                    <p>নিজের দোকানের নামে নতুন অডিও বানাতে চান? ফর্ম পূরণ করুন — আমরা যোগাযোগ করব!</p>
+                </div>
+                <div class="custom-order-arrow">→</div>
             </div>
         </div>
     </section>
@@ -1078,6 +1283,11 @@
             </div>
             <span class="upi-hint">👆 UPI আইডি কপি করতে ক্লিক করুন</span>
 
+            <div class="verify-name-box">
+                <span class="verify-icon">⚠️</span> পেমেন্ট করার আগে নাম ভেরিফাই করুন
+                <strong>Harun Al Rasid</strong>
+            </div>
+
             <div class="customer-info">
                 <h4>📝 আপনার তথ্য দিন</h4>
                 <div class="form-group">
@@ -1097,6 +1307,88 @@
             <p class="payment-note">
                 পেমেন্ট সম্পন্ন হলে উপরের বাটনে ক্লিক করুন।<br>
                 আপনার WhatsApp-এ আমরা সরাসরি অডিও পাঠিয়ে দেব।
+            </p>
+        </div>
+    </div>
+
+    <!-- ================= Custom Order Modal ================= -->
+    <div class="modal-overlay" id="customOrderModal">
+        <div class="modal custom-form-modal">
+            <button class="modal-close" id="closeCustomOrderBtn">✕</button>
+
+            <div class="modal-header">
+                <div class="modal-icon-circle">🎤</div>
+                <h2>কাস্টম অডিও অর্ডার</h2>
+                <p>আপনার ব্যবসার জন্য বিশেষ মাইকিং তৈরি করুন</p>
+            </div>
+
+            <div class="custom-form-info">
+                💡 <strong>জানতে হবে:</strong> নিচের ফর্মটি পূরণ করুন। আমরা ২৪ ঘণ্টার মধ্যে যোগাযোগ করব।
+            </div>
+
+            <div class="customer-info">
+                <h4>📝 আপনার তথ্য দিন</h4>
+
+                <div class="form-group">
+                    <label>আপনার নাম <span class="req">*</span></label>
+                    <input type="text" id="customName" placeholder="আপনার পূর্ণ নাম">
+                </div>
+
+                <div class="form-group">
+                    <label>দোকান / ব্যবসার নাম <span class="req">*</span></label>
+                    <input type="text" id="customBusiness" placeholder="যেমন: শ্রী রাম কাপড়ের দোকান">
+                </div>
+
+                <div class="form-group">
+                    <label>WhatsApp নম্বর <span class="req">*</span></label>
+                    <input type="tel" id="customPhone" placeholder="১০ ডিজিটের নম্বর">
+                </div>
+
+                <div class="form-group">
+                    <label>ব্যবসার ধরন <span class="req">*</span></label>
+                    <select id="customCategory">
+                        <option value="">-- ক্যাটাগরি বেছে নিন --</option>
+                        <option value="কাপড়ের দোকান">👗 কাপড়ের দোকান</option>
+                        <option value="কম্পিউটার ও CSC">💻 কম্পিউটার ও CSC</option>
+                        <option value="জুতোর দোকান">👟 জুতোর দোকান</option>
+                        <option value="স্টেশনারি দোকান">📚 স্টেশনারি দোকান</option>
+                        <option value="জুয়েলার্স">💎 জুয়েলার্স</option>
+                        <option value="গিফট হাউস">🎁 গিফট হাউস</option>
+                        <option value="ইলেকট্রিক দোকান">💡 ইলেকট্রিক দোকান</option>
+                        <option value="বাসনের দোকান">🍽️ বাসনের দোকান</option>
+                        <option value="অন্যান্য">🛒 অন্যান্য</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>অডিওর সময়কাল (আনুমানিক)</label>
+                    <select id="customDuration">
+                        <option value="30 সেকেন্ড">৩০ সেকেন্ড</option>
+                        <option value="1 মিনিট" selected>১ মিনিট</option>
+                        <option value="2 মিনিট">২ মিনিট</option>
+                        <option value="3 মিনিট">৩ মিনিট</option>
+                        <option value="5 মিনিট+">৫ মিনিট বা বেশি</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>বাজেট (₹) — ঐচ্ছিক</label>
+                    <input type="text" id="customBudget" placeholder="যেমন: 200-500">
+                </div>
+
+                <div class="form-group">
+                    <label>বিশেষ নির্দেশনা (ঐচ্ছিক)</label>
+                    <textarea id="customNote" placeholder="যেমন: বাংলা + হিন্দি মিক্স, মেয়ে কণ্ঠে, দোকানের ঠিকানা সহ ইত্যাদি"></textarea>
+                </div>
+            </div>
+
+            <button class="btn-payment-done" id="submitCustomOrderBtn">
+                <span>💬</span> WhatsApp এ পাঠান
+            </button>
+
+            <p class="payment-note">
+                ফর্ম সাবমিট করলে আপনার তথ্য সোজা আমাদের WhatsApp-এ যাবে।<br>
+                আমরা দ্রুত যোগাযোগ করব। 🙏
             </p>
         </div>
     </div>
@@ -1204,9 +1496,6 @@
             query, orderBy, serverTimestamp
         } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
-        /* =====================================================
-           🔥 Firebase Init
-           ===================================================== */
         const firebaseConfig = {
             apiKey:            "AIzaSyAdKQHpuVvmllMUmiHzJyppDCeWMO4ILtc",
             authDomain:        "azad-digital-seva-ad7f3.firebaseapp.com",
@@ -1244,7 +1533,7 @@
         let currentAudioForPayment = null;
 
         /* =====================================================
-           🎨 ক্যাটাগরি রেন্ডার
+           🎨 ক্যাটাগরি
            ===================================================== */
         function renderCategories() {
             const container = document.getElementById('categoryTabs');
@@ -1269,7 +1558,6 @@
 
             container.innerHTML = allBtn + catBtns + viewAllBtn;
 
-            /* সব ক্যাটাগরি বাটনে ক্লিক */
             document.querySelectorAll('.cat-tab[data-cat]').forEach(btn => {
                 btn.addEventListener('click', function () {
                     filterCategory(this.dataset.cat, this);
@@ -1285,7 +1573,7 @@
         }
 
         /* =====================================================
-           📡 Firestore লোড
+           📡 Firestore
            ===================================================== */
         async function loadAudios() {
             const grid = document.getElementById('audioGrid');
@@ -1316,7 +1604,7 @@
         }
 
         /* =====================================================
-           🎨 অডিও গ্রিড রেন্ডার
+           🎨 গ্রিড
            ===================================================== */
         function renderAudios() {
             const grid = document.getElementById('audioGrid');
@@ -1390,7 +1678,6 @@
                 `;
             }).join('');
 
-            /* ডাউনলোড বাটনে ক্লিক */
             document.querySelectorAll('.download-btn').forEach(btn => {
                 btn.addEventListener('click', function () {
                     openDownloadModal(this.dataset.audioId);
@@ -1521,6 +1808,61 @@
 
             window.open('https://wa.me/' + STUDIO_INFO.whatsappNumber + '?text=' + encodeURIComponent(message), '_blank');
             closeDownloadModal();
+            showToast('✅ WhatsApp খোলা হচ্ছে...');
+        }
+
+        /* =====================================================
+           🎤 Custom Order
+           ===================================================== */
+        function openCustomOrderModal() {
+            document.getElementById('customOrderModal').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeCustomOrderModal() {
+            document.getElementById('customOrderModal').classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        function submitCustomOrder() {
+            const name = document.getElementById('customName').value.trim();
+            const business = document.getElementById('customBusiness').value.trim();
+            const phone = document.getElementById('customPhone').value.trim();
+            const category = document.getElementById('customCategory').value;
+            const duration = document.getElementById('customDuration').value;
+            const budget = document.getElementById('customBudget').value.trim() || '—';
+            const note = document.getElementById('customNote').value.trim() || '—';
+
+            if (!name) { showToast('⚠️ আপনার নাম লিখুন'); return; }
+            if (!business) { showToast('⚠️ দোকানের নাম লিখুন'); return; }
+            if (!phone || phone.length < 10) { showToast('⚠️ সঠিক WhatsApp নম্বর দিন'); return; }
+            if (!category) { showToast('⚠️ ব্যবসার ধরন বেছে নিন'); return; }
+
+            const message =
+`🎤 *Azad Mikeing Studio — কাস্টম অডিও অর্ডার*
+
+━━━━━━━━━━━━━━━━━━
+👤 *গ্রাহকের তথ্য*
+━━━━━━━━━━━━━━━━━━
+📝 নাম: ${name}
+🏪 দোকান: ${business}
+📱 WhatsApp: ${phone}
+
+━━━━━━━━━━━━━━━━━━
+🎵 *অডিওর তথ্য*
+━━━━━━━━━━━━━━━━━━
+🛒 ব্যবসার ধরন: ${category}
+⏱️ সময়কাল: ${duration}
+💰 বাজেট: ₹ ${budget}
+📌 নির্দেশনা: ${note}
+
+━━━━━━━━━━━━━━━━━━
+✅ কাস্টম অডিও অর্ডার
+
+অনুগ্রহ করে যোগাযোগ করুন। 🙏`;
+
+            window.open('https://wa.me/' + STUDIO_INFO.whatsappNumber + '?text=' + encodeURIComponent(message), '_blank');
+            closeCustomOrderModal();
             showToast('✅ WhatsApp খোলা হচ্ছে...');
         }
 
@@ -1703,7 +2045,7 @@
         }
 
         /* =====================================================
-           🎯 Event Listeners — সব বাটন ঠিকভাবে কাজ করবে
+           🎯 Event Listeners
            ===================================================== */
         document.getElementById('adminBtn').addEventListener('click', openAdminModal);
         document.getElementById('closeAdminBtn').addEventListener('click', closeAdminModal);
@@ -1716,27 +2058,36 @@
         document.getElementById('confirmPaymentBtn').addEventListener('click', confirmPaymentDone);
         document.getElementById('upiBox').addEventListener('click', copyUPI);
 
-        /* Admin ট্যাব */
+        /* Custom Order */
+        document.getElementById('openCustomOrder').addEventListener('click', openCustomOrderModal);
+        document.getElementById('closeCustomOrderBtn').addEventListener('click', closeCustomOrderModal);
+        document.getElementById('submitCustomOrderBtn').addEventListener('click', submitCustomOrder);
+
+        /* Admin Tabs */
         document.querySelectorAll('.admin-tab').forEach(tab => {
             tab.addEventListener('click', function () {
                 switchAdminTab(this.dataset.tab);
             });
         });
 
-        /* Esc চাপলে বন্ধ */
+        /* Esc চাপলে সব বন্ধ */
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape') {
                 closeDownloadModal();
                 closeAdminModal();
+                closeCustomOrderModal();
             }
         });
 
-        /* মডালের বাইরে ক্লিকে বন্ধ */
+        /* বাইরে ক্লিকে বন্ধ */
         document.getElementById('downloadModal').addEventListener('click', function (e) {
             if (e.target === this) closeDownloadModal();
         });
         document.getElementById('adminModal').addEventListener('click', function (e) {
             if (e.target === this) closeAdminModal();
+        });
+        document.getElementById('customOrderModal').addEventListener('click', function (e) {
+            if (e.target === this) closeCustomOrderModal();
         });
 
         /* =====================================================

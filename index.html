@@ -22,6 +22,8 @@
     <link rel="dns-prefetch" href="https://blogger.googleusercontent.com">
     <link rel="preconnect" href="https://lh3.googleusercontent.com" crossorigin>
     <link rel="dns-prefetch" href="https://lh3.googleusercontent.com">
+    <link rel="preconnect" href="https://1.bp.blogspot.com" crossorigin>
+    <link rel="dns-prefetch" href="https://1.bp.blogspot.com">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -349,11 +351,11 @@
 
         .blog-card:hover { transform: translateY(-5px); box-shadow: 0 14px 28px -8px rgba(7,94,84,0.25); }
 
-        /* ===== 16:9 থাম্বনেইল ===== */
+        /* ===== 16:9 থাম্বনেইল (পরিষ্কার ছবির জন্য) ===== */
         .blog-thumb {
             width: 100%;
             aspect-ratio: 16 / 9;
-            background: #d0e2df center/cover no-repeat;
+            background: #d0e2df;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -369,6 +371,11 @@
             object-fit: cover;
             display: block;
             background: #e6f0ee;
+            /* ছবি পরিষ্কার দেখানোর জন্য */
+            image-rendering: -webkit-optimize-contrast;
+            image-rendering: crisp-edges;
+            transform: translateZ(0);
+            backface-visibility: hidden;
         }
 
         .blog-thumb.no-image {
@@ -402,7 +409,7 @@
 
         .blog-date { font-size: 0.72rem; color: #128c7e; font-weight: 600; }
 
-        /* ব্লগ লোডিং স্কেলেটন (দ্রুত দেখানোর জন্য) */
+        /* ব্লগ লোডিং স্কেলেটন */
         .blog-skeleton {
             background: white;
             border-radius: 14px;
@@ -1558,7 +1565,7 @@
 
         <div class="hero-slider-inner" id="photoSlider">
             <div class="slide active" style="background-image: url('https://picsum.photos/id/1015/1600/600');"></div>
-            <div class="slide" style="background-image: url('https://picsum.photos/id/1018/1600/600');"></div>
+            <div class="slide" style="background-image: url('https://i.postimg.cc/Twt18MSS/file-00000000c9d882118e0777930ec4675a.png');"></div>
             <div class="slide" style="background-image: url('https://picsum.photos/id/1025/1600/600');"></div>
             <div class="slide" style="background-image: url('https://picsum.photos/id/1035/1600/600');"></div>
             <div class="slide" style="background-image: url('https://picsum.photos/id/1043/1600/600');"></div>
@@ -2031,14 +2038,14 @@
         })();
 
         /* ========================================================= */
-        /* ===== BLOGGER AUTO BLOG LOADER (৬টি পোস্ট, 16:9) ========= */
+        /* ===== BLOGGER AUTO BLOG LOADER (৬টি পোস্ট, HD ছবি) ======== */
         /* ========================================================= */
         (function () {
             const BLOG_URL  = 'https://jante-hole.blogspot.com';
             const MAX_POSTS = 6;
             const GRID_ID   = 'blogGrid';
-            const CACHE_KEY = 'ads_blog_cache_v2';
-            const CACHE_TTL = 5 * 60 * 1000; // ৫ মিনিট ক্যাশ
+            const CACHE_KEY = 'ads_blog_cache_v3';
+            const CACHE_TTL = 5 * 60 * 1000;
 
             const grid = document.getElementById(GRID_ID);
             if (!grid) return;
@@ -2093,7 +2100,7 @@
                         if (s && s.parentNode) s.parentNode.removeChild(s);
                         if (!grid.querySelector('.blog-card')) showError();
                     }
-                }, 6000);
+                }, 8000);
             }
 
             function showError() {
@@ -2104,43 +2111,58 @@
                     '</div>';
             }
 
-           // ---------- থাম্বনেইল (নতুন Blogger সিস্টেমের জন্য) ----------
-function getThumbnail(entry) {
-    let url = '';
-    
-    // ১. ফিড থেকে থাম্বনেইল URL নেওয়া
-    if (entry.media$thumbnail && entry.media$thumbnail.url) {
-        url = entry.media$thumbnail.url;
-    } 
-    // ২. না পেলে কনটেন্ট থেকে প্রথম ছবি
-    else if (entry.content && entry.content.$t) {
-        const m = entry.content.$t.match(/<img[^>]+src=["']([^"']+)["']/i);
-        if (m && m[1]) url = m[1];
-    }
-    // ৩. না পেলে সামারি থেকে প্রথম ছবি
-    if (!url && entry.summary && entry.summary.$t) {
-        const m = entry.summary.$t.match(/<img[^>]+src=["']([^"']+)["']/i);
-        if (m && m[1]) url = m[1];
-    }
-    if (!url) return '';
+            // =====================================================
+            // ★★★ মূল সমাধান: HD / পরিষ্কার ছবি ★★★
+            // =====================================================
+            // Blogger থেকে আসা যেকোনো ছবির URL-কে তার মূল/বড়
+            // রেজোলিউশনে রূপান্তর করে — যাতে ছবি ঝাপসা না হয়।
+            // =====================================================
+            function getHDThumbnail(entry) {
+                let url = '';
 
-    // ===== মূল সমাধান =====
-    // যদি লিংক blogger.googleusercontent.com হয় (নতুন সিস্টেম)
-    if (url.includes('blogger.googleusercontent.com')) {
-        // পুরনো সাইজ প্যারামিটার থাকলে সরিয়ে ফেলুন
-        url = url.split('?')[0];
-        // নতুন সাইজ প্যারামিটার যোগ করুন (16:9 অনুপাতে বড় সাইজ)
-        url += '?imgmax=800'; 
-    } 
-    // পুরনো সিস্টেমের লিংকের জন্য (bp.blogspot.com)
-    else {
-        // সব সাইজ প্যাটার্ন বড় s800 সাইজে রূপান্তর
-        url = url.replace(/\/s\d+(-c)?\//g, '/s800/')
-                 .replace(/\/w\d+-h\d+(-c)?\//g, '/s800/');
-    }
+                // ১. ফিডের থাম্বনেইল
+                if (entry.media$thumbnail && entry.media$thumbnail.url) {
+                    url = entry.media$thumbnail.url;
+                }
+                // ২. পোস্টের কনটেন্ট থেকে প্রথম ছবি
+                if (!url && entry.content && entry.content.$t) {
+                    const m = entry.content.$t.match(/<img[^>]+src=["']([^"']+)["']/i);
+                    if (m && m[1]) url = m[1];
+                }
+                // ৩. সামারি থেকে প্রথম ছবি
+                if (!url && entry.summary && entry.summary.$t) {
+                    const m = entry.summary.$t.match(/<img[^>]+src=["']([^"']+)["']/i);
+                    if (m && m[1]) url = m[1];
+                }
+                if (!url) return '';
 
-    return url;
-}
+                // HTML এনটিটি ডিকোড (যেমন &amp; → &)
+                url = url.replace(/&amp;/g, '&');
+
+                // ===== Blogger ইমেজ URL-কে HD সাইজে রূপান্তর =====
+
+                // পুরনো Blogger ডোমেইন (bp.blogspot.com)
+                if (url.includes('bp.blogspot.com')) {
+                    // যেকোনো /sXXX/ বা /wXXX-hXXX/ সাইজকে s1600 দিয়ে বদলানো
+                    url = url.replace(/\/s\d+(-c)?\//, '/s1600/')
+                             .replace(/\/w\d+-h\d+(-c)?\//, '/s1600/')
+                             .replace(/\/s\d+(-c)?$/, '/s1600');
+                    // যদি কোনো সাইজ প্যারামিটার না থাকে
+                    if (!/\/s\d+/.test(url) && !/\/w\d+-h\d+/.test(url)) {
+                        // লিংকের শেষে /s1600 যোগ করা
+                        url = url.replace(/(\/[^\/]+\.(jpg|jpeg|png|gif|webp))(\?.*)?$/i, '/s1600$1$3');
+                    }
+                }
+                // নতুন Blogger ডোমেইন (googleusercontent.com)
+                else if (url.includes('googleusercontent.com')) {
+                    // সব পুরনো প্যারামিটার সরিয়ে =s1600 যোগ করা
+                    url = url.split('=')[0];
+                    url = url.replace(/\/s\d+(-c)?\//, '/');
+                    url += '=s1600';
+                }
+
+                return url;
+            }
 
             // ---------- বাংলা তারিখ ----------
             function formatDate(iso) {
@@ -2182,7 +2204,7 @@ function getThumbnail(entry) {
                         link: link,
                         title: title,
                         summary: summary,
-                        thumb: getThumbnail(entry),
+                        thumb: getHDThumbnail(entry),
                         date: entry.published ? formatDate(entry.published.$t) : ''
                     };
                 });
@@ -2202,7 +2224,7 @@ function getThumbnail(entry) {
                     card.rel = 'noopener';
 
                     const thumbHtml = p.thumb
-                        ? '<div class="blog-thumb"><img src="' + escapeHtml(p.thumb) + '" alt="' + escapeHtml(p.title) + '" loading="eager" decoding="async" fetchpriority="high" width="480" height="270"></div>'
+                        ? '<div class="blog-thumb"><img src="' + escapeHtml(p.thumb) + '" alt="' + escapeHtml(p.title) + '" loading="eager" decoding="async" fetchpriority="high"></div>'
                         : '<div class="blog-thumb no-image">📰</div>';
 
                     card.innerHTML =

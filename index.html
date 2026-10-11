@@ -15,6 +15,14 @@
     <title>Azad Digital Seva</title>
     <meta name="description" content="Azad Digital Seva - সরকারি ও বেসরকারি অনলাইন পরিষেবা, গুরুত্বপূর্ণ খবর এবং দরকারি অনলাইন টুলস।">
 
+    <!-- Preconnect: Blogger Feed দ্রুত লোডের জন্য -->
+    <link rel="preconnect" href="https://jante-hole.blogspot.com" crossorigin>
+    <link rel="dns-prefetch" href="https://jante-hole.blogspot.com">
+    <link rel="preconnect" href="https://blogger.googleusercontent.com" crossorigin>
+    <link rel="dns-prefetch" href="https://blogger.googleusercontent.com">
+    <link rel="preconnect" href="https://lh3.googleusercontent.com" crossorigin>
+    <link rel="dns-prefetch" href="https://lh3.googleusercontent.com">
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@400;500;600;700;800&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
@@ -321,7 +329,7 @@
         /* ================= ব্লগ গ্রিড ================= */
         .blog-grid {
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
+            grid-template-columns: repeat(3, 1fr);
             gap: 18px;
             margin-bottom: 20px;
         }
@@ -335,10 +343,13 @@
             cursor: pointer;
             display: flex;
             flex-direction: column;
+            text-decoration: none;
+            color: inherit;
         }
 
         .blog-card:hover { transform: translateY(-5px); box-shadow: 0 14px 28px -8px rgba(7,94,84,0.25); }
 
+        /* ===== 16:9 থাম্বনেইল ===== */
         .blog-thumb {
             width: 100%;
             aspect-ratio: 16 / 9;
@@ -348,21 +359,101 @@
             justify-content: center;
             color: #075e54;
             font-size: 2rem;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .blog-thumb img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            background: #e6f0ee;
+        }
+
+        .blog-thumb.no-image {
+            background: linear-gradient(135deg, #d0e2df, #a8d5cc);
         }
 
         .blog-body { padding: 12px 14px 16px; flex-grow: 1; display: flex; flex-direction: column; }
 
         .blog-body h4 {
-            font-size: 0.98rem;
+            font-size: 1.02rem;
             color: #075e54;
             margin-bottom: 6px;
             font-weight: 700;
-            line-height: 1.35;
+            line-height: 1.4;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
         }
 
-        .blog-body p { font-size: 0.82rem; color: #4a6075; flex-grow: 1; margin-bottom: 10px; }
+        .blog-body p {
+            font-size: 0.85rem;
+            color: #4a6075;
+            flex-grow: 1;
+            margin-bottom: 10px;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
 
         .blog-date { font-size: 0.72rem; color: #128c7e; font-weight: 600; }
+
+        /* ব্লগ লোডিং স্কেলেটন (দ্রুত দেখানোর জন্য) */
+        .blog-skeleton {
+            background: white;
+            border-radius: 14px;
+            overflow: hidden;
+            box-shadow: 0 6px 16px rgba(0,0,0,0.06);
+        }
+
+        .blog-skeleton .sk-thumb {
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            background: linear-gradient(90deg, #e6eeec 25%, #f4faf8 50%, #e6eeec 75%);
+            background-size: 200% 100%;
+            animation: skShine 1.4s infinite;
+        }
+
+        .blog-skeleton .sk-body { padding: 12px 14px 16px; }
+
+        .blog-skeleton .sk-line {
+            height: 12px;
+            border-radius: 6px;
+            background: linear-gradient(90deg, #e6eeec 25%, #f4faf8 50%, #e6eeec 75%);
+            background-size: 200% 100%;
+            animation: skShine 1.4s infinite;
+            margin-bottom: 8px;
+        }
+
+        .blog-skeleton .sk-line.short { width: 60%; }
+        .blog-skeleton .sk-line.tiny { width: 35%; height: 10px; }
+
+        @keyframes skShine {
+            0%   { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+
+        .blog-error {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 40px 20px;
+            color: #7b8cae;
+            font-size: 1rem;
+            font-weight: 600;
+            background: #ffffff;
+            border-radius: 14px;
+            box-shadow: 0 6px 16px rgba(0,0,0,0.06);
+        }
+
+        .blog-error a {
+            color: #128c7e;
+            text-decoration: underline;
+            font-weight: 700;
+        }
 
         .view-more-wrap { text-align: center; margin: 25px 0 10px; }
 
@@ -1535,109 +1626,61 @@
 
         <h2 class="section-title">📝 Latest Blog</h2>
 
-        <div class="blog-grid">
-            <div class="blog-card">
-                <div class="blog-thumb">📰</div>
-                <div class="blog-body">
-                    <h4>অনলাইন জন্ম নিবন্ধন নতুন নিয়ম ২০২৫</h4>
-                    <p>জানুন নতুন নিয়মে কীভাবে দ্রুত জন্ম নিবন্ধন করা যায়।</p>
-                    <span class="blog-date">১৫ জানুয়ারি, ২০২৫</span>
+        <!-- ================= Jante Hole ব্লগ থেকে অটো লোড ================= -->
+        <div class="blog-grid" id="blogGrid">
+            <!-- দ্রুত দেখানোর জন্য স্কেলেটন কার্ড -->
+            <div class="blog-skeleton">
+                <div class="sk-thumb"></div>
+                <div class="sk-body">
+                    <div class="sk-line"></div>
+                    <div class="sk-line short"></div>
+                    <div class="sk-line tiny"></div>
                 </div>
             </div>
-            <div class="blog-card">
-                <div class="blog-thumb">📄</div>
-                <div class="blog-body">
-                    <h4>পাসপোর্ট আবেদনের সহজ উপায়</h4>
-                    <p>অনলাইনে পাসপোর্ট আবেদনের সম্পূর্ণ গাইডলাইন।</p>
-                    <span class="blog-date">১২ জানুয়ারি, ২০২৫</span>
+            <div class="blog-skeleton">
+                <div class="sk-thumb"></div>
+                <div class="sk-body">
+                    <div class="sk-line"></div>
+                    <div class="sk-line short"></div>
+                    <div class="sk-line tiny"></div>
                 </div>
             </div>
-            <div class="blog-card">
-                <div class="blog-thumb">💡</div>
-                <div class="blog-body">
-                    <h4>বিল পেমেন্টের নতুন পদ্ধতি</h4>
-                    <p>ঘরে বসেই সকল বিল পরিশোধের আধুনিক উপায়।</p>
-                    <span class="blog-date">১০ জানুয়ারি, ২০২৫</span>
+            <div class="blog-skeleton">
+                <div class="sk-thumb"></div>
+                <div class="sk-body">
+                    <div class="sk-line"></div>
+                    <div class="sk-line short"></div>
+                    <div class="sk-line tiny"></div>
                 </div>
             </div>
-            <div class="blog-card">
-                <div class="blog-thumb">🔐</div>
-                <div class="blog-body">
-                    <h4>অনলাইনে নিরাপদ থাকার উপায়</h4>
-                    <p>সাইবার সিকিউরিটি সম্পর্কে জরুরি কিছু টিপস।</p>
-                    <span class="blog-date">৮ জানুয়ারি, ২০২৫</span>
+            <div class="blog-skeleton">
+                <div class="sk-thumb"></div>
+                <div class="sk-body">
+                    <div class="sk-line"></div>
+                    <div class="sk-line short"></div>
+                    <div class="sk-line tiny"></div>
                 </div>
             </div>
-
-            <div class="blog-card">
-                <div class="blog-thumb">📱</div>
-                <div class="blog-body">
-                    <h4>মোবাইল রিচার্জ অফার ২০২৫</h4>
-                    <p>সব অপারেটরের সেরা ইন্টারনেট প্যাক ও অফার।</p>
-                    <span class="blog-date">৬ জানুয়ারি, ২০২৫</span>
+            <div class="blog-skeleton">
+                <div class="sk-thumb"></div>
+                <div class="sk-body">
+                    <div class="sk-line"></div>
+                    <div class="sk-line short"></div>
+                    <div class="sk-line tiny"></div>
                 </div>
             </div>
-            <div class="blog-card">
-                <div class="blog-thumb">🛡️</div>
-                <div class="blog-body">
-                    <h4>গাড়ির বীমা করার নিয়ম</h4>
-                    <p>ভেহিকেল ইনস্যুরেন্স করার সম্পূর্ণ প্রক্রিয়া।</p>
-                    <span class="blog-date">৪ জানুয়ারি, ২০২৫</span>
-                </div>
-            </div>
-            <div class="blog-card">
-                <div class="blog-thumb">🎓</div>
-                <div class="blog-body">
-                    <h4>পরীক্ষার ফলাফল দেখার উপায়</h4>
-                    <p>অনলাইনে দ্রুত ফলাফল ও সার্টিফিকেট ডাউনলোড।</p>
-                    <span class="blog-date">২ জানুয়ারি, ২০২৫</span>
-                </div>
-            </div>
-            <div class="blog-card">
-                <div class="blog-thumb">🧰</div>
-                <div class="blog-body">
-                    <h4>দরকারি অনলাইন টুলস</h4>
-                    <p>প্রতিদিনের কাজে লাগবে এমন ১০টি অনলাইন টুল।</p>
-                    <span class="blog-date">১ জানুয়ারি, ২০২৫</span>
-                </div>
-            </div>
-
-            <div class="blog-card">
-                <div class="blog-thumb">📊</div>
-                <div class="blog-body">
-                    <h4>এক্সেল ক্যালকুলেটর ব্যবহার</h4>
-                    <p>অফিসের কাজে এক্সেল ক্যালকুলেটরের সহজ ব্যবহার।</p>
-                    <span class="blog-date">৩০ ডিসেম্বর, ২০২৪</span>
-                </div>
-            </div>
-            <div class="blog-card">
-                <div class="blog-thumb">📁</div>
-                <div class="blog-body">
-                    <h4>PDF ফাইল কনভার্ট করার নিয়ম</h4>
-                    <p>যেকোনো ফাইলকে PDF-এ রূপান্তর করার সহজ পদ্ধতি।</p>
-                    <span class="blog-date">২৮ ডিসেম্বর, ২০২৪</span>
-                </div>
-            </div>
-            <div class="blog-card">
-                <div class="blog-thumb">📅</div>
-                <div class="blog-body">
-                    <h4>বাংলা ক্যালেন্ডার ২০২৫</h4>
-                    <p>২০২৫ সালের সম্পূর্ণ বাংলা ক্যালেন্ডার ডাউনলোড।</p>
-                    <span class="blog-date">২৫ ডিসেম্বর, ২০২৪</span>
-                </div>
-            </div>
-            <div class="blog-card">
-                <div class="blog-thumb">🔠</div>
-                <div class="blog-body">
-                    <h4>বাংলা টাইপিং শেখার সহজ উপায়</h4>
-                    <p>মোবাইল ও কম্পিউটারে দ্রুত বাংলা টাইপিং।</p>
-                    <span class="blog-date">২২ ডিসেম্বর, ২০২৪</span>
+            <div class="blog-skeleton">
+                <div class="sk-thumb"></div>
+                <div class="sk-body">
+                    <div class="sk-line"></div>
+                    <div class="sk-line short"></div>
+                    <div class="sk-line tiny"></div>
                 </div>
             </div>
         </div>
 
         <div class="view-more-wrap">
-            <a href="all-blogs.html" class="btn-view-more">View More →</a>
+            <a href="https://jante-hole.blogspot.com/" target="_blank" rel="noopener" class="btn-view-more">View More →</a>
         </div>
 
     </main>
@@ -1985,6 +2028,209 @@
                     interval = setInterval(nextSlide, 4000);
                 });
             });
+        })();
+
+        /* ========================================================= */
+        /* ===== BLOGGER AUTO BLOG LOADER (৬টি পোস্ট, 16:9) ========= */
+        /* ========================================================= */
+        (function () {
+            const BLOG_URL  = 'https://jante-hole.blogspot.com';
+            const MAX_POSTS = 6;
+            const GRID_ID   = 'blogGrid';
+            const CACHE_KEY = 'ads_blog_cache_v2';
+            const CACHE_TTL = 5 * 60 * 1000; // ৫ মিনিট ক্যাশ
+
+            const grid = document.getElementById(GRID_ID);
+            if (!grid) return;
+
+            // ---------- ক্যাশ ----------
+            function loadFromCache() {
+                try {
+                    const raw = localStorage.getItem(CACHE_KEY);
+                    if (!raw) return null;
+                    const obj = JSON.parse(raw);
+                    if (!obj || !obj.t || !obj.d) return null;
+                    if (Date.now() - obj.t > CACHE_TTL) return null;
+                    return obj.d;
+                } catch (e) { return null; }
+            }
+
+            function saveToCache(data) {
+                try {
+                    localStorage.setItem(CACHE_KEY, JSON.stringify({
+                        t: Date.now(),
+                        d: data
+                    }));
+                } catch (e) {}
+            }
+
+            // ---------- Blogger Feed ----------
+            function loadBloggerFeed(callback) {
+                const callbackName = 'bloggerFeedCallback_' + Date.now();
+                const feedUrl = BLOG_URL + '/feeds/posts/default'
+                              + '?alt=json-in-script'
+                              + '&max-results=' + MAX_POSTS
+                              + '&callback=' + callbackName;
+
+                window[callbackName] = function (data) {
+                    callback(data);
+                    try { delete window[callbackName]; } catch (e) { window[callbackName] = undefined; }
+                    const s = document.getElementById(callbackName);
+                    if (s && s.parentNode) s.parentNode.removeChild(s);
+                };
+
+                const script = document.createElement('script');
+                script.id = callbackName;
+                script.src = feedUrl;
+                script.async = true;
+                script.onerror = function () { showError(); };
+                document.body.appendChild(script);
+
+                setTimeout(function () {
+                    if (window[callbackName]) {
+                        try { delete window[callbackName]; } catch (e) {}
+                        const s = document.getElementById(callbackName);
+                        if (s && s.parentNode) s.parentNode.removeChild(s);
+                        if (!grid.querySelector('.blog-card')) showError();
+                    }
+                }, 6000);
+            }
+
+            function showError() {
+                grid.innerHTML =
+                    '<div class="blog-error">' +
+                        '⚠️ ব্লগ পোস্ট লোড করা যায়নি। ' +
+                        '<a href="' + BLOG_URL + '" target="_blank" rel="noopener">সরাসরি ব্লগ দেখুন →</a>' +
+                    '</div>';
+            }
+
+            // ---------- থাম্বনেইল: 16:9 (w480-h270) ----------
+            function getThumbnail(entry) {
+                let url = '';
+                if (entry.media$thumbnail && entry.media$thumbnail.url) {
+                    url = entry.media$thumbnail.url;
+                } else if (entry.content && entry.content.$t) {
+                    const m = entry.content.$t.match(/<img[^>]+src=["']([^"']+)["']/i);
+                    if (m && m[1]) url = m[1];
+                }
+                if (!url && entry.summary && entry.summary.$t) {
+                    const m = entry.summary.$t.match(/<img[^>]+src=["']([^"']+)["']/i);
+                    if (m && m[1]) url = m[1];
+                }
+                if (!url) return '';
+
+                // Blogger/Google-এর সব সাইজ প্যাটার্ন 16:9 (480x270) করে দেওয়া
+                url = url.replace(/\/s\d+(-c)?\//g, '/w480-h270-c/')
+                         .replace(/\/w\d+-h\d+(-c)?\//g, '/w480-h270-c/')
+                         .replace(/\/s72-c\//g, '/w480-h270-c/');
+
+                // Googleusercontent-এ সাইজ প্যারামিটার
+                if (/googleusercontent\.com/.test(url)) {
+                    // পুরনো প্যারামিটার সরিয়ে নতুন 16:9 যোগ
+                    url = url.split('?')[0] + '?w=480&h=270&c=1';
+                }
+                return url;
+            }
+
+            // ---------- বাংলা তারিখ ----------
+            function formatDate(iso) {
+                try {
+                    const d = new Date(iso);
+                    const months = ['জানুয়ারি','ফেব্রুয়ারি','মার্চ','এপ্রিল','মে','জুন',
+                                    'জুলাই','আগস্ট','সেপ্টেম্বর','অক্টোবর','নভেম্বর','ডিসেম্বর'];
+                    const bn = ['০','১','২','৩','৪','৫','৬','৭','৮','৯'];
+                    const toBn = (n) => String(n).split('').map(x => bn[x] || x).join('');
+                    return toBn(d.getDate()) + ' ' + months[d.getMonth()] + ', ' + toBn(d.getFullYear());
+                } catch (e) { return ''; }
+            }
+
+            function escapeHtml(s) {
+                return String(s).replace(/[&<>"']/g, c => (
+                    {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]
+                ));
+            }
+
+            // ---------- Feed পার্স ----------
+            function parseFeed(data) {
+                if (!data || !data.feed || !data.feed.entry) return [];
+                return data.feed.entry.map(function (entry) {
+                    let link = BLOG_URL;
+                    if (entry.link) {
+                        entry.link.forEach(function (l) {
+                            if (l.rel === 'alternate') link = l.href;
+                        });
+                    }
+                    const title = entry.title ? entry.title.$t : 'Untitled';
+
+                    let summary = '';
+                    if (entry.summary && entry.summary.$t) summary = entry.summary.$t;
+                    else if (entry.content && entry.content.$t) summary = entry.content.$t;
+                    summary = summary.replace(/<[^>]+>/g, '').trim();
+                    if (summary.length > 100) summary = summary.substring(0, 100) + '...';
+
+                    return {
+                        link: link,
+                        title: title,
+                        summary: summary,
+                        thumb: getThumbnail(entry),
+                        date: entry.published ? formatDate(entry.published.$t) : ''
+                    };
+                });
+            }
+
+            // ---------- রেন্ডার ----------
+            function renderPosts(posts) {
+                if (!posts || !posts.length) { showError(); return; }
+
+                const frag = document.createDocumentFragment();
+
+                posts.forEach(function (p) {
+                    const card = document.createElement('a');
+                    card.className = 'blog-card';
+                    card.href = p.link;
+                    card.target = '_blank';
+                    card.rel = 'noopener';
+
+                    const thumbHtml = p.thumb
+                        ? '<div class="blog-thumb"><img src="' + escapeHtml(p.thumb) + '" alt="' + escapeHtml(p.title) + '" loading="eager" decoding="async" fetchpriority="high" width="480" height="270"></div>'
+                        : '<div class="blog-thumb no-image">📰</div>';
+
+                    card.innerHTML =
+                        thumbHtml +
+                        '<div class="blog-body">' +
+                            '<h4>' + escapeHtml(p.title) + '</h4>' +
+                            '<p>' + escapeHtml(p.summary) + '</p>' +
+                            '<span class="blog-date">' + escapeHtml(p.date) + '</span>' +
+                        '</div>';
+
+                    frag.appendChild(card);
+                });
+
+                grid.innerHTML = '';
+                grid.appendChild(frag);
+            }
+
+            // ---------- শুরু ----------
+            const cached = loadFromCache();
+            if (cached && cached.length) renderPosts(cached);
+
+            function fetchFresh() {
+                loadBloggerFeed(function (data) {
+                    const posts = parseFeed(data);
+                    if (posts.length) {
+                        renderPosts(posts);
+                        saveToCache(posts);
+                    } else if (!cached) {
+                        showError();
+                    }
+                });
+            }
+
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', fetchFresh);
+            } else {
+                fetchFresh();
+            }
         })();
 
         /* ========================================================= */

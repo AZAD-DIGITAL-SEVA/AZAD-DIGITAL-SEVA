@@ -2104,33 +2104,32 @@
                     '</div>';
             }
 
-            // ---------- থাম্বনেইল: 16:9 (w480-h270) ----------
-            function getThumbnail(entry) {
-                let url = '';
-                if (entry.media$thumbnail && entry.media$thumbnail.url) {
-                    url = entry.media$thumbnail.url;
-                } else if (entry.content && entry.content.$t) {
-                    const m = entry.content.$t.match(/<img[^>]+src=["']([^"']+)["']/i);
-                    if (m && m[1]) url = m[1];
-                }
-                if (!url && entry.summary && entry.summary.$t) {
-                    const m = entry.summary.$t.match(/<img[^>]+src=["']([^"']+)["']/i);
-                    if (m && m[1]) url = m[1];
-                }
-                if (!url) return '';
+            // ---------- থাম্বনেইল: বড় সাইজ (s640) ----------
+function getThumbnail(entry) {
+    let url = '';
+    if (entry.media$thumbnail && entry.media$thumbnail.url) {
+        url = entry.media$thumbnail.url;
+    } else if (entry.content && entry.content.$t) {
+        const m = entry.content.$t.match(/<img[^>]+src=["']([^"']+)["']/i);
+        if (m && m[1]) url = m[1];
+    }
+    if (!url && entry.summary && entry.summary.$t) {
+        const m = entry.summary.$t.match(/<img[^>]+src=["']([^"']+)["']/i);
+        if (m && m[1]) url = m[1];
+    }
+    if (!url) return '';
 
-                // Blogger/Google-এর সব সাইজ প্যাটার্ন 16:9 (480x270) করে দেওয়া
-                url = url.replace(/\/s\d+(-c)?\//g, '/w480-h270-c/')
-                         .replace(/\/w\d+-h\d+(-c)?\//g, '/w480-h270-c/')
-                         .replace(/\/s72-c\//g, '/w480-h270-c/');
+    // Blogger-এর সব সাইজ প্যাটার্ন বড় s640 সাইজে রূপান্তর
+    url = url.replace(/\/s\d+(-c)?\//g, '/s640/')
+             .replace(/\/w\d+-h\d+(-c)?\//g, '/s640/')
+             .replace(/\/s72-c\//g, '/s640/');
 
-                // Googleusercontent-এ সাইজ প্যারামিটার
-                if (/googleusercontent\.com/.test(url)) {
-                    // পুরনো প্যারামিটার সরিয়ে নতুন 16:9 যোগ
-                    url = url.split('?')[0] + '?w=480&h=270&c=1';
-                }
-                return url;
-            }
+    // Googleusercontent-এ সাইজ প্যারামিটার
+    if (/googleusercontent\.com/.test(url)) {
+        url = url.split('?')[0] + '?imgmax=640';
+    }
+    return url;
+}
 
             // ---------- বাংলা তারিখ ----------
             function formatDate(iso) {

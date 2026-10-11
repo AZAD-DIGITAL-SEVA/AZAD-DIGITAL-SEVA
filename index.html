@@ -2104,30 +2104,41 @@
                     '</div>';
             }
 
-            // ---------- থাম্বনেইল: বড় সাইজ (s640) ----------
+           // ---------- থাম্বনেইল (নতুন Blogger সিস্টেমের জন্য) ----------
 function getThumbnail(entry) {
     let url = '';
+    
+    // ১. ফিড থেকে থাম্বনেইল URL নেওয়া
     if (entry.media$thumbnail && entry.media$thumbnail.url) {
         url = entry.media$thumbnail.url;
-    } else if (entry.content && entry.content.$t) {
+    } 
+    // ২. না পেলে কনটেন্ট থেকে প্রথম ছবি
+    else if (entry.content && entry.content.$t) {
         const m = entry.content.$t.match(/<img[^>]+src=["']([^"']+)["']/i);
         if (m && m[1]) url = m[1];
     }
+    // ৩. না পেলে সামারি থেকে প্রথম ছবি
     if (!url && entry.summary && entry.summary.$t) {
         const m = entry.summary.$t.match(/<img[^>]+src=["']([^"']+)["']/i);
         if (m && m[1]) url = m[1];
     }
     if (!url) return '';
 
-    // Blogger-এর সব সাইজ প্যাটার্ন বড় s640 সাইজে রূপান্তর
-    url = url.replace(/\/s\d+(-c)?\//g, '/s640/')
-             .replace(/\/w\d+-h\d+(-c)?\//g, '/s640/')
-             .replace(/\/s72-c\//g, '/s640/');
-
-    // Googleusercontent-এ সাইজ প্যারামিটার
-    if (/googleusercontent\.com/.test(url)) {
-        url = url.split('?')[0] + '?imgmax=640';
+    // ===== মূল সমাধান =====
+    // যদি লিংক blogger.googleusercontent.com হয় (নতুন সিস্টেম)
+    if (url.includes('blogger.googleusercontent.com')) {
+        // পুরনো সাইজ প্যারামিটার থাকলে সরিয়ে ফেলুন
+        url = url.split('?')[0];
+        // নতুন সাইজ প্যারামিটার যোগ করুন (16:9 অনুপাতে বড় সাইজ)
+        url += '?imgmax=800'; 
+    } 
+    // পুরনো সিস্টেমের লিংকের জন্য (bp.blogspot.com)
+    else {
+        // সব সাইজ প্যাটার্ন বড় s800 সাইজে রূপান্তর
+        url = url.replace(/\/s\d+(-c)?\//g, '/s800/')
+                 .replace(/\/w\d+-h\d+(-c)?\//g, '/s800/');
     }
+
     return url;
 }
 

@@ -371,6 +371,2464 @@
             object-fit: cover;
             display: block;
             background: #e6f0ee;
+            image-rendering: -webkit-optimize-contrast;
+            image-rendering: crisp-edges;
+            transform: translateZ(0);
+            backface-visibility: hidden;
+        }
+
+        .blog-thumb.no-image {
+            background: linear-gradient(135deg, #d0e2df, #a8d5cc);
+        }
+
+        .blog-body { padding: 12px 14px 16px; flex-grow: 1; display: flex; flex-direction: column; }
+
+        .blog-body h4 {
+            font-size: 1.02rem;
+            color: #075e54;
+            margin-bottom: 6px;
+            font-weight: 700;
+            line-height: 1.4;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .blog-body p {
+            font-size: 0.85rem;
+            color: #4a6075;
+            flex-grow: 1;
+            margin-bottom: 10px;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .blog-date { font-size: 0.72rem; color: #128c7e; font-weight: 600; }
+
+        /* ব্লগ লোডিং স্কেলেটন */
+        .blog-skeleton {
+            background: white;
+            border-radius: 14px;
+            overflow: hidden;
+            box-shadow: 0 6px 16px rgba(0,0,0,0.06);
+        }
+
+        .blog-skeleton .sk-thumb {
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            background: linear-gradient(90deg, #e6eeec 25%, #f4faf8 50%, #e6eeec 75%);
+            background-size: 200% 100%;
+            animation: skShine 1.4s infinite;
+        }
+
+        .blog-skeleton .sk-body { padding: 12px 14px 16px; }
+
+        .blog-skeleton .sk-line {
+            height: 12px;
+            border-radius: 6px;
+            background: linear-gradient(90deg, #e6eeec 25%, #f4faf8 50%, #e6eeec 75%);
+            background-size: 200% 100%;
+            animation: skShine 1.4s infinite;
+            margin-bottom: 8px;
+        }
+
+        .blog-skeleton .sk-line.short { width: 60%; }
+        .blog-skeleton .sk-line.tiny { width: 35%; height: 10px; }
+
+        @keyframes skShine {
+            0%   { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+
+        .blog-error {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 40px 20px;
+            color: #7b8cae;
+            font-size: 1rem;
+            font-weight: 600;
+            background: #ffffff;
+            border-radius: 14px;
+            box-shadow: 0 6px 16px rgba(0,0,0,0.06);
+        }
+
+        .blog-error a {
+            color: #128c7e;
+            text-decoration: underline;
+            font-weight: 700;
+        }
+
+        .view-more-wrap { text-align: center; margin: 25px 0 10px; }
+
+        .btn-view-more {
+            display: inline-block;
+            background: #128c7e;
+            color: white;
+            text-decoration: none;
+            padding: 12px 45px;
+            border-radius: 40px;
+            font-weight: 700;
+            font-size: 1rem;
+            transition: background 0.2s, transform 0.2s;
+            box-shadow: 0 6px 18px rgba(18,140,126,0.35);
+        }
+
+        .btn-view-more:hover { background: #075e54; transform: translateY(-2px); }
+
+        /* ================= ফটো স্লাইডার (সাদা ব্যাকগ্রাউন্ড, 16:6) ================= */
+        .hero-slider-section {
+            width: 100%;
+            background: #ffffff;
+            padding: 45px 40px 40px;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 0;
+            margin-bottom: 30px;
+        }
+
+        .hero-fixed-title {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #f9a826;
+            color: #1e2b3c;
+            font-size: 1rem;
+            font-weight: 700;
+            padding: 8px 32px;
+            border-radius: 0 0 20px 20px;
+            z-index: 20;
+            box-shadow: 0 6px 18px rgba(249,168,38,0.4);
+            white-space: nowrap;
+            letter-spacing: 0.3px;
+        }
+
+        .hero-slider-inner {
+            width: 100%;
+            max-width: 1100px;
+            aspect-ratio: 16 / 6;
+            border-radius: 18px;
+            overflow: hidden;
+            box-shadow: 0 12px 32px -10px rgba(0,0,0,0.25);
+            background: #f0f4f8;
+            position: relative;
+            margin-top: 25px;
+        }
+
+        .slide {
+            position: absolute;
+            inset: 0;
+            opacity: 0;
+            transition: opacity 0.8s ease-in-out;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .slide.active { opacity: 1; }
+
+        .slider-dots {
+            position: absolute;
+            bottom: 15px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 10px;
+            z-index: 10;
+        }
+
+        .slider-dots span {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.6);
+            box-shadow: 0 0 0 1px rgba(0,0,0,0.15);
+            cursor: pointer;
+            transition: background 0.2s, transform 0.2s;
+        }
+
+        .slider-dots span.active { background: #f9a826; transform: scale(1.2); }
+
+        /* ================= Thank You / ডোনার সেকশন ================= */
+        .thankyou-section {
+            margin: 50px auto 30px;
+            background: #ffffff;
+            border-radius: 20px;
+            padding: 25px 0;
+            box-shadow: 0 12px 28px -8px rgba(0,50,40,0.12);
+            border-top: 5px solid #f9a826;
+            overflow: hidden;
+            position: relative;
+            width: calc(100% - 40px);
+            max-width: 1200px;
+        }
+
+        .thankyou-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 25px 5px 25px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .thankyou-header h2 {
+            font-size: 1.5rem;
+            color: #075e54;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .thankyou-fixed {
+            background: #f9a826;
+            color: #1e2b3c;
+            font-weight: 700;
+            font-size: 0.8rem;
+            padding: 7px 16px;
+            border-radius: 30px;
+            box-shadow: 0 4px 12px rgba(249,168,38,0.4);
+            white-space: nowrap;
+        }
+
+        .thankyou-track-wrap {
+            overflow: hidden;
+            width: 100%;
+            padding: 15px 0 25px 0;
+        }
+
+        .thankyou-track {
+            display: flex;
+            gap: 16px;
+            width: max-content;
+            padding: 0 25px;
+            animation: slideRightToLeft 30s linear infinite;
+        }
+
+        .thankyou-track:hover { animation-play-state: paused; }
+
+        @keyframes slideRightToLeft {
+            0%   { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        .donor-card {
+            background: linear-gradient(135deg, #e3f2ef, #d0ece7);
+            border-left: 5px solid #128c7e;
+            border-radius: 14px;
+            padding: 14px 22px;
+            min-width: 230px;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            box-shadow: 0 4px 14px rgba(0,0,0,0.06);
+            flex-shrink: 0;
+        }
+
+        .donor-avatar {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: #128c7e;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.1rem;
+            flex-shrink: 0;
+        }
+
+        .donor-info { text-align: left; }
+
+        .donor-info strong {
+            display: block;
+            font-size: 0.95rem;
+            color: #075e54;
+            white-space: nowrap;
+        }
+
+        .donor-info span {
+            font-size: 0.8rem;
+            color: #128c7e;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+
+        /* ================= সব ডোনার দেখার বাটন ================= */
+        .view-all-donors-wrap {
+            text-align: center;
+            padding: 10px 20px 25px;
+            margin-top: 5px;
+            border-top: 2px dashed #e3ebf0;
+        }
+
+        .btn-view-all-donors {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: linear-gradient(135deg, #128c7e, #075e54);
+            color: #ffffff;
+            text-decoration: none;
+            padding: 13px 38px;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: 700;
+            letter-spacing: 0.3px;
+            box-shadow: 0 8px 22px rgba(18, 140, 126, 0.4);
+            transition: all 0.28s cubic-bezier(0.22, 1, 0.36, 1);
+            position: relative;
+            overflow: hidden;
+            font-family: 'Noto Sans Bengali', sans-serif;
+        }
+
+        .btn-view-all-donors::before {
+            content: "";
+            position: absolute;
+            top: 0; left: -80%;
+            width: 60%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.35), transparent);
+            transform: skewX(-20deg);
+            transition: left 0.7s;
+        }
+
+        .btn-view-all-donors:hover::before { left: 120%; }
+
+        .btn-view-all-donors:hover {
+            background: linear-gradient(135deg, #075e54, #0b2e2a);
+            transform: translateY(-3px);
+            box-shadow: 0 14px 30px rgba(18, 140, 126, 0.55);
+        }
+
+        .btn-view-all-donors:active { transform: translateY(-1px); }
+
+        .btn-view-all-donors span { font-size: 1.1rem; }
+
+        .view-all-note {
+            margin-top: 10px;
+            font-size: 0.82rem;
+            color: #7b8cae;
+            font-weight: 500;
+            font-style: italic;
+        }
+
+        /* ================= ওভারলে ================= */
+        .menu-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.4);
+            z-index: 999;
+            display: none;
+        }
+
+        .menu-overlay.show { display: block; }
+
+        /* ================= ফুটার ================= */
+        footer {
+            background: #0b2e2a;
+            color: #d4e6e3;
+            text-align: center;
+            padding: 20px 16px;
+            border-top: 4px solid #f9a826;
+        }
+
+        footer p { max-width: 700px; margin: 0 auto 8px; font-size: 0.9rem; line-height: 1.5; }
+
+        .footer-links {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px 18px;
+            margin: 10px 0 6px;
+        }
+
+        .footer-links a {
+            color: #c2e5df;
+            text-decoration: none;
+            font-size: 0.85rem;
+            transition: color 0.2s;
+        }
+
+        .footer-links a:hover { color: #f9a826; }
+
+        .copyright { font-size: 0.75rem; opacity: 0.75; margin-top: 10px; }
+
+        /* ================= DONATION MODAL ================= */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(6, 14, 38, 0.72);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 16px;
+            z-index: 9999;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.35s ease, visibility 0.35s ease;
+            overflow-y: auto;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal {
+            width: 100%;
+            max-width: 440px;
+            background: #fff;
+            border-radius: 28px;
+            padding: 34px 26px 28px;
+            text-align: center;
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.5);
+            transform: scale(0.85) translateY(30px);
+            opacity: 0;
+            transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.35s ease;
+            position: relative;
+            overflow: hidden;
+            margin: auto;
+        }
+
+        .modal-overlay.active .modal {
+            transform: scale(1) translateY(0);
+            opacity: 1;
+        }
+
+        .modal::before {
+            content: "";
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 6px;
+            background: linear-gradient(90deg, #5b7cfa, #a86bfa, #ff6ea6, #ffb347);
+            background-size: 300% 100%;
+            animation: slideGradient 6s linear infinite;
+        }
+
+        @keyframes slideGradient {
+            0%   { background-position: 0% 50%; }
+            100% { background-position: 300% 50%; }
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 14px;
+            right: 14px;
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            background: #f0f4ff;
+            border: none;
+            color: #3b5bf0;
+            font-size: 20px;
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.22s;
+            line-height: 1;
+            z-index: 2;
+        }
+
+        .modal-close:hover {
+            background: #3b5bf0;
+            color: #fff;
+            transform: rotate(90deg);
+        }
+
+        .modal-icon {
+            width: 78px;
+            height: 78px;
+            margin: 0 auto 16px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #eef3ff, #dbe6ff);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 38px;
+            box-shadow: 0 10px 25px rgba(91, 124, 250, 0.28), 0 0 0 8px rgba(91, 124, 250, 0.08);
+            animation: modalGentle 3s ease-in-out infinite;
+        }
+
+        @keyframes modalGentle {
+            0%, 100% { transform: translateY(0); }
+            50%      { transform: translateY(-6px); }
+        }
+
+        .modal h2 {
+            font-size: 23px;
+            font-weight: 800;
+            color: #0b1e4b;
+            margin-bottom: 6px;
+            letter-spacing: -0.3px;
+        }
+
+        .modal-subtitle {
+            font-size: 14.5px;
+            color: #6b7a99;
+            font-weight: 500;
+            margin-bottom: 18px;
+        }
+
+        .modal-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: linear-gradient(135deg, #fff4d6, #ffe7a3);
+            color: #7a5a00;
+            padding: 6px 15px;
+            border-radius: 30px;
+            font-size: 12.5px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            box-shadow: 0 6px 16px rgba(255, 200, 60, 0.28);
+            border: 1px solid rgba(255, 200, 60, 0.4);
+        }
+
+        .modal-qr {
+            position: relative;
+            width: 200px;
+            height: 200px;
+            margin: 0 auto 18px;
+            background: #fff;
+            border-radius: 20px;
+            padding: 10px;
+            box-shadow: 0 16px 36px rgba(11, 30, 75, 0.16), 0 0 0 1px rgba(91, 124, 250, 0.15);
+            transition: transform 0.3s;
+        }
+
+        .modal-qr::before,
+        .modal-qr::after {
+            content: "";
+            position: absolute;
+            width: 22px;
+            height: 22px;
+            border: 3px solid #5b7cfa;
+            border-radius: 5px;
+        }
+        .modal-qr::before { top: -5px; left: -5px; border-right: 0; border-bottom: 0; }
+        .modal-qr::after  { bottom: -5px; right: -5px; border-left: 0; border-top: 0; }
+
+        .modal-qr:hover { transform: scale(1.04) rotate(-1deg); }
+
+        .modal-qr img {
+            width: 100%;
+            height: 100%;
+            display: block;
+            border-radius: 12px;
+        }
+
+        .modal-upi {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            background: linear-gradient(135deg, #eef3ff, #e2ebff);
+            border: 1.5px dashed #a9befa;
+            border-radius: 14px;
+            padding: 12px 14px;
+            margin-bottom: 8px;
+            cursor: pointer;
+            transition: all 0.25s;
+            user-select: none;
+            -webkit-user-select: none;
+            position: relative;
+        }
+
+        .modal-upi:hover {
+            background: linear-gradient(135deg, #e2ebff, #d4e0ff);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 22px rgba(91, 124, 250, 0.18);
+        }
+
+        .modal-upi:active { transform: scale(0.98); }
+
+        .modal-upi.copied {
+            background: linear-gradient(135deg, #d4f5d4, #b8eab8) !important;
+            border-color: #4caf50;
+        }
+
+        .modal-upi .id-text {
+            font-size: 13px;
+            font-weight: 700;
+            color: #0b1e4b;
+            word-break: break-all;
+            flex: 1;
+            text-align: left;
+        }
+
+        .modal-upi .copy-icon {
+            font-size: 17px;
+            color: #5b7cfa;
+            flex-shrink: 0;
+            transition: all 0.2s;
+        }
+
+        .modal-upi.copied .copy-icon { color: #2e7d32; }
+
+        .modal-hint {
+            display: block;
+            font-size: 11.5px;
+            color: #93a3c2;
+            margin-bottom: 14px;
+            font-weight: 500;
+        }
+
+        .modal-name {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            background: linear-gradient(135deg, #fff8e6, #ffefc4);
+            border: 1.5px solid #ffd966;
+            border-radius: 16px;
+            padding: 12px 16px;
+            margin: 6px 0 16px;
+            box-shadow: 0 6px 18px rgba(255, 200, 60, 0.22);
+        }
+
+        .modal-name .name-label {
+            font-size: 11.5px;
+            color: #8a6d00;
+            font-weight: 600;
+            letter-spacing: 0.3px;
+        }
+
+        .modal-name .name-value {
+            font-size: 17px;
+            color: #0b1e4b;
+            font-weight: 800;
+            letter-spacing: 0.8px;
+            font-family: 'Poppins', 'Segoe UI', sans-serif;
+        }
+
+        .modal-name .name-note {
+            font-size: 11.5px;
+            color: #6b7a99;
+            font-weight: 500;
+            margin-top: 2px;
+            font-style: italic;
+        }
+
+        .modal-pay {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            width: 100%;
+            background: linear-gradient(135deg, #5b7cfa 0%, #3b5bf0 50%, #2d45c7 100%);
+            color: #fff;
+            text-decoration: none;
+            padding: 16px 20px;
+            border-radius: 60px;
+            font-size: 16.5px;
+            font-weight: 700;
+            box-shadow: 0 14px 28px rgba(59, 91, 240, 0.42);
+            transition: all 0.28s cubic-bezier(0.22, 1, 0.36, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .modal-pay::before {
+            content: "";
+            position: absolute;
+            top: 0; left: -80%;
+            width: 60%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.35), transparent);
+            transform: skewX(-20deg);
+            transition: left 0.7s;
+        }
+
+        .modal-pay:hover::before { left: 120%; }
+        .modal-pay:hover { transform: translateY(-3px); box-shadow: 0 20px 36px rgba(59, 91, 240, 0.55); }
+
+        .modal-msg {
+            margin-top: 22px;
+            padding: 20px 18px;
+            border-radius: 18px;
+            background: linear-gradient(135deg, #f7f9ff, #edf2ff);
+            border: 1px solid rgba(91, 124, 250, 0.15);
+            text-align: left;
+            position: relative;
+        }
+
+        .modal-msg::before {
+            content: "❝";
+            position: absolute;
+            top: -6px;
+            left: 12px;
+            font-size: 38px;
+            color: #5b7cfa;
+            opacity: 0.25;
+            font-family: Georgia, serif;
+            line-height: 1;
+        }
+
+        .modal-msg p {
+            font-size: 14px;
+            line-height: 1.8;
+            color: #24365e;
+            font-weight: 500;
+        }
+
+        .modal-msg p + p {
+            margin-top: 14px;
+            padding-top: 14px;
+            border-top: 1px dashed rgba(91, 124, 250, 0.28);
+        }
+
+        .modal-msg strong { color: #0b1e4b; font-weight: 700; }
+
+        /* ================= SUBSCRIBE MODAL ================= */
+        .sub-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(6, 14, 38, 0.75);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 16px;
+            z-index: 10000;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.35s ease, visibility 0.35s ease;
+            overflow-y: auto;
+        }
+
+        .sub-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .sub-modal {
+            width: 100%;
+            max-width: 430px;
+            background: #fff;
+            border-radius: 28px;
+            padding: 36px 26px 28px;
+            text-align: center;
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.55);
+            transform: scale(0.85) translateY(30px);
+            opacity: 0;
+            transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.35s ease;
+            position: relative;
+            overflow: hidden;
+            margin: auto;
+        }
+
+        .sub-overlay.active .sub-modal {
+            transform: scale(1) translateY(0);
+            opacity: 1;
+        }
+
+        .sub-modal::before {
+            content: "";
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 6px;
+            background: linear-gradient(90deg, #ff0000, #25d366, #ff0000, #25d366);
+            background-size: 400% 100%;
+            animation: subGradient 8s linear infinite;
+        }
+
+        @keyframes subGradient {
+            0%   { background-position: 0% 50%; }
+            100% { background-position: 400% 50%; }
+        }
+
+        .sub-close {
+            position: absolute;
+            top: 14px;
+            right: 14px;
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            background: #f0f4ff;
+            border: none;
+            color: #3b5bf0;
+            font-size: 20px;
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.22s;
+            line-height: 1;
+            z-index: 2;
+        }
+
+        .sub-close:hover {
+            background: #3b5bf0;
+            color: #fff;
+            transform: rotate(90deg);
+        }
+
+        .sub-icon-main {
+            width: 84px;
+            height: 84px;
+            margin: 0 auto 16px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #eef3ff, #dbe6ff);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+            box-shadow: 0 10px 25px rgba(91, 124, 250, 0.28), 0 0 0 8px rgba(91, 124, 250, 0.08);
+            animation: modalGentle 3s ease-in-out infinite;
+        }
+
+        .sub-modal h2 {
+            font-size: 23px;
+            font-weight: 800;
+            color: #0b1e4b;
+            margin-bottom: 8px;
+            letter-spacing: -0.3px;
+        }
+
+        .sub-modal .sub-desc {
+            font-size: 14px;
+            color: #6b7a99;
+            font-weight: 500;
+            line-height: 1.7;
+            margin-bottom: 22px;
+            padding: 0 6px;
+        }
+
+        .sub-modal .sub-desc strong {
+            color: #0b1e4b;
+            font-weight: 700;
+        }
+
+        .sub-actions {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 18px;
+        }
+
+        .btn-action {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            width: 100%;
+            padding: 14px 20px;
+            border-radius: 18px;
+            text-decoration: none;
+            color: #fff;
+            font-weight: 700;
+            font-family: 'Noto Sans Bengali', sans-serif;
+            transition: all 0.28s cubic-bezier(0.22, 1, 0.36, 1);
+            position: relative;
+            overflow: hidden;
+            text-align: left;
+        }
+
+        .btn-action::before {
+            content: "";
+            position: absolute;
+            top: 0; left: -80%;
+            width: 60%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transform: skewX(-20deg);
+            transition: left 0.7s;
+        }
+
+        .btn-action:hover::before { left: 120%; }
+
+        .btn-action:hover { transform: translateY(-3px); }
+        .btn-action:active { transform: translateY(-1px); }
+
+        .btn-youtube-action {
+            background: linear-gradient(135deg, #ff0000, #cc0000);
+            box-shadow: 0 10px 24px rgba(255, 0, 0, 0.35);
+        }
+        .btn-youtube-action:hover {
+            box-shadow: 0 16px 30px rgba(255, 0, 0, 0.5);
+        }
+
+        .btn-whatsapp-action {
+            background: linear-gradient(135deg, #25d366, #128c7e);
+            box-shadow: 0 10px 24px rgba(37, 211, 102, 0.35);
+        }
+        .btn-whatsapp-action:hover {
+            box-shadow: 0 16px 30px rgba(37, 211, 102, 0.5);
+        }
+
+        .btn-action .btn-icon-box {
+            width: 44px;
+            height: 44px;
+            background: rgba(255, 255, 255, 0.22);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            flex-shrink: 0;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .btn-action .btn-text {
+            display: flex;
+            flex-direction: column;
+            line-height: 1.25;
+            flex: 1;
+            min-width: 0;
+        }
+
+        .btn-action .btn-text small {
+            font-size: 11.5px;
+            font-weight: 500;
+            opacity: 0.92;
+            letter-spacing: 0.2px;
+        }
+
+        .btn-action .btn-text span {
+            font-size: 15.5px;
+            font-weight: 700;
+            letter-spacing: 0.2px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .btn-action .btn-arrow {
+            font-size: 18px;
+            opacity: 0.85;
+            flex-shrink: 0;
+            transition: transform 0.25s;
+        }
+
+        .btn-action:hover .btn-arrow {
+            transform: translateX(4px);
+        }
+
+        .sub-note {
+            margin-top: 6px;
+            padding-top: 16px;
+            border-top: 1px dashed #e3ebf0;
+            font-size: 13px;
+            color: #93a3c2;
+            font-weight: 500;
+            line-height: 1.6;
+        }
+
+        .sub-note strong { color: #0b1e4b; }
+
+        /* ================= TOAST ================= */
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%) translateY(90px);
+            background: linear-gradient(135deg, #075e54, #0b2e2a);
+            color: #fff;
+            padding: 13px 24px;
+            border-radius: 50px;
+            font-size: 14px;
+            font-weight: 600;
+            box-shadow: 0 18px 40px rgba(0, 0, 0, 0.4);
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+            z-index: 10001;
+            white-space: nowrap;
+            max-width: 90vw;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .toast.show {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+
+        body.modal-open { overflow: hidden; }
+
+        /* ================= রেসপন্সিভ ================= */
+        @media (max-width: 992px) {
+            .blog-grid { grid-template-columns: repeat(3, 1fr); }
+        }
+
+        @media (max-width: 768px) {
+            header { padding: 10px 14px; gap: 8px; }
+            .header-left { gap: 8px; flex: 1; }
+            .header-logo h1 { font-size: 1rem; }
+            .header-logo-icon { font-size: 1.5rem; }
+            .header-subtitle { display: none; }
+            .btn-donate, .btn-subscribe { display: none; }
+            .btn-login { font-size: 0.8rem; padding: 7px 16px; }
+
+            .card p { display: none; }
+            .card { padding: 22px 14px 20px; }
+            .card-link { margin-top: 4px; }
+            .blog-body p { display: none; }
+
+            .card-crop h3 { font-size: 0.85rem; line-height: 1.3; }
+            .card-invitation h3 { font-size: 0.85rem; line-height: 1.3; }
+
+            .service-grid { grid-template-columns: 1fr 1fr; gap: 14px; }
+            .blog-grid { grid-template-columns: repeat(2, 1fr); }
+            .container { padding: 20px 14px 40px; }
+            .hero-slider-section { padding: 45px 16px 28px; margin-bottom: 20px; }
+            .hero-fixed-title { font-size: 0.85rem; padding: 6px 20px; }
+
+            .thankyou-section {
+                margin: 35px auto 25px;
+                width: calc(100% - 24px);
+                border-radius: 16px;
+                border-top-width: 4px;
+            }
+
+            .thankyou-header {
+                padding: 16px 16px 5px 16px;
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+                gap: 10px;
+            }
+
+            .thankyou-header h2 {
+                font-size: 1.1rem;
+                justify-content: center;
+                gap: 6px;
+            }
+
+            .thankyou-fixed {
+                font-size: 0.7rem;
+                padding: 5px 14px;
+            }
+
+            .thankyou-track-wrap { padding: 12px 0 20px 0; }
+
+            .thankyou-track {
+                gap: 12px;
+                padding: 0 12px;
+                animation-duration: 22s;
+            }
+
+            .donor-card {
+                padding: 11px 16px;
+                min-width: 195px;
+                gap: 11px;
+                border-radius: 12px;
+                border-left-width: 4px;
+            }
+
+            .donor-avatar {
+                width: 38px;
+                height: 38px;
+                font-size: 0.95rem;
+            }
+
+            .donor-info strong { font-size: 0.84rem; }
+            .donor-info span { font-size: 0.72rem; }
+
+            footer { padding: 16px 12px; }
+            footer p { font-size: 0.82rem; margin-bottom: 6px; }
+            .footer-links { gap: 6px 14px; margin: 8px 0 4px; }
+            .footer-links a { font-size: 0.78rem; }
+            .copyright { font-size: 0.68rem; margin-top: 8px; }
+
+            .modal { padding: 28px 20px 24px; border-radius: 24px; }
+            .modal-icon { width: 68px; height: 68px; font-size: 34px; }
+            .modal h2 { font-size: 20px; }
+            .modal-qr { width: 175px; height: 175px; }
+            .modal-upi .id-text { font-size: 11.5px; }
+            .modal-name .name-value { font-size: 15px; }
+            .modal-pay { font-size: 15px; padding: 14px; }
+            .modal-msg { padding: 18px 14px; }
+            .modal-msg p { font-size: 13.5px; }
+        }
+
+        @media (max-width: 480px) {
+            .header-logo h1 { font-size: 0.88rem; }
+            .header-logo-icon { font-size: 1.3rem; }
+            .menu-toggle { width: 38px; height: 38px; }
+            .btn-login { font-size: 0.72rem; padding: 6px 12px; }
+            .blog-grid { grid-template-columns: 1fr 1fr; }
+            .card h3 { font-size: 1.05rem; }
+            .card-crop h3 { font-size: 0.78rem; line-height: 1.3; }
+            .card-invitation h3 { font-size: 0.78rem; line-height: 1.3; }
+            .hero-fixed-title { font-size: 0.72rem; padding: 5px 14px; }
+            .hero-slider-section { padding: 42px 10px 20px; margin-bottom: 16px; }
+
+            .thankyou-section {
+                margin: 30px auto 20px;
+                width: calc(100% - 20px);
+            }
+
+            .thankyou-header { padding: 14px 12px 5px 12px; }
+            .thankyou-header h2 { font-size: 1rem; }
+
+            .thankyou-fixed {
+                font-size: 0.64rem;
+                padding: 4px 12px;
+            }
+
+            .thankyou-track { padding: 0 10px; gap: 10px; }
+
+            .donor-card {
+                padding: 10px 14px;
+                min-width: 175px;
+                gap: 9px;
+            }
+
+            .donor-avatar {
+                width: 34px;
+                height: 34px;
+                font-size: 0.85rem;
+            }
+
+            .donor-info strong { font-size: 0.78rem; }
+            .donor-info span { font-size: 0.68rem; }
+
+            footer { padding: 14px 10px; }
+            footer p { font-size: 0.75rem; }
+            .footer-links { gap: 5px 10px; }
+            .footer-links a { font-size: 0.72rem; }
+            .copyright { font-size: 0.62rem; }
+
+            .modal-qr { width: 150px; height: 150px; }
+            .modal-name .name-value { font-size: 14px; }
+
+            .btn-view-all-donors {
+                padding: 11px 28px;
+                font-size: 0.9rem;
+            }
+            .view-all-note {
+                font-size: 0.75rem;
+            }
+
+            .sub-modal { padding: 30px 20px 24px; border-radius: 24px; }
+            .sub-icon-main { width: 72px; height: 72px; font-size: 34px; }
+            .sub-modal h2 { font-size: 20px; }
+            .sub-modal .sub-desc { font-size: 13px; }
+            .btn-action { padding: 12px 16px; gap: 12px; }
+            .btn-action .btn-icon-box { width: 40px; height: 40px; font-size: 20px; }
+            .btn-action .btn-text span { font-size: 14px; }
+            .btn-action .btn-text small { font-size: 10.5px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ================= হেডার ================= -->
+    <header>
+        <div class="header-left">
+            <button class="menu-toggle" id="menuToggle" aria-label="Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+
+            <div class="header-logo">
+                <span class="header-logo-icon">🖥️</span>
+                <div class="header-logo-text">
+                    <h1>Azad <span>Digital Seva</span></h1>
+                    <p class="header-subtitle">সরকারি ও বেসরকারি অনলাইন পরিষেবা</p>
+                </div>
+            </div>
+
+            <nav class="header-dropdown" id="headerDropdown">
+                <a href="index.html">🏠 Home</a>
+                <a href="blog.html">📝 Blog</a>
+                <a href="youtube.html">📺 YouTube</a>
+                <a href="facebook.html">📘 Facebook</a>
+                <a href="contact.html">📞 Contact</a>
+                <a href="about.html">ℹ️ About</a>
+            </nav>
+        </div>
+
+        <div class="header-actions">
+            <button class="btn-donate" id="openDonate">❤️ ডোনেশন</button>
+            <button class="btn-subscribe" id="openSubscribe">🔔 সাবস্ক্রাইব</button>
+            <button class="btn-login" onclick="location.href='login.html'">লগ ইন</button>
+        </div>
+    </header>
+
+    <div class="menu-overlay" id="menuOverlay"></div>
+
+    <!-- ================= ফটো স্লাইডার (সাদা ব্যাকগ্রাউন্ড, 16:6) ================= -->
+    <section class="hero-slider-section">
+
+        <div class="hero-fixed-title">🎉 আজাদ ডিজিটাল সেবা অফার</div>
+
+        <div class="hero-slider-inner" id="photoSlider">
+            <div class="slide active" style="background-image: url('https://i.postimg.cc/Twt18MSS/file-00000000c9d882118e0777930ec4675a.png');"></div>
+            <div class="slide" style="background-image: url('https://picsum.photos/id/1018/1600/600');"></div>
+            <div class="slide" style="background-image: url('https://picsum.photos/id/1025/1600/600');"></div>
+            <div class="slide" style="background-image: url('https://picsum.photos/id/1035/1600/600');"></div>
+            <div class="slide" style="background-image: url('https://picsum.photos/id/1043/1600/600');"></div>
+
+            <div class="slider-dots" id="sliderDots">
+                <span class="active" data-index="0"></span>
+                <span data-index="1"></span>
+                <span data-index="2"></span>
+                <span data-index="3"></span>
+                <span data-index="4"></span>
+            </div>
+        </div>
+
+    </section>
+
+    <!-- ================= মূল কনটেন্ট ================= -->
+    <main class="container">
+
+        <div class="service-grid">
+
+            <a href="gov-service.html" class="card card-gov">
+                <div class="card-icon">🏛️</div>
+                <h3>Government Services</h3>
+                <p>জাতীয় পরিচয়পত্র, জন্ম নিবন্ধন, অনলাইন আবেদন ও ডাউনলোড।</p>
+                <span class="card-link">বিস্তারিত</span>
+            </a>
+
+            <a href="online-service.html" class="card card-online">
+                <div class="card-icon">🌐</div>
+                <h3>Online Services</h3>
+                <p>অনলাইন ফরম পূরণ, সার্টিফিকেট ভেরিফিকেশন ও ডাউনলোড।</p>
+                <span class="card-link">বিস্তারিত</span>
+            </a>
+
+            <a href="card-crop-tools.html" class="card card-crop">
+                <div class="card-icon">✂️</div>
+                <h3>Smart Card Crop Tool</h3>
+                <p>সব কার্ডের PDF থেকে অটো ক্রপ করে PVC সাইজ ছবি তৈরি করুন।</p>
+                <span class="card-link">ক্রপ করুন</span>
+            </a>
+
+            <!-- ===== Invitation Card Order ===== -->
+            <a href="invitation-card.html" class="card card-invitation">
+                <div class="card-icon">💌</div>
+                <h3>Invitation Card Order</h3>
+                <p>বিয়ের কার্ড, হালখাতার কার্ড, জন্মদিনের কার্ড, ভিজিটিং কার্ড, রাবার স্ট্যাম্প, কাপড়ের ব্যাগ, জার্সি পেন্টিং ও মগ প্রিন্টিং।</p>
+                <span class="card-link">অর্ডার করুন</span>
+            </a>
+
+            <a href="insurance.html" class="card card-insurance">
+                <div class="card-icon">🛡️</div>
+                <h3>Vehicle Insurance</h3>
+                <p>গাড়ির বীমা, রিনিউ ও নতুন পলিসি সহ সকল ইনস্যুরেন্স সেবা।</p>
+                <span class="card-link">বীমা করুন</span>
+            </a>
+
+            <a href="azad-miking-studio.html" class="card card-public">
+                <div class="card-icon">🏢</div>
+                <h3>Public Services</h3>
+                <p>সরকারি ও বেসরকারি সকল পাবলিক পরিষেবা এক জায়গায়।</p>
+                <span class="card-link">দেখুন</span>
+            </a>
+
+        </div>
+
+        <h2 class="section-title">📝 Latest Blog</h2>
+
+        <!-- ================= Jante Hole ব্লগ থেকে অটো লোড ================= -->
+        <div class="blog-grid" id="blogGrid">
+            <!-- দ্রুত দেখানোর জন্য স্কেলেটন কার্ড -->
+            <div class="blog-skeleton">
+                <div class="sk-thumb"></div>
+                <div class="sk-body">
+                    <div class="sk-line"></div>
+                    <div class="sk-line short"></div>
+                    <div class="sk-line tiny"></div>
+                </div>
+            </div>
+            <div class="blog-skeleton">
+                <div class="sk-thumb"></div>
+                <div class="sk-body">
+                    <div class="sk-line"></div>
+                    <div class="sk-line short"></div>
+                    <div class="sk-line tiny"></div>
+                </div>
+            </div>
+            <div class="blog-skeleton">
+                <div class="sk-thumb"></div>
+                <div class="sk-body">
+                    <div class="sk-line"></div>
+                    <div class="sk-line short"></div>
+                    <div class="sk-line tiny"></div>
+                </div>
+            </div>
+            <div class="blog-skeleton">
+                <div class="sk-thumb"></div>
+                <div class="sk-body">
+                    <div class="sk-line"></div>
+                    <div class="sk-line short"></div>
+                    <div class="sk-line tiny"></div>
+                </div>
+            </div>
+            <div class="blog-skeleton">
+                <div class="sk-thumb"></div>
+                <div class="sk-body">
+                    <div class="sk-line"></div>
+                    <div class="sk-line short"></div>
+                    <div class="sk-line tiny"></div>
+                </div>
+            </div>
+            <div class="blog-skeleton">
+                <div class="sk-thumb"></div>
+                <div class="sk-body">
+                    <div class="sk-line"></div>
+                    <div class="sk-line short"></div>
+                    <div class="sk-line tiny"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="view-more-wrap">
+            <a href="https://jante-hole.blogspot.com/" target="_blank" rel="noopener" class="btn-view-more">View More →</a>
+        </div>
+
+    </main>
+
+    <!-- ================= Thank You / আমাদের ডোনারগণ ================= -->
+    <section class="thankyou-section">
+
+        <div class="thankyou-header">
+            <h2>🙏 আমাদের ডোনারগণ</h2>
+            <span class="thankyou-fixed">💖 Thank You</span>
+        </div>
+
+        <div class="thankyou-track-wrap">
+            <div class="thankyou-track" id="donorTrack">
+                <div class="donor-card">
+                    <div class="donor-avatar">R</div>
+                    <div class="donor-info">
+                        <strong>Rahul Sharma</strong>
+                        <span>₹ 100 ডোনেশন</span>
+                    </div>
+                </div>
+                <div class="donor-card">
+                    <div class="donor-avatar">A</div>
+                    <div class="donor-info">
+                        <strong>Abdul Karim</strong>
+                        <span>₹ 50 ডোনেশন</span>
+                    </div>
+                </div>
+                <div class="donor-card">
+                    <div class="donor-avatar">P</div>
+                    <div class="donor-info">
+                        <strong>Priya Patel</strong>
+                        <span>₹ 500 ডোনেশন</span>
+                    </div>
+                </div>
+                <div class="donor-card">
+                    <div class="donor-avatar">M</div>
+                    <div class="donor-info">
+                        <strong>Mohammed Irfan</strong>
+                        <span>₹ 200 ডোনেশন</span>
+                    </div>
+                </div>
+                <div class="donor-card">
+                    <div class="donor-avatar">S</div>
+                    <div class="donor-info">
+                        <strong>Sneha Verma</strong>
+                        <span>₹ 150 ডোনেশন</span>
+                    </div>
+                </div>
+                <div class="donor-card">
+                    <div class="donor-avatar">A</div>
+                    <div class="donor-info">
+                        <strong>Arjun Singh</strong>
+                        <span>₹ 20 ডোনেশন</span>
+                    </div>
+                </div>
+                <div class="donor-card">
+                    <div class="donor-avatar">F</div>
+                    <div class="donor-info">
+                        <strong>Fatima Khan</strong>
+                        <span>₹ 300 ডোনেশন</span>
+                    </div>
+                </div>
+                <div class="donor-card">
+                    <div class="donor-avatar">V</div>
+                    <div class="donor-info">
+                        <strong>Vikram Reddy</strong>
+                        <span>₹ 10 ডোনেশন</span>
+                    </div>
+                </div>
+                <div class="donor-card">
+                    <div class="donor-avatar">A</div>
+                    <div class="donor-info">
+                        <strong>Ayesha Siddiqui</strong>
+                        <span>₹ 250 ডোনেশন</span>
+                    </div>
+                </div>
+                <div class="donor-card">
+                    <div class="donor-avatar">K</div>
+                    <div class="donor-info">
+                        <strong>Kavita Joshi</strong>
+                        <span>₹ 100 ডোনেশন</span>
+                    </div>
+                </div>
+
+                <!-- ডুপ্লিকেট (স্লাইড কন্টিনিউয়াস রাখার জন্য) -->
+                <div class="donor-card">
+                    <div class="donor-avatar">R</div>
+                    <div class="donor-info">
+                        <strong>Rahul Sharma</strong>
+                        <span>₹ 100 ডোনেশন</span>
+                    </div>
+                </div>
+                <div class="donor-card">
+                    <div class="donor-avatar">A</div>
+                    <div class="donor-info">
+                        <strong>Abdul Karim</strong>
+                        <span>₹ 50 ডোনেশন</span>
+                    </div>
+                </div>
+                <div class="donor-card">
+                    <div class="donor-avatar">P</div>
+                    <div class="donor-info">
+                        <strong>Priya Patel</strong>
+                        <span>₹ 500 ডোনেশন</span>
+                    </div>
+                </div>
+                <div class="donor-card">
+                    <div class="donor-avatar">M</div>
+                    <div class="donor-info">
+                        <strong>Mohammed Irfan</strong>
+                        <span>₹ 200 ডোনেশন</span>
+                    </div>
+                </div>
+                <div class="donor-card">
+                    <div class="donor-avatar">S</div>
+                    <div class="donor-info">
+                        <strong>Sneha Verma</strong>
+                        <span>₹ 150 ডোনেশন</span>
+                    </div>
+                </div>
+                <div class="donor-card">
+                    <div class="donor-avatar">A</div>
+                    <div class="donor-info">
+                        <strong>Arjun Singh</strong>
+                        <span>₹ 20 ডোনেশন</span>
+                    </div>
+                </div>
+                <div class="donor-card">
+                    <div class="donor-avatar">F</div>
+                    <div class="donor-info">
+                        <strong>Fatima Khan</strong>
+                        <span>₹ 300 ডোনেশন</span>
+                    </div>
+                </div>
+                <div class="donor-card">
+                    <div class="donor-avatar">V</div>
+                    <div class="donor-info">
+                        <strong>Vikram Reddy</strong>
+                        <span>₹ 10 ডোনেশন</span>
+                    </div>
+                </div>
+                <div class="donor-card">
+                    <div class="donor-avatar">A</div>
+                    <div class="donor-info">
+                        <strong>Ayesha Siddiqui</strong>
+                        <span>₹ 250 ডোনেশন</span>
+                    </div>
+                </div>
+                <div class="donor-card">
+                    <div class="donor-avatar">K</div>
+                    <div class="donor-info">
+                        <strong>Kavita Joshi</strong>
+                        <span>₹ 100 ডোনেশন</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="view-all-donors-wrap">
+            <a href="all-donors.html" class="btn-view-all-donors">
+                <span>🙏</span> সব ডোনার দেখুন <span>→</span>
+            </a>
+            <p class="view-all-note">শেষ ৩০ দিনের সকল ডোনারের তালিকা</p>
+        </div>
+
+    </section>
+
+    <!-- ================= ফুটার ================= -->
+    <footer>
+        <p>🏢 Azad Digital Seva — আপনার বিশ্বস্ত অনলাইন সেবা প্রদানকারী</p>
+        <div class="footer-links">
+            <a href="index.html">Home</a>
+            <a href="services.html">Services</a>
+            <a href="tools.html">Tools</a>
+            <a href="notice.html">Notice</a>
+            <a href="contact.html">Contact</a>
+        </div>
+        <p class="copyright">© ২০২৫ Azad Digital Seva | সর্বস্বত্ব সংরক্ষিত</p>
+    </footer>
+
+    <!-- ================= DONATION MODAL ================= -->
+    <div class="modal-overlay" id="donateModal">
+        <div class="modal" role="dialog" aria-modal="true" aria-labelledby="donateTitle">
+
+            <button class="modal-close" id="closeModal" aria-label="বন্ধ করুন">✕</button>
+
+            <div class="modal-icon">🙏</div>
+
+            <h2 id="donateTitle">সাম্মানিক ডোনেশন</h2>
+            <p class="modal-subtitle">আপনার ভালোবাসায় এগিয়ে চলা</p>
+
+            <div class="modal-badge">
+                <span>💙</span> যতটুকু পারেন, ততটুকুই
+            </div>
+
+            <div class="modal-qr">
+                <img
+                    src="https://api.qrserver.com/v1/create-qr-code/?size=500x500&margin=10&data=upi%3A%2F%2Fpay%3Fpa%3DBHARATPE.9K0K0G1X4A535991%40unitype%26pn%3DHARUN%2520AL%2520RASID%26cu%3DINR"
+                    alt="UPI QR Code - HARUN AL RASID"
+                    loading="lazy"
+                >
+            </div>
+
+            <div class="modal-upi" id="modalUpi" title="কপি করতে ক্লিক করুন">
+                <span class="id-text" id="upiText">BHARATPE.9K0K0G1X4A535991@unitype</span>
+                <span class="copy-icon" id="copyIcon">📋</span>
+            </div>
+            <span class="modal-hint">👆 UPI আইডি কপি করতে ক্লিক করুন</span>
+
+            <div class="modal-name">
+                <span class="name-label">💳 পেমেন্ট গ্রহণকারী</span>
+                <span class="name-value">HARUN AL RASID</span>
+                <span class="name-note">নাম দেখে পেমেন্ট করবেন</span>
+            </div>
+
+            <a
+                href="upi://pay?pa=BHARATPE.9K0K0G1X4A535991@unitype&pn=HARUN%20AL%20RASID&cu=INR"
+                class="modal-pay"
+                target="_blank"
+                rel="noopener"
+            >
+                <span>💸</span> এখনই পেমেন্ট করুন
+            </a>
+
+            <div class="modal-msg">
+                <p>
+                    💡 আমরা চাই না আপনি বাধ্য হয়ে দান করুন।<br>
+                    আমরা চাই — <strong>আপনার ভালো লাগা থেকে যতটুকু পারেন, দিন।</strong><br>
+                    কারণ আপনার সেই সামান্য অবদানই আমাদের সবচেয়ে বড় শক্তি। 🙏
+                </p>
+                <p>
+                    🌸 দান মানে টাকা দেওয়া নয় —<br>
+                    <strong>দান মানে কারও পাশে দাঁড়ানো।</strong><br>
+                    আপনি আজ আমাদের পাশে দাঁড়ালে —<br>
+                    আগামীকাল আমরা হাজার মানুষের পাশে দাঁড়াতে পারব। 💙
+                </p>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- ================= SUBSCRIBE MODAL ================= -->
+    <div class="sub-overlay" id="subscribeModal">
+        <div class="sub-modal" role="dialog" aria-modal="true" aria-labelledby="subTitle">
+
+            <button class="sub-close" id="closeSubscribe" aria-label="বন্ধ করুন">✕</button>
+
+            <div class="sub-icon-main">🔔</div>
+
+            <h2 id="subTitle">আমাদের সাথে যুক্ত হোন</h2>
+            <p class="sub-desc">
+                <strong>YouTube</strong> এ সাবস্ক্রাইব করুন এবং <strong>WhatsApp</strong> চ্যানেলে যোগ দিন — সব আপডেট সবার আগে পেতে।
+            </p>
+
+            <div class="sub-actions">
+
+                <a
+                    href="https://www.youtube.com/@JanteHoleOfficial"
+                    class="btn-action btn-youtube-action"
+                    target="_blank"
+                    rel="noopener"
+                >
+                    <div class="btn-icon-box">📺</div>
+                    <div class="btn-text">
+                        <small>YouTube এ</small>
+                        <span>সাবস্ক্রাইব করুন</span>
+                    </div>
+                    <div class="btn-arrow">→</div>
+                </a>
+
+                <a
+                    href="https://whatsapp.com/channel/0029Vb7YXIFK0IBl3AWaPH2v"
+                    class="btn-action btn-whatsapp-action"
+                    target="_blank"
+                    rel="noopener"
+                >
+                    <div class="btn-icon-box">💬</div>
+                    <div class="btn-text">
+                        <small>WhatsApp এ</small>
+                        <span>চ্যানেলে যোগ দিন</span>
+                    </div>
+                    <div class="btn-arrow">→</div>
+                </a>
+
+            </div>
+
+            <p class="sub-note">
+                💙 <strong>ধন্যবাদ!</strong> আপনার সাপোর্টই আমাদের এগিয়ে চলার শক্তি।
+            </p>
+
+        </div>
+    </div>
+
+    <!-- Toast -->
+    <div class="toast" id="toast">✅ কপি হয়েছে!</div>
+
+    <!-- ================= JavaScript ================= -->
+    <script>
+        /* ===== ৩-ডট মেনু টগল ===== */
+        (function () {
+            const toggle = document.getElementById('menuToggle');
+            const dropdown = document.getElementById('headerDropdown');
+            const overlay = document.getElementById('menuOverlay');
+
+            function openMenu() {
+                dropdown.classList.add('open');
+                toggle.classList.add('active');
+                overlay.classList.add('show');
+            }
+            function closeMenu() {
+                dropdown.classList.remove('open');
+                toggle.classList.remove('active');
+                overlay.classList.remove('show');
+            }
+
+            toggle.addEventListener('click', (e) => {
+                e.stopPropagation();
+                dropdown.classList.contains('open') ? closeMenu() : openMenu();
+            });
+            overlay.addEventListener('click', closeMenu);
+            document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeMenu(); });
+            dropdown.addEventListener('click', (e) => e.stopPropagation());
+        })();
+
+        /* ===== ফটো স্লাইডার (৮ সেকেন্ড) ===== */
+        (function () {
+            const slides = document.querySelectorAll('.slide');
+            const dots = document.querySelectorAll('#sliderDots span');
+            let current = 0;
+            const total = slides.length;
+
+            function goTo(index) {
+                slides.forEach((s, i) => s.classList.toggle('active', i === index));
+                dots.forEach((d, i) => d.classList.toggle('active', i === index));
+                current = index;
+            }
+            function nextSlide() { goTo((current + 1) % total); }
+
+            // প্রতি ৮ সেকেন্ডে ছবি বদলাবে
+            let interval = setInterval(nextSlide, 8000);
+            dots.forEach((dot, i) => {
+                dot.addEventListener('click', () => {
+                    clearInterval(interval);
+                    goTo(i);
+                    interval = setInterval(nextSlide, 8000);
+                });
+            });
+        })();
+
+        /* ========================================================= */
+        /* ===== BLOGGER AUTO BLOG LOADER (৬টি পোস্ট, HD ছবি) ======== */
+        /* ========================================================= */
+        (function () {
+            const BLOG_URL  = 'https://jante-hole.blogspot.com';
+            const MAX_POSTS = 6;
+            const GRID_ID   = 'blogGrid';
+            const CACHE_KEY = 'ads_blog_cache_v3';
+            const CACHE_TTL = 5 * 60 * 1000;
+
+            const grid = document.getElementById(GRID_ID);
+            if (!grid) return;
+
+            // ---------- ক্যাশ ----------
+            function loadFromCache() {
+                try {
+                    const raw = localStorage.getItem(CACHE_KEY);
+                    if (!raw) return null;
+                    const obj = JSON.parse(raw);
+                    if (!obj || !obj.t || !obj.d) return null;
+                    if (Date.now() - obj.t > CACHE_TTL) return null;
+                    return obj.d;
+                } catch (e) { return null; }
+            }
+
+            function saveToCache(data) {
+                try {
+                    localStorage.setItem(CACHE_KEY, JSON.stringify({
+                        t: Date.now(),
+                        d: data
+                    }));
+                } catch (e) {}
+            }
+
+            // ---------- Blogger Feed ----------
+            function loadBloggerFeed(callback) {
+                const callbackName = 'bloggerFeedCallback_' + Date.now();
+                const feedUrl = BLOG_URL + '/feeds/posts/default'
+                              + '?alt=json-in-script'
+                              + '&max-results=' + MAX_POSTS
+                              + '&callback=' + callbackName;
+
+                window[callbackName] = function (data) {
+                    callback(data);
+                    try { delete window[callbackName]; } catch (e) { window[callbackName] = undefined; }
+                    const s = document.getElementById(callbackName);
+                    if (s && s.parentNode) s.parentNode.removeChild(s);
+                };
+
+                const script = document.createElement('script');
+                script.id = callbackName;
+                script.src = feedUrl;
+                script.async = true;
+                script.onerror = function () { showError(); };
+                document.body.appendChild(script);
+
+                setTimeout(function () {
+                    if (window[callbackName]) {
+                        try { delete window[callbackName]; } catch (e) {}
+                        const s = document.getElementById(callbackName);
+                        if (s && s.parentNode) s.parentNode.removeChild(s);
+                        if (!grid.querySelector('.blog-card')) showError();
+                    }
+                }, 8000);
+            }
+
+            function showError() {
+                grid.innerHTML =
+                    '<div class="blog-error">' +
+                        '⚠️ ব্লগ পোস্ট লোড করা যায়নি। ' +
+                        '<a href="' + BLOG_URL + '" target="_blank" rel="noopener">সরাসরি ব্লগ দেখুন →</a>' +
+                    '</div>';
+            }
+
+            // =====================================================
+            // ★★★ HD / পরিষ্কার ছবি ★★★
+            // =====================================================
+            function getHDThumbnail(entry) {
+                let url = '';
+
+                if (entry.media$thumbnail && entry.media$thumbnail.url) {
+                    url = entry.media$thumbnail.url;
+                }
+                if (!url && entry.content && entry.content.$t) {
+                    const m = entry.content.$t.match(/<img[^>]+src=["']([^"']+)["']/i);
+                    if (m && m[1]) url = m[1];
+                }
+                if (!url && entry.summary && entry.summary.$t) {
+                    const m = entry.summary.$t.match(/<img[^>]+src=["']([^"']+)["']/i);
+                    if (m && m[1]) url = m[1];
+                }
+                if (!url) return '';
+
+                url = url.replace(/&amp;/g, '&');
+
+                // পুরনো Blogger ডোমেইন (bp.blogspot.com)
+                if (url.includes('bp.blogspot.com')) {
+                    url = url.replace(/\/s\d+(-c)?\//, '/s1600/')
+                             .replace(/\/w\d+-h\d+(-c)?\//, '/s1600/')
+                             .replace(/\/s\d+(-c)?$/, '/s1600');
+                    if (!/\/s\d+/.test(url) && !/\/w\d+-h\d+/.test(url)) {
+                        url = url.replace(/(\/[^\/]+\.(jpg|jpeg|png|gif|webp))(\?.*)?$/i, '/s1600$1$3');
+                    }
+                }
+                // নতুন Blogger ডোমেইন (googleusercontent.com)
+                else if (url.includes('googleusercontent.com')) {
+                    url = url.split('=')[0];
+                    url = url.replace(/\/s\d+(-c)?\//, '/');
+                    url += '=s1600';
+                }
+
+                return url;
+            }
+
+            // ---------- বাংলা তারিখ ----------
+            function formatDate(iso) {
+                try {
+                    const d = new Date(iso);
+                    const months = ['জানুয়ারি','ফেব্রুয়ারি','মার্চ','এপ্রিল','মে','জুন',
+                                    'জুলাই','আগস্ট','সেপ্টেম্বর','অক্টোবর','নভেম্বর','ডিসেম্বর'];
+                    const bn = ['০','১','২','৩','৪','৫','৬','৭','৮','৯'];
+                    const toBn = (n) => String(n).split('').map(x => bn[x] || x).join('');
+                    return toBn(d.getDate()) + ' ' + months[d.getMonth()] + ', ' + toBn(d.getFullYear());
+                } catch (e) { return ''; }
+            }
+
+            function escapeHtml(s) {
+                return String(s).replace(/[&<>"']/g, c => (
+                    {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]
+                ));
+            }
+
+            // ---------- Feed পার্স ----------
+            function parseFeed(data) {
+                if (!data || !data.feed || !data.feed.entry) return [];
+                return data.feed.entry.map(function (entry) {
+                    let link = BLOG_URL;
+                    if (entry.link) {
+                        entry.link.forEach(function (l) {
+                            if (l.rel === 'alternate') link = l.href;
+                        });
+                    }
+                    const title = entry.title ? entry.title.$t : 'Untitled';
+
+                    let summary = '';
+                    if (entry.summary && entry.summary.$t) summary = entry.summary.$t;
+                    else if (entry.content && entry.content.$t) summary = entry.content.$t;
+                    summary = summary.replace(/<[^>]+>/g, '').trim();
+                    if (summary.length > 100) summary = summary.substring(0, 100) + '...';
+
+                    return {
+                        link: link,
+                        title: title,
+                        summary: summary,
+                        thumb: getHDThumbnail(entry),
+                        date: entry.published ? formatDate(entry.published.$t) : ''
+                    };
+                });
+            }
+
+            // ---------- রেন্ডার ----------
+            function renderPosts(posts) {
+                if (!posts || !posts.length) { showError(); return; }
+
+                const frag = document.createDocumentFragment();
+
+                posts.forEach(function (p) {
+                    const card = document.createElement('a');
+                    card.className = 'blog-card';
+                    card.href = p.link;
+                    card.target = '_blank';
+                    card.rel = 'noopener';
+
+                    const thumbHtml = p.thumb
+                        ? '<div class="blog-thumb"><img src="' + escapeHtml(p.thumb) + '" alt="' + escapeHtml(p.title) + '" loading="eager" decoding="async" fetchpriority="high"></div>'
+                        : '<div class="blog-thumb no-image">📰</div>';
+
+                    card.innerHTML =
+                        thumbHtml +
+                        '<div class="blog-body">' +
+                            '<h4>' + escapeHtml(p.title) + '</h4>' +
+                            '<p>' + escapeHtml(p.summary) + '</p>' +
+                            '<span class="blog-date">' + escapeHtml(p.date) + '</span>' +
+                        '</div>';
+
+                    frag.appendChild(card);
+                });
+
+                grid.innerHTML = '';
+                grid.appendChild(frag);
+            }
+
+            // ---------- শুরু ----------
+            const cached = loadFromCache();
+            if (cached && cached.length) renderPosts(cached);
+
+            function fetchFresh() {
+                loadBloggerFeed(function (data) {
+                    const posts = parseFeed(data);
+                    if (posts.length) {
+                        renderPosts(posts);
+                        saveToCache(posts);
+                    } else if (!cached) {
+                        showError();
+                    }
+                });
+            }
+
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', fetchFresh);
+            } else {
+                fetchFresh();
+            }
+        })();
+
+        /* ========================================================= */
+        /* ===== DONATION MODAL ==================================== */
+        /* ========================================================= */
+        (function () {
+            const overlay  = document.getElementById('donateModal');
+            const openBtn  = document.getElementById('openDonate');
+            const closeBtn = document.getElementById('closeModal');
+            const modalUpi = document.getElementById('modalUpi');
+            const copyIcon = document.getElementById('copyIcon');
+            const toast    = document.getElementById('toast');
+            const UPI_ID   = 'BHARATPE.9K0K0G1X4A535991@unitype';
+
+            const KEY_SHOWN_COUNT = 'ads_donate_shown_count';
+            const MAX_SHOW_COUNT  = 4;
+
+            const AUTO_DELAYS_MS = [180000, 300000, 480000, 1200000];
+
+            function getCount() {
+                try { return parseInt(localStorage.getItem(KEY_SHOWN_COUNT) || '0', 10) || 0; }
+                catch (e) { return 0; }
+            }
+            function setCount(n) {
+                try { localStorage.setItem(KEY_SHOWN_COUNT, String(n)); } catch (e) {}
+            }
+            function increaseCount() {
+                const n = getCount() + 1;
+                setCount(n);
+                return n;
+            }
+            function isLimitReached() {
+                return getCount() >= MAX_SHOW_COUNT;
+            }
+
+            function openModal() {
+                overlay.classList.add('active');
+                document.body.classList.add('modal-open');
+            }
+            function closeModal() {
+                overlay.classList.remove('active');
+                document.body.classList.remove('modal-open');
+            }
+
+            function showDonatePopup(from) {
+                if (from === 'manual') {
+                    openModal();
+                    return true;
+                }
+                if (isLimitReached()) return false;
+                increaseCount();
+                openModal();
+                return true;
+            }
+
+            if (openBtn) {
+                openBtn.addEventListener('click', function () {
+                    showDonatePopup('manual');
+                });
+            }
+
+            if (closeBtn) closeBtn.addEventListener('click', closeModal);
+            if (overlay) {
+                overlay.addEventListener('click', function (e) {
+                    if (e.target === overlay) closeModal();
+                });
+            }
+            document.addEventListener('keydown', function (e) {
+                if (e.key === 'Escape' && overlay.classList.contains('active')) {
+                    closeModal();
+                }
+            });
+
+            function showToast(msg) {
+                if (!toast) return;
+                toast.textContent = msg;
+                toast.classList.add('show');
+                clearTimeout(window.__toastTimer);
+                window.__toastTimer = setTimeout(function () {
+                    toast.classList.remove('show');
+                }, 2500);
+            }
+
+            function copyText(text) {
+                return new Promise(function (resolve, reject) {
+                    if (navigator.clipboard && navigator.clipboard.writeText && window.isSecureContext) {
+                        navigator.clipboard.writeText(text)
+                            .then(resolve)
+                            .catch(function () {
+                                legacyCopy(text) ? resolve() : reject();
+                            });
+                        return;
+                    }
+                    legacyCopy(text) ? resolve() : reject();
+                });
+            }
+
+            function legacyCopy(text) {
+                try {
+                    const ta = document.createElement('textarea');
+                    ta.value = text;
+                    ta.setAttribute('readonly', '');
+                    ta.style.position = 'absolute';
+                    ta.style.left = '-9999px';
+                    ta.style.top = '0';
+                    document.body.appendChild(ta);
+
+                    if (navigator.userAgent.match(/ipad|iphone/i)) {
+                        const range = document.createRange();
+                        range.selectNodeContents(ta);
+                        const sel = window.getSelection();
+                        sel.removeAllRanges();
+                        sel.addRange(range);
+                        ta.setSelectionRange(0, 999999);
+                    } else {
+                        ta.select();
+                    }
+
+                    const success = document.execCommand('copy');
+                    document.body.removeChild(ta);
+                    return success;
+                } catch (e) {
+                    return false;
+                }
+            }
+
+            if (modalUpi) {
+                modalUpi.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+
+                    copyText(UPI_ID)
+                        .then(function () {
+                            showToast('✅ UPI আইডি কপি হয়েছে!');
+                            modalUpi.classList.add('copied');
+                            if (copyIcon) copyIcon.textContent = '✅';
+                            setTimeout(function () {
+                                modalUpi.classList.remove('copied');
+                                if (copyIcon) copyIcon.textContent = '📋';
+                            }, 1800);
+                        })
+                        .catch(function () {
+                            showToast('❌ কপি হয়নি — ম্যানুয়ালি সিলেক্ট করুন');
+                        });
+                });
+
+                modalUpi.addEventListener('touchend', function (e) {
+                    e.preventDefault();
+                    modalUpi.click();
+                }, { passive: false });
+            }
+
+            function scheduleAutoPopups() {
+                const alreadyShown = getCount();
+                for (let i = alreadyShown; i < MAX_SHOW_COUNT; i++) {
+                    const delay = AUTO_DELAYS_MS[i];
+                    if (typeof delay !== 'number') continue;
+                    setTimeout(function () {
+                        if (!isLimitReached()) {
+                            showDonatePopup('auto');
+                        }
+                    }, delay);
+                }
+            }
+
+            window.addEventListener('load', function () {
+                setTimeout(scheduleAutoPopups, 1000);
+            });
+
+        })();
+
+        /* ========================================================= */
+        /* ===== SUBSCRIBE MODAL (YouTube + WhatsApp) ============== */
+        /* ========================================================= */
+        (function () {
+            const subOverlay  = document.getElementById('subscribeModal');
+            const subOpenBtn  = document.getElementById('openSubscribe');
+            const subCloseBtn = document.getElementById('closeSubscribe');
+
+            if (!subOverlay || !subOpenBtn || !subCloseBtn) return;
+
+            function openSubModal() {
+                subOverlay.classList.add('active');
+                document.body.classList.add('modal-open');
+            }
+            function closeSubModal() {
+                subOverlay.classList.remove('active');
+                document.body.classList.remove('modal-open');
+            }
+
+            subOpenBtn.addEventListener('click', openSubModal);
+            subCloseBtn.addEventListener('click', closeSubModal);
+
+            subOverlay.addEventListener('click', function (e) {
+                if (e.target === subOverlay) closeSubModal();
+            });
+
+            document.addEventListener('keydown', function (e) {
+                if (e.key === 'Escape' && subOverlay.classList.contains('active')) {
+                    closeSubModal();
+                }
+            });
+        })();
+    </script>
+
+</body>
+</html><!DOCTYPE html>
+<html lang="bn">
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-J6HGBMP17T"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-J6HGBMP17T');
+    </script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Azad Digital Seva</title>
+    <meta name="description" content="Azad Digital Seva - সরকারি ও বেসরকারি অনলাইন পরিষেবা, গুরুত্বপূর্ণ খবর এবং দরকারি অনলাইন টুলস।">
+
+    <!-- Preconnect: Blogger Feed দ্রুত লোডের জন্য -->
+    <link rel="preconnect" href="https://jante-hole.blogspot.com" crossorigin>
+    <link rel="dns-prefetch" href="https://jante-hole.blogspot.com">
+    <link rel="preconnect" href="https://blogger.googleusercontent.com" crossorigin>
+    <link rel="dns-prefetch" href="https://blogger.googleusercontent.com">
+    <link rel="preconnect" href="https://lh3.googleusercontent.com" crossorigin>
+    <link rel="dns-prefetch" href="https://lh3.googleusercontent.com">
+    <link rel="preconnect" href="https://1.bp.blogspot.com" crossorigin>
+    <link rel="dns-prefetch" href="https://1.bp.blogspot.com">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@400;500;600;700;800&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Segoe UI', Arial, 'Noto Sans Bengali', sans-serif;
+            background: #f0f4f8;
+            color: #1e2b3c;
+            line-height: 1.5;
+        }
+
+        /* ================= হেডার ================= */
+        header {
+            background: linear-gradient(135deg, #075e54, #128c7e);
+            color: white;
+            padding: 10px 20px;
+            border-bottom: 4px solid #f9a826;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 10px;
+            box-shadow: 0 4px 16px rgba(7, 94, 84, 0.25);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-shrink: 0;
+            position: relative;
+        }
+
+        .menu-toggle {
+            width: 42px;
+            height: 42px;
+            border-radius: 12px;
+            background: rgba(255,255,255,0.15);
+            border: 1.5px solid rgba(255,255,255,0.35);
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+            transition: background 0.2s, transform 0.2s;
+            flex-shrink: 0;
+        }
+
+        .menu-toggle:hover { background: rgba(255,255,255,0.28); transform: scale(1.05); }
+        .menu-toggle.active { background: #f9a826; border-color: #f9a826; }
+
+        .menu-toggle span {
+            width: 5px; height: 5px;
+            border-radius: 50%;
+            background: #fff;
+            transition: background 0.2s;
+        }
+
+        .menu-toggle.active span { background: #1e2b3c; }
+
+        .header-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-shrink: 0;
+        }
+
+        .header-logo-icon { font-size: 2rem; }
+
+        .header-logo-text {
+            display: flex;
+            flex-direction: column;
+            line-height: 1.15;
+        }
+
+        .header-logo h1 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            letter-spacing: 0.3px;
+            white-space: nowrap;
+        }
+
+        .header-logo h1 span { color: #f9a826; }
+
+        .header-subtitle {
+            font-size: 0.72rem;
+            font-weight: 400;
+            color: #d4ece8;
+            opacity: 0.9;
+            margin-top: 2px;
+            white-space: nowrap;
+        }
+
+        .header-dropdown {
+            position: absolute;
+            top: calc(100% + 12px);
+            left: 0;
+            background: #ffffff;
+            border-radius: 14px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.28);
+            padding: 10px;
+            display: none;
+            flex-direction: column;
+            gap: 2px;
+            min-width: 220px;
+            z-index: 1002;
+            border-top: 4px solid #f9a826;
+            animation: dropFade 0.2s ease;
+        }
+
+        @keyframes dropFade {
+            from { opacity: 0; transform: translateY(-8px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        .header-dropdown.open { display: flex; }
+
+        .header-dropdown a {
+            color: #1e2b3c;
+            text-decoration: none;
+            padding: 11px 16px;
+            border-radius: 10px;
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: background 0.15s, color 0.15s, padding-left 0.15s;
+            white-space: nowrap;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .header-dropdown a:hover { background: #e3f2ef; color: #075e54; padding-left: 22px; }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-shrink: 0;
+        }
+
+        .btn-donate, .btn-subscribe {
+            border: 1.5px solid rgba(255,255,255,0.7);
+            background: transparent;
+            color: #fff;
+            font-size: 0.85rem;
+            font-weight: 600;
+            padding: 7px 16px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-family: inherit;
+            transition: all 0.25s;
+            white-space: nowrap;
+        }
+
+        .btn-donate:hover { background: #f9a826; border-color: #f9a826; color: #1e2b3c; }
+        .btn-subscribe { background: #e74c3c; border-color: #e74c3c; }
+        .btn-subscribe:hover { background: #c0392b; }
+
+        .btn-login {
+            background: #fff;
+            color: #075e54;
+            border: none;
+            font-size: 0.9rem;
+            font-weight: 700;
+            padding: 8px 24px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-family: inherit;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            white-space: nowrap;
+        }
+
+        .btn-login:hover { background: #f9a826; color: #1e2b3c; }
+
+        /* ================= কনটেইনার ================= */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 30px 20px 50px;
+        }
+
+        /* ================= সার্ভিস গ্রিড ================= */
+        .service-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 18px;
+            margin-bottom: 45px;
+        }
+
+        .card {
+            border-radius: 18px;
+            padding: 28px 20px 24px;
+            text-align: center;
+            color: white;
+            box-shadow: 0 10px 24px -8px rgba(0,0,0,0.2);
+            transition: transform 0.25s, box-shadow 0.25s;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .card::after {
+            content: '';
+            position: absolute;
+            top: -30px; right: -30px;
+            width: 100px; height: 100px;
+            background: rgba(255,255,255,0.12);
+            border-radius: 50%;
+            transition: transform 0.4s;
+        }
+
+        .card:hover::after { transform: scale(1.8); }
+        .card:hover { transform: translateY(-6px); box-shadow: 0 18px 32px -10px rgba(0,0,0,0.3); }
+
+        .card-icon { font-size: 2.6rem; margin-bottom: 12px; position: relative; z-index: 1; }
+
+        .card h3 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 6px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .card p {
+            font-size: 0.9rem;
+            opacity: 0.95;
+            flex-grow: 1;
+            position: relative;
+            z-index: 1;
+            margin-bottom: 14px;
+        }
+
+        .card-link {
+            display: inline-block;
+            background: rgba(255,255,255,0.25);
+            border: 1.5px solid rgba(255,255,255,0.7);
+            color: white;
+            text-decoration: none;
+            padding: 7px 22px;
+            border-radius: 30px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            position: relative;
+            z-index: 1;
+            transition: background 0.2s;
+        }
+
+        .card-link:hover { background: rgba(255,255,255,0.45); }
+
+        .card-gov { background: linear-gradient(135deg, #1a6b5e, #0e8a75); }
+        .card-online { background: linear-gradient(135deg, #2b5e9e, #1e7bc4); }
+        .card-bill { background: linear-gradient(135deg, #b03a2e, #e74c3c); }
+        .card-recharge { background: linear-gradient(135deg, #d68910, #f39c12); }
+        .card-insurance { background: linear-gradient(135deg, #7d3c98, #a569bd); }
+        .card-public { background: linear-gradient(135deg, #1a5276, #2980b9); }
+
+        .card-crop { background: linear-gradient(135deg, #6d28d9, #ec4899); }
+
+        .card-crop h3 {
+            font-size: 1.3rem;
+            line-height: 1.35;
+            font-weight: 700;
+        }
+
+        /* ================= Invitation Card স্টাইল ================= */
+        .card-invitation {
+            background: linear-gradient(135deg, #d63384, #a61e6b);
+        }
+
+        .card-invitation h3 {
+            font-size: 1.1rem;
+            line-height: 1.35;
+            font-weight: 700;
+        }
+
+        .card-invitation p {
+            font-size: 0.82rem;
+            line-height: 1.5;
+        }
+
+        /* ================= সেকশন টাইটেল ================= */
+        .section-title {
+            font-size: 1.8rem;
+            color: #075e54;
+            margin: 40px 0 18px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #f9a826;
+            display: inline-block;
+            font-weight: 700;
+        }
+
+        /* ================= ব্লগ গ্রিড ================= */
+        .blog-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 18px;
+            margin-bottom: 20px;
+        }
+
+        .blog-card {
+            background: white;
+            border-radius: 14px;
+            overflow: hidden;
+            box-shadow: 0 6px 16px rgba(0,0,0,0.06);
+            transition: transform 0.25s, box-shadow 0.25s;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .blog-card:hover { transform: translateY(-5px); box-shadow: 0 14px 28px -8px rgba(7,94,84,0.25); }
+
+        /* ===== 16:9 থাম্বনেইল (পরিষ্কার ছবির জন্য) ===== */
+        .blog-thumb {
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            background: #d0e2df;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #075e54;
+            font-size: 2rem;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .blog-thumb img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            background: #e6f0ee;
             /* ছবি পরিষ্কার দেখানোর জন্য */
             image-rendering: -webkit-optimize-contrast;
             image-rendering: crisp-edges;

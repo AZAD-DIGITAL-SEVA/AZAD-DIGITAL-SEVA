@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ভারতীয় গাড়ির বীমা অবস্থা যাচাই</title>
+    <style>
+        * { box-sizing: border-box; font-family: system-ui, -apple-system, sans-serif; }
+        body { background: #f0f2f5; display: flex; justify-content: center; padding: 40px 16px; margin: 0; }
+        .card { background: #fff; border-radius: 16px; padding: 32px; max-width: 560px; width: 100%; box-shadow: 0 8px 24px rgba(0,0,0,0.08); }
+        h1 { font-size: 1.5rem; margin: 0 0 8px; color: #1a1a2e; }
+        .sub { color: #666; font-size: 0.9rem; margin-bottom: 24px; }
+        label { display: block; font-weight: 600; margin-bottom: 6px; color: #333; font-size: 0.95rem; }
+        input { width: 100%; padding: 12px 16px; border: 1.5px solid #ddd; border-radius: 10px; font-size: 1rem; text-transform: uppercase; letter-spacing: 1px; transition: border-color 0.2s; }
+        input:focus { outline: none; border-color: #4a6cf7; }
+        input::placeholder { text-transform: none; letter-spacing: normal; color: #aaa; }
+        button { width: 100%; padding: 14px; margin-top: 16px; background: #4a6cf7; color: #fff; border: none; border-radius: 10px; font-size: 1rem; font-weight: 600; cursor: pointer; transition: background 0.2s; }
+        button:hover { background: #3b5de7; }
+        button:disabled { background: #a0b0f0; cursor: not-allowed; }
+        .result { margin-top: 24px; padding: 20px; border-radius: 12px; display: none; }
+        .result.show { display: block; }
+        .result.active { background: #e8f5e9; border-left: 5px solid #2e7d32; }
+        .result.expired { background: #ffebee; border-left: 5px solid #c62828; }
+        .result.unknown { background: #fff8e1; border-left: 5px solid #f9a825; }
+        .result.error { background: #fce4ec; border-left: 5px solid #ad1457; }
+        .result .status { font-size: 1.2rem; font-weight: 700; margin-bottom: 12px; }
+        .result .detail { font-size: 0.9rem; color: #444; line-height: 1.8; }
+        .result .detail span { font-weight: 600; color: #1a1a2e; }
+        .note { margin-top: 20px; padding: 12px 16px; background: #f5f5f5; border-radius: 8px; font-size: 0.8rem; color: #777; line-height: 1.6; }
+    </style>
+</head>
+<body>
+<div class="card">
+    <h1>🚗 গাড়ির বীমা অবস্থা যাচাই</h1>
+    <p class="sub">ভারতীয় গাড়ির নম্বর ইনপুট দিন (যেমন MH12AB1234)</p>
+
+    <label for="vehicleInput">গাড়ির নিবন্ধন নম্বর</label>
+    <input type="text" id="vehicleInput" placeholder="MH12AB1234" maxlength="13" autocomplete="off">
+
+    <button id="checkBtn" onclick="checkInsurance()">যাচাই করুন</button>
+
+    <div id="result" class="result"></div>
+
+    <div class="note">
+        ⚠️ এই সরঞ্জামটি শুধুমাত্র পরীক্ষার জন্য, ডেটা তৃতীয় পক্ষের API থেকে আসে। প্রকৃত উৎপাদন পরিবেশে, API Key ব্যাকএন্ডে রাখুন। VAHAN ডেটা আপডেট হতে 15-30 দিন বিলম্ব হতে পারে।
+    </div>
+</div>
+
+<script>
+    // ========== এখানে আপনার নিজের API তথ্য দিয়ে প্রতিস্থাপন করুন ==========
+    const API_URL = 'https://api.eko.in/tools/kyc/vehicle-rc';
+    const API_KEY = 'YOUR_API_KEY';        // আপনার Eko developer_key
+    const SECRET_KEY = 'YOUR_SECRET_KEY';  // আপনার Eko secret-key (প্রকৃত ব্যবহারে ব্যাকএন্ডে সিগনেচার তৈরি করুন)
+    // =====================================================================
+
+    async function checkInsurance() {
+        const input = document.getElementById('vehicleInput');
+        const btn = document.getElementById('checkBtn');
+        const resultDiv = document.getElementById('result');
+        const vehicleNumber = input.value.trim().toUpperCase();
+
+        if (!vehicleNumber || vehicleNumber.length < 6) {
+            showResult('unknown', 'অনুগ্রহ করে সঠিক গাড়ির নম্বর ইনপুট দিন', '');
+            return;
+        }
+
+        btn.disabled = true;
+        btn.textContent = 'যাচাই করা হচ্ছে...';
+        resultDiv.className = 'result';
+        resultDiv.style.display = 'none';
+
+        try {
+            const payload = {
+                initiator_id: 'YOUR_INITIATOR_ID',
+                client_ref_id: 'test_' + Date.now(),
+                vehicle_number: vehicleNumber
+            };
+
+            const response = await fetch(API_URL, {
+                method: 'POST',
+                headers: {
+                    'developer_key': API_KEY,
+                    'secret-key': SECRET_KEY,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(payload)
+            });
+
+            const result = await response.json();
+            const data = result.data || result;
+
+            const insuranceUpto = data.vehicle_insurance_upto;
+            const companyName = data.vehicle_insurance_company_name || 'অজানা';
+            const policyNumber = data.vehicle_insurance_policy_number || 'অজানা';
+
+            if (!insuranceUpto) {
+                showResult('unknown', '⚠️ বীমার তথ্য পাওয়া যায়নি', 'এই গাড়ির VAHAN ডেটাবেসে বীমা রেকর্ড নেই, অথবা API প্রতিক্রিয়া ফরম্যাট ভিন্ন।');
+                return;
+            }
+
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
+            const expiry = new Date(insuranceUpto);
+            const isExpired = expiry < today;
+
+            if (isExpired) {
+                showResult('expired',
+                    '❌ বীমার মেয়াদ শেষ',
+                    `বীমা কোম্পানি: ${companyName}<br>পলিসি নম্বর: ${policyNumber}<br>মেয়াদ শেষের তারিখ: ${insuranceUpto}`
+                );
+            } else {
+                showResult('active',
+                    '✅ বীমা বৈধ',
+                    `বীমা কোম্পানি: ${companyName}<br>পলিসি নম্বর: ${policyNumber}<br>মেয়াদ শেষের তারিখ: ${insuranceUpto}`
+                );
+            }
+
+        } catch (error) {
+            showResult('error', '❌ অনুরোধ ব্যর্থ', 'ত্রুটি: ' + error.message + '<br>অনুগ্রহ করে API Key এবং অনুমতি সেটিংস পরীক্ষা করুন।');
+        } finally {
+            btn.disabled = false;
+            btn.textContent = 'যাচাই করুন';
+        }
+    }
+
+    function showResult(type, status, detail) {
+        const div = document.getElementById('result');
+        div.className = 'result show ' + type;
+        div.innerHTML = `<div class="status">${status}</div><div class="detail">${detail}</div>`;
+    }
+
+    // Enter কী সমর্থন
+    document.getElementById('vehicleInput').addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') checkInsurance();
+    });
+</script>
+</body>
+</html>

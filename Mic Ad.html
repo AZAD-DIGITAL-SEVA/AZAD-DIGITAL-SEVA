@@ -1,344 +1,724 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Azad Miking Studio — Professional Voice Generator</title>
-<style>
-    /* --- Base & Reset --- */
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { 
-        font-family: 'Inter', system-ui, -apple-system, sans-serif; 
-        background: #f8fafc; /* প্রফেশনাল সাদা-ধূসর ব্যাকগ্রাউন্ড */
-        color: #1e293b; 
-        line-height: 1.6; 
-        min-height: 100vh; 
-    }
-    .container { max-width: 1050px; margin: 0 auto; padding: 0 1.5rem; }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mic Ad | Azad AI Studio</title>
+    <meta name="description" content="Mic Ad - Azad AI Studio. 100+ Premium AI Photo & Video Prompts, AI Classes, and more.">
     
-    /* --- Header --- */
-    header { padding: 1.2rem 0; border-bottom: 1px solid #e2e8f0; background: #ffffff; }
-    .header-inner { display: flex; justify-content: space-between; align-items: center; }
-    .logo { font-size: 1.25rem; font-weight: 800; color: #0f172a; letter-spacing: -0.5px; }
-    .logo span { color: #2563eb; }
-    
-    /* --- Hero --- */
-    .hero { padding: 3rem 0 2rem; text-align: center; }
-    .hero h1 { font-size: clamp(2rem, 4vw, 2.8rem); font-weight: 800; color: #0f172a; line-height: 1.2; margin-bottom: 1rem; letter-spacing: -0.5px; }
-    .hero h1 span { color: #2563eb; }
-    .hero p { font-size: 1.1rem; color: #64748b; max-width: 600px; margin: 0 auto; }
-    
-    /* --- Studio App Box --- */
-    .studio-app { background: #ffffff; border: 1px solid #e2e8f0; border-radius: 20px; padding: 2rem; margin: 1.5rem 0 3rem; box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05); }
-    .app-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
-    @media (max-width: 768px) { .app-grid { grid-template-columns: 1fr; } .studio-app { padding: 1.5rem; } }
-    
-    /* --- Labels & Inputs --- */
-    .panel-title { font-size: 0.85rem; font-weight: 700; color: #475569; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem; }
-    .panel-title span { background: #eff6ff; color: #2563eb; width: 24px; height: 24px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 0.75rem; }
-    
-    .script-input { width: 100%; min-height: 220px; background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 12px; padding: 1rem; color: #1e293b; font-family: inherit; font-size: 1rem; resize: vertical; outline: none; transition: border 0.2s; }
-    .script-input:focus { border-color: #3b82f6; background: #ffffff; }
-    .script-input::placeholder { color: #94a3b8; }
-    
-    /* --- Voice Options --- */
-    .voice-list { display: grid; gap: 0.8rem; }
-    .voice-option { display: flex; align-items: center; gap: 1rem; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 12px; padding: 1rem; cursor: pointer; transition: all 0.2s; }
-    .voice-option:hover { border-color: #93c5fd; background: #eff6ff; }
-    .voice-option.selected { border-color: #3b82f6; background: #eff6ff; box-shadow: 0 0 0 1px #3b82f6; }
-    
-    .voice-avatar { width: 44px; height: 44px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.4rem; flex-shrink: 0; background: #ffffff; border: 1px solid #e2e8f0; }
-    .voice-info h4 { font-size: 1rem; font-weight: 600; color: #0f172a; margin-bottom: 0.1rem; }
-    .voice-info p { font-size: 0.8rem; color: #64748b; }
-    
-    .demo-btn { margin-left: auto; background: #ffffff; border: 1px solid #cbd5e1; color: #3b82f6; padding: 0.4rem 0.8rem; border-radius: 6px; font-size: 0.75rem; font-weight: 600; cursor: pointer; transition: all 0.2s; display: flex; align-items: center; gap: 0.3rem; }
-    .demo-btn:hover { background: #3b82f6; color: white; border-color: #3b82f6; }
-    
-    /* --- Actions --- */
-    .generate-wrap { margin-top: 2rem; display: flex; gap: 1rem; justify-content: center; }
-    .btn { display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem; padding: 0.9rem 2rem; border-radius: 10px; font-weight: 600; font-size: 1rem; cursor: pointer; border: none; font-family: inherit; transition: all 0.2s; }
-    .btn-primary { background: #2563eb; color: white; box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2); }
-    .btn-primary:hover:not(:disabled) { background: #1d4ed8; transform: translateY(-1px); }
-    .btn-primary:disabled { opacity: 0.6; cursor: not-allowed; background: #94a3b8; box-shadow: none; }
-    .btn-secondary { background: #ffffff; color: #475569; border: 1px solid #cbd5e1; }
-    .btn-secondary:hover { background: #f1f5f9; }
-    
-    /* --- Status & Output --- */
-    .status-msg { text-align: center; font-size: 0.9rem; color: #2563eb; margin-top: 1rem; min-height: 1.5em; font-weight: 500;}
-    .output-box { margin-top: 2rem; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 16px; padding: 1.5rem; display: none; animation: fadeIn 0.3s ease; }
-    .output-box.show { display: block; }
-    @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
-    
-    .output-header { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1rem; color: #059669; font-weight: 600; }
-    audio { width: 100%; margin-bottom: 1rem; border-radius: 8px; outline: none; }
-    
-    /* --- Footer --- */
-    footer { padding: 2rem 0; text-align: center; border-top: 1px solid #e2e8f0; color: #64748b; font-size: 0.9rem; background: #ffffff; }
-    footer strong { color: #0f172a; }
-</style>
+    <!-- Fonts & Icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Poppins:wght@500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        :root {
+            --primary: #4f46e5;
+            --primary-hover: #4338ca;
+            --bg-color: #f8fafc;
+            --card-bg: #ffffff;
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --border: #e2e8f0;
+            --success: #22c55e;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* ================= HEADER ================= */
+        header {
+            background: #ffffff;
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            padding: 15px 0;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+        }
+
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            color: var(--text-main);
+        }
+
+        .logo-icon {
+            width: 45px;
+            height: 45px;
+            background: linear-gradient(135deg, #6366f1, #a855f7);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+        }
+
+        .logo-text h1 {
+            font-size: 1.4rem;
+            font-weight: 800;
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.2;
+            letter-spacing: -0.5px;
+        }
+
+        .logo-text p {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+            color: var(--text-main);
+            font-weight: 600;
+            font-size: 0.9rem;
+            padding: 10px 20px;
+            border-radius: 10px;
+            background: var(--bg-color);
+            border: 1px solid var(--border);
+            transition: all 0.2s;
+        }
+
+        .back-btn:hover {
+            background: var(--card-bg);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            border-color: #cbd5e1;
+        }
+
+        /* ================= HERO SECTION ================= */
+        .hero {
+            text-align: center;
+            padding: 60px 20px 40px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: #eef2ff;
+            color: var(--primary);
+            padding: 8px 16px;
+            border-radius: 30px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            border: 1px solid #c7d2fe;
+        }
+
+        .hero h2 {
+            font-size: 3rem;
+            font-weight: 800;
+            line-height: 1.2;
+            margin-bottom: 15px;
+            color: #0f172a;
+            letter-spacing: -1px;
+        }
+
+        .hero h2 span {
+            background: linear-gradient(135deg, var(--primary), #a855f7);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p {
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* ================= MAIN CONTAINER ================= */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px 20px 80px;
+        }
+
+        /* ================= TABS ================= */
+        .tabs {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 40px;
+        }
+
+        .tab-btn {
+            padding: 12px 24px;
+            border-radius: 50px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            border: 1px solid var(--border);
+            background: white;
+            color: var(--text-muted);
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-family: inherit;
+        }
+
+        .tab-btn.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+            box-shadow: 0 4px 15px rgba(79, 70, 229, 0.3);
+        }
+
+        .tab-btn:hover:not(.active) {
+            background: #f1f5f9;
+            color: var(--text-main);
+        }
+
+        /* ================= GALLERY GRID ================= */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+            gap: 30px;
+        }
+
+        /* ================= GALLERY CARD ================= */
+        .gallery-item {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.03);
+            transition: transform 0.3s, box-shadow 0.3s;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .gallery-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px -5px rgba(0,0,0,0.1);
+        }
+
+        /* Media Wrapper (Image/Video Thumbnail) */
+        .media-wrapper {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            background: #e2e8f0;
+            overflow: hidden;
+            display: block;
+            text-decoration: none;
+        }
+
+        .media-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.5s;
+        }
+
+        .gallery-item:hover .media-wrapper img {
+            transform: scale(1.05);
+        }
+
+        /* Video Play Overlay */
+        .play-overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(0,0,0,0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s;
+            pointer-events: none;
+        }
+
+        .gallery-item:hover .play-overlay {
+            opacity: 1;
+        }
+
+        .play-icon {
+            width: 60px;
+            height: 60px;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #ef4444;
+            font-size: 1.5rem;
+            padding-left: 5px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+
+        /* Content Wrapper (Prompt & Copy Button) */
+        .content-wrapper {
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+
+        .prompt-label {
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .prompt-text {
+            font-size: 0.9rem;
+            color: #334155;
+            font-family: 'Inter', sans-serif;
+            background: #f8fafc;
+            padding: 15px;
+            border-radius: 10px;
+            border: 1px solid var(--border);
+            margin-bottom: 15px;
+            line-height: 1.5;
+            flex-grow: 1;
+            display: -webkit-box;
+            -webkit-line-clamp: 4;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            font-style: italic;
+        }
+
+        /* Copy Button */
+        .copy-btn {
+            width: 100%;
+            padding: 12px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            font-family: inherit;
+        }
+
+        .copy-btn:hover {
+            background: var(--primary-hover);
+        }
+
+        .copy-btn.copied {
+            background: var(--success);
+        }
+
+        /* ================= AI CLASSES SECTION ================= */
+        .class-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .class-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 30px;
+            text-decoration: none;
+            color: inherit;
+            transition: all 0.3s;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .class-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px -5px rgba(0,0,0,0.1);
+            border-color: var(--primary);
+        }
+
+        .class-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+        }
+
+        .class-card h3 {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: var(--text-main);
+        }
+
+        .class-card p {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin-bottom: 20px;
+            flex-grow: 1;
+        }
+
+        .class-link {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        /* ================= NEW ADD SECTION ================= */
+        .new-add-section {
+            text-align: center;
+            padding: 60px 20px;
+            background: white;
+            border-radius: 20px;
+            border: 1px dashed #cbd5e1;
+            margin-top: 20px;
+        }
+
+        .new-add-section i {
+            font-size: 3rem;
+            color: var(--primary);
+            margin-bottom: 20px;
+        }
+
+        .new-add-section h3 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .new-add-section p {
+            color: var(--text-muted);
+            margin-bottom: 20px;
+        }
+
+        /* ================= FOOTER ================= */
+        footer {
+            text-align: center;
+            padding: 30px 20px;
+            border-top: 1px solid var(--border);
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            background: white;
+        }
+
+        /* ================= RESPONSIVE ================= */
+        @media (max-width: 768px) {
+            .hero h2 { font-size: 2.2rem; }
+            .hero p { font-size: 1rem; }
+            .gallery-grid { grid-template-columns: 1fr; }
+            .class-grid { grid-template-columns: 1fr; }
+            .tabs { flex-direction: column; }
+            .tab-btn { width: 100%; justify-content: center; }
+        }
+    </style>
 </head>
 <body>
 
-<header>
-    <div class="container header-inner">
-        <div class="logo">Azad Miking <span>Studio</span></div>
-    </div>
-</header>
-
-<section class="hero">
-    <div class="container">
-        <h1>Create <span>Loudspeaker-Ready</span> Audio Ads<br>in Seconds</h1>
-        <p>Paste your shop announcement, choose a professional voice, and download your audio instantly.</p>
-    </div>
-</section>
-
-<div class="container" id="app">
-    <div class="studio-app">
-        <div class="app-grid">
-            <!-- Script Input Area -->
-            <div>
-                <div class="panel-title"><span>1</span> Paste Your Script</div>
-                <textarea id="scriptInput" class="script-input" placeholder="Example: আসসালামু আলাইকুম! আজ আমাদের দোকানে সব পণ্যে ৫০% ছাড়! আজই চলে আসুন..."></textarea>
-            </div>
-            
-            <!-- Voice Selection Area -->
-            <div>
-                <div class="panel-title"><span>2</span> Choose a Voice Model</div>
-                <div class="voice-list" id="voiceList"></div>
-            </div>
+    <!-- HEADER -->
+    <header>
+        <div class="header-container">
+            <a href="#" class="logo">
+                <div class="logo-icon"><i class="fa-solid fa-wand-magic-sparkles"></i></div>
+                <div class="logo-text">
+                    <h1>Mic Ad</h1>
+                    <p>Azad AI Studio</p>
+                </div>
+            </a>
+            <a href="index.html" class="back-btn"><i class="fa-solid fa-arrow-left"></i> Go Back</a>
         </div>
+    </header>
 
-        <!-- Action Buttons -->
-        <div class="generate-wrap">
-            <button class="btn btn-primary" id="generateBtn" disabled>
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" x2="12" y1="19" y2="22"/></svg>
-                Generate Audio
+    <!-- HERO SECTION -->
+    <section class="hero">
+        <div class="hero-badge">
+            <i class="fa-solid fa-bolt"></i> Premium Collection
+        </div>
+        <h2>Ignite Your <span>Creativity</span> with AI</h2>
+        <p>Explore the best AI prompts. Copy the exact prompt below the image or video to recreate the same stunning quality.</p>
+    </section>
+
+    <!-- MAIN CONTENT -->
+    <main class="container">
+        
+        <!-- TABS -->
+        <div class="tabs">
+            <button class="tab-btn active" onclick="switchTab('photo')">
+                <i class="fa-regular fa-images"></i> 100+ AI Photos
+            </button>
+            <button class="tab-btn" onclick="switchTab('video')">
+                <i class="fa-solid fa-video"></i> 100+ AI Videos
+            </button>
+            <button class="tab-btn" onclick="switchTab('class')">
+                <i class="fa-solid fa-graduation-cap"></i> AI Class
+            </button>
+            <button class="tab-btn" onclick="switchTab('new')">
+                <i class="fa-solid fa-plus"></i> New Add
             </button>
         </div>
 
-        <div class="status-msg" id="statusMsg"></div>
-
-        <!-- Audio Output Area -->
-        <div class="output-box" id="outputBox">
-            <div class="output-header">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
-                Your Audio is Ready!
-            </div>
-            <audio id="audioPlayer" controls></audio>
-            <div style="display: flex; gap: 1rem;">
-                <button class="btn btn-primary" id="downloadBtn">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
-                    Download Audio
-                </button>
-            </div>
+        <!-- 1. PHOTO GALLERY SECTION -->
+        <div id="photoSection" class="gallery-grid">
+            <!-- Rendered by JavaScript -->
         </div>
-    </div>
-</div>
 
-<footer>
-    <div class="container">
-        <strong>Azad Miking Studio</strong> &copy; 2025. All rights reserved.
-    </div>
-</footer>
+        <!-- 2. VIDEO GALLERY SECTION -->
+        <div id="videoSection" class="gallery-grid" style="display: none;">
+            <!-- Rendered by JavaScript -->
+        </div>
 
-<script>
-/* =========================================================
-   ⚠️ এখানে আপনার Cloudflare Worker-এর লিংক বসান
-   ========================================================= */
-const CLOUDFLARE_WORKER_URL = "https://azad-tts-proxy.your-subdomain.workers.dev"; 
-// উপরের লিংকের জায়গায় আপনার তৈরি করা Worker-এর লিংক বসান। 
-// যেমন: "https://azad-tts-proxy.azad.workers.dev"
+        <!-- 3. AI CLASS SECTION -->
+        <div id="classSection" class="class-grid" style="display: none;">
+            <a href="#" class="class-card">
+                <div class="class-icon" style="background:#eff6ff; color:#3b82f6;"><i class="fa-solid fa-image"></i></div>
+                <h3>AI Photo Creation Masterclass</h3>
+                <p>Learn step-by-step how to use Midjourney, DALL-E, and Stable Diffusion to create photorealistic images.</p>
+                <span class="class-link">Start Learning <i class="fa-solid fa-arrow-right"></i></span>
+            </a>
+            <a href="#" class="class-card">
+                <div class="class-icon" style="background:#fdf2f8; color:#ec4899;"><i class="fa-solid fa-film"></i></div>
+                <h3>AI Video Generation Basics</h3>
+                <p>Master RunwayML, Pika, and Sora to create cinematic videos using text prompts.</p>
+                <span class="class-link">Start Learning <i class="fa-solid fa-arrow-right"></i></span>
+            </a>
+            <a href="#" class="class-card">
+                <div class="class-icon" style="background:#f0fdf4; color:#22c55e;"><i class="fa-solid fa-microphone"></i></div>
+                <h3>AI Voice & Audio</h3>
+                <p>Generate realistic AI voices, clone your own voice, and create AI music for videos.</p>
+                <span class="class-link">Start Learning <i class="fa-solid fa-arrow-right"></i></span>
+            </a>
+            <a href="#" class="class-card">
+                <div class="class-icon" style="background:#fffbeb; color:#f59e0b;"><i class="fa-solid fa-pen-nib"></i></div>
+                <h3>Prompt Engineering 101</h3>
+                <p>The ultimate guide to writing perfect prompts for any AI tool to get exactly what you want.</p>
+                <span class="class-link">Start Learning <i class="fa-solid fa-arrow-right"></i></span>
+            </a>
+        </div>
 
-/* =========================================================
-   ⚙️ VOICE CONFIGURATION (ভবিষ্যতে এখানে পরিবর্তন করুন)
-   ========================================================= */
-const voices = [
-    { 
-        id: 'v1', 
-        name: 'Rafiq', 
-        desc: 'Young Male • Energetic', 
-        emoji: '👨‍🦱', 
-        apiVoice: 'Brian', // StreamElements API ভয়েস
-        pitch: 1.1, 
-        rate: 1.0 
-    },
-    { 
-        id: 'v2', 
-        name: 'Nusrat', 
-        desc: 'Young Female • Bright', 
-        emoji: '👩', 
-        apiVoice: 'Aditi', 
-        pitch: 1.2, 
-        rate: 1.0 
-    },
-    { 
-        id: 'v3', 
-        name: 'Karim', 
-        desc: 'Mature Male • Authoritative', 
-        emoji: '🧔', 
-        apiVoice: 'Brian', 
-        pitch: 0.85, 
-        rate: 0.9 
-    },
-    { 
-        id: 'v4', 
-        name: 'Fatima', 
-        desc: 'Mature Female • Calm', 
-        emoji: '👩‍🦳', 
-        apiVoice: 'Aditi', 
-        pitch: 0.9, 
-        rate: 0.9 
-    }
-];
+        <!-- 4. NEW ADD SECTION -->
+        <div id="newSection" class="new-add-section" style="display: none;">
+            <i class="fa-solid fa-cloud-arrow-up"></i>
+            <h3>More Coming Soon!</h3>
+            <p>We are constantly adding new AI tools, tips, and exclusive prompts. Stay tuned!</p>
+        </div>
 
-let selectedVoice = voices[0];
-let generatedAudioBlob = null;
-let audioContext = null;
+    </main>
 
-const voiceListEl = document.getElementById('voiceList');
-const scriptInput = document.getElementById('scriptInput');
-const generateBtn = document.getElementById('generateBtn');
-const statusMsg = document.getElementById('statusMsg');
-const outputBox = document.getElementById('outputBox');
-const audioPlayer = document.getElementById('audioPlayer');
-const downloadBtn = document.getElementById('downloadBtn');
+    <!-- FOOTER -->
+    <footer>
+        <p>© 2025 <strong>Mic Ad | Azad AI Studio</strong>. All rights reserved.</p>
+    </footer>
 
-// UI রেন্ডার
-function renderVoices() {
-    voiceListEl.innerHTML = '';
-    voices.forEach(v => {
-        const div = document.createElement('div');
-        div.className = 'voice-option' + (v.id === selectedVoice.id ? ' selected' : '');
-        div.innerHTML = `
-            <div class="voice-avatar">${v.emoji}</div>
-            <div class="voice-info"><h4>${v.name}</h4><p>${v.desc}</p></div>
-            <button class="demo-btn" onclick="playDemo(event, '${v.id}')">▶ Demo</button>
-        `;
-        div.addEventListener('click', (e) => { 
-            if(e.target.tagName === 'BUTTON') return; 
-            selectedVoice = v; 
-            renderVoices(); 
-        });
-        voiceListEl.appendChild(div);
-    });
-}
-renderVoices();
+    <!-- JAVASCRIPT -->
+    <script>
+        // ==========================================
+        // ADD YOUR PHOTO & PROMPT DATA HERE
+        // ==========================================
+        const photoData = [
+            {
+                image: "https://images.unsplash.com/photo-1517841905240-472988babdf9?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80", 
+                prompt: "A cinematic portrait of a beautiful Bengali woman wearing a red saree, golden hour lighting, 8k resolution, photorealistic, highly detailed face, bokeh background."
+            },
+            {
+                image: "https://images.unsplash.com/photo-1514565131-fce0801e5785?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+                prompt: "A futuristic cyberpunk city at night, neon lights, raining, reflections on the street, highly detailed, 4k, cinematic composition."
+            },
+            {
+                image: "https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+                prompt: "A cute fluffy white cat sitting on a windowsill, soft morning sunlight, glowing fur, macro photography, depth of field."
+            },
+            // Add more photos here...
+        ];
 
-// ইনপুট চেক
-scriptInput.addEventListener('input', () => {
-    generateBtn.disabled = scriptInput.value.trim().length === 0;
-});
+        // ==========================================
+        // ADD YOUR VIDEO & PROMPT DATA HERE
+        // ==========================================
+        const videoData = [
+            {
+                // Enter the YouTube Video ID here (e.g., if link is https://youtu.be/dQw4w9WgXcQ, ID is dQw4w9WgXcQ)
+                videoId: "dQw4w9WgXcQ", 
+                prompt: "A drone shot flying over a lush green rice field in Bangladesh, sunrise, golden light, cinematic 4k, smooth motion."
+            },
+            {
+                videoId: "3JZ_D3ELwOQ",
+                prompt: "A slow-motion video of a water droplet falling into a pool of water, creating ripples, macro lens, 120fps, hyper-realistic."
+            },
+            {
+                videoId: "L_jWHffIx5E",
+                prompt: "A futuristic car driving on a neon-lit highway at night, speed motion blur, cyberpunk style, cinematic video."
+            },
+            // Add more videos here...
+        ];
 
-// ডেমো প্লে (ব্রাউজারের নিজস্ব Web Speech API দিয়ে)
-window.playDemo = function(e, id) {
-    e.stopPropagation();
-    const v = voices.find(x => x.id === id);
-    if (!v) return;
-    
-    window.speechSynthesis.cancel();
-    const utterance = new SpeechSynthesisUtterance("আসসালামু আলাইকুম, এটি একটি ডেমো ভয়েস।");
-    utterance.pitch = v.pitch;
-    utterance.rate = v.rate;
-    utterance.lang = 'bn-IN'; 
-    
-    const sysVoices = window.speechSynthesis.getVoices();
-    const match = sysVoices.find(sv => sv.lang.includes('bn') || sv.lang.includes('hi'));
-    if (match) utterance.voice = match;
-    
-    window.speechSynthesis.speak(utterance);
-    statusMsg.textContent = `🔊 Playing ${v.name} demo...`;
-    utterance.onend = () => { statusMsg.textContent = ''; };
-};
+        // ==========================================
+        // DO NOT CHANGE THE CODE BELOW
+        // ==========================================
 
-// মেইন অডিও জেনারেট ফাংশন
-generateBtn.addEventListener('click', async () => {
-    const text = scriptInput.value.trim();
-    if (!text) return;
-    if (!CLOUDFLARE_WORKER_URL || CLOUDFLARE_WORKER_URL.includes('your-subdomain')) {
-        statusMsg.textContent = '⚠️ দয়া করে কোডে আপনার Cloudflare Worker-এর লিংকটি বসান।';
-        return;
-    }
+        // Switch Tabs Function
+        function switchTab(type) {
+            const sections = {
+                photo: document.getElementById('photoSection'),
+                video: document.getElementById('videoSection'),
+                class: document.getElementById('classSection'),
+                new: document.getElementById('newSection')
+            };
+            const tabBtns = document.querySelectorAll('.tab-btn');
 
-    generateBtn.style.display = 'none';
-    outputBox.classList.remove('show');
-    statusMsg.textContent = `⏳ Fetching audio from API...`;
-    if (generatedAudioBlob) URL.revokeObjectURL(generatedAudioBlob);
+            // Hide all sections
+            Object.values(sections).forEach(sec => {
+                if(sec) sec.style.display = 'none';
+            });
+            
+            // Remove active class from all tabs
+            tabBtns.forEach(btn => btn.classList.remove('active'));
 
-    try {
-        // ১. Cloudflare Worker প্রক্সি থেকে অডিও ফাইল আনা
-        // Worker এখানে StreamElements API-তে রিকোয়েস্ট পাঠাবে
-        const apiUrl = `${CLOUDFLARE_WORKER_URL}/?voice=${selectedVoice.apiVoice}&text=${encodeURIComponent(text)}`;
-        
-        const response = await fetch(apiUrl);
-        if (!response.ok) {
-            throw new Error(`API request failed with status ${response.status}`);
+            // Show selected section and set active class
+            if (sections[type]) {
+                if (type === 'photo' || type === 'video') {
+                    sections[type].style.display = 'grid';
+                } else if (type === 'class') {
+                    sections[type].style.display = 'grid';
+                } else {
+                    sections[type].style.display = 'block';
+                }
+            }
+
+            // Find the clicked button to make it active
+            const btnMap = { 'photo': 0, 'video': 1, 'class': 2, 'new': 3 };
+            if (tabBtns[btnMap[type]]) {
+                tabBtns[btnMap[type]].classList.add('active');
+            }
         }
-        
-        const arrayBuffer = await response.arrayBuffer();
-        
-        // ২. Web Audio API দিয়ে প্রসেস এবং রেকর্ড করা (ডাউনলোডের জন্য)
-        statusMsg.textContent = `⚙️ Processing audio for download...`;
-        
-        audioContext = new (window.AudioContext || window.webkitAudioContext)();
-        const decodedBuffer = await audioContext.decodeAudioData(arrayBuffer);
-        
-        const source = audioContext.createBufferSource();
-        source.buffer = decodedBuffer;
-        source.playbackRate.value = selectedVoice.rate;
-        
-        // রেকর্ডার সেটআপ
-        const dest = audioContext.createMediaStreamDestination();
-        source.connect(dest);
-        source.connect(audioContext.destination);
-        
-        const mediaRecorder = new MediaRecorder(dest.stream);
-        const chunks = [];
-        mediaRecorder.ondataavailable = e => { if (e.data.size) chunks.push(e.data); };
-        
-        const recordingPromise = new Promise(resolve => {
-            mediaRecorder.onstop = () => resolve(new Blob(chunks, { type: 'audio/webm' }));
+
+        // Copy to Clipboard Function
+        function copyPrompt(btnElement, text) {
+            navigator.clipboard.writeText(text).then(() => {
+                showCopiedState(btnElement);
+            }).catch(err => {
+                // Fallback if clipboard API fails
+                const textarea = document.createElement('textarea');
+                textarea.value = text;
+                document.body.appendChild(textarea);
+                textarea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textarea);
+                showCopiedState(btnElement);
+            });
+        }
+
+        // Button State after Copying
+        function showCopiedState(btnElement) {
+            const originalHTML = btnElement.innerHTML;
+            btnElement.innerHTML = '<i class="fa-solid fa-check"></i> Copied!';
+            btnElement.classList.add('copied');
+            
+            setTimeout(() => {
+                btnElement.innerHTML = originalHTML;
+                btnElement.classList.remove('copied');
+            }, 2000);
+        }
+
+        // Render Photos
+        function renderPhotos() {
+            const container = document.getElementById('photoSection');
+            if(!container) return;
+            container.innerHTML = ''; 
+
+            photoData.forEach((item, index) => {
+                const safePrompt = item.prompt.replace(/'/g, "\\'").replace(/"/g, '&quot;');
+                
+                const card = document.createElement('div');
+                card.className = 'gallery-item';
+                card.innerHTML = `
+                    <div class="media-wrapper">
+                        <img src="${item.image}" alt="AI Photo Prompt ${index + 1}" loading="lazy">
+                    </div>
+                    <div class="content-wrapper">
+                        <div class="prompt-label"><i class="fa-solid fa-quote-left"></i> Prompt</div>
+                        <div class="prompt-text">${item.prompt}</div>
+                        <button class="copy-btn" onclick="copyPrompt(this, '${safePrompt}')">
+                            <i class="fa-regular fa-copy"></i> Copy Prompt
+                        </button>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        // Render Videos
+        function renderVideos() {
+            const container = document.getElementById('videoSection');
+            if(!container) return;
+            container.innerHTML = '';
+
+            videoData.forEach((item, index) => {
+                const safePrompt = item.prompt.replace(/'/g, "\\'").replace(/"/g, '&quot;');
+                
+                const thumbnailUrl = `https://img.youtube.com/vi/${item.videoId}/maxresdefault.jpg`;
+                const videoLink = `https://www.youtube.com/watch?v=${item.videoId}`;
+
+                const card = document.createElement('div');
+                card.className = 'gallery-item';
+                card.innerHTML = `
+                    <a href="${videoLink}" target="_blank" class="media-wrapper">
+                        <img src="${thumbnailUrl}" alt="AI Video Prompt ${index + 1}" loading="lazy" onerror="this.src='https://img.youtube.com/vi/${item.videoId}/hqdefault.jpg'">
+                        <div class="play-overlay">
+                            <div class="play-icon"><i class="fa-solid fa-play"></i></div>
+                        </div>
+                    </a>
+                    <div class="content-wrapper">
+                        <div class="prompt-label"><i class="fa-solid fa-quote-left"></i> Prompt</div>
+                        <div class="prompt-text">${item.prompt}</div>
+                        <button class="copy-btn" onclick="copyPrompt(this, '${safePrompt}')">
+                            <i class="fa-regular fa-copy"></i> Copy Prompt
+                        </button>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        // Initialize on Page Load
+        document.addEventListener('DOMContentLoaded', () => {
+            renderPhotos();
+            renderVideos();
         });
-
-        mediaRecorder.start();
-        source.start(0);
-        statusMsg.textContent = `🎙️ Generating and recording... (Please wait)`;
-        
-        await new Promise(resolve => { source.onended = resolve; });
-        await new Promise(r => setTimeout(r, 300)); 
-        mediaRecorder.stop();
-        
-        generatedAudioBlob = await recordingPromise;
-        
-        // ৩. আউটপুট দেখানো
-        const audioUrl = URL.createObjectURL(generatedAudioBlob);
-        audioPlayer.src = audioUrl;
-        outputBox.classList.add('show');
-        statusMsg.textContent = `✅ Audio generated successfully!`;
-        
-    } catch (error) {
-        console.error(error);
-        statusMsg.textContent = `❌ Error: ${error.message}। আপনার Worker লিংক চেক করুন।`;
-    } finally {
-        generateBtn.style.display = 'inline-flex';
-        if (audioContext) audioContext.close();
-    }
-});
-
-// ডাউনলোড বাটন
-downloadBtn.addEventListener('click', () => {
-    if (!generatedAudioBlob) return;
-    const a = document.createElement('a');
-    a.href = URL.createObjectURL(generatedAudioBlob);
-    a.download = `azad-miking-${selectedVoice.name.toLowerCase()}-${Date.now()}.webm`;
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-});
-
-if ('speechSynthesis' in window) {
-    window.speechSynthesis.onvoiceschanged = () => window.speechSynthesis.getVoices();
-}
-</script>
-
+    </script>
 </body>
 </html>

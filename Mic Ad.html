@@ -1,0 +1,469 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="text-scale" content="scale" />
+    <title>Azad Miking Studio — Loudspeaker-Ready Audio Ads</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+            background: #0b0b10;
+            color: #e8e8f0;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+
+        /* Badge */
+        .badge {
+            display: inline-block;
+            background: rgba(168, 85, 247, 0.15);
+            color: #c084fc;
+            font-size: 0.8rem;
+            font-weight: 500;
+            padding: 0.35rem 1rem;
+            border-radius: 100px;
+            margin-bottom: 1.5rem;
+            letter-spacing: 0.5px;
+            border: 1px solid rgba(168, 85, 247, 0.25);
+        }
+
+        /* Header */
+        header {
+            padding: 1.5rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        }
+
+        .header-inner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.2rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #a78bfa, #f0abfc);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-link {
+            color: #9090a8;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.2s;
+        }
+
+        .nav-link:hover {
+            color: #e0e0f0;
+        }
+
+        /* Hero */
+        .hero {
+            padding: 4rem 0 3rem;
+        }
+
+        .hero h1 {
+            font-size: clamp(2.2rem, 5vw, 3.5rem);
+            font-weight: 800;
+            line-height: 1.15;
+            letter-spacing: -0.03em;
+            margin-bottom: 1.2rem;
+            max-width: 750px;
+        }
+
+        .hero h1 .gradient {
+            background: linear-gradient(135deg, #a78bfa, #f0abfc);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero p {
+            font-size: 1.1rem;
+            color: #a0a0b8;
+            max-width: 600px;
+            margin-bottom: 2rem;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 0.85rem 2rem;
+            border-radius: 100px;
+            font-weight: 600;
+            font-size: 1rem;
+            text-decoration: none;
+            transition: all 0.2s ease;
+            cursor: pointer;
+            border: none;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #7c3aed, #a855f7);
+            color: white;
+            box-shadow: 0 4px 20px rgba(124, 58, 237, 0.35);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(124, 58, 237, 0.5);
+        }
+
+        /* Section base */
+        section {
+            padding: 3.5rem 0;
+        }
+
+        .section-label {
+            color: #c084fc;
+            font-size: 0.8rem;
+            font-weight: 600;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            margin-bottom: 0.8rem;
+        }
+
+        .section-title {
+            font-size: clamp(1.6rem, 3vw, 2.2rem);
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            margin-bottom: 0.8rem;
+        }
+
+        .section-desc {
+            color: #9090a8;
+            max-width: 620px;
+            font-size: 1rem;
+            margin-bottom: 2.5rem;
+        }
+
+        /* Features */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.25rem;
+        }
+
+        .feature-card {
+            background: #12121a;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 18px;
+            padding: 1.8rem 1.5rem;
+            transition: border-color 0.25s, transform 0.25s;
+        }
+
+        .feature-card:hover {
+            border-color: rgba(168, 85, 247, 0.35);
+            transform: translateY(-3px);
+        }
+
+        .feature-icon {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .feature-card h3 {
+            font-size: 1.15rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .feature-card p {
+            color: #9090a8;
+            font-size: 0.95rem;
+        }
+
+        /* Use cases */
+        .usecase-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .usecase-card {
+            background: linear-gradient(145deg, #14141e, #1a1a28);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 16px;
+            padding: 1.5rem;
+        }
+
+        .usecase-card h4 {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 0.4rem;
+            color: #e0e0f0;
+        }
+
+        .usecase-card p {
+            color: #9090a8;
+            font-size: 0.9rem;
+            font-style: italic;
+        }
+
+        .usecase-list {
+            list-style: none;
+            display: grid;
+            gap: 0.6rem;
+        }
+
+        .usecase-list li {
+            color: #b0b0c8;
+            font-size: 0.95rem;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .usecase-list li::before {
+            content: "◆";
+            position: absolute;
+            left: 0;
+            color: #a855f7;
+            font-size: 0.7rem;
+            top: 0.25rem;
+        }
+
+        /* Pricing */
+        .pricing-card {
+            background: linear-gradient(145deg, #14141e, #1a1a2a);
+            border: 1px solid rgba(168, 85, 247, 0.25);
+            border-radius: 24px;
+            padding: 2.5rem;
+            max-width: 480px;
+            box-shadow: 0 20px 50px -20px rgba(124, 58, 237, 0.3);
+        }
+
+        .pricing-label {
+            color: #c084fc;
+            font-size: 0.8rem;
+            font-weight: 600;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            margin-bottom: 0.8rem;
+        }
+
+        .price {
+            font-size: 3rem;
+            font-weight: 800;
+            letter-spacing: -0.03em;
+            margin-bottom: 0.3rem;
+        }
+
+        .price span {
+            font-size: 1rem;
+            font-weight: 400;
+            color: #9090a8;
+        }
+
+        .pricing-desc {
+            color: #9090a8;
+            font-size: 0.95rem;
+            margin-bottom: 1.8rem;
+        }
+
+        .pricing-features {
+            list-style: none;
+            display: grid;
+            gap: 0.9rem;
+            margin-bottom: 2rem;
+        }
+
+        .pricing-features li {
+            display: flex;
+            align-items: center;
+            gap: 0.7rem;
+            font-size: 0.95rem;
+            color: #d0d0e0;
+        }
+
+        .check {
+            color: #a855f7;
+            font-weight: 700;
+        }
+
+        .pricing-card .btn {
+            width: 100%;
+            text-align: center;
+        }
+
+        /* Footer */
+        footer {
+            padding: 2.5rem 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.06);
+            text-align: center;
+        }
+
+        footer p {
+            color: #787890;
+            font-size: 0.9rem;
+        }
+
+        .footer-brand {
+            color: #a78bfa;
+            font-weight: 600;
+        }
+
+        @media (max-width: 600px) {
+            .hero {
+                padding: 2.5rem 0 2rem;
+            }
+            .pricing-card {
+                padding: 1.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="container header-inner">
+            <div class="logo">Azad Miking Studio</div>
+            <a href="#pricing" class="nav-link">Pricing</a>
+        </div>
+    </header>
+
+    <!-- Hero -->
+    <section class="hero">
+        <div class="container">
+            <div class="badge">Now live for local businesses</div>
+            <h1>
+                Loudspeaker-ready<br />
+                <span class="gradient">Audio Ads</span><br />
+                in seconds.
+            </h1>
+            <p>
+                The ultimate AI-powered platform for generating localized, professional
+                voiceovers tailored perfectly for local vendors. No studios. No delays.
+            </p>
+            <a href="#pricing" class="btn btn-primary">Start Creating</a>
+        </div>
+    </section>
+
+    <!-- What We Do -->
+    <section>
+        <div class="container">
+            <div class="section-label">What We Do</div>
+            <h2 class="section-title">From text prompt to loudspeaker</h2>
+            <p class="section-desc">
+                We turn complex ad production into a simple text prompt. Provide the details
+                of your shop, and our AI crafts a catchy script and converts it into
+                realistic, loudspeaker-ready audio.
+            </p>
+
+            <div class="features-grid">
+                <div class="feature-card">
+                    <span class="feature-icon">✍️</span>
+                    <h3>AI Scriptwriting</h3>
+                    <p>
+                        Struggling with what to say? Our advanced AI generates culturally
+                        relevant, highly persuasive scripts guaranteed to grab attention.
+                    </p>
+                </div>
+                <div class="feature-card">
+                    <span class="feature-icon">🗣️</span>
+                    <h3>Regional Languages</h3>
+                    <p>
+                        Speak directly to your local audience. We support native accents
+                        including flawless Bengali, Hindi, and other regional dialects.
+                    </p>
+                </div>
+                <div class="feature-card">
+                    <span class="feature-icon">📢</span>
+                    <h3>Loudspeaker Ready</h3>
+                    <p>
+                        The audio is engineered and mastered specifically for outdoor play,
+                        auto-rickshaw announcements, and shopfront speakers.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Designed for Local Commerce -->
+    <section>
+        <div class="container">
+            <div class="section-label">Designed for</div>
+            <h2 class="section-title">Local Commerce</h2>
+            <p class="section-desc">
+                Whether you are running a seasonal sale or announcing a grand opening,
+                Azad Miking Studio gets you heard. Stop relying on expensive voice actors
+                or low-quality recordings.
+            </p>
+
+            <ul class="usecase-list" style="margin-bottom: 2rem;">
+                <li>Clothing Stores (Pujo Sale, Eid Offers)</li>
+                <li>Grocery Shops &amp; Supermarkets</li>
+                <li>Mobile &amp; Electronic Showrooms</li>
+                <li>Political &amp; Event Announcements</li>
+            </ul>
+
+            <div class="usecase-grid">
+                <div class="usecase-card">
+                    <h4>Supermarket Drop</h4>
+                    <p>"Weekend mega savings on all dal and rice!"</p>
+                </div>
+                <div class="usecase-card">
+                    <h4>Mobile Shop</h4>
+                    <p>"New 5G smartphones starting exactly at ₹9,999!"</p>
+                </div>
+                <div class="usecase-card">
+                    <h4>Boutique Launch</h4>
+                    <p>"Exclusive Puja collection just arrived. Visit today!"</p>
+                </div>
+                <div class="usecase-card">
+                    <h4>Sales Announcement</h4>
+                    <p>"Hurry, clearance sale ends this Sunday!"</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing -->
+    <section id="pricing">
+        <div class="container">
+            <div class="section-label">Simple, Honest Pricing</div>
+            <h2 class="section-title">Pay only for what you generate</h2>
+            <p class="section-desc">
+                No hidden subscriptions. No lock-in. It's the most affordable way to
+                broadcast your business.
+            </p>
+
+            <div class="pricing-card">
+                <div class="pricing-label">Flat Rate</div>
+                <div class="price">₹50 <span>/ ad</span></div>
+                <p class="pricing-desc">
+                    Everything you need to get your message on the air.
+                </p>
+                <ul class="pricing-features">
+                    <li><span class="check">✓</span> Custom AI Script Generation</li>
+                    <li><span class="check">✓</span> Premium Regional Voices</li>
+                    <li><span class="check">✓</span> High-Quality MP3 Download</li>
+                    <li><span class="check">✓</span> Fast Cloud Processing</li>
+                </ul>
+                <a href="#" class="btn btn-primary">Generate Your Ad</a>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p><span class="footer-brand">Azad Miking Studio</span> &copy; 2025 — All rights reserved.</p>
+        </div>
+    </footer>
+
+</body>
+</html>

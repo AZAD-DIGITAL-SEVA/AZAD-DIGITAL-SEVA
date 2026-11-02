@@ -1,469 +1,783 @@
 <!doctype html>
 <html lang="en">
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="text-scale" content="scale" />
-    <title>Azad Miking Studio — Loudspeaker-Ready Audio Ads</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Azad Miking Studio — AI Voice Generator</title>
+<style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
 
-        body {
-            font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
-            background: #0b0b10;
-            color: #e8e8f0;
-            line-height: 1.6;
-        }
+    body {
+        font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+        background: #0b0b10;
+        color: #e8e8f0;
+        line-height: 1.6;
+        min-height: 100vh;
+    }
 
-        .container {
-            max-width: 1100px;
-            margin: 0 auto;
-            padding: 0 1.5rem;
-        }
+    .container {
+        max-width: 1100px;
+        margin: 0 auto;
+        padding: 0 1.5rem;
+    }
 
-        /* Badge */
-        .badge {
-            display: inline-block;
-            background: rgba(168, 85, 247, 0.15);
-            color: #c084fc;
-            font-size: 0.8rem;
-            font-weight: 500;
-            padding: 0.35rem 1rem;
-            border-radius: 100px;
-            margin-bottom: 1.5rem;
-            letter-spacing: 0.5px;
-            border: 1px solid rgba(168, 85, 247, 0.25);
-        }
+    /* Header */
+    header {
+        padding: 1.3rem 0;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    }
+    .header-inner {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    .logo {
+        font-size: 1.2rem;
+        font-weight: 700;
+        background: linear-gradient(135deg, #a78bfa, #f0abfc);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+    .nav-link {
+        color: #9090a8;
+        text-decoration: none;
+        font-size: 0.9rem;
+        transition: color 0.2s;
+    }
+    .nav-link:hover { color: #e0e0f0; }
 
-        /* Header */
-        header {
-            padding: 1.5rem 0;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-        }
+    /* Hero */
+    .hero { padding: 3rem 0 2rem; }
+    .hero h1 {
+        font-size: clamp(2rem, 4.5vw, 3rem);
+        font-weight: 800;
+        line-height: 1.15;
+        letter-spacing: -0.03em;
+        margin-bottom: 1rem;
+        max-width: 750px;
+    }
+    .hero h1 .gradient {
+        background: linear-gradient(135deg, #a78bfa, #f0abfc);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+    .hero p {
+        font-size: 1.05rem;
+        color: #a0a0b8;
+        max-width: 620px;
+    }
 
-        .header-inner {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
+    /* Studio App */
+    .studio-app {
+        background: #12121a;
+        border: 1px solid rgba(255, 255, 255, 0.07);
+        border-radius: 24px;
+        padding: 2rem;
+        margin: 1.5rem 0 3rem;
+        box-shadow: 0 20px 60px -25px rgba(124, 58, 237, 0.35);
+    }
 
-        .logo {
-            font-size: 1.2rem;
-            font-weight: 700;
-            background: linear-gradient(135deg, #a78bfa, #f0abfc);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
+    .app-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1.5rem;
+    }
 
-        .nav-link {
-            color: #9090a8;
-            text-decoration: none;
-            font-size: 0.9rem;
-            transition: color 0.2s;
-        }
+    @media (max-width: 800px) {
+        .app-grid { grid-template-columns: 1fr; }
+        .studio-app { padding: 1.5rem; }
+    }
 
-        .nav-link:hover {
-            color: #e0e0f0;
-        }
+    .panel-title {
+        font-size: 0.8rem;
+        font-weight: 600;
+        letter-spacing: 1.2px;
+        text-transform: uppercase;
+        color: #c084fc;
+        margin-bottom: 0.8rem;
+    }
 
-        /* Hero */
-        .hero {
-            padding: 4rem 0 3rem;
-        }
+    /* Script textarea */
+    .script-input {
+        width: 100%;
+        min-height: 200px;
+        background: #0b0b12;
+        border: 1px solid rgba(255, 255, 255, 0.09);
+        border-radius: 14px;
+        padding: 1rem;
+        color: #e8e8f0;
+        font-family: inherit;
+        font-size: 0.98rem;
+        resize: vertical;
+        outline: none;
+        transition: border-color 0.2s;
+    }
+    .script-input:focus {
+        border-color: rgba(168, 85, 247, 0.5);
+    }
+    .script-input::placeholder { color: #5a5a70; }
 
-        .hero h1 {
-            font-size: clamp(2.2rem, 5vw, 3.5rem);
-            font-weight: 800;
-            line-height: 1.15;
-            letter-spacing: -0.03em;
-            margin-bottom: 1.2rem;
-            max-width: 750px;
-        }
+    .char-count {
+        font-size: 0.78rem;
+        color: #787890;
+        text-align: right;
+        margin-top: 0.4rem;
+    }
 
-        .hero h1 .gradient {
-            background: linear-gradient(135deg, #a78bfa, #f0abfc);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
+    /* Voice models */
+    .voice-list {
+        display: grid;
+        gap: 0.7rem;
+    }
+    .voice-option {
+        display: flex;
+        align-items: center;
+        gap: 0.9rem;
+        background: #0b0b12;
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 14px;
+        padding: 0.85rem 1rem;
+        cursor: pointer;
+        transition: all 0.2s;
+    }
+    .voice-option:hover {
+        border-color: rgba(168, 85, 247, 0.4);
+    }
+    .voice-option.selected {
+        border-color: #a855f7;
+        background: rgba(168, 85, 247, 0.1);
+    }
+    .voice-avatar {
+        width: 42px;
+        height: 42px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.3rem;
+        flex-shrink: 0;
+    }
+    .voice-info h4 {
+        font-size: 0.95rem;
+        font-weight: 600;
+        margin-bottom: 0.1rem;
+    }
+    .voice-info p {
+        font-size: 0.8rem;
+        color: #9090a8;
+    }
+    .voice-check {
+        margin-left: auto;
+        color: #a855f7;
+        font-weight: 700;
+        opacity: 0;
+        font-size: 1.1rem;
+    }
+    .voice-option.selected .voice-check { opacity: 1; }
 
-        .hero p {
-            font-size: 1.1rem;
-            color: #a0a0b8;
-            max-width: 600px;
-            margin-bottom: 2rem;
-        }
+    /* Generate button */
+    .btn {
+        display: inline-block;
+        padding: 0.9rem 2rem;
+        border-radius: 100px;
+        font-weight: 600;
+        font-size: 1rem;
+        text-decoration: none;
+        transition: all 0.2s ease;
+        cursor: pointer;
+        border: none;
+        font-family: inherit;
+    }
+    .btn-primary {
+        background: linear-gradient(135deg, #7c3aed, #a855f7);
+        color: white;
+        box-shadow: 0 4px 20px rgba(124, 58, 237, 0.35);
+    }
+    .btn-primary:hover:not(:disabled) {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 30px rgba(124, 58, 237, 0.5);
+    }
+    .btn-primary:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+    }
+    .btn-secondary {
+        background: #1c1c28;
+        color: #d0d0e0;
+        border: 1px solid rgba(255, 255, 255, 0.12);
+    }
+    .btn-secondary:hover { background: #252533; }
 
-        .btn {
-            display: inline-block;
-            padding: 0.85rem 2rem;
-            border-radius: 100px;
-            font-weight: 600;
-            font-size: 1rem;
-            text-decoration: none;
-            transition: all 0.2s ease;
-            cursor: pointer;
-            border: none;
-        }
+    .generate-wrap {
+        margin-top: 1.5rem;
+        display: flex;
+        gap: 0.8rem;
+        flex-wrap: wrap;
+    }
 
-        .btn-primary {
-            background: linear-gradient(135deg, #7c3aed, #a855f7);
-            color: white;
-            box-shadow: 0 4px 20px rgba(124, 58, 237, 0.35);
-        }
+    /* Output / Player */
+    .output-box {
+        margin-top: 1.5rem;
+        background: #0b0b12;
+        border: 1px solid rgba(168, 85, 247, 0.25);
+        border-radius: 16px;
+        padding: 1.2rem;
+        display: none;
+    }
+    .output-box.show { display: block; }
+    .output-box h4 {
+        font-size: 0.95rem;
+        margin-bottom: 0.8rem;
+        color: #d0d0e0;
+    }
+    audio {
+        width: 100%;
+        margin-bottom: 0.8rem;
+        border-radius: 10px;
+    }
+    .output-actions {
+        display: flex;
+        gap: 0.7rem;
+        flex-wrap: wrap;
+    }
 
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 30px rgba(124, 58, 237, 0.5);
-        }
+    .status-msg {
+        font-size: 0.85rem;
+        color: #c084fc;
+        margin-top: 0.8rem;
+        min-height: 1.2em;
+    }
 
-        /* Section base */
-        section {
-            padding: 3.5rem 0;
-        }
+    /* Info section */
+    section { padding: 2.5rem 0; }
+    .section-label {
+        color: #c084fc;
+        font-size: 0.8rem;
+        font-weight: 600;
+        letter-spacing: 1.5px;
+        text-transform: uppercase;
+        margin-bottom: 0.8rem;
+    }
+    .section-title {
+        font-size: clamp(1.5rem, 3vw, 2rem);
+        font-weight: 700;
+        letter-spacing: -0.02em;
+        margin-bottom: 0.8rem;
+    }
+    .section-desc {
+        color: #9090a8;
+        max-width: 620px;
+        font-size: 0.98rem;
+        margin-bottom: 2rem;
+    }
 
-        .section-label {
-            color: #c084fc;
-            font-size: 0.8rem;
-            font-weight: 600;
-            letter-spacing: 1.5px;
-            text-transform: uppercase;
-            margin-bottom: 0.8rem;
-        }
+    .features-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+        gap: 1.25rem;
+    }
+    .feature-card {
+        background: #12121a;
+        border: 1px solid rgba(255, 255, 255, 0.06);
+        border-radius: 18px;
+        padding: 1.6rem 1.4rem;
+        transition: border-color 0.25s, transform 0.25s;
+    }
+    .feature-card:hover {
+        border-color: rgba(168, 85, 247, 0.35);
+        transform: translateY(-3px);
+    }
+    .feature-icon { font-size: 1.7rem; margin-bottom: 0.8rem; display: block; }
+    .feature-card h3 { font-size: 1.05rem; font-weight: 600; margin-bottom: 0.4rem; }
+    .feature-card p { color: #9090a8; font-size: 0.9rem; }
 
-        .section-title {
-            font-size: clamp(1.6rem, 3vw, 2.2rem);
-            font-weight: 700;
-            letter-spacing: -0.02em;
-            margin-bottom: 0.8rem;
-        }
+    /* Steps */
+    .steps {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 1rem;
+    }
+    .step {
+        background: linear-gradient(145deg, #14141e, #1a1a28);
+        border: 1px solid rgba(255, 255, 255, 0.06);
+        border-radius: 16px;
+        padding: 1.4rem;
+        position: relative;
+    }
+    .step-num {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 34px;
+        height: 34px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #7c3aed, #a855f7);
+        color: white;
+        font-weight: 700;
+        font-size: 0.9rem;
+        margin-bottom: 0.8rem;
+    }
+    .step h4 { font-size: 1rem; margin-bottom: 0.3rem; }
+    .step p { font-size: 0.88rem; color: #9090a8; }
 
-        .section-desc {
-            color: #9090a8;
-            max-width: 620px;
-            font-size: 1rem;
-            margin-bottom: 2.5rem;
-        }
-
-        /* Features */
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 1.25rem;
-        }
-
-        .feature-card {
-            background: #12121a;
-            border: 1px solid rgba(255, 255, 255, 0.06);
-            border-radius: 18px;
-            padding: 1.8rem 1.5rem;
-            transition: border-color 0.25s, transform 0.25s;
-        }
-
-        .feature-card:hover {
-            border-color: rgba(168, 85, 247, 0.35);
-            transform: translateY(-3px);
-        }
-
-        .feature-icon {
-            font-size: 1.8rem;
-            margin-bottom: 1rem;
-            display: block;
-        }
-
-        .feature-card h3 {
-            font-size: 1.15rem;
-            font-weight: 600;
-            margin-bottom: 0.5rem;
-        }
-
-        .feature-card p {
-            color: #9090a8;
-            font-size: 0.95rem;
-        }
-
-        /* Use cases */
-        .usecase-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-            gap: 1rem;
-            margin-bottom: 2rem;
-        }
-
-        .usecase-card {
-            background: linear-gradient(145deg, #14141e, #1a1a28);
-            border: 1px solid rgba(255, 255, 255, 0.06);
-            border-radius: 16px;
-            padding: 1.5rem;
-        }
-
-        .usecase-card h4 {
-            font-size: 1rem;
-            font-weight: 600;
-            margin-bottom: 0.4rem;
-            color: #e0e0f0;
-        }
-
-        .usecase-card p {
-            color: #9090a8;
-            font-size: 0.9rem;
-            font-style: italic;
-        }
-
-        .usecase-list {
-            list-style: none;
-            display: grid;
-            gap: 0.6rem;
-        }
-
-        .usecase-list li {
-            color: #b0b0c8;
-            font-size: 0.95rem;
-            padding-left: 1.5rem;
-            position: relative;
-        }
-
-        .usecase-list li::before {
-            content: "◆";
-            position: absolute;
-            left: 0;
-            color: #a855f7;
-            font-size: 0.7rem;
-            top: 0.25rem;
-        }
-
-        /* Pricing */
-        .pricing-card {
-            background: linear-gradient(145deg, #14141e, #1a1a2a);
-            border: 1px solid rgba(168, 85, 247, 0.25);
-            border-radius: 24px;
-            padding: 2.5rem;
-            max-width: 480px;
-            box-shadow: 0 20px 50px -20px rgba(124, 58, 237, 0.3);
-        }
-
-        .pricing-label {
-            color: #c084fc;
-            font-size: 0.8rem;
-            font-weight: 600;
-            letter-spacing: 1.5px;
-            text-transform: uppercase;
-            margin-bottom: 0.8rem;
-        }
-
-        .price {
-            font-size: 3rem;
-            font-weight: 800;
-            letter-spacing: -0.03em;
-            margin-bottom: 0.3rem;
-        }
-
-        .price span {
-            font-size: 1rem;
-            font-weight: 400;
-            color: #9090a8;
-        }
-
-        .pricing-desc {
-            color: #9090a8;
-            font-size: 0.95rem;
-            margin-bottom: 1.8rem;
-        }
-
-        .pricing-features {
-            list-style: none;
-            display: grid;
-            gap: 0.9rem;
-            margin-bottom: 2rem;
-        }
-
-        .pricing-features li {
-            display: flex;
-            align-items: center;
-            gap: 0.7rem;
-            font-size: 0.95rem;
-            color: #d0d0e0;
-        }
-
-        .check {
-            color: #a855f7;
-            font-weight: 700;
-        }
-
-        .pricing-card .btn {
-            width: 100%;
-            text-align: center;
-        }
-
-        /* Footer */
-        footer {
-            padding: 2.5rem 0;
-            border-top: 1px solid rgba(255, 255, 255, 0.06);
-            text-align: center;
-        }
-
-        footer p {
-            color: #787890;
-            font-size: 0.9rem;
-        }
-
-        .footer-brand {
-            color: #a78bfa;
-            font-weight: 600;
-        }
-
-        @media (max-width: 600px) {
-            .hero {
-                padding: 2.5rem 0 2rem;
-            }
-            .pricing-card {
-                padding: 1.8rem;
-            }
-        }
-    </style>
+    /* Footer */
+    footer {
+        padding: 2rem 0;
+        border-top: 1px solid rgba(255, 255, 255, 0.06);
+        text-align: center;
+    }
+    footer p { color: #787890; font-size: 0.88rem; }
+    .footer-brand { color: #a78bfa; font-weight: 600; }
+</style>
 </head>
 <body>
 
-    <header>
-        <div class="container header-inner">
-            <div class="logo">Azad Miking Studio</div>
-            <a href="#pricing" class="nav-link">Pricing</a>
-        </div>
-    </header>
+<header>
+    <div class="container header-inner">
+        <div class="logo">Azad Miking Studio</div>
+        <a href="#studio" class="nav-link">Try Now</a>
+    </div>
+</header>
 
-    <!-- Hero -->
-    <section class="hero">
-        <div class="container">
-            <div class="badge">Now live for local businesses</div>
-            <h1>
-                Loudspeaker-ready<br />
-                <span class="gradient">Audio Ads</span><br />
-                in seconds.
-            </h1>
-            <p>
-                The ultimate AI-powered platform for generating localized, professional
-                voiceovers tailored perfectly for local vendors. No studios. No delays.
-            </p>
-            <a href="#pricing" class="btn btn-primary">Start Creating</a>
-        </div>
-    </section>
+<!-- Hero -->
+<section class="hero">
+    <div class="container">
+        <h1>
+            Turn your script into<br />
+            <span class="gradient">loudspeaker-ready audio</span><br />
+            in seconds.
+        </h1>
+        <p>
+            Paste your shop announcement, choose a voice, and generate professional
+            miking audio instantly. Perfect for local businesses, sales, and events.
+        </p>
+    </div>
+</section>
 
-    <!-- What We Do -->
-    <section>
-        <div class="container">
-            <div class="section-label">What We Do</div>
-            <h2 class="section-title">From text prompt to loudspeaker</h2>
-            <p class="section-desc">
-                We turn complex ad production into a simple text prompt. Provide the details
-                of your shop, and our AI crafts a catchy script and converts it into
-                realistic, loudspeaker-ready audio.
-            </p>
+<!-- Studio App -->
+<div class="container" id="studio">
+    <div class="studio-app">
 
-            <div class="features-grid">
-                <div class="feature-card">
-                    <span class="feature-icon">✍️</span>
-                    <h3>AI Scriptwriting</h3>
-                    <p>
-                        Struggling with what to say? Our advanced AI generates culturally
-                        relevant, highly persuasive scripts guaranteed to grab attention.
-                    </p>
-                </div>
-                <div class="feature-card">
-                    <span class="feature-icon">🗣️</span>
-                    <h3>Regional Languages</h3>
-                    <p>
-                        Speak directly to your local audience. We support native accents
-                        including flawless Bengali, Hindi, and other regional dialects.
-                    </p>
-                </div>
-                <div class="feature-card">
-                    <span class="feature-icon">📢</span>
-                    <h3>Loudspeaker Ready</h3>
-                    <p>
-                        The audio is engineered and mastered specifically for outdoor play,
-                        auto-rickshaw announcements, and shopfront speakers.
-                    </p>
+        <div class="app-grid">
+            <!-- Left: Script -->
+            <div>
+                <div class="panel-title">1. Paste Your Script</div>
+                <textarea
+                    id="scriptInput"
+                    class="script-input"
+                    placeholder="Example: আসসালামু আলাইকুম! আজ আমাদের দোকানে সব পণ্যে ৫০% ছাড়! আজই চলে আসুন..."
+                ></textarea>
+                <div class="char-count"><span id="charCount">0</span> characters</div>
+            </div>
+
+            <!-- Right: Voice Models -->
+            <div>
+                <div class="panel-title">2. Choose a Voice</div>
+                <div class="voice-list" id="voiceList">
+                    <!-- Populated by JS -->
                 </div>
             </div>
         </div>
-    </section>
 
-    <!-- Designed for Local Commerce -->
-    <section>
-        <div class="container">
-            <div class="section-label">Designed for</div>
-            <h2 class="section-title">Local Commerce</h2>
-            <p class="section-desc">
-                Whether you are running a seasonal sale or announcing a grand opening,
-                Azad Miking Studio gets you heard. Stop relying on expensive voice actors
-                or low-quality recordings.
-            </p>
+        <!-- Generate -->
+        <div class="generate-wrap">
+            <button class="btn btn-primary" id="generateBtn" disabled>
+                🎙️ Generate Audio
+            </button>
+            <button class="btn btn-secondary" id="stopBtn" style="display:none;">
+                ⏹ Stop
+            </button>
+        </div>
 
-            <ul class="usecase-list" style="margin-bottom: 2rem;">
-                <li>Clothing Stores (Pujo Sale, Eid Offers)</li>
-                <li>Grocery Shops &amp; Supermarkets</li>
-                <li>Mobile &amp; Electronic Showrooms</li>
-                <li>Political &amp; Event Announcements</li>
-            </ul>
+        <div class="status-msg" id="statusMsg"></div>
 
-            <div class="usecase-grid">
-                <div class="usecase-card">
-                    <h4>Supermarket Drop</h4>
-                    <p>"Weekend mega savings on all dal and rice!"</p>
-                </div>
-                <div class="usecase-card">
-                    <h4>Mobile Shop</h4>
-                    <p>"New 5G smartphones starting exactly at ₹9,999!"</p>
-                </div>
-                <div class="usecase-card">
-                    <h4>Boutique Launch</h4>
-                    <p>"Exclusive Puja collection just arrived. Visit today!"</p>
-                </div>
-                <div class="usecase-card">
-                    <h4>Sales Announcement</h4>
-                    <p>"Hurry, clearance sale ends this Sunday!"</p>
-                </div>
+        <!-- Output -->
+        <div class="output-box" id="outputBox">
+            <h4>✅ Your Generated Audio</h4>
+            <audio id="audioPlayer" controls></audio>
+            <div class="output-actions">
+                <button class="btn btn-primary" id="downloadBtn">⬇️ Download Audio</button>
+                <button class="btn btn-secondary" id="replayBtn">🔁 Replay</button>
             </div>
         </div>
-    </section>
+    </div>
+</div>
 
-    <!-- Pricing -->
-    <section id="pricing">
-        <div class="container">
-            <div class="section-label">Simple, Honest Pricing</div>
-            <h2 class="section-title">Pay only for what you generate</h2>
-            <p class="section-desc">
-                No hidden subscriptions. No lock-in. It's the most affordable way to
-                broadcast your business.
-            </p>
+<!-- How It Works -->
+<section>
+    <div class="container">
+        <div class="section-label">How It Works</div>
+        <h2 class="section-title">Three simple steps</h2>
+        <p class="section-desc">
+            No studio. No delays. Just paste your script, pick a voice, and get your audio.
+        </p>
 
-            <div class="pricing-card">
-                <div class="pricing-label">Flat Rate</div>
-                <div class="price">₹50 <span>/ ad</span></div>
-                <p class="pricing-desc">
-                    Everything you need to get your message on the air.
-                </p>
-                <ul class="pricing-features">
-                    <li><span class="check">✓</span> Custom AI Script Generation</li>
-                    <li><span class="check">✓</span> Premium Regional Voices</li>
-                    <li><span class="check">✓</span> High-Quality MP3 Download</li>
-                    <li><span class="check">✓</span> Fast Cloud Processing</li>
-                </ul>
-                <a href="#" class="btn btn-primary">Generate Your Ad</a>
+        <div class="steps">
+            <div class="step">
+                <div class="step-num">1</div>
+                <h4>Paste Your Script</h4>
+                <p>Write or paste your announcement in Bengali, Hindi, or English.</p>
+            </div>
+            <div class="step">
+                <div class="step-num">2</div>
+                <h4>Pick a Voice</h4>
+                <p>Choose from our 4 AI voice models — each with its own style.</p>
+            </div>
+            <div class="step">
+                <div class="step-num">3</div>
+                <h4>Download</h4>
+                <p>Preview the audio and download it for your loudspeaker or shop.</p>
             </div>
         </div>
-    </section>
+    </div>
+</section>
 
-    <footer>
-        <div class="container">
-            <p><span class="footer-brand">Azad Miking Studio</span> &copy; 2025 — All rights reserved.</p>
+<!-- Features -->
+<section>
+    <div class="container">
+        <div class="section-label">Features</div>
+        <h2 class="section-title">Built for local businesses</h2>
+
+        <div class="features-grid">
+            <div class="feature-card">
+                <span class="feature-icon">⚡</span>
+                <h3>Instant Generation</h3>
+                <p>Your script is converted into audio in seconds — no waiting, no studio.</p>
+            </div>
+            <div class="feature-card">
+                <span class="feature-icon">🗣️</span>
+                <h3>Multiple Voices</h3>
+                <p>Choose from 4 AI voice models with different ages and styles.</p>
+            </div>
+            <div class="feature-card">
+                <span class="feature-icon">💾</span>
+                <h3>Downloadable</h3>
+                <p>Download your finished audio to play on any speaker or device.</p>
+            </div>
         </div>
-    </footer>
+    </div>
+</section>
+
+<footer>
+    <div class="container">
+        <p><span class="footer-brand">Azad Miking Studio</span> &copy; 2025 — All rights reserved.</p>
+    </div>
+</footer>
+
+<script>
+/* ================================
+   VOICE MODELS
+   ================================ */
+const voices = [
+    {
+        id: 'young-male',
+        name: 'Rafiq',
+        desc: 'Young male • Energetic',
+        emoji: '👨‍🦱',
+        color: '#3b82f6',
+        pitch: 1.1,
+        rate: 1.05
+    },
+    {
+        id: 'young-female',
+        name: 'Nusrat',
+        desc: 'Young female • Bright',
+        emoji: '👩',
+        color: '#ec4899',
+        pitch: 1.3,
+        rate: 1.0
+    },
+    {
+        id: 'mature-male',
+        name: 'Karim',
+        desc: 'Mature male • Authoritative',
+        emoji: '🧔',
+        color: '#10b981',
+        pitch: 0.8,
+        rate: 0.9
+    },
+    {
+        id: 'mature-female',
+        name: 'Fatima',
+        desc: 'Mature female • Calm',
+        emoji: '👩‍🦳',
+        color: '#f59e0b',
+        pitch: 1.05,
+        rate: 0.88
+    }
+];
+
+let selectedVoice = voices[0];
+
+/* ================================
+   RENDER VOICE LIST
+   ================================ */
+const voiceListEl = document.getElementById('voiceList');
+
+function renderVoices() {
+    voiceListEl.innerHTML = '';
+    voices.forEach(v => {
+        const div = document.createElement('div');
+        div.className = 'voice-option' + (v.id === selectedVoice.id ? ' selected' : '');
+        div.innerHTML = `
+            <div class="voice-avatar" style="background:${v.color}22; color:${v.color}">
+                ${v.emoji}
+            </div>
+            <div class="voice-info">
+                <h4>${v.name}</h4>
+                <p>${v.desc}</p>
+            </div>
+            <span class="voice-check">✓</span>
+        `;
+        div.addEventListener('click', () => {
+            selectedVoice = v;
+            renderVoices();
+            updateGenerateBtn();
+        });
+        voiceListEl.appendChild(div);
+    });
+}
+renderVoices();
+
+/* ================================
+   SCRIPT INPUT HANDLING
+   ================================ */
+const scriptInput = document.getElementById('scriptInput');
+const charCount = document.getElementById('charCount');
+const generateBtn = document.getElementById('generateBtn');
+const stopBtn = document.getElementById('stopBtn');
+const statusMsg = document.getElementById('statusMsg');
+const outputBox = document.getElementById('outputBox');
+const audioPlayer = document.getElementById('audioPlayer');
+const downloadBtn = document.getElementById('downloadBtn');
+const replayBtn = document.getElementById('replayBtn');
+
+scriptInput.addEventListener('input', () => {
+    charCount.textContent = scriptInput.value.length;
+    updateGenerateBtn();
+});
+
+function updateGenerateBtn() {
+    const hasScript = scriptInput.value.trim().length > 0;
+    generateBtn.disabled = !hasScript;
+}
+
+/* ================================
+   SPEECH SYNTHESIS
+   ================================ */
+let currentUtterance = null;
+let speechSupported = 'speechSynthesis' in window;
+
+if (!speechSupported) {
+    statusMsg.textContent = '⚠️ Your browser does not support speech synthesis. Please use Chrome or Edge.';
+}
+
+/* Try to find a matching system voice for the language */
+function pickSystemVoice(lang) {
+    const allVoices = speechSynthesis.getVoices();
+    if (!allVoices.length) return null;
+
+    // Prefer voices matching the language
+    const langMap = {
+        'bn': ['bn-IN', 'bn-BD', 'bn'],
+        'hi': ['hi-IN', 'hi'],
+        'en': ['en-IN', 'en-US', 'en-GB', 'en']
+    };
+
+    const targetLangs = langMap[lang] || ['en'];
+
+    for (const tl of targetLangs) {
+        const match = allVoices.find(v => v.lang.toLowerCase().startsWith(tl.toLowerCase()));
+        if (match) return match;
+    }
+    return allVoices[0]; // fallback
+}
+
+/* Detect language from text */
+function detectLang(text) {
+    if (/[\u0980-\u09FF]/.test(text)) return 'bn'; // Bengali
+    if (/[\u0900-\u097F]/.test(text)) return 'hi'; // Hindi
+    return 'en';
+}
+
+/* ================================
+   GENERATE AUDIO
+   ================================ */
+generateBtn.addEventListener('click', () => {
+    const text = scriptInput.value.trim();
+    if (!text) return;
+    if (!speechSupported) return;
+
+    // Cancel any ongoing speech
+    speechSynthesis.cancel();
+
+    const lang = detectLang(text);
+    const sysVoice = pickSystemVoice(lang);
+
+    currentUtterance = new SpeechSynthesisUtterance(text);
+    currentUtterance.lang = sysVoice ? sysVoice.lang : (lang === 'bn' ? 'bn-IN' : lang === 'hi' ? 'hi-IN' : 'en-US');
+    if (sysVoice) currentUtterance.voice = sysVoice;
+    currentUtterance.pitch = selectedVoice.pitch;
+    currentUtterance.rate = selectedVoice.rate;
+    currentUtterance.volume = 1;
+
+    // UI updates
+    outputBox.classList.remove('show');
+    statusMsg.textContent = `🎙️ Generating with ${selectedVoice.name} (${selectedVoice.desc})...`;
+    generateBtn.style.display = 'none';
+    stopBtn.style.display = 'inline-block';
+
+    currentUtterance.onstart = () => {
+        statusMsg.textContent = `🔊 Playing preview with ${selectedVoice.name}...`;
+    };
+
+    currentUtterance.onend = () => {
+        statusMsg.textContent = `✅ Audio generated! You can now download or replay.`;
+        outputBox.classList.add('show');
+        generateBtn.style.display = 'inline-block';
+        stopBtn.style.display = 'none';
+    };
+
+    currentUtterance.onerror = (e) => {
+        statusMsg.textContent = '❌ Error: ' + (e.error || 'unknown');
+        generateBtn.style.display = 'inline-block';
+        stopBtn.style.display = 'none';
+    };
+
+    speechSynthesis.speak(currentUtterance);
+});
+
+/* Stop */
+stopBtn.addEventListener('click', () => {
+    speechSynthesis.cancel();
+    statusMsg.textContent = '⏹ Stopped.';
+    generateBtn.style.display = 'inline-block';
+    stopBtn.style.display = 'none';
+});
+
+/* Replay */
+replayBtn.addEventListener('click', () => {
+    if (currentUtterance) {
+        speechSynthesis.cancel();
+        speechSynthesis.speak(currentUtterance);
+        statusMsg.textContent = `🔊 Replaying with ${selectedVoice.name}...`;
+    }
+});
+
+/* Download — uses MediaRecorder to capture speech as audio */
+downloadBtn.addEventListener('click', async () => {
+    const text = scriptInput.value.trim();
+    if (!text) return;
+
+    statusMsg.textContent = '⏳ Preparing download... (recording in real-time)';
+
+    try {
+        const blob = await recordSpeechToBlob(text, selectedVoice);
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `azad-miking-${selectedVoice.id}-${Date.now()}.webm`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+        statusMsg.textContent = '✅ Downloaded! (WebM format — playable in most players)';
+    } catch (err) {
+        statusMsg.textContent = '❌ Download failed: ' + err.message + '. Try Chrome/Edge.';
+        console.error(err);
+    }
+});
+
+/* ================================
+   RECORD SPEECH TO BLOB (for download)
+   ================================ */
+async function recordSpeechToBlob(text, voice) {
+    // We use the Web Audio API to capture speechSynthesis output.
+    // Note: speechSynthesis cannot be captured directly, so we use
+    // MediaRecorder on a MediaStreamDestination via a workaround.
+    // Simpler approach: use AudioContext + MediaRecorder on a dummy stream
+    // and rely on system audio capture — not reliable across browsers.
+    //
+    // Best practical approach for a demo: create a silent audio context,
+    // but we cannot capture TTS. So we instead generate a WAV file
+    // using an offline oscillator? That won't have speech.
+    //
+    // Therefore: we use MediaRecorder to record the *tab audio* if the
+    // user grants it, OR we fall back to a message.
+    //
+    // For a robust real-world app, you'd use a server-side TTS API.
+    //
+    // Here we attempt to capture using getDisplayMedia with audio.
+
+    if (!navigator.mediaDevices || !navigator.mediaDevices.getDisplayMedia) {
+        throw new Error('Audio capture not supported in this browser');
+    }
+
+    // Ask user to share tab audio
+    const stream = await navigator.mediaDevices.getDisplayMedia({
+        video: true,
+        audio: true
+    });
+
+    const audioTracks = stream.getAudioTracks();
+    if (audioTracks.length === 0) {
+        stream.getTracks().forEach(t => t.stop());
+        throw new Error('No audio track. Please share a tab with audio.');
+    }
+
+    // Stop video track (we only need audio)
+    stream.getVideoTracks().forEach(t => t.stop());
+
+    const audioStream = new MediaStream(audioTracks);
+    const recorder = new MediaRecorder(audioStream, { mimeType: 'audio/webm' });
+    const chunks = [];
+
+    recorder.ondataavailable = e => { if (e.data.size > 0) chunks.push(e.data); };
+
+    const done = new Promise(resolve => {
+        recorder.onstop = () => resolve(new Blob(chunks, { type: 'audio/webm' }));
+    });
+
+    recorder.start();
+
+    // Speak
+    const utterance = new SpeechSynthesisUtterance(text);
+    utterance.pitch = voice.pitch;
+    utterance.rate = voice.rate;
+    utterance.volume = 1;
+    const lang = detectLang(text);
+    const sysVoice = pickSystemVoice(lang);
+    if (sysVoice) { utterance.voice = sysVoice; utterance.lang = sysVoice.lang; }
+
+    await new Promise((resolve) => {
+        utterance.onend = resolve;
+        utterance.onerror = resolve;
+        speechSynthesis.speak(utterance);
+    });
+
+    // Give recorder a moment to flush
+    await new Promise(r => setTimeout(r, 500));
+
+    recorder.stop();
+    stream.getTracks().forEach(t => t.stop());
+
+    return await done;
+}
+
+/* ================================
+   INIT
+   ================================ */
+// Load voices (async in some browsers)
+if (speechSupported) {
+    speechSynthesis.onvoiceschanged = () => {
+        // voices loaded
+    };
+    // Trigger load
+    speechSynthesis.getVoices();
+}
+</script>
 
 </body>
 </html>

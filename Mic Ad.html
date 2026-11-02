@@ -3,128 +3,181 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Azad Miking Studio — AI Voice Generator</title>
+<title>Azad Miking Studio — Professional Voice Generator</title>
 <style>
+    /* --- Base & Reset --- */
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { font-family: 'Inter', system-ui, -apple-system, sans-serif; background: #0b0b10; color: #e8e8f0; line-height: 1.6; min-height: 100vh; }
-    .container { max-width: 1100px; margin: 0 auto; padding: 0 1.5rem; }
-    
-    /* Header */
-    header { padding: 1.3rem 0; border-bottom: 1px solid rgba(255,255,255,0.06); }
-    .header-inner { display: flex; justify-content: space-between; align-items: center; }
-    .logo { font-size: 1.2rem; font-weight: 700; background: linear-gradient(135deg, #a78bfa, #f0abfc); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-    
-    /* Hero */
-    .hero { padding: 3rem 0 2rem; }
-    .hero h1 { font-size: clamp(2rem, 4.5vw, 3rem); font-weight: 800; line-height: 1.15; letter-spacing: -0.03em; margin-bottom: 1rem; max-width: 750px; }
-    .hero h1 .gradient { background: linear-gradient(135deg, #a78bfa, #f0abfc); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-    .hero p { font-size: 1.05rem; color: #a0a0b8; max-width: 620px; }
-    
-    /* Studio App */
-    .studio-app { background: #12121a; border: 1px solid rgba(255,255,255,0.07); border-radius: 24px; padding: 2rem; margin: 1.5rem 0 3rem; box-shadow: 0 20px 60px -25px rgba(124,58,237,0.35); }
-    .app-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
-    @media (max-width: 800px) { .app-grid { grid-template-columns: 1fr; } .studio-app { padding: 1.5rem; } }
-    
-    /* Script Input */
-    .panel-title { font-size: 0.8rem; font-weight: 600; letter-spacing: 1.2px; text-transform: uppercase; color: #c084fc; margin-bottom: 0.8rem; }
-    .script-input { width: 100%; min-height: 200px; background: #0b0b12; border: 1px solid rgba(255,255,255,0.09); border-radius: 14px; padding: 1rem; color: #e8e8f0; font-family: inherit; font-size: 0.98rem; resize: vertical; outline: none; transition: border-color 0.2s; }
-    .script-input:focus { border-color: rgba(168,85,247,0.5); }
-    .script-input::placeholder { color: #5a5a70; }
-    .char-count { font-size: 0.78rem; color: #787890; text-align: right; margin-top: 0.4rem; }
-    
-    /* Voice Options */
-    .voice-list { display: grid; gap: 0.7rem; }
-    .voice-option { display: flex; align-items: center; gap: 0.9rem; background: #0b0b12; border: 1px solid rgba(255,255,255,0.08); border-radius: 14px; padding: 0.85rem 1rem; cursor: pointer; transition: all 0.2s; position: relative;}
-    .voice-option:hover { border-color: rgba(168,85,247,0.4); }
-    .voice-option.selected { border-color: #a855f7; background: rgba(168,85,247,0.1); }
-    .voice-avatar { width: 42px; height: 42px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.3rem; flex-shrink: 0; }
-    .voice-info h4 { font-size: 0.95rem; font-weight: 600; margin-bottom: 0.1rem; }
-    .voice-info p { font-size: 0.8rem; color: #9090a8; }
-    .voice-check { margin-left: auto; color: #a855f7; font-weight: 700; opacity: 0; font-size: 1.1rem; }
-    .voice-option.selected .voice-check { opacity: 1; }
-    
-    /* Demo Play Button */
-    .demo-btn {
-        background: rgba(168,85,247,0.15);
-        border: 1px solid rgba(168,85,247,0.3);
-        color: #d8b4fe;
-        padding: 0.3rem 0.8rem;
-        border-radius: 50px;
-        font-size: 0.75rem;
-        font-weight: 600;
-        cursor: pointer;
-        margin-left: 1rem;
-        transition: all 0.2s;
-        display: flex;
-        align-items: center;
-        gap: 0.3rem;
+    body { 
+        font-family: 'Inter', system-ui, -apple-system, sans-serif; 
+        background: #f8fafc; /* প্রফেশনাল সাদা-ধূসর ব্যাকগ্রাউন্ড */
+        color: #1e293b; 
+        line-height: 1.6; 
+        min-height: 100vh; 
     }
-    .demo-btn:hover { background: rgba(168,85,247,0.3); color: white; }
-
-    /* Buttons */
-    .btn { display: inline-block; padding: 0.9rem 2rem; border-radius: 100px; font-weight: 600; font-size: 1rem; text-decoration: none; transition: all 0.2s ease; cursor: pointer; border: none; font-family: inherit; }
-    .btn-primary { background: linear-gradient(135deg, #7c3aed, #a855f7); color: white; box-shadow: 0 4px 20px rgba(124,58,237,0.35); }
-    .btn-primary:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(124,58,237,0.5); }
-    .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; }
-    .btn-secondary { background: #1c1c28; color: #d0d0e0; border: 1px solid rgba(255,255,255,0.12); }
-    .btn-secondary:hover { background: #252533; }
-    .generate-wrap { margin-top: 1.5rem; display: flex; gap: 0.8rem; flex-wrap: wrap; }
+    .container { max-width: 1050px; margin: 0 auto; padding: 0 1.5rem; }
     
-    /* Output */
-    .output-box { margin-top: 1.5rem; background: #0b0b12; border: 1px solid rgba(168,85,247,0.25); border-radius: 16px; padding: 1.2rem; display: none; }
+    /* --- Header --- */
+    header { 
+        padding: 1.2rem 0; 
+        border-bottom: 1px solid #e2e8f0; 
+        background: #ffffff;
+    }
+    .header-inner { display: flex; justify-content: space-between; align-items: center; }
+    .logo { font-size: 1.25rem; font-weight: 800; color: #0f172a; letter-spacing: -0.5px; }
+    .logo span { color: #3b82f6; /* ব্লু অ্যাকসেন্ট */ }
+    
+    /* --- Hero --- */
+    .hero { padding: 3rem 0 2rem; text-align: center; }
+    .hero h1 { font-size: clamp(2rem, 4vw, 2.8rem); font-weight: 800; color: #0f172a; line-height: 1.2; margin-bottom: 1rem; letter-spacing: -0.5px; }
+    .hero h1 span { color: #2563eb; }
+    .hero p { font-size: 1.1rem; color: #64748b; max-width: 600px; margin: 0 auto; }
+    
+    /* --- Studio App Box --- */
+    .studio-app { 
+        background: #ffffff; 
+        border: 1px solid #e2e8f0; 
+        border-radius: 20px; 
+        padding: 2rem; 
+        margin: 1.5rem 0 3rem; 
+        box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
+    }
+    .app-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
+    @media (max-width: 768px) { .app-grid { grid-template-columns: 1fr; } .studio-app { padding: 1.5rem; } }
+    
+    /* --- Labels & Inputs --- */
+    .panel-title { font-size: 0.85rem; font-weight: 700; color: #475569; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem; }
+    .panel-title span { background: #eff6ff; color: #2563eb; width: 24px; height: 24px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 0.75rem; }
+    
+    .script-input { 
+        width: 100%; min-height: 220px; 
+        background: #f8fafc; 
+        border: 1px solid #cbd5e1; 
+        border-radius: 12px; 
+        padding: 1rem; 
+        color: #1e293b; 
+        font-family: inherit; font-size: 1rem; 
+        resize: vertical; outline: none; transition: border 0.2s;
+    }
+    .script-input:focus { border-color: #3b82f6; background: #ffffff; }
+    .script-input::placeholder { color: #94a3b8; }
+    
+    /* --- Voice Options --- */
+    .voice-list { display: grid; gap: 0.8rem; }
+    .voice-option { 
+        display: flex; align-items: center; gap: 1rem; 
+        background: #f8fafc; 
+        border: 1px solid #e2e8f0; 
+        border-radius: 12px; padding: 1rem; 
+        cursor: pointer; transition: all 0.2s; 
+    }
+    .voice-option:hover { border-color: #93c5fd; background: #eff6ff; }
+    .voice-option.selected { border-color: #3b82f6; background: #eff6ff; box-shadow: 0 0 0 1px #3b82f6; }
+    
+    .voice-avatar { 
+        width: 44px; height: 44px; border-radius: 50%; 
+        display: flex; align-items: center; justify-content: center; 
+        font-size: 1.4rem; flex-shrink: 0; background: #ffffff; border: 1px solid #e2e8f0;
+    }
+    .voice-info h4 { font-size: 1rem; font-weight: 600; color: #0f172a; margin-bottom: 0.1rem; }
+    .voice-info p { font-size: 0.8rem; color: #64748b; }
+    
+    .demo-btn {
+        margin-left: auto; background: #ffffff; border: 1px solid #cbd5e1;
+        color: #3b82f6; padding: 0.4rem 0.8rem; border-radius: 6px;
+        font-size: 0.75rem; font-weight: 600; cursor: pointer; transition: all 0.2s;
+        display: flex; align-items: center; gap: 0.3rem;
+    }
+    .demo-btn:hover { background: #3b82f6; color: white; border-color: #3b82f6; }
+    
+    /* --- Actions --- */
+    .generate-wrap { margin-top: 2rem; display: flex; gap: 1rem; justify-content: center; }
+    .btn { 
+        display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem;
+        padding: 0.9rem 2rem; border-radius: 10px; font-weight: 600; font-size: 1rem; 
+        cursor: pointer; border: none; font-family: inherit; transition: all 0.2s; 
+    }
+    .btn-primary { background: #2563eb; color: white; box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2); }
+    .btn-primary:hover:not(:disabled) { background: #1d4ed8; transform: translateY(-1px); }
+    .btn-primary:disabled { opacity: 0.6; cursor: not-allowed; background: #94a3b8; box-shadow: none; }
+    .btn-secondary { background: #ffffff; color: #475569; border: 1px solid #cbd5e1; }
+    .btn-secondary:hover { background: #f1f5f9; }
+    
+    /* --- Status & Output --- */
+    .status-msg { text-align: center; font-size: 0.9rem; color: #2563eb; margin-top: 1rem; min-height: 1.5em; font-weight: 500;}
+    
+    .output-box { 
+        margin-top: 2rem; background: #f8fafc; 
+        border: 1px solid #e2e8f0; border-radius: 16px; 
+        padding: 1.5rem; display: none; 
+        animation: fadeIn 0.3s ease;
+    }
     .output-box.show { display: block; }
-    .output-box h4 { font-size: 0.95rem; margin-bottom: 0.8rem; color: #d0d0e0; }
-    audio { width: 100%; margin-bottom: 0.8rem; border-radius: 10px; }
-    .output-actions { display: flex; gap: 0.7rem; flex-wrap: wrap; }
-    .status-msg { font-size: 0.85rem; color: #c084fc; margin-top: 0.8rem; min-height: 1.2em; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
     
-    /* Footer */
-    footer { padding: 2rem 0; border-top: 1px solid rgba(255,255,255,0.06); text-align: center; }
-    footer p { color: #787890; font-size: 0.88rem; }
-    .footer-brand { color: #a78bfa; font-weight: 600; }
+    .output-header { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1rem; color: #059669; font-weight: 600; }
+    audio { width: 100%; margin-bottom: 1rem; border-radius: 8px; outline: none; }
+    
+    /* --- Footer --- */
+    footer { padding: 2rem 0; text-align: center; border-top: 1px solid #e2e8f0; color: #64748b; font-size: 0.9rem; background: #ffffff; }
+    footer strong { color: #0f172a; }
 </style>
 </head>
 <body>
 
 <header>
     <div class="container header-inner">
-        <div class="logo">Azad Miking Studio</div>
+        <div class="logo">Azad Miking <span>Studio</span></div>
     </div>
 </header>
 
 <section class="hero">
     <div class="container">
-        <h1>Turn your script into<br /><span class="gradient">loudspeaker-ready audio</span><br />in seconds.</h1>
-        <p>Paste your shop announcement, choose a voice, and generate professional miking audio instantly. No API key required!</p>
+        <h1>Create <span>Loudspeaker-Ready</span> Audio Ads<br>in Seconds</h1>
+        <p>Paste your shop announcement, choose a professional voice, and download your audio instantly.</p>
     </div>
 </section>
 
-<div class="container" id="studio">
+<div class="container" id="app">
     <div class="studio-app">
         <div class="app-grid">
+            <!-- Script Input Area -->
             <div>
-                <div class="panel-title">1. Paste Your Script</div>
+                <div class="panel-title"><span>1</span> Paste Your Script</div>
                 <textarea id="scriptInput" class="script-input" placeholder="Example: আসসালামু আলাইকুম! আজ আমাদের দোকানে সব পণ্যে ৫০% ছাড়! আজই চলে আসুন..."></textarea>
-                <div class="char-count"><span id="charCount">0</span> characters</div>
             </div>
+            
+            <!-- Voice Selection Area -->
             <div>
-                <div class="panel-title">2. Choose a Voice Model</div>
-                <div class="voice-list" id="voiceList"></div>
+                <div class="panel-title"><span>2</span> Choose a Voice Model</div>
+                <div class="voice-list" id="voiceList">
+                    <!-- Voices injected via JS -->
+                </div>
             </div>
         </div>
 
+        <!-- Action Buttons -->
         <div class="generate-wrap">
-            <button class="btn btn-primary" id="generateBtn" disabled>🎙️ Generate Audio</button>
+            <button class="btn btn-primary" id="generateBtn" disabled>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" x2="12" y1="19" y2="22"/></svg>
+                Generate Audio
+            </button>
             <button class="btn btn-secondary" id="stopBtn" style="display:none;">⏹ Stop</button>
         </div>
 
         <div class="status-msg" id="statusMsg"></div>
 
+        <!-- Audio Output Area -->
         <div class="output-box" id="outputBox">
-            <h4>✅ Your Generated Audio</h4>
+            <div class="output-header">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                Your Audio is Ready!
+            </div>
             <audio id="audioPlayer" controls></audio>
-            <div class="output-actions">
-                <button class="btn btn-primary" id="downloadBtn">⬇️ Download Audio</button>
+            <div style="display: flex; gap: 1rem;">
+                <button class="btn btn-primary" id="downloadBtn">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
+                    Download Audio
+                </button>
             </div>
         </div>
     </div>
@@ -132,62 +185,76 @@
 
 <footer>
     <div class="container">
-        <p><span class="footer-brand">Azad Miking Studio</span> &copy; 2025</p>
+        <strong>Azad Miking Studio</strong> &copy; 2025. All rights reserved.
     </div>
 </footer>
 
 <script>
-// ৪টি ভিন্ন এজ গ্রুপের ভয়েস মডেল (ডেমো স্ক্রিপ্টসহ)
+/* =========================================================
+   ⚙️ VOICE CONFIGURATION (ভবিষ্যতে এখানে পরিবর্তন করুন)
+   ========================================================= */
 const voices = [
     { 
         id: 'v1', 
         name: 'Rafiq', 
         desc: 'Young Male • Energetic', 
         emoji: '👨‍🦱', 
-        color: '#3b82f6', 
-        pitch: 1.2, 
-        rate: 1.1,
-        demoText: 'আসসালামু আলাইকুম! আমাদের দোকানে নতুন স্টক এসেছে। আজই চলে আসুন।'
+        apiVoice: 'Brian', // StreamElements API ভয়েস
+        pitch: 1.1, 
+        rate: 1.0 
     },
     { 
         id: 'v2', 
         name: 'Nusrat', 
         desc: 'Young Female • Bright', 
         emoji: '👩', 
-        color: '#ec4899', 
-        pitch: 1.4, 
-        rate: 1.0,
-        demoText: 'নতুন সাজের কালেকশন এসেছে। আজই চলে আসুন আমাদের শোরুমে।'
+        apiVoice: 'Aditi', 
+        pitch: 1.2, 
+        rate: 1.0 
     },
     { 
         id: 'v3', 
         name: 'Karim', 
         desc: 'Mature Male • Authoritative', 
         emoji: '🧔', 
-        color: '#10b981', 
-        pitch: 0.8, 
-        rate: 0.85,
-        demoText: 'সব ধরনের মোবাইল ফোন এবং এক্সেসরিজ পাওয়া যাচ্ছে আমাদের দোকানে।'
+        apiVoice: 'Brian', 
+        pitch: 0.85, 
+        rate: 0.9 
     },
     { 
         id: 'v4', 
         name: 'Fatima', 
         desc: 'Mature Female • Calm', 
         emoji: '👩‍🦳', 
-        color: '#f59e0b', 
-        pitch: 1.0, 
-        rate: 0.9,
-        demoText: 'বিশেষ ছাড়ে আজ সব কাপড়ে। এই সুযোগ হাতছাড়া করবেন না।'
+        apiVoice: 'Aditi', 
+        pitch: 0.9, 
+        rate: 0.9 
     }
 ];
 
+/* =========================================================
+   ⚙️ API CONFIGURATION (নতুন API অ্যাড করতে এখানে ফাংশন লিখুন)
+   ========================================================= */
+const apiConfig = {
+    // বর্তমানে ফ্রি StreamElements API ব্যবহার করা হচ্ছে
+    endpoint: "https://api.streamelements.com/kappa/v2/speech",
+    
+    // ভবিষ্যতে আপনি চাইলে এখানে ElevenLabs বা Google TTS-এর লজিক বসাতে পারেন
+    getAudioUrl: function(text, voiceId) {
+        return `${this.endpoint}?voice=${voiceId}&text=${encodeURIComponent(text)}`;
+    }
+};
+
+/* =========================================================
+   🚀 APP LOGIC (এখানে সাধারণত পরিবর্তন করার দরকার নেই)
+   ========================================================= */
 let selectedVoice = voices[0];
-let generatedAudioUrl = null;
-let speechUtterance = null;
+let generatedAudioBlob = null;
+let audioContext = null;
+let currentSource = null;
 
 const voiceListEl = document.getElementById('voiceList');
 const scriptInput = document.getElementById('scriptInput');
-const charCount = document.getElementById('charCount');
 const generateBtn = document.getElementById('generateBtn');
 const stopBtn = document.getElementById('stopBtn');
 const statusMsg = document.getElementById('statusMsg');
@@ -202,14 +269,12 @@ function renderVoices() {
         const div = document.createElement('div');
         div.className = 'voice-option' + (v.id === selectedVoice.id ? ' selected' : '');
         div.innerHTML = `
-            <div class="voice-avatar" style="background:${v.color}22; color:${v.color}">${v.emoji}</div>
+            <div class="voice-avatar">${v.emoji}</div>
             <div class="voice-info"><h4>${v.name}</h4><p>${v.desc}</p></div>
-            <button class="demo-btn" onclick="playDemo(event, '${v.id}')">▶ ডেমো</button>
-            <span class="voice-check">✓</span>
+            <button class="demo-btn" onclick="playDemo(event, '${v.id}')">▶ Demo</button>
         `;
         div.addEventListener('click', (e) => { 
-            // ডেমো বাটনে ক্লিক করলে সিলেক্ট যেন না হয়
-            if(e.target.classList.contains('demo-btn')) return; 
+            if(e.target.tagName === 'BUTTON') return; 
             selectedVoice = v; 
             renderVoices(); 
         });
@@ -218,131 +283,130 @@ function renderVoices() {
 }
 renderVoices();
 
-// ডেমো প্লে করার ফাংশন
-window.playDemo = function(event, voiceId) {
-    event.stopPropagation(); // প্যারেন্ট ডিভ-এ ক্লিক ইভেন্ট বন্ধ করে
-    const voice = voices.find(v => v.id === voiceId);
-    if (!voice) return;
-
-    // আগের কথা বন্ধ করা
-    window.speechSynthesis.cancel();
-
-    const utterance = new SpeechSynthesisUtterance(voice.demoText);
-    utterance.pitch = voice.pitch;
-    utterance.rate = voice.rate;
-    utterance.lang = 'bn-IN'; 
-
-    // ব্রাউজারের সিস্টেম ভয়েস খোঁজা
-    const sysVoices = window.speechSynthesis.getVoices();
-    const match = sysVoices.find(v => v.lang.includes('bn') || v.lang.includes('hi'));
-    if (match) utterance.voice = match;
-
-    window.speechSynthesis.speak(utterance);
-    statusMsg.textContent = `🔊 Playing demo for ${voice.name}...`;
-    
-    utterance.onend = () => {
-        statusMsg.textContent = '';
-    };
-};
-
+// ইনপুট চেক
 scriptInput.addEventListener('input', () => {
-    charCount.textContent = scriptInput.value.length;
     generateBtn.disabled = scriptInput.value.trim().length === 0;
 });
 
-// অডিও জেনারেট ও রেকর্ড করার ফাংশন
-async function generateAndRecordAudio(text, voice) {
-    return new Promise(async (resolve, reject) => {
-        try {
-            const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-            const dest = audioCtx.createMediaStreamDestination();
-            const mediaRecorder = new MediaRecorder(dest.stream);
-            const chunks = [];
+// ডেমো প্লে (ব্রাউজারের নিজস্ব Web Speech API দিয়ে)
+window.playDemo = function(e, id) {
+    e.stopPropagation();
+    const v = voices.find(x => x.id === id);
+    if (!v) return;
+    
+    window.speechSynthesis.cancel();
+    const utterance = new SpeechSynthesisUtterance("আসসালামু আলাইকুম, এটি একটি ডেমো ভয়েস।");
+    utterance.pitch = v.pitch;
+    utterance.rate = v.rate;
+    utterance.lang = 'bn-IN'; // বাংলা অ্যাকসেন্ট
+    
+    const sysVoices = window.speechSynthesis.getVoices();
+    const match = sysVoices.find(sv => sv.lang.includes('bn') || sv.lang.includes('hi'));
+    if (match) utterance.voice = match;
+    
+    window.speechSynthesis.speak(utterance);
+    statusMsg.textContent = `🔊 Playing ${v.name} demo...`;
+    utterance.onend = () => { statusMsg.textContent = ''; };
+};
 
-            mediaRecorder.ondataavailable = e => { if (e.data.size > 0) chunks.push(e.data); };
-            mediaRecorder.onstop = () => resolve(new Blob(chunks, { type: 'audio/webm' }));
-
-            speechUtterance = new SpeechSynthesisUtterance(text);
-            speechUtterance.pitch = voice.pitch;
-            speechUtterance.rate = voice.rate;
-            speechUtterance.lang = 'bn-IN';
-
-            const sysVoices = window.speechSynthesis.getVoices();
-            const match = sysVoices.find(v => v.lang.includes('bn') || v.lang.includes('hi'));
-            if (match) speechUtterance.voice = match;
-
-            mediaRecorder.start();
-            statusMsg.textContent = `🎙️ Generating with ${voice.name}...`;
-
-            speechUtterance.onend = () => {
-                mediaRecorder.stop();
-                audioCtx.close();
-                statusMsg.textContent = `✅ Audio generated with ${voice.name}! Ready to download.`;
-                generateBtn.style.display = 'inline-block';
-                stopBtn.style.display = 'none';
-            };
-
-            speechUtterance.onerror = (e) => {
-                mediaRecorder.stop();
-                audioCtx.close();
-                reject(new Error('Speech synthesis failed'));
-            };
-
-            generateBtn.style.display = 'none';
-            stopBtn.style.display = 'inline-block';
-            outputBox.classList.remove('show');
-
-            window.speechSynthesis.speak(speechUtterance);
-
-        } catch (err) {
-            reject(err);
-        }
-    });
-}
-
+// মেইন অডিও জেনারেট ফাংশন
 generateBtn.addEventListener('click', async () => {
     const text = scriptInput.value.trim();
     if (!text) return;
 
+    // UI রিসেট
+    generateBtn.style.display = 'none';
+    stopBtn.style.display = 'inline-flex';
+    outputBox.classList.remove('show');
+    statusMsg.textContent = `⏳ Fetching audio from API...`;
+    if (generatedAudioBlob) URL.revokeObjectURL(generatedAudioBlob);
+
     try {
-        const blob = await generateAndRecordAudio(text, selectedVoice);
+        // ১. API থেকে অডিও ফাইল আনা
+        const apiUrl = apiConfig.getAudioUrl(text, selectedVoice.apiVoice);
+        const response = await fetch(apiUrl);
+        if (!response.ok) throw new Error("API request failed");
         
-        if (generatedAudioUrl) URL.revokeObjectURL(generatedAudioUrl);
-        generatedAudioUrl = URL.createObjectURL(blob);
+        const arrayBuffer = await response.arrayBuffer();
         
-        audioPlayer.src = generatedAudioUrl;
+        // ২. Web Audio API দিয়ে প্রসেস এবং রেকর্ড করা (ডাউনলোডের জন্য)
+        statusMsg.textContent = `⚙️ Processing audio for download...`;
+        
+        audioContext = new (window.AudioContext || window.webkitAudioContext)();
+        const decodedBuffer = await audioContext.decodeAudioData(arrayBuffer);
+        
+        // পিচ এবং স্পিড অ্যাডজাস্ট করা
+        const source = audioContext.createBufferSource();
+        source.buffer = decodedBuffer;
+        source.playbackRate.value = selectedVoice.rate;
+        
+        // রেকর্ডার সেটআপ
+        const dest = audioContext.createMediaStreamDestination();
+        source.connect(dest);
+        source.connect(audioContext.destination); // স্পিকারেও শোনাবে
+        
+        const mediaRecorder = new MediaRecorder(dest.stream);
+        const chunks = [];
+        mediaRecorder.ondataavailable = e => { if (e.data.size) chunks.push(e.data); };
+        
+        const recordingPromise = new Promise(resolve => {
+            mediaRecorder.onstop = () => resolve(new Blob(chunks, { type: 'audio/webm' }));
+        });
+
+        // প্লে এবং রেকর্ড শুরু
+        mediaRecorder.start();
+        source.start(0);
+        statusMsg.textContent = `🎙️ Generating and recording... (Please wait)`;
+        
+        // অডিও শেষ হওয়ার অপেক্ষা
+        await new Promise(resolve => { source.onended = resolve; });
+        
+        // রেকর্ডিং বন্ধ
+        await new Promise(r => setTimeout(r, 500)); // বাফার ফ্লাশ করার সময়
+        mediaRecorder.stop();
+        generatedAudioBlob = await recordingPromise;
+        
+        // ৩. আউটপুট দেখানো
+        const audioUrl = URL.createObjectURL(generatedAudioBlob);
+        audioPlayer.src = audioUrl;
         outputBox.classList.add('show');
-        audioPlayer.play().catch(() => {});
+        statusMsg.textContent = `✅ Audio generated successfully!`;
         
-    } catch (err) {
-        statusMsg.textContent = '❌ Error: ' + err.message;
-        generateBtn.style.display = 'inline-block';
+    } catch (error) {
+        console.error(error);
+        statusMsg.textContent = `❌ Error: ${error.message}`;
+    } finally {
+        generateBtn.style.display = 'inline-flex';
         stopBtn.style.display = 'none';
+        if (audioContext) audioContext.close();
     }
 });
 
+// স্টপ বাটন
 stopBtn.addEventListener('click', () => {
+    if (audioContext && audioContext.state === 'running') {
+        audioContext.suspend();
+    }
     window.speechSynthesis.cancel();
-    statusMsg.textContent = '⏹ Stopped.';
-    generateBtn.style.display = 'inline-block';
+    statusMsg.textContent = `⏹ Process stopped.`;
+    generateBtn.style.display = 'inline-flex';
     stopBtn.style.display = 'none';
 });
 
+// ডাউনলোড বাটন
 downloadBtn.addEventListener('click', () => {
-    if (!generatedAudioUrl) return;
+    if (!generatedAudioBlob) return;
     const a = document.createElement('a');
-    a.href = generatedAudioUrl;
+    a.href = URL.createObjectURL(generatedAudioBlob);
     a.download = `azad-miking-${selectedVoice.name.toLowerCase()}-${Date.now()}.webm`;
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
 });
 
-// ব্রাউজার লোড হলে ভয়েস লিস্ট লোড করা
+// ব্রাউজারের ভয়েস লোড করা (ডেমো প্লে-এর জন্য)
 if ('speechSynthesis' in window) {
-    window.speechSynthesis.onvoiceschanged = () => {
-        window.speechSynthesis.getVoices();
-    };
+    window.speechSynthesis.onvoiceschanged = () => window.speechSynthesis.getVoices();
 }
 </script>
 

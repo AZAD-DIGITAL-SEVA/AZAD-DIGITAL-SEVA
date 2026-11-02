@@ -34,7 +34,7 @@
     
     /* Voice Options */
     .voice-list { display: grid; gap: 0.7rem; }
-    .voice-option { display: flex; align-items: center; gap: 0.9rem; background: #0b0b12; border: 1px solid rgba(255,255,255,0.08); border-radius: 14px; padding: 0.85rem 1rem; cursor: pointer; transition: all 0.2s; }
+    .voice-option { display: flex; align-items: center; gap: 0.9rem; background: #0b0b12; border: 1px solid rgba(255,255,255,0.08); border-radius: 14px; padding: 0.85rem 1rem; cursor: pointer; transition: all 0.2s; position: relative;}
     .voice-option:hover { border-color: rgba(168,85,247,0.4); }
     .voice-option.selected { border-color: #a855f7; background: rgba(168,85,247,0.1); }
     .voice-avatar { width: 42px; height: 42px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.3rem; flex-shrink: 0; }
@@ -43,6 +43,24 @@
     .voice-check { margin-left: auto; color: #a855f7; font-weight: 700; opacity: 0; font-size: 1.1rem; }
     .voice-option.selected .voice-check { opacity: 1; }
     
+    /* Demo Play Button */
+    .demo-btn {
+        background: rgba(168,85,247,0.15);
+        border: 1px solid rgba(168,85,247,0.3);
+        color: #d8b4fe;
+        padding: 0.3rem 0.8rem;
+        border-radius: 50px;
+        font-size: 0.75rem;
+        font-weight: 600;
+        cursor: pointer;
+        margin-left: 1rem;
+        transition: all 0.2s;
+        display: flex;
+        align-items: center;
+        gap: 0.3rem;
+    }
+    .demo-btn:hover { background: rgba(168,85,247,0.3); color: white; }
+
     /* Buttons */
     .btn { display: inline-block; padding: 0.9rem 2rem; border-radius: 100px; font-weight: 600; font-size: 1rem; text-decoration: none; transition: all 0.2s ease; cursor: pointer; border: none; font-family: inherit; }
     .btn-primary { background: linear-gradient(135deg, #7c3aed, #a855f7); color: white; box-shadow: 0 4px 20px rgba(124,58,237,0.35); }
@@ -119,12 +137,48 @@
 </footer>
 
 <script>
-// ৪টি ভিন্ন এজ গ্রুপের ভয়েস মডেল
+// ৪টি ভিন্ন এজ গ্রুপের ভয়েস মডেল (ডেমো স্ক্রিপ্টসহ)
 const voices = [
-    { id: 'v1', name: 'Rafiq', desc: 'Young Male • Energetic', emoji: '👨‍🦱', color: '#3b82f6', pitch: 1.2, rate: 1.1 },
-    { id: 'v2', name: 'Nusrat', desc: 'Young Female • Bright', emoji: '👩', color: '#ec4899', pitch: 1.4, rate: 1.0 },
-    { id: 'v3', name: 'Karim', desc: 'Mature Male • Authoritative', emoji: '🧔', color: '#10b981', pitch: 0.8, rate: 0.85 },
-    { id: 'v4', name: 'Fatima', desc: 'Mature Female • Calm', emoji: '👩‍🦳', color: '#f59e0b', pitch: 1.0, rate: 0.9 }
+    { 
+        id: 'v1', 
+        name: 'Rafiq', 
+        desc: 'Young Male • Energetic', 
+        emoji: '👨‍🦱', 
+        color: '#3b82f6', 
+        pitch: 1.2, 
+        rate: 1.1,
+        demoText: 'আসসালামু আলাইকুম! আমাদের দোকানে নতুন স্টক এসেছে। আজই চলে আসুন।'
+    },
+    { 
+        id: 'v2', 
+        name: 'Nusrat', 
+        desc: 'Young Female • Bright', 
+        emoji: '👩', 
+        color: '#ec4899', 
+        pitch: 1.4, 
+        rate: 1.0,
+        demoText: 'নতুন সাজের কালেকশন এসেছে। আজই চলে আসুন আমাদের শোরুমে।'
+    },
+    { 
+        id: 'v3', 
+        name: 'Karim', 
+        desc: 'Mature Male • Authoritative', 
+        emoji: '🧔', 
+        color: '#10b981', 
+        pitch: 0.8, 
+        rate: 0.85,
+        demoText: 'সব ধরনের মোবাইল ফোন এবং এক্সেসরিজ পাওয়া যাচ্ছে আমাদের দোকানে।'
+    },
+    { 
+        id: 'v4', 
+        name: 'Fatima', 
+        desc: 'Mature Female • Calm', 
+        emoji: '👩‍🦳', 
+        color: '#f59e0b', 
+        pitch: 1.0, 
+        rate: 0.9,
+        demoText: 'বিশেষ ছাড়ে আজ সব কাপড়ে। এই সুযোগ হাতছাড়া করবেন না।'
+    }
 ];
 
 let selectedVoice = voices[0];
@@ -150,13 +204,46 @@ function renderVoices() {
         div.innerHTML = `
             <div class="voice-avatar" style="background:${v.color}22; color:${v.color}">${v.emoji}</div>
             <div class="voice-info"><h4>${v.name}</h4><p>${v.desc}</p></div>
+            <button class="demo-btn" onclick="playDemo(event, '${v.id}')">▶ ডেমো</button>
             <span class="voice-check">✓</span>
         `;
-        div.addEventListener('click', () => { selectedVoice = v; renderVoices(); });
+        div.addEventListener('click', (e) => { 
+            // ডেমো বাটনে ক্লিক করলে সিলেক্ট যেন না হয়
+            if(e.target.classList.contains('demo-btn')) return; 
+            selectedVoice = v; 
+            renderVoices(); 
+        });
         voiceListEl.appendChild(div);
     });
 }
 renderVoices();
+
+// ডেমো প্লে করার ফাংশন
+window.playDemo = function(event, voiceId) {
+    event.stopPropagation(); // প্যারেন্ট ডিভ-এ ক্লিক ইভেন্ট বন্ধ করে
+    const voice = voices.find(v => v.id === voiceId);
+    if (!voice) return;
+
+    // আগের কথা বন্ধ করা
+    window.speechSynthesis.cancel();
+
+    const utterance = new SpeechSynthesisUtterance(voice.demoText);
+    utterance.pitch = voice.pitch;
+    utterance.rate = voice.rate;
+    utterance.lang = 'bn-IN'; 
+
+    // ব্রাউজারের সিস্টেম ভয়েস খোঁজা
+    const sysVoices = window.speechSynthesis.getVoices();
+    const match = sysVoices.find(v => v.lang.includes('bn') || v.lang.includes('hi'));
+    if (match) utterance.voice = match;
+
+    window.speechSynthesis.speak(utterance);
+    statusMsg.textContent = `🔊 Playing demo for ${voice.name}...`;
+    
+    utterance.onend = () => {
+        statusMsg.textContent = '';
+    };
+};
 
 scriptInput.addEventListener('input', () => {
     charCount.textContent = scriptInput.value.length;
@@ -167,7 +254,6 @@ scriptInput.addEventListener('input', () => {
 async function generateAndRecordAudio(text, voice) {
     return new Promise(async (resolve, reject) => {
         try {
-            // ১. অডিও কনটেক্সট এবং রেকর্ডার সেটআপ
             const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
             const dest = audioCtx.createMediaStreamDestination();
             const mediaRecorder = new MediaRecorder(dest.stream);
@@ -176,22 +262,18 @@ async function generateAndRecordAudio(text, voice) {
             mediaRecorder.ondataavailable = e => { if (e.data.size > 0) chunks.push(e.data); };
             mediaRecorder.onstop = () => resolve(new Blob(chunks, { type: 'audio/webm' }));
 
-            // স্পিচ সিন্থেসিস সেটআপ
             speechUtterance = new SpeechSynthesisUtterance(text);
             speechUtterance.pitch = voice.pitch;
             speechUtterance.rate = voice.rate;
-            speechUtterance.lang = 'bn-IN'; // বাংলা বা হিন্দি সাপোর্ট
+            speechUtterance.lang = 'bn-IN';
 
-            // ব্রাউজারের সিস্টেম ভয়েস খোঁজা
-            const sysVoices = speechSynthesis.getVoices();
-            const match = sysVoices.find(v => v.lang.includes('bn') || v.lang.includes('hi') || v.lang.includes('en-IN'));
+            const sysVoices = window.speechSynthesis.getVoices();
+            const match = sysVoices.find(v => v.lang.includes('bn') || v.lang.includes('hi'));
             if (match) speechUtterance.voice = match;
 
-            // ২. রেকর্ডিং শুরু
             mediaRecorder.start();
             statusMsg.textContent = `🎙️ Generating with ${voice.name}...`;
 
-            // ৩. প্লে এবং সেভ করা (স্পিকারে শোনার জন্য)
             speechUtterance.onend = () => {
                 mediaRecorder.stop();
                 audioCtx.close();
@@ -210,7 +292,7 @@ async function generateAndRecordAudio(text, voice) {
             stopBtn.style.display = 'inline-block';
             outputBox.classList.remove('show');
 
-            speechSynthesis.speak(speechUtterance);
+            window.speechSynthesis.speak(speechUtterance);
 
         } catch (err) {
             reject(err);
@@ -223,7 +305,6 @@ generateBtn.addEventListener('click', async () => {
     if (!text) return;
 
     try {
-        // ব্রাউজার অডিও রেকর্ড করার পারমিশন দরকার হতে পারে
         const blob = await generateAndRecordAudio(text, selectedVoice);
         
         if (generatedAudioUrl) URL.revokeObjectURL(generatedAudioUrl);
@@ -231,31 +312,26 @@ generateBtn.addEventListener('click', async () => {
         
         audioPlayer.src = generatedAudioUrl;
         outputBox.classList.add('show');
-        
-        // অটো প্লে
         audioPlayer.play().catch(() => {});
         
     } catch (err) {
         statusMsg.textContent = '❌ Error: ' + err.message;
-        console.error(err);
         generateBtn.style.display = 'inline-block';
         stopBtn.style.display = 'none';
     }
 });
 
 stopBtn.addEventListener('click', () => {
-    speechSynthesis.cancel();
+    window.speechSynthesis.cancel();
     statusMsg.textContent = '⏹ Stopped.';
     generateBtn.style.display = 'inline-block';
     stopBtn.style.display = 'none';
 });
 
-// ডাউনলোড বাটন
 downloadBtn.addEventListener('click', () => {
     if (!generatedAudioUrl) return;
     const a = document.createElement('a');
     a.href = generatedAudioUrl;
-    // ফাইলটি .webm ফরম্যাটে সেভ হবে যা ব্রাউজার ও মিডিয়া প্লেয়ারে চলে
     a.download = `azad-miking-${selectedVoice.name.toLowerCase()}-${Date.now()}.webm`;
     document.body.appendChild(a);
     a.click();
@@ -264,8 +340,8 @@ downloadBtn.addEventListener('click', () => {
 
 // ব্রাউজার লোড হলে ভয়েস লিস্ট লোড করা
 if ('speechSynthesis' in window) {
-    speechSynthesis.onvoiceschanged = () => {
-        speechSynthesis.getVoices();
+    window.speechSynthesis.onvoiceschanged = () => {
+        window.speechSynthesis.getVoices();
     };
 }
 </script>

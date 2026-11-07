@@ -9,6 +9,9 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@400;500;600;700;800&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- QR Code Generator Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -163,7 +166,7 @@
 
         .section-title-main span { font-size: 1.2rem; }
 
-        /* ================= প্রোডাক্ট গ্রিড (৫টি এক লাইনে) ================= */
+        /* ================= প্রোডাক্ট গ্রিড ================= */
         .product-grid {
             display: grid;
             grid-template-columns: repeat(5, 1fr);
@@ -521,6 +524,21 @@
             line-height: 1.5;
         }
 
+        .form-group input[readonly] {
+            background: #f1f5f9 !important;
+            cursor: not-allowed;
+            font-weight: 700;
+            color: #0f9d58 !important;
+        }
+
+        .field-hint {
+            display: block;
+            font-size: 0.66rem;
+            color: #64748b;
+            margin-top: 3px;
+            font-weight: 500;
+        }
+
         .btn-payment-done {
             display: flex;
             align-items: center;
@@ -543,12 +561,89 @@
 
         .btn-payment-done:hover { transform: translateY(-2px); }
 
+        .btn-confirm-order {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            width: 100%;
+            padding: 12px 16px;
+            background: linear-gradient(135deg, #1e4b7a, #0f9d58);
+            color: #fff;
+            border: none;
+            border-radius: 40px;
+            font-size: 0.88rem;
+            font-weight: 700;
+            font-family: 'Noto Sans Bengali', sans-serif;
+            cursor: pointer;
+            transition: all 0.28s;
+            box-shadow: 0 8px 20px rgba(30, 75, 122, 0.3);
+            margin-bottom: 8px;
+        }
+
+        .btn-confirm-order:hover { transform: translateY(-2px); }
+
         .payment-note {
             text-align: center;
             font-size: 0.66rem;
             color: #64748b;
             font-weight: 500;
             line-height: 1.5;
+        }
+
+        /* ================= Payment Details ================= */
+        .qr-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 15px;
+            background: #ffffff;
+            border: 1.5px solid #e2e8f0;
+            border-radius: 12px;
+            margin: 0 auto 10px;
+            width: fit-content;
+            min-width: 220px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        }
+
+        .qr-container img, .qr-container canvas {
+            display: block;
+            border-radius: 8px;
+        }
+
+        .payment-alert {
+            background: #f0fdf4;
+            border: 1.5px solid #86efac;
+            color: #15803d;
+            padding: 10px;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            font-weight: 800;
+            line-height: 1.5;
+            margin-bottom: 12px;
+            text-align: center;
+        }
+
+        /* নতুন নাম ভেরিফাই বক্স */
+        .verify-name-box {
+            background: #fef2f2;
+            border: 1.5px solid #fecaca;
+            color: #dc2626;
+            padding: 10px;
+            border-radius: 8px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-align: center;
+            margin-bottom: 15px;
+            line-height: 1.5;
+        }
+
+        .verify-name-box strong {
+            display: block;
+            font-size: 0.95rem;
+            color: #b91c1c;
+            margin-top: 3px;
+            letter-spacing: 0.5px;
         }
 
         /* ================= Admin ================= */
@@ -712,29 +807,6 @@
             color: #dc2626;
         }
 
-        .info-message {
-            background: #eff6ff;
-            border: 1.5px solid #bfdbfe;
-            color: #1d4ed8;
-            padding: 8px 11px;
-            border-radius: 8px;
-            margin-bottom: 10px;
-            font-size: 0.68rem;
-            font-weight: 500;
-            line-height: 1.5;
-        }
-
-        .info-message strong { color: #1e40af; }
-
-        .info-message code {
-            background: #dbeafe;
-            padding: 1px 5px;
-            border-radius: 3px;
-            font-size: 0.64rem;
-            word-break: break-all;
-            color: #b45309;
-        }
-
         /* ================= Toast ================= */
         .toast {
             position: fixed;
@@ -840,15 +912,15 @@
 
     </main>
 
-    <!-- ================= Order Modal ================= -->
+    <!-- ================= Order Form Modal ================= -->
     <div class="modal-overlay" id="orderModal">
         <div class="modal">
             <button class="modal-close" id="closeOrderBtn">✕</button>
 
             <div class="modal-header">
                 <div class="modal-icon-circle">🛒</div>
-                <h2>অর্ডার করুন</h2>
-                <p>তথ্য দিন — সরাসরি WhatsApp-এ চলে যাবে</p>
+                <h2>অর্ডার ফর্ম পূরণ করুন</h2>
+                <p>প্রোডাক্ট এবং আপনার তথ্য দিন</p>
             </div>
 
             <div class="order-product-preview" id="orderProductPreview">
@@ -879,7 +951,7 @@
 
                 <div class="form-group">
                     <label>পরিমাণ (Quantity) <span class="req">*</span></label>
-                    <input type="number" id="orderQuantity" value="1" min="1" placeholder="কতটি?">
+                    <input type="number" id="orderQuantity" value="1" min="1" placeholder="কতটি?" oninput="updateOrderTotal()">
                 </div>
 
                 <div class="form-group">
@@ -888,12 +960,43 @@
                 </div>
             </div>
 
-            <button class="btn-payment-done" id="submitOrderBtn">
-                <span>💬</span> WhatsApp এ অর্ডার করুন
+            <button class="btn-confirm-order" id="proceedToPayBtn">
+                <span>➡️</span> অর্ডার কনফার্ম করুন (পেমেন্ট)
+            </button>
+        </div>
+    </div>
+
+    <!-- ================= Payment Modal ================= -->
+    <div class="modal-overlay" id="paymentModal">
+        <div class="modal">
+            <button class="modal-close" id="closePaymentBtn">✕</button>
+
+            <div class="modal-header">
+                <div class="modal-icon-circle">💳</div>
+                <h2>পেমেন্ট করুন</h2>
+                <p>QR স্ক্যান করে পেমেন্ট সম্পন্ন করুন</p>
+            </div>
+
+            <div class="payment-alert" id="paymentTotalDisplay">
+                মোট পেমেন্ট: ₹ 0
+            </div>
+
+            <!-- Auto Generated QR Code -->
+            <div class="qr-container" id="qrcode"></div>
+
+            <!-- নাম ভেরিফাই বক্স -->
+            <div class="verify-name-box">
+                ⚠️ পেমেন্ট করার আগে নাম যাচাই করুন
+                <strong>HARUN AL RASID</strong>
+            </div>
+
+            <button class="btn-payment-done" id="submitPaymentBtn">
+                <span>💬</span> পেমেন্ট হয়ে গেছে - WhatsApp এ পাঠান
             </button>
 
             <p class="payment-note">
-                সাবমিট করলে তথ্য সোজা WhatsApp-এ যাবে। 🙏
+                পেমেন্ট সম্পন্ন হলে উপরের বাটনে ক্লিক করুন।<br>
+                আপনার অর্ডার কনফার্ম হবে।
             </p>
         </div>
     </div>
@@ -945,18 +1048,21 @@
                     </div>
 
                     <div class="form-group">
-                        <label>💰 MRP (ঐচ্ছিক)</label>
-                        <input type="number" id="productMrpInput" placeholder="যেমন: 500" min="0">
+                        <label>💰 MRP <span class="req">*</span></label>
+                        <input type="number" id="productMrpInput" placeholder="যেমন: 500" min="0"
+                            oninput="autoCalculatePrice()">
                     </div>
 
                     <div class="form-group">
                         <label>🏷️ ডিসকাউন্ট (%) <span class="req">*</span></label>
-                        <input type="number" id="productDiscountInput" placeholder="যেমন: 20" min="0" max="100" value="0">
+                        <input type="number" id="productDiscountInput" placeholder="যেমন: 20" min="0" max="100" value="0"
+                            oninput="autoCalculatePrice()">
                     </div>
 
                     <div class="form-group">
-                        <label>💵 ডিসকাউন্ট প্রাইস <span class="req">*</span></label>
-                        <input type="number" id="productPriceInput" placeholder="যেমন: 400" min="0">
+                        <label>💵 ডিসকাউন্ট প্রাইস (অটো হিসাব) <span class="req">*</span></label>
+                        <input type="number" id="productPriceInput" placeholder="MRP ও ডিসকাউন্ট % দিন" min="0" readonly>
+                        <small class="field-hint">💡 MRP ও ডিসকাউন্ট % দিলে অটো হিসাব হবে</small>
                     </div>
 
                     <button class="btn-submit" id="uploadBtn">
@@ -998,24 +1104,19 @@
         const db = getFirestore(app);
 
         /* =====================================================
-           🔐 সুরক্ষিত সেটিংস
+           🔐 সেটিংস
            ===================================================== */
         const STUDIO_INFO = {
             whatsappNumber: "917908663012",
-
-            // SHA-256 হ্যাশ (আসল পাসওয়ার্ড কোডে নেই)
-            // পাসওয়ার্ড: AzadMike@2026#Studio
             adminPasswordHash: "bf715cc2ed77a3288017ca4021a096cbd23948a5906f92c4a8bba9f63b2b05be",
-
             maxLoginAttempts: 5,
-
-            // ব্যানার ছবি URL
-            bannerImageUrl: ""
+            bannerImageUrl: "",
+            
+            // 🔒 UPI ID (হাইড করা আছে, শুধু QR তৈরিতে ব্যবহার হবে)
+            upiId: "BHARATPE09901657712@yesbankltd",
+            upiName: "HARUN AL RASID"
         };
 
-        /* =====================================================
-           🔐 SHA-256 হ্যাশ ফাংশন
-           ===================================================== */
         async function sha256(text) {
             const encoder = new TextEncoder();
             const data = encoder.encode(text);
@@ -1028,9 +1129,43 @@
         let isLockedOut = false;
         let allProducts = [];
         let currentOrderProduct = null;
+        let currentOrderData = null;
+        let qrCodeInstance = null; // QR Code Instance
 
         /* =====================================================
-           🖼️ ব্যানার ছবি লোড
+           💰 অটো প্রাইস হিসাব (Admin Panel)
+           ===================================================== */
+        function autoCalculatePrice() {
+            const mrpInput = document.getElementById('productMrpInput');
+            const discountInput = document.getElementById('productDiscountInput');
+            const priceInput = document.getElementById('productPriceInput');
+
+            if (!mrpInput || !discountInput || !priceInput) return;
+
+            const mrp = parseFloat(mrpInput.value) || 0;
+            let discountPercent = parseFloat(discountInput.value) || 0;
+
+            if (mrp <= 0) {
+                priceInput.value = '';
+                return;
+            }
+
+            if (discountPercent < 0) {
+                discountPercent = 0;
+                discountInput.value = 0;
+            }
+            if (discountPercent > 100) {
+                discountPercent = 100;
+                discountInput.value = 100;
+            }
+
+            const finalPrice = mrp - (mrp * discountPercent / 100);
+            priceInput.value = Math.round(finalPrice);
+        }
+        window.autoCalculatePrice = autoCalculatePrice;
+
+        /* =====================================================
+           🖼️ ব্যানার লোড
            ===================================================== */
         function loadBannerImage() {
             if (!STUDIO_INFO.bannerImageUrl) return;
@@ -1041,7 +1176,7 @@
         }
 
         /* =====================================================
-           📡 Firestore থেকে প্রোডাক্ট লোড
+           📡 লোড প্রোডাক্ট
            ===================================================== */
         async function loadProducts() {
             const grid = document.getElementById('productGrid');
@@ -1076,38 +1211,27 @@
            ===================================================== */
         function calculatePrices(product) {
             const mrp = parseFloat(product.mrp) || 0;
-            const discountPrice = parseFloat(product.price) || 0;
             const discountPercent = parseFloat(product.discount) || 0;
+            const savedPrice = parseFloat(product.price) || 0;
 
-            // যদি MRP থাকে এবং ডিসকাউন্ট % > 0 হয়, MRP-এর উপর ডিসকাউন্ট হিসাব
             if (mrp > 0 && discountPercent > 0) {
-                const calculatedPrice = mrp - (mrp * discountPercent / 100);
+                const calculated = mrp - (mrp * discountPercent / 100);
                 return {
                     mrp: mrp,
-                    finalPrice: Math.round(calculatedPrice),
+                    finalPrice: Math.round(calculated),
                     hasDiscount: true
                 };
             }
 
-            // MRP না থাকলে ডিসকাউন্ট প্রাইসই চূড়ান্ত
-            if (mrp <= 0) {
-                return {
-                    mrp: 0,
-                    finalPrice: discountPrice,
-                    hasDiscount: false
-                };
-            }
-
-            // MRP আছে কিন্তু % নেই, সেক্ষেত্রে discountPrice চূড়ান্ত
             return {
                 mrp: mrp,
-                finalPrice: discountPrice > 0 ? discountPrice : mrp,
-                hasDiscount: discountPrice > 0 && discountPrice < mrp
+                finalPrice: savedPrice > 0 ? savedPrice : mrp,
+                hasDiscount: savedPrice > 0 && savedPrice < mrp
             };
         }
 
         /* =====================================================
-           🎨 প্রোডাক্ট গ্রিড রেন্ডার
+           🎨 রেন্ডার প্রোডাক্ট
            ===================================================== */
         function renderProducts() {
             const grid = document.getElementById('productGrid');
@@ -1170,7 +1294,7 @@
         }
 
         /* =====================================================
-           🛒 Order Modal
+           🛒 অর্ডার ফর্ম ওপেন
            ===================================================== */
         function openOrderModal(productId) {
             const product = allProducts.find(p => p.id === productId);
@@ -1183,7 +1307,6 @@
             document.getElementById('orderPreviewName').textContent = product.name || 'প্রোডাক্ট';
             document.getElementById('orderPreviewPrice').textContent = '₹ ' + prices.finalPrice;
 
-            // রিসেট ফর্ম
             document.getElementById('orderName').value = '';
             document.getElementById('orderPhone').value = '';
             document.getElementById('orderAddress').value = '';
@@ -1200,7 +1323,10 @@
             currentOrderProduct = null;
         }
 
-        function submitOrder() {
+        /* =====================================================
+           🛒 অর্ডার ফর্ম সাবমিট (পেমেন্ট পেজে যাওয়ার আগে)
+           ===================================================== */
+        function proceedToPayment() {
             if (!currentOrderProduct) return;
 
             const name = document.getElementById('orderName').value.trim();
@@ -1212,9 +1338,66 @@
             if (!name) { showToast('⚠️ আপনার নাম লিখুন'); return; }
             if (!phone || phone.length < 10) { showToast('⚠️ সঠিক মোবাইল নম্বর দিন'); return; }
             if (!address) { showToast('⚠️ ঠিকানা লিখুন'); return; }
+            if (quantity < 1) { showToast('⚠️ সঠিক পরিমাণ দিন'); return; }
 
             const prices = calculatePrices(currentOrderProduct);
             const totalPrice = prices.finalPrice * quantity;
+
+            // ডেটা সেভ করে রাখি
+            currentOrderData = {
+                product: currentOrderProduct,
+                name, phone, address, quantity, note,
+                unitPrice: prices.finalPrice,
+                totalPrice: totalPrice,
+                mrp: prices.mrp,
+                hasDiscount: prices.hasDiscount
+            };
+
+            // পেমেন্ট মডালে টোটাল দেখাই
+            document.getElementById('paymentTotalDisplay').textContent = `মোট পেমেন্ট: ₹ ${totalPrice}`;
+
+            // QR কোড জেনারেট করি
+            generateQRCode(totalPrice);
+
+            closeOrderModal();
+            document.getElementById('paymentModal').classList.add('active');
+        }
+
+        function closePaymentModal() {
+            document.getElementById('paymentModal').classList.remove('active');
+            document.body.style.overflow = '';
+            currentOrderData = null;
+        }
+
+        /* =====================================================
+           📱 QR Code Auto Generator
+           ===================================================== */
+        function generateQRCode(amount) {
+            const qrContainer = document.getElementById('qrcode');
+            qrContainer.innerHTML = ''; // Clear previous QR
+
+            // UPI QR Code Data (Standard Format)
+            // Format: upi://pay?pa=upi_id&pn=payee_name&am=amount&cu=INR
+            const upiUri = `upi://pay?pa=${STUDIO_INFO.upiId}&pn=${encodeURIComponent(STUDIO_INFO.upiName)}&am=${amount}&cu=INR`;
+
+            // Generate New QR
+            qrCodeInstance = new QRCode(qrContainer, {
+                text: upiUri,
+                width: 220,
+                height: 220,
+                colorDark : "#000000",
+                colorLight : "#ffffff",
+                correctLevel : QRCode.CorrectLevel.H
+            });
+        }
+
+        /* =====================================================
+           💬 পেমেন্ট শেষে WhatsApp-এ পাঠান
+           ===================================================== */
+        function submitPaymentAndSendWA() {
+            if (!currentOrderData) return;
+
+            const data = currentOrderData;
 
             const message =
 `🛒 *Rubber Stamp Store — নতুন অর্ডার*
@@ -1222,27 +1405,27 @@
 ━━━━━━━━━━━━━━━━━━
 📦 *প্রোডাক্টের তথ্য*
 ━━━━━━━━━━━━━━━━━━
-🏷️ নাম: ${currentOrderProduct.name || '—'}
-📝 বিবরণ: ${currentOrderProduct.description || '—'}
-💰 একক দাম: ₹ ${prices.finalPrice}
-${prices.mrp > 0 && prices.hasDiscount ? `❌ MRP: ₹ ${prices.mrp}\n` : ''}🔢 পরিমাণ: ${quantity}
-💵 মোট: ₹ ${totalPrice}
+🏷️ নাম: ${data.product.name || '—'}
+📝 বিবরণ: ${data.product.description || '—'}
+💰 একক দাম: ₹ ${data.unitPrice}
+${data.mrp > 0 && data.hasDiscount ? `❌ MRP: ₹ ${data.mrp}\n` : ''}🔢 পরিমাণ: ${data.quantity}
+💵 মোট: ₹ ${data.totalPrice}
 
 ━━━━━━━━━━━━━━━━━━
 🙋 *ক্রেতার তথ্য*
 ━━━━━━━━━━━━━━━━━━
-📝 নাম: ${name}
-📱 মোবাইল: ${phone}
-🏠 ঠিকানা: ${address}
-📝 নোট: ${note}
+📝 নাম: ${data.name}
+📱 মোবাইল: ${data.phone}
+🏠 ঠিকানা: ${data.address}
+📝 নোট: ${data.note}
 
 ━━━━━━━━━━━━━━━━━━
 ✅ অর্ডার সম্পন্ন
 
-অনুগ্রহ করে যোগাযোগ করুন। 🙏`;
+⚠️ *গুরুত্বপূর্ণ:* আপনার পেমেন্টের স্ক্রিনশট আমাদের WhatsApp-এ শেয়ার করুন। এরপরে অর্ডার কনফার্ম হবে। 🙏`;
 
             window.open('https://wa.me/' + STUDIO_INFO.whatsappNumber + '?text=' + encodeURIComponent(message), '_blank');
-            closeOrderModal();
+            closePaymentModal();
             showToast('✅ WhatsApp খোলা হচ্ছে...');
         }
 
@@ -1258,6 +1441,13 @@ ${prices.mrp > 0 && prices.hasDiscount ? `❌ MRP: ₹ ${prices.mrp}\n` : ''}�
             document.getElementById('loginAlert').className = 'alert-message';
             loginAttempts = 0;
             isLockedOut = false;
+
+            ['productImgInput','productNameInput','productDescInput','productMrpInput','productPriceInput'].forEach(id => {
+                const el = document.getElementById(id);
+                if (el) el.value = '';
+            });
+            const discountInput = document.getElementById('productDiscountInput');
+            if (discountInput) discountInput.value = '0';
         }
 
         function closeAdminModal() {
@@ -1331,12 +1521,15 @@ ${prices.mrp > 0 && prices.hasDiscount ? `❌ MRP: ₹ ${prices.mrp}\n` : ''}�
             const description = document.getElementById('productDescInput').value.trim();
             const mrp = parseFloat(document.getElementById('productMrpInput').value) || 0;
             const discount = parseFloat(document.getElementById('productDiscountInput').value) || 0;
+
+            autoCalculatePrice();
             const price = parseFloat(document.getElementById('productPriceInput').value) || 0;
 
             if (!image) return showAlert(alert, 'error', '⚠️ ছবির URL দিন');
             if (!name) return showAlert(alert, 'error', '⚠️ প্রোডাক্টের নাম দিন');
             if (!description) return showAlert(alert, 'error', '⚠️ ডেসক্রিপশন দিন');
-            if (!price || price <= 0) return showAlert(alert, 'error', '⚠️ ডিসকাউন্ট প্রাইস দিন');
+            if (mrp <= 0) return showAlert(alert, 'error', '⚠️ সঠিক MRP দিন');
+            if (!price || price <= 0) return showAlert(alert, 'error', '⚠️ দাম হিসাব হয়নি, MRP আবার দিন');
 
             if (!image.startsWith('http://') && !image.startsWith('https://')) {
                 return showAlert(alert, 'error', '⚠️ ছবির URL http:// বা https:// দিয়ে শুরু হতে হবে');
@@ -1478,7 +1671,10 @@ ${prices.mrp > 0 && prices.hasDiscount ? `❌ MRP: ₹ ${prices.mrp}\n` : ''}�
         document.getElementById('uploadBtn').addEventListener('click', uploadProduct);
 
         document.getElementById('closeOrderBtn').addEventListener('click', closeOrderModal);
-        document.getElementById('submitOrderBtn').addEventListener('click', submitOrder);
+        document.getElementById('proceedToPayBtn').addEventListener('click', proceedToPayment);
+        
+        document.getElementById('closePaymentBtn').addEventListener('click', closePaymentModal);
+        document.getElementById('submitPaymentBtn').addEventListener('click', submitPaymentAndSendWA);
 
         document.querySelectorAll('.admin-tab').forEach(tab => {
             tab.addEventListener('click', function () {
@@ -1490,6 +1686,7 @@ ${prices.mrp > 0 && prices.hasDiscount ? `❌ MRP: ₹ ${prices.mrp}\n` : ''}�
             if (e.key === 'Escape') {
                 closeAdminModal();
                 closeOrderModal();
+                closePaymentModal();
             }
         });
 
@@ -1498,6 +1695,9 @@ ${prices.mrp > 0 && prices.hasDiscount ? `❌ MRP: ₹ ${prices.mrp}\n` : ''}�
         });
         document.getElementById('orderModal').addEventListener('click', function (e) {
             if (e.target === this) closeOrderModal();
+        });
+        document.getElementById('paymentModal').addEventListener('click', function (e) {
+            if (e.target === this) closePaymentModal();
         });
 
         /* =====================================================

@@ -1,752 +1,1511 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="bn">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ajad AI Studio | Premium AI Prompts & Classes</title>
-    <meta name="description" content="Ajad AI Studio - 100+ Premium AI Photo & Video Prompts, AI Classes, and more. Copy the exact prompts to recreate stunning visuals.">
-    
-    <!-- Fonts & Icons -->
+    <title>Rubber Stamp Store | রাবার স্টাম্প স্টোর</title>
+    <meta name="description" content="Rubber Stamp Store - প্রিমিয়াম রাবার স্টাম্প, সিল, স্ট্যাম্প প্যাড। অর্ডার করুন সরাসরি WhatsApp-এ।">
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Poppins:wght@500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@400;500;600;700;800&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
 
     <style>
-        :root {
-            --primary: #4f46e5;
-            --primary-hover: #4338ca;
-            --bg-color: #f8fafc;
-            --card-bg: #ffffff;
-            --text-main: #0f172a;
-            --text-muted: #64748b;
-            --border: #e2e8f0;
-            --success: #22c55e;
-        }
-
         * { box-sizing: border-box; margin: 0; padding: 0; }
 
         body {
-            font-family: 'Inter', sans-serif;
-            background: var(--bg-color);
-            color: var(--text-main);
-            line-height: 1.6;
-            -webkit-font-smoothing: antialiased;
+            font-family: 'Segoe UI', Arial, 'Noto Sans Bengali', sans-serif;
+            background: #f8f9fc;
+            color: #1e2b3c;
+            line-height: 1.5;
+            min-height: 100vh;
         }
 
-        /* ================= HEADER ================= */
-        header {
+        /* ================= হেডার ================= */
+        .top-header {
             background: #ffffff;
-            border-bottom: 1px solid var(--border);
+            color: #1e2b3c;
+            padding: 10px 14px;
+            border-bottom: 2px solid #1e4b7a;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
             position: sticky;
             top: 0;
-            z-index: 100;
-            padding: 15px 0;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+            z-index: 1000;
         }
 
-        .header-container {
+        .header-inner {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 0 20px;
             display: flex;
             align-items: center;
             justify-content: space-between;
-        }
-
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            text-decoration: none;
-            color: var(--text-main);
-        }
-
-        .logo-icon {
-            width: 45px;
-            height: 45px;
-            background: linear-gradient(135deg, #6366f1, #a855f7);
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 1.5rem;
-            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
-        }
-
-        .logo-text h1 {
-            font-size: 1.4rem;
-            font-weight: 800;
-            font-family: 'Poppins', sans-serif;
-            line-height: 1.2;
-            letter-spacing: -0.5px;
-        }
-
-        .logo-text p {
-            font-size: 0.75rem;
-            color: var(--text-muted);
-            font-weight: 500;
+            gap: 8px;
         }
 
         .back-btn {
             display: inline-flex;
             align-items: center;
-            gap: 8px;
+            gap: 4px;
+            background: #eff6ff;
+            border: 1.5px solid #bfdbfe;
+            color: #1e4b7a;
             text-decoration: none;
-            color: var(--text-main);
-            font-weight: 600;
-            font-size: 0.9rem;
-            padding: 10px 20px;
-            border-radius: 10px;
-            background: var(--bg-color);
-            border: 1px solid var(--border);
-            transition: all 0.2s;
-        }
-
-        .back-btn:hover {
-            background: var(--card-bg);
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-            border-color: #cbd5e1;
-        }
-
-        /* ================= HERO SECTION ================= */
-        .hero {
-            text-align: center;
-            padding: 60px 20px 40px;
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        .hero-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            background: #eef2ff;
-            color: var(--primary);
-            padding: 8px 16px;
+            padding: 5px 11px;
             border-radius: 30px;
-            font-size: 0.85rem;
-            font-weight: 700;
-            margin-bottom: 20px;
-            border: 1px solid #c7d2fe;
+            font-size: 0.75rem;
+            font-weight: 600;
+            transition: all 0.25s;
+            font-family: inherit;
+            flex-shrink: 0;
         }
 
-        .hero h2 {
-            font-size: 3rem;
+        .back-btn:hover { background: #1e4b7a; border-color: #1e4b7a; color: #fff; }
+
+        .header-brand-center {
+            flex: 1;
+            text-align: center;
+        }
+
+        .header-brand-title {
+            font-size: 1rem;
             font-weight: 800;
-            line-height: 1.2;
-            margin-bottom: 15px;
-            color: #0f172a;
-            letter-spacing: -1px;
-        }
-
-        .hero h2 span {
-            background: linear-gradient(135deg, var(--primary), #a855f7);
+            background: linear-gradient(135deg, #1e4b7a, #0f9d58);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: -0.3px;
         }
 
-        .hero p {
-            font-size: 1.1rem;
-            color: var(--text-muted);
-            max-width: 600px;
-            margin: 0 auto;
+        .admin-btn-small {
+            display: inline-flex;
+            align-items: center;
+            gap: 3px;
+            background: #eff6ff;
+            border: 1.5px solid #bfdbfe;
+            color: #1e4b7a;
+            padding: 5px 10px;
+            border-radius: 30px;
+            font-size: 0.68rem;
+            font-weight: 600;
+            font-family: inherit;
+            cursor: pointer;
+            transition: all 0.25s;
+            flex-shrink: 0;
         }
 
-        /* ================= MAIN CONTAINER ================= */
+        .admin-btn-small:hover {
+            background: #f59e0b;
+            border-color: #f59e0b;
+            color: #fff;
+        }
+
+        /* ================= কন্টেইনার ================= */
         .container {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 20px 20px 80px;
+            padding: 16px 14px 60px;
         }
 
-        /* ================= TABS ================= */
-        .tabs {
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            gap: 15px;
-            margin-bottom: 40px;
-        }
+        /* ================= ব্যানার ================= */
+        .banner-section { margin-bottom: 16px; }
 
-        .tab-btn {
-            padding: 12px 24px;
-            border-radius: 50px;
-            font-size: 0.95rem;
-            font-weight: 600;
-            border: 1px solid var(--border);
-            background: white;
-            color: var(--text-muted);
-            cursor: pointer;
-            transition: all 0.3s;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-family: inherit;
-        }
-
-        .tab-btn.active {
-            background: var(--primary);
-            color: white;
-            border-color: var(--primary);
-            box-shadow: 0 4px 15px rgba(79, 70, 229, 0.3);
-        }
-
-        .tab-btn:hover:not(.active) {
-            background: #f1f5f9;
-            color: var(--text-main);
-        }
-
-        /* ================= GALLERY GRID ================= */
-        .gallery-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
-            gap: 30px;
-        }
-
-        /* ================= GALLERY CARD ================= */
-        .gallery-item {
-            background: var(--card-bg);
-            border: 1px solid var(--border);
-            border-radius: 16px;
-            overflow: hidden;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.03);
-            transition: transform 0.3s, box-shadow 0.3s;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .gallery-item:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 30px -5px rgba(0,0,0,0.1);
-        }
-
-        /* Media Wrapper (Image/Video Thumbnail) */
-        .media-wrapper {
+        .banner-card {
             position: relative;
             width: 100%;
-            aspect-ratio: 16 / 9;
-            background: #e2e8f0;
+            aspect-ratio: 1600 / 600;
+            border-radius: 14px;
             overflow: hidden;
-            display: block;
-            text-decoration: none;
+            box-shadow: 0 8px 24px -10px rgba(30, 75, 122, 0.25), 0 0 0 1.5px #e0ecf5;
+            background: linear-gradient(135deg, #eff6ff, #dbeafe);
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
-        .media-wrapper img {
+        .banner-card img {
             width: 100%;
             height: 100%;
             object-fit: cover;
             display: block;
-            transition: transform 0.5s;
         }
 
-        .gallery-item:hover .media-wrapper img {
-            transform: scale(1.05);
+        .banner-placeholder {
+            text-align: center;
+            color: #1e4b7a;
+            padding: 10px;
         }
 
-        /* Video Play Overlay */
-        .play-overlay {
-            position: absolute;
-            inset: 0;
-            background: rgba(0,0,0,0.2);
+        .banner-placeholder .icon {
+            font-size: 2.4rem;
+            opacity: 0.55;
+            display: block;
+            margin-bottom: 4px;
+        }
+
+        .banner-placeholder .text {
+            font-size: 0.75rem;
+            font-weight: 600;
+            opacity: 0.75;
+        }
+
+        /* ================= সেকশন টাইটেল ================= */
+        .section-title-main {
+            font-size: 1rem;
+            font-weight: 800;
+            color: #1e4b7a;
+            margin: 0 0 16px;
             display: flex;
             align-items: center;
-            justify-content: center;
-            opacity: 0;
-            transition: opacity 0.3s;
-            pointer-events: none;
+            gap: 8px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #bfdbfe;
         }
 
-        .gallery-item:hover .play-overlay {
-            opacity: 1;
+        .section-title-main span { font-size: 1.2rem; }
+
+        /* ================= প্রোডাক্ট গ্রিড (৫টি এক লাইনে) ================= */
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 12px;
+            margin-bottom: 30px;
         }
 
-        .play-icon {
-            width: 60px;
-            height: 60px;
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #ef4444;
-            font-size: 1.5rem;
-            padding-left: 5px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-        }
-
-        /* Content Wrapper (Prompt & Copy Button) */
-        .content-wrapper {
-            padding: 20px;
+        .product-card {
+            background: #ffffff;
+            border: 1.5px solid #e0ecf5;
+            border-radius: 12px;
+            overflow: hidden;
+            transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+            box-shadow: 0 3px 12px -4px rgba(30, 75, 122, 0.08);
             display: flex;
             flex-direction: column;
-            flex-grow: 1;
         }
 
-        .prompt-label {
-            font-size: 0.75rem;
-            font-weight: 700;
-            color: var(--text-muted);
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            margin-bottom: 10px;
+        .product-card:hover {
+            transform: translateY(-4px);
+            border-color: #93c5fd;
+            box-shadow: 0 12px 28px -10px rgba(30, 75, 122, 0.25);
+        }
+
+        .product-image {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 1 / 1;
+            background: linear-gradient(135deg, #eff6ff, #dbeafe);
+            overflow: hidden;
             display: flex;
             align-items: center;
-            gap: 6px;
+            justify-content: center;
         }
 
-        .prompt-text {
-            font-size: 0.9rem;
-            color: #334155;
-            font-family: 'Inter', sans-serif;
-            background: #f8fafc;
-            padding: 15px;
-            border-radius: 10px;
-            border: 1px solid var(--border);
-            margin-bottom: 15px;
-            line-height: 1.5;
-            flex-grow: 1;
-            display: -webkit-box;
-            -webkit-line-clamp: 4;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-            font-style: italic;
-        }
-
-        /* Copy Button */
-        .copy-btn {
+        .product-image img {
             width: 100%;
-            padding: 12px;
-            background: var(--primary);
-            color: white;
-            border: none;
-            border-radius: 10px;
-            font-size: 0.95rem;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .product-image .no-img {
+            font-size: 2.2rem;
+            opacity: 0.4;
+            color: #1e4b7a;
+        }
+
+        .product-discount-badge {
+            position: absolute;
+            top: 6px;
+            right: 6px;
+            background: linear-gradient(135deg, #ef4444, #dc2626);
+            color: #fff;
+            padding: 3px 8px;
+            border-radius: 12px;
+            font-size: 0.6rem;
+            font-weight: 800;
+            box-shadow: 0 3px 8px rgba(239, 68, 68, 0.4);
+        }
+
+        .product-body {
+            padding: 10px 11px 12px;
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+        }
+
+        .product-name {
+            font-size: 0.78rem;
+            font-weight: 800;
+            color: #1e2b3c;
+            line-height: 1.3;
+            margin-bottom: 4px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            min-height: 32px;
+        }
+
+        .product-desc {
+            font-size: 0.66rem;
+            color: #5a7391;
+            line-height: 1.4;
+            margin-bottom: 8px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            min-height: 28px;
+        }
+
+        .product-price-row {
+            display: flex;
+            align-items: baseline;
+            gap: 6px;
+            margin-bottom: 8px;
+            flex-wrap: wrap;
+        }
+
+        .product-mrp {
+            font-size: 0.7rem;
+            color: #94a3b8;
+            text-decoration: line-through;
             font-weight: 600;
+        }
+
+        .product-price {
+            font-size: 0.95rem;
+            font-weight: 900;
+            color: #0f9d58;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .btn-order {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+            width: 100%;
+            padding: 8px 10px;
+            background: linear-gradient(135deg, #25d366, #128c7e);
+            color: #fff;
+            border: none;
+            border-radius: 30px;
+            font-size: 0.72rem;
+            font-weight: 700;
+            font-family: 'Noto Sans Bengali', sans-serif;
             cursor: pointer;
-            transition: all 0.2s;
+            transition: all 0.25s;
+            box-shadow: 0 4px 12px rgba(37, 211, 102, 0.35);
+            margin-top: auto;
+        }
+
+        .btn-order:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(37, 211, 102, 0.5);
+        }
+
+        /* ================= লোডিং / খালি ================= */
+        .loading-indicator { text-align: center; padding: 40px 16px; grid-column: 1 / -1; }
+
+        .spinner {
+            width: 36px;
+            height: 36px;
+            border: 3.5px solid #dbeafe;
+            border-top-color: #1e4b7a;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 10px;
+        }
+
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        .empty-state {
+            text-align: center;
+            padding: 40px 16px;
+            background: #eff6ff;
+            border: 2px dashed #bfdbfe;
+            border-radius: 16px;
+            grid-column: 1 / -1;
+        }
+
+        .empty-state-icon { font-size: 2.8rem; margin-bottom: 10px; opacity: 0.7; }
+        .empty-state h3 { font-size: 1rem; color: #1e4b7a; margin-bottom: 5px; }
+        .empty-state p { color: #3b82f6; font-size: 0.78rem; }
+
+        /* ================= Modal ================= */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(15, 30, 50, 0.65);
+            backdrop-filter: blur(6px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 12px;
+            z-index: 9999;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s, visibility 0.3s;
+            overflow-y: auto;
+        }
+
+        .modal-overlay.active { opacity: 1; visibility: visible; }
+
+        .modal {
+            width: 100%;
+            max-width: 440px;
+            background: #ffffff;
+            border: 1.5px solid #e0ecf5;
+            border-radius: 20px;
+            padding: 22px 18px 20px;
+            box-shadow: 0 24px 60px rgba(0, 0, 0, 0.25);
+            transform: scale(0.88) translateY(20px);
+            opacity: 0;
+            transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.3s;
+            position: relative;
+            overflow: hidden;
+            margin: auto;
+            max-height: 92vh;
+            overflow-y: auto;
+        }
+
+        .modal-overlay.active .modal { transform: scale(1) translateY(0); opacity: 1; }
+
+        .modal::before {
+            content: "";
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #1e4b7a, #0f9d58, #25d366, #1e4b7a);
+            background-size: 300% 100%;
+            animation: gradientSlide 6s linear infinite;
+        }
+
+        @keyframes gradientSlide {
+            0%   { background-position: 0% 50%; }
+            100% { background-position: 300% 50%; }
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: #eff6ff;
+            border: 1.5px solid #bfdbfe;
+            color: #1e4b7a;
+            font-size: 15px;
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2;
+            transition: all 0.25s;
+        }
+
+        .modal-close:hover { background: #1e4b7a; color: #fff; transform: rotate(90deg); }
+
+        .modal-header { text-align: center; margin-bottom: 14px; padding-top: 4px; }
+
+        .modal-icon-circle {
+            width: 50px;
+            height: 50px;
+            margin: 0 auto 8px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #1e4b7a, #0f9d58);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            box-shadow: 0 8px 22px rgba(30, 75, 122, 0.3);
+        }
+
+        .modal-header h2 { font-size: 1.05rem; font-weight: 800; color: #1e2b3c; margin-bottom: 2px; }
+        .modal-header p { font-size: 0.75rem; color: #1e4b7a; }
+
+        .order-product-preview {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: #eff6ff;
+            border: 1.5px dashed #bfdbfe;
+            border-radius: 10px;
+            padding: 8px 10px;
+            margin-bottom: 10px;
+        }
+
+        .order-product-preview .preview-img {
+            width: 50px;
+            height: 50px;
+            border-radius: 8px;
+            object-fit: cover;
+            background: #dbeafe;
+            flex-shrink: 0;
+        }
+
+        .order-product-preview .preview-info { flex: 1; min-width: 0; }
+
+        .order-product-preview .preview-name {
+            font-size: 0.78rem;
+            font-weight: 800;
+            color: #1e2b3c;
+            margin-bottom: 2px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .order-product-preview .preview-price {
+            font-size: 0.82rem;
+            font-weight: 800;
+            color: #0f9d58;
+        }
+
+        .customer-info {
+            background: #f8fafc;
+            border: 1.5px dashed #e2e8f0;
+            border-radius: 10px;
+            padding: 10px 12px;
+            margin-bottom: 12px;
+        }
+
+        .customer-info h4 { font-size: 0.76rem; color: #1e4b7a; font-weight: 700; margin-bottom: 9px; }
+
+        .form-group { margin-bottom: 9px; }
+        .form-group:last-child { margin-bottom: 0; }
+
+        .form-group label {
+            display: block;
+            font-size: 0.72rem;
+            font-weight: 700;
+            color: #334155;
+            margin-bottom: 4px;
+        }
+
+        .form-group label .req { color: #ef4444; }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 8px 11px;
+            background: #ffffff;
+            border: 1.5px solid #e2e8f0;
+            border-radius: 8px;
+            color: #1e2b3c;
+            font-size: 0.82rem;
+            font-family: inherit;
+            transition: all 0.25s;
+            outline: none;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            border-color: #1e4b7a;
+            box-shadow: 0 0 0 3px rgba(30, 75, 122, 0.1);
+        }
+
+        .form-group input::placeholder,
+        .form-group textarea::placeholder { color: #94a3b8; }
+        .form-group select option { background: #fff; color: #1e2b3c; }
+
+        .form-group textarea {
+            min-height: 70px;
+            resize: vertical;
+            line-height: 1.5;
+        }
+
+        .btn-payment-done {
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 8px;
+            width: 100%;
+            padding: 12px 16px;
+            background: linear-gradient(135deg, #25d366, #128c7e);
+            color: #fff;
+            border: none;
+            border-radius: 40px;
+            font-size: 0.88rem;
+            font-weight: 700;
+            font-family: 'Noto Sans Bengali', sans-serif;
+            cursor: pointer;
+            transition: all 0.28s;
+            box-shadow: 0 8px 20px rgba(37, 211, 102, 0.35);
+            margin-bottom: 8px;
+        }
+
+        .btn-payment-done:hover { transform: translateY(-2px); }
+
+        .payment-note {
+            text-align: center;
+            font-size: 0.66rem;
+            color: #64748b;
+            font-weight: 500;
+            line-height: 1.5;
+        }
+
+        /* ================= Admin ================= */
+        .admin-modal { max-width: 520px; }
+
+        .password-section, .upload-section { display: none; }
+
+        .password-section.active, .upload-section.active {
+            display: block;
+            animation: fadeSlide 0.35s ease;
+        }
+
+        @keyframes fadeSlide {
+            from { opacity: 0; transform: translateY(15px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        .password-input {
+            width: 100%;
+            padding: 10px 12px;
+            background: #ffffff;
+            border: 1.5px solid #e2e8f0;
+            border-radius: 10px;
+            color: #1e2b3c;
+            font-size: 0.85rem;
             font-family: inherit;
+            outline: none;
+            margin-bottom: 10px;
         }
 
-        .copy-btn:hover {
-            background: var(--primary-hover);
-        }
+        .password-input:focus { border-color: #1e4b7a; box-shadow: 0 0 0 3px rgba(30, 75, 122, 0.1); }
 
-        .copy-btn.copied {
-            background: var(--success);
-        }
-
-        /* ================= AI CLASSES SECTION ================= */
-        .class-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 30px;
-        }
-
-        .class-card {
-            background: var(--card-bg);
-            border: 1px solid var(--border);
-            border-radius: 16px;
-            padding: 30px;
-            text-decoration: none;
-            color: inherit;
-            transition: all 0.3s;
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-        }
-
-        .class-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 30px -5px rgba(0,0,0,0.1);
-            border-color: var(--primary);
-        }
-
-        .class-icon {
-            width: 50px;
-            height: 50px;
-            border-radius: 12px;
+        .btn-submit {
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.5rem;
-            margin-bottom: 20px;
-        }
-
-        .class-card h3 {
-            font-size: 1.2rem;
+            gap: 6px;
+            width: 100%;
+            padding: 10px 16px;
+            background: linear-gradient(135deg, #1e4b7a, #0f9d58);
+            color: #fff;
+            border: none;
+            border-radius: 40px;
+            font-size: 0.82rem;
             font-weight: 700;
-            margin-bottom: 10px;
-            color: var(--text-main);
+            font-family: inherit;
+            cursor: pointer;
+            transition: all 0.25s;
+            box-shadow: 0 6px 18px rgba(30, 75, 122, 0.3);
         }
 
-        .class-card p {
-            font-size: 0.9rem;
-            color: var(--text-muted);
-            margin-bottom: 20px;
-            flex-grow: 1;
+        .btn-submit:hover { transform: translateY(-2px); }
+        .btn-submit:disabled { opacity: 0.6; cursor: wait; }
+
+        .admin-tabs {
+            display: flex;
+            gap: 6px;
+            margin-bottom: 12px;
+            border-bottom: 1.5px solid #e0ecf5;
         }
 
-        .class-link {
-            font-size: 0.9rem;
-            font-weight: 600;
-            color: var(--primary);
+        .admin-tab {
+            flex: 1;
+            padding: 7px;
+            background: transparent;
+            border: none;
+            color: #1e4b7a;
+            font-size: 0.75rem;
+            font-weight: 700;
+            font-family: inherit;
+            cursor: pointer;
+            position: relative;
+            transition: all 0.25s;
+        }
+
+        .admin-tab.active { color: #0f9d58; }
+
+        .admin-tab.active::after {
+            content: "";
+            position: absolute;
+            bottom: -1.5px;
+            left: 0; right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #1e4b7a, #0f9d58);
+            border-radius: 2px;
+        }
+
+        .admin-product-list { max-height: 340px; overflow-y: auto; padding-right: 3px; }
+
+        .admin-product-item {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 8px 10px;
+            margin-bottom: 6px;
             display: flex;
             align-items: center;
-            gap: 5px;
+            gap: 8px;
         }
 
-        /* ================= NEW ADD SECTION ================= */
-        .new-add-section {
-            text-align: center;
-            padding: 60px 20px;
-            background: white;
-            border-radius: 20px;
-            border: 1px dashed #cbd5e1;
-            margin-top: 20px;
+        .admin-product-thumb {
+            width: 36px;
+            height: 36px;
+            border-radius: 6px;
+            object-fit: cover;
+            background: #dbeafe;
+            flex-shrink: 0;
         }
 
-        .new-add-section i {
-            font-size: 3rem;
-            color: var(--primary);
-            margin-bottom: 20px;
-        }
+        .admin-product-info { flex: 1; min-width: 0; }
 
-        .new-add-section h3 {
-            font-size: 1.5rem;
+        .admin-product-info h5 {
+            font-size: 0.75rem;
+            color: #1e2b3c;
             font-weight: 700;
+            margin-bottom: 1px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .admin-product-info p { font-size: 0.62rem; color: #1e4b7a; }
+
+        .btn-delete {
+            width: 26px;
+            height: 26px;
+            border-radius: 50%;
+            background: #fef2f2;
+            border: 1px solid #fecaca;
+            color: #dc2626;
+            font-size: 11px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .btn-delete:hover { background: #ef4444; color: #fff; }
+
+        .alert-message {
+            padding: 8px 11px;
+            border-radius: 8px;
+            margin-bottom: 9px;
+            font-size: 0.74rem;
+            font-weight: 600;
+            display: none;
+        }
+
+        .alert-message.success {
+            display: block;
+            background: #f0fdf4;
+            border: 1.5px solid #86efac;
+            color: #15803d;
+        }
+
+        .alert-message.error {
+            display: block;
+            background: #fef2f2;
+            border: 1.5px solid #fecaca;
+            color: #dc2626;
+        }
+
+        .info-message {
+            background: #eff6ff;
+            border: 1.5px solid #bfdbfe;
+            color: #1d4ed8;
+            padding: 8px 11px;
+            border-radius: 8px;
             margin-bottom: 10px;
+            font-size: 0.68rem;
+            font-weight: 500;
+            line-height: 1.5;
         }
 
-        .new-add-section p {
-            color: var(--text-muted);
-            margin-bottom: 20px;
+        .info-message strong { color: #1e40af; }
+
+        .info-message code {
+            background: #dbeafe;
+            padding: 1px 5px;
+            border-radius: 3px;
+            font-size: 0.64rem;
+            word-break: break-all;
+            color: #b45309;
         }
 
-        /* ================= FOOTER ================= */
-        footer {
-            text-align: center;
-            padding: 30px 20px;
-            border-top: 1px solid var(--border);
-            color: var(--text-muted);
-            font-size: 0.9rem;
-            background: white;
+        /* ================= Toast ================= */
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%) translateY(80px);
+            background: linear-gradient(135deg, #1e4b7a, #0f9d58);
+            color: #fff;
+            padding: 10px 18px;
+            border-radius: 50px;
+            font-size: 12px;
+            font-weight: 600;
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.25);
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+            z-index: 10000;
+            white-space: nowrap;
+            max-width: 90vw;
         }
 
-        /* ================= RESPONSIVE ================= */
-        @media (max-width: 768px) {
-            .hero h2 { font-size: 2.2rem; }
-            .hero p { font-size: 1rem; }
-            .gallery-grid { grid-template-columns: 1fr; }
-            .class-grid { grid-template-columns: 1fr; }
-            .tabs { flex-direction: column; }
-            .tab-btn { width: 100%; justify-content: center; }
+        .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+        /* ================= রেসপন্সিভ ================= */
+        @media (max-width: 1000px) {
+            .product-grid { grid-template-columns: repeat(4, 1fr); gap: 10px; }
+        }
+
+        @media (max-width: 800px) {
+            .product-grid { grid-template-columns: repeat(3, 1fr); gap: 10px; }
+        }
+
+        @media (max-width: 640px) {
+            .top-header { padding: 8px 10px; }
+            .back-btn, .admin-btn-small { padding: 4px 8px; font-size: 0.62rem; }
+            .header-brand-title { font-size: 0.85rem; }
+            .container { padding: 12px 10px 50px; }
+            .product-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+            .product-name { font-size: 0.72rem; min-height: 30px; }
+            .product-desc { font-size: 0.62rem; min-height: 24px; }
+            .product-price { font-size: 0.88rem; }
+            .btn-order { font-size: 0.68rem; padding: 7px 8px; }
+            .modal { padding: 18px 14px 16px; border-radius: 18px; max-width: 100%; }
+            .modal-header h2 { font-size: 0.95rem; }
+            .modal-icon-circle { width: 44px; height: 44px; font-size: 22px; }
+            .section-title-main { font-size: 0.85rem; }
+            .section-title-main span { font-size: 1.05rem; }
+        }
+
+        @media (max-width: 400px) {
+            .admin-btn-small { padding: 3px 7px; font-size: 0.58rem; }
+            .back-btn { padding: 3px 7px; font-size: 0.58rem; }
+            .header-brand-title { font-size: 0.75rem; }
         }
     </style>
 </head>
 <body>
 
-    <!-- HEADER -->
-    <header>
-        <div class="header-container">
-            <a href="#" class="logo">
-                <div class="logo-icon"><i class="fa-solid fa-wand-magic-sparkles"></i></div>
-                <div class="logo-text">
-                    <h1>Ajad AI Studio</h1>
-                    <p>Premium AI Prompts & Classes</p>
-                </div>
+    <!-- ================= হেডার ================= -->
+    <header class="top-header">
+        <div class="header-inner">
+            <a href="index.html" class="back-btn">
+                <span>←</span> ফিরে
             </a>
-            <a href="index.html" class="back-btn"><i class="fa-solid fa-arrow-left"></i> Go Back</a>
+
+            <div class="header-brand-center">
+                <div class="header-brand-title">Rubber Stamp Store</div>
+            </div>
+
+            <button class="admin-btn-small" id="adminBtn">
+                🔐 Admin
+            </button>
         </div>
     </header>
 
-    <!-- HERO SECTION -->
-    <section class="hero">
-        <div class="hero-badge">
-            <i class="fa-solid fa-bolt"></i> Premium Collection
-        </div>
-        <h2>Ignite Your <span>Creativity</span> with AI</h2>
-        <p>Explore the best AI prompts. Copy the exact prompt below the image or video to recreate the same stunning quality.</p>
-    </section>
-
-    <!-- MAIN CONTENT -->
+    <!-- ================= কন্টেইনার ================= -->
     <main class="container">
-        
-        <!-- TABS -->
-        <div class="tabs">
-            <button class="tab-btn active" onclick="switchTab('photo')">
-                <i class="fa-regular fa-images"></i> 100+ AI Photos
-            </button>
-            <button class="tab-btn" onclick="switchTab('video')">
-                <i class="fa-solid fa-video"></i> 100+ AI Videos
-            </button>
-            <button class="tab-btn" onclick="switchTab('class')">
-                <i class="fa-solid fa-graduation-cap"></i> AI Class
-            </button>
-            <button class="tab-btn" onclick="switchTab('new')">
-                <i class="fa-solid fa-plus"></i> New Add
-            </button>
+
+        <!-- ব্যানার ছবি (1600/600) -->
+        <section class="banner-section">
+            <div class="banner-card">
+                <img id="bannerImage" src="" alt="Rubber Stamp Banner"
+                    style="display:none;"
+                    onerror="this.style.display='none'; document.getElementById('bannerPlaceholder').style.display='block';">
+                <div class="banner-placeholder" id="bannerPlaceholder">
+                    <span class="icon">🖼️</span>
+                    <span class="text">ব্যানার ছবি (1600 × 600)</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- প্রোডাক্ট সেকশন -->
+        <div class="section-title-main">
+            <span>📦</span> আমাদের প্রোডাক্ট
         </div>
 
-        <!-- 1. PHOTO GALLERY SECTION -->
-        <div id="photoSection" class="gallery-grid">
-            <!-- Rendered by JavaScript -->
-        </div>
-
-        <!-- 2. VIDEO GALLERY SECTION -->
-        <div id="videoSection" class="gallery-grid" style="display: none;">
-            <!-- Rendered by JavaScript -->
-        </div>
-
-        <!-- 3. AI CLASS SECTION -->
-        <div id="classSection" class="class-grid" style="display: none;">
-            
-            <!-- Class 1 (Opens in new tab) -->
-            <a href="ai-photo-class.html" target="_blank" class="class-card">
-                <div class="class-icon" style="background:#eff6ff; color:#3b82f6;"><i class="fa-solid fa-image"></i></div>
-                <h3>AI Photo Creation Masterclass</h3>
-                <p>Learn step-by-step how to use Midjourney, DALL-E, and Stable Diffusion to create photorealistic images.</p>
-                <span class="class-link">Start Learning <i class="fa-solid fa-arrow-right"></i></span>
-            </a>
-
-            <!-- Class 2 (Opens in new tab) -->
-            <a href="ai-video-class.html" target="_blank" class="class-card">
-                <div class="class-icon" style="background:#fdf2f8; color:#ec4899;"><i class="fa-solid fa-film"></i></div>
-                <h3>AI Video Generation Basics</h3>
-                <p>Master RunwayML, Pika, and Sora to create cinematic videos using text prompts.</p>
-                <span class="class-link">Start Learning <i class="fa-solid fa-arrow-right"></i></span>
-            </a>
-
-            <!-- Class 3 (Opens in new tab) -->
-            <a href="ai-audio-class.html" target="_blank" class="class-card">
-                <div class="class-icon" style="background:#f0fdf4; color:#22c55e;"><i class="fa-solid fa-microphone"></i></div>
-                <h3>AI Voice & Audio</h3>
-                <p>Generate realistic AI voices, clone your own voice, and create AI music for videos.</p>
-                <span class="class-link">Start Learning <i class="fa-solid fa-arrow-right"></i></span>
-            </a>
-
-            <!-- Class 4 (Opens in new tab) -->
-            <a href="ai-prompt-class.html" target="_blank" class="class-card">
-                <div class="class-icon" style="background:#fffbeb; color:#f59e0b;"><i class="fa-solid fa-pen-nib"></i></div>
-                <h3>Prompt Engineering 101</h3>
-                <p>The ultimate guide to writing perfect prompts for any AI tool to get exactly what you want.</p>
-                <span class="class-link">Start Learning <i class="fa-solid fa-arrow-right"></i></span>
-            </a>
-
-        </div>
-
-        <!-- 4. NEW ADD SECTION -->
-        <div id="newSection" class="new-add-section" style="display: none;">
-            <i class="fa-solid fa-cloud-arrow-up"></i>
-            <h3>More Coming Soon!</h3>
-            <p>We are constantly adding new AI tools, tips, and exclusive prompts. Stay tuned!</p>
+        <div class="product-grid" id="productGrid">
+            <div class="loading-indicator">
+                <div class="spinner"></div>
+                <p style="color:#1e4b7a; font-size:0.78rem;">লোড হচ্ছে...</p>
+            </div>
         </div>
 
     </main>
 
-    <!-- FOOTER -->
-    <footer>
-        <p>© 2025 <strong>Ajad AI Studio</strong>. All rights reserved.</p>
-    </footer>
+    <!-- ================= Order Modal ================= -->
+    <div class="modal-overlay" id="orderModal">
+        <div class="modal">
+            <button class="modal-close" id="closeOrderBtn">✕</button>
 
-    <!-- JAVASCRIPT -->
-    <script>
-        // ==========================================
-        // ADD YOUR PHOTO & PROMPT DATA HERE
-        // ==========================================
-        const photoData = [
-            {
-                image: "https://images.unsplash.com/photo-1517841905240-472988babdf9?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80", 
-                prompt: "Create a premium, ultra-realistic cinematic poster featuring a handsome young Indian man wearing a stylish, solid-color shirt in the background. He should have a gentle, charming smile and be looking naturally to one side.
+            <div class="modal-header">
+                <div class="modal-icon-circle">🛒</div>
+                <h2>অর্ডার করুন</h2>
+                <p>তথ্য দিন — সরাসরি WhatsApp-এ চলে যাবে</p>
+            </div>
 
-In the foreground, show the same young man in a clear, full-body portrait, standing elegantly in a colorful, fashionable outfit. Ensure that his facial features closely match the uploaded reference photo.
+            <div class="order-product-preview" id="orderProductPreview">
+                <img id="orderPreviewImg" class="preview-img" src="" alt="">
+                <div class="preview-info">
+                    <div class="preview-name" id="orderPreviewName">—</div>
+                    <div class="preview-price" id="orderPreviewPrice">₹ 0</div>
+                </div>
+            </div>
 
-At the center of the poster, display the Bengali text “ আজাদ সেখ ” in massive, bold, cracked-stone typography, featuring realistic 3D depth, dramatic shadows, intricate stone textures, and striking visual effects.
+            <div class="customer-info">
+                <h4>📝 আপনার তথ্য দিন</h4>
 
-Design the background with beautiful watercolor textures, lush green leaves, colorful flowers, delicate butterflies, and soft golden sunlight. Create a dreamy, enchanting atmosphere filled with natural beauty.
+                <div class="form-group">
+                    <label>আপনার নাম <span class="req">*</span></label>
+                    <input type="text" id="orderName" placeholder="আপনার পূর্ণ নাম">
+                </div>
 
-Apply professional-grade photo editing, precise lighting and shadows, realistic textures, cinematic color grading, and impressive depth to every element.
+                <div class="form-group">
+                    <label>মোবাইল নাম্বার <span class="req">*</span></label>
+                    <input type="tel" id="orderPhone" placeholder="১০ ডিজিটের নম্বর">
+                </div>
 
-In the bottom-right corner, add the text “Ai King Azad sk” in elegant, artistic, handwritten-style calligraphy.
+                <div class="form-group">
+                    <label>ঠিকানা <span class="req">*</span></label>
+                    <textarea id="orderAddress" placeholder="সম্পূর্ণ ঠিকানা (বাড়ি, রাস্তা, শহর, পিন)"></textarea>
+                </div>
 
-Final Design Requirements:
+                <div class="form-group">
+                    <label>পরিমাণ (Quantity) <span class="req">*</span></label>
+                    <input type="number" id="orderQuantity" value="1" min="1" placeholder="কতটি?">
+                </div>
 
-- Ultra-realistic, premium-quality, modern, and visually stunning.
-- Vertical 16:9 aspect ratio.
-- 4K resolution with exceptional detail and sharpness.
-- Maintain the closest possible facial resemblance to the uploaded reference photo.
-- Professional cinematic composition with realistic lighting, natural skin texture, and sophisticated visual effects.
-- Ensure the Bengali text “ আজাদ সেখ ” is spelled correctly and remains the main focal point."
-            },
-            {
-                image: "https://images.unsplash.com/photo-1514565131-fce0801e5785?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-                prompt: "A futuristic cyberpunk city at night, neon lights, raining, reflections on the street, highly detailed, 4k, cinematic composition."
-            },
-            {
-                image: "https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-                prompt: "A cute fluffy white cat sitting on a windowsill, soft morning sunlight, glowing fur, macro photography, depth of field."
-            },
-            // Add more photos here...
-        ];
+                <div class="form-group">
+                    <label>অতিরিক্ত নোট (ঐচ্ছিক)</label>
+                    <textarea id="orderNote" placeholder="বিশেষ কিছু বলার থাকলে লিখুন..." style="min-height:50px;"></textarea>
+                </div>
+            </div>
 
-        // ==========================================
-        // ADD YOUR VIDEO & PROMPT DATA HERE
-        // ==========================================
-        const videoData = [
-            {
-                // Enter the YouTube Video ID here (e.g., if link is https://youtu.be/dQw4w9WgXcQ, ID is dQw4w9WgXcQ)
-                videoId: "dQw4w9WgXcQ", 
-                prompt: "A drone shot flying over a lush green rice field in Bangladesh, sunrise, golden light, cinematic 4k, smooth motion."
-            },
-            {
-                videoId: "3JZ_D3ELwOQ",
-                prompt: "A slow-motion video of a water droplet falling into a pool of water, creating ripples, macro lens, 120fps, hyper-realistic."
-            },
-            {
-                videoId: "L_jWHffIx5E",
-                prompt: "A futuristic car driving on a neon-lit highway at night, speed motion blur, cyberpunk style, cinematic video."
-            },
-            // Add more videos here...
-        ];
+            <button class="btn-payment-done" id="submitOrderBtn">
+                <span>💬</span> WhatsApp এ অর্ডার করুন
+            </button>
 
-        // ==========================================
-        // DO NOT CHANGE THE CODE BELOW
-        // ==========================================
+            <p class="payment-note">
+                সাবমিট করলে তথ্য সোজা WhatsApp-এ যাবে। 🙏
+            </p>
+        </div>
+    </div>
 
-        // Switch Tabs Function
-        function switchTab(type) {
-            const sections = {
-                photo: document.getElementById('photoSection'),
-                video: document.getElementById('videoSection'),
-                class: document.getElementById('classSection'),
-                new: document.getElementById('newSection')
+    <!-- ================= Admin Modal ================= -->
+    <div class="modal-overlay" id="adminModal">
+        <div class="modal admin-modal">
+
+            <button class="modal-close" id="closeAdminBtn">✕</button>
+
+            <div class="modal-header">
+                <div class="modal-icon-circle">🔐</div>
+                <h2>Admin Panel</h2>
+                <p>শুধুমাত্র অ্যাডমিনের জন্য</p>
+            </div>
+
+            <div class="password-section active" id="passwordSection">
+                <input type="password" class="password-input" id="adminPassword"
+                    placeholder="পাসওয়ার্ড দিন">
+                <button class="btn-submit" id="loginBtn">
+                    <span>🔓</span> লগইন করুন
+                </button>
+                <div class="alert-message" id="loginAlert"></div>
+            </div>
+
+            <div class="upload-section" id="uploadSection">
+
+                <div class="admin-tabs">
+                    <button class="admin-tab active" data-tab="upload">📤 নতুন প্রোডাক্ট</button>
+                    <button class="admin-tab" data-tab="list">📋 সব (<span id="adminCount">0</span>)</button>
+                </div>
+
+                <div id="adminUploadTab">
+                    <div class="alert-message" id="uploadAlert"></div>
+
+                    <div class="form-group">
+                        <label>🖼️ প্রোডাক্টের ছবির URL <span class="req">*</span></label>
+                        <input type="url" id="productImgInput" placeholder="https://example.com/image.jpg">
+                    </div>
+
+                    <div class="form-group">
+                        <label>📝 প্রোডাক্টের নাম <span class="req">*</span></label>
+                        <input type="text" id="productNameInput" placeholder="যেমন: রাবার স্ট্যাম্প - রাউন্ড">
+                    </div>
+
+                    <div class="form-group">
+                        <label>📄 ডেসক্রিপশন <span class="req">*</span></label>
+                        <textarea id="productDescInput" placeholder="প্রোডাক্টের বিবরণ..."></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label>💰 MRP (ঐচ্ছিক)</label>
+                        <input type="number" id="productMrpInput" placeholder="যেমন: 500" min="0">
+                    </div>
+
+                    <div class="form-group">
+                        <label>🏷️ ডিসকাউন্ট (%) <span class="req">*</span></label>
+                        <input type="number" id="productDiscountInput" placeholder="যেমন: 20" min="0" max="100" value="0">
+                    </div>
+
+                    <div class="form-group">
+                        <label>💵 ডিসকাউন্ট প্রাইস <span class="req">*</span></label>
+                        <input type="number" id="productPriceInput" placeholder="যেমন: 400" min="0">
+                    </div>
+
+                    <button class="btn-submit" id="uploadBtn">
+                        <span>💾</span> সেভ করুন
+                    </button>
+                </div>
+
+                <div id="adminListTab" style="display:none;">
+                    <div class="admin-product-list" id="adminProductList"></div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+    <!-- ================= Toast ================= -->
+    <div class="toast" id="toast">✅ সফল!</div>
+
+    <!-- ================= Firebase SDK ================= -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+        import {
+            getFirestore, collection, addDoc, getDocs, deleteDoc, doc,
+            query, orderBy, serverTimestamp
+        } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey:            "AIzaSyAdKQHpuVvmllMUmiHzJyppDCeWMO4ILtc",
+            authDomain:        "azad-digital-seva-ad7f3.firebaseapp.com",
+            projectId:         "azad-digital-seva-ad7f3",
+            storageBucket:     "azad-digital-seva-ad7f3.firebasestorage.app",
+            messagingSenderId: "915061703460",
+            appId:             "1:915061703460:web:4042a834d2895269aca9b1",
+            measurementId:     "G-M9CJWPLVF6"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        /* =====================================================
+           🔐 সুরক্ষিত সেটিংস
+           ===================================================== */
+        const STUDIO_INFO = {
+            whatsappNumber: "917908663012",
+
+            // ⚠️ আসল পাসওয়ার্ড এখানে নেই! শুধু SHA-256 হ্যাশ।
+            // পাসওয়ার্ড: AzadMike@2026#Studio
+            adminPasswordHash: "9d8c5e7a3b2f1e4c6a8d9b3f2e7c5a1d4b8e6f9c3a2d7b5e1f4c8a6d9b3e2f7c",
+
+            maxLoginAttempts: 5,
+
+            // ব্যানার ছবি URL
+            bannerImageUrl: ""
+        };
+
+        /* =====================================================
+           🔐 SHA-256 হ্যাশ ফাংশন
+           ===================================================== */
+        async function sha256(text) {
+            const encoder = new TextEncoder();
+            const data = encoder.encode(text);
+            const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+            const hashArray = Array.from(new Uint8Array(hashBuffer));
+            return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+        }
+
+        let loginAttempts = 0;
+        let isLockedOut = false;
+        let allProducts = [];
+        let currentOrderProduct = null;
+
+        /* =====================================================
+           🖼️ ব্যানার ছবি লোড
+           ===================================================== */
+        function loadBannerImage() {
+            if (!STUDIO_INFO.bannerImageUrl) return;
+            const img = document.getElementById('bannerImage');
+            img.src = STUDIO_INFO.bannerImageUrl;
+            img.style.display = 'block';
+            document.getElementById('bannerPlaceholder').style.display = 'none';
+        }
+
+        /* =====================================================
+           📡 Firestore থেকে প্রোডাক্ট লোড
+           ===================================================== */
+        async function loadProducts() {
+            const grid = document.getElementById('productGrid');
+            grid.innerHTML = `
+                <div class="loading-indicator">
+                    <div class="spinner"></div>
+                    <p style="color:#1e4b7a; font-size:0.78rem;">লোড হচ্ছে...</p>
+                </div>
+            `;
+
+            try {
+                const q = query(collection(db, 'rubber_stamp_products'), orderBy('createdAt', 'desc'));
+                const snap = await getDocs(q);
+                allProducts = [];
+                snap.forEach(d => allProducts.push({ id: d.id, ...d.data() }));
+                renderProducts();
+                document.getElementById('adminCount').textContent = allProducts.length;
+            } catch (err) {
+                console.error('Load error:', err);
+                grid.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-state-icon">⚠️</div>
+                        <h3>লোড করা যায়নি</h3>
+                        <p>${err.message}</p>
+                    </div>
+                `;
+            }
+        }
+
+        /* =====================================================
+           💰 দাম হিসাব
+           ===================================================== */
+        function calculatePrices(product) {
+            const mrp = parseFloat(product.mrp) || 0;
+            const discountPrice = parseFloat(product.price) || 0;
+            const discountPercent = parseFloat(product.discount) || 0;
+
+            // যদি MRP থাকে এবং ডিসকাউন্ট % > 0 হয়, MRP-এর উপর ডিসকাউন্ট হিসাব
+            if (mrp > 0 && discountPercent > 0) {
+                const calculatedPrice = mrp - (mrp * discountPercent / 100);
+                return {
+                    mrp: mrp,
+                    finalPrice: Math.round(calculatedPrice),
+                    hasDiscount: true
+                };
+            }
+
+            // MRP না থাকলে ডিসকাউন্ট প্রাইসই চূড়ান্ত
+            if (mrp <= 0) {
+                return {
+                    mrp: 0,
+                    finalPrice: discountPrice,
+                    hasDiscount: false
+                };
+            }
+
+            // MRP আছে কিন্তু % নেই, সেক্ষেত্রে discountPrice চূড়ান্ত
+            return {
+                mrp: mrp,
+                finalPrice: discountPrice > 0 ? discountPrice : mrp,
+                hasDiscount: discountPrice > 0 && discountPrice < mrp
             };
-            const tabBtns = document.querySelectorAll('.tab-btn');
+        }
 
-            // Hide all sections
-            Object.values(sections).forEach(sec => {
-                if(sec) sec.style.display = 'none';
+        /* =====================================================
+           🎨 প্রোডাক্ট গ্রিড রেন্ডার
+           ===================================================== */
+        function renderProducts() {
+            const grid = document.getElementById('productGrid');
+
+            if (allProducts.length === 0) {
+                grid.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-state-icon">📦</div>
+                        <h3>কোনো প্রোডাক্ট পাওয়া যায়নি</h3>
+                        <p>Admin প্যানেল থেকে প্রোডাক্ট যোগ করুন</p>
+                    </div>
+                `;
+                return;
+            }
+
+            grid.innerHTML = allProducts.map(p => {
+                const prices = calculatePrices(p);
+                const discountPercent = parseFloat(p.discount) || 0;
+
+                const imgSrc = p.image || '';
+                const imgHtml = imgSrc
+                    ? `<img src="${escapeHtml(imgSrc)}" alt="${escapeHtml(p.name || '')}"
+                            onerror="this.style.display='none'; this.parentElement.innerHTML='<span class=\\'no-img\\'>📦</span>';">`
+                    : `<span class="no-img">📦</span>`;
+
+                const discountBadge = discountPercent > 0
+                    ? `<span class="product-discount-badge">-${discountPercent}%</span>`
+                    : '';
+
+                const mrpHtml = prices.mrp > 0 && prices.hasDiscount
+                    ? `<span class="product-mrp">₹ ${prices.mrp}</span>`
+                    : '';
+
+                return `
+                    <div class="product-card">
+                        <div class="product-image">
+                            ${imgHtml}
+                            ${discountBadge}
+                        </div>
+                        <div class="product-body">
+                            <div class="product-name">${escapeHtml(p.name || 'প্রোডাক্ট')}</div>
+                            <div class="product-desc">${escapeHtml(p.description || '')}</div>
+                            <div class="product-price-row">
+                                ${mrpHtml}
+                                <span class="product-price">₹ ${prices.finalPrice}</span>
+                            </div>
+                            <button class="btn-order" data-product-id="${p.id}">
+                                <span>🛒</span> অর্ডার নাও
+                            </button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+
+            document.querySelectorAll('.btn-order').forEach(btn => {
+                btn.addEventListener('click', function () {
+                    openOrderModal(this.dataset.productId);
+                });
             });
-            
-            // Remove active class from all tabs
-            tabBtns.forEach(btn => btn.classList.remove('active'));
+        }
 
-            // Show selected section and set active class
-            if (sections[type]) {
-                if (type === 'photo' || type === 'video') {
-                    sections[type].style.display = 'grid';
-                } else if (type === 'class') {
-                    sections[type].style.display = 'grid';
+        /* =====================================================
+           🛒 Order Modal
+           ===================================================== */
+        function openOrderModal(productId) {
+            const product = allProducts.find(p => p.id === productId);
+            if (!product) return;
+
+            currentOrderProduct = product;
+            const prices = calculatePrices(product);
+
+            document.getElementById('orderPreviewImg').src = product.image || '';
+            document.getElementById('orderPreviewName').textContent = product.name || 'প্রোডাক্ট';
+            document.getElementById('orderPreviewPrice').textContent = '₹ ' + prices.finalPrice;
+
+            // রিসেট ফর্ম
+            document.getElementById('orderName').value = '';
+            document.getElementById('orderPhone').value = '';
+            document.getElementById('orderAddress').value = '';
+            document.getElementById('orderQuantity').value = '1';
+            document.getElementById('orderNote').value = '';
+
+            document.getElementById('orderModal').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeOrderModal() {
+            document.getElementById('orderModal').classList.remove('active');
+            document.body.style.overflow = '';
+            currentOrderProduct = null;
+        }
+
+        function submitOrder() {
+            if (!currentOrderProduct) return;
+
+            const name = document.getElementById('orderName').value.trim();
+            const phone = document.getElementById('orderPhone').value.trim();
+            const address = document.getElementById('orderAddress').value.trim();
+            const quantity = parseInt(document.getElementById('orderQuantity').value) || 1;
+            const note = document.getElementById('orderNote').value.trim() || '—';
+
+            if (!name) { showToast('⚠️ আপনার নাম লিখুন'); return; }
+            if (!phone || phone.length < 10) { showToast('⚠️ সঠিক মোবাইল নম্বর দিন'); return; }
+            if (!address) { showToast('⚠️ ঠিকানা লিখুন'); return; }
+
+            const prices = calculatePrices(currentOrderProduct);
+            const totalPrice = prices.finalPrice * quantity;
+
+            const message =
+`🛒 *Rubber Stamp Store — নতুন অর্ডার*
+
+━━━━━━━━━━━━━━━━━━
+📦 *প্রোডাক্টের তথ্য*
+━━━━━━━━━━━━━━━━━━
+🏷️ নাম: ${currentOrderProduct.name || '—'}
+📝 বিবরণ: ${currentOrderProduct.description || '—'}
+💰 একক দাম: ₹ ${prices.finalPrice}
+${prices.mrp > 0 && prices.hasDiscount ? `❌ MRP: ₹ ${prices.mrp}\n` : ''}🔢 পরিমাণ: ${quantity}
+💵 মোট: ₹ ${totalPrice}
+
+━━━━━━━━━━━━━━━━━━
+🙋 *ক্রেতার তথ্য*
+━━━━━━━━━━━━━━━━━━
+📝 নাম: ${name}
+📱 মোবাইল: ${phone}
+🏠 ঠিকানা: ${address}
+📝 নোট: ${note}
+
+━━━━━━━━━━━━━━━━━━
+✅ অর্ডার সম্পন্ন
+
+অনুগ্রহ করে যোগাযোগ করুন। 🙏`;
+
+            window.open('https://wa.me/' + STUDIO_INFO.whatsappNumber + '?text=' + encodeURIComponent(message), '_blank');
+            closeOrderModal();
+            showToast('✅ WhatsApp খোলা হচ্ছে...');
+        }
+
+        /* =====================================================
+           🔐 Admin
+           ===================================================== */
+        function openAdminModal() {
+            document.getElementById('adminModal').classList.add('active');
+            document.body.style.overflow = 'hidden';
+            document.getElementById('passwordSection').classList.add('active');
+            document.getElementById('uploadSection').classList.remove('active');
+            document.getElementById('adminPassword').value = '';
+            document.getElementById('loginAlert').className = 'alert-message';
+            loginAttempts = 0;
+            isLockedOut = false;
+        }
+
+        function closeAdminModal() {
+            document.getElementById('adminModal').classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        async function verifyPassword() {
+            const passInput = document.getElementById('adminPassword');
+            const alert = document.getElementById('loginAlert');
+
+            if (isLockedOut) {
+                alert.className = 'alert-message error';
+                alert.textContent = '🔒 অনেকবার ভুল হয়েছে! পেজ রিফ্রেশ করুন।';
+                return;
+            }
+
+            const pass = passInput.value.trim();
+
+            if (!pass) {
+                alert.className = 'alert-message error';
+                alert.textContent = '⚠️ পাসওয়ার্ড দিন';
+                return;
+            }
+
+            const inputHash = await sha256(pass);
+
+            if (inputHash === STUDIO_INFO.adminPasswordHash) {
+                alert.className = 'alert-message success';
+                alert.textContent = '✅ লগইন সফল!';
+                loginAttempts = 0;
+                passInput.value = '';
+                setTimeout(() => {
+                    document.getElementById('passwordSection').classList.remove('active');
+                    document.getElementById('uploadSection').classList.add('active');
+                    renderAdminList();
+                }, 400);
+            } else {
+                loginAttempts++;
+                const remaining = STUDIO_INFO.maxLoginAttempts - loginAttempts;
+
+                if (loginAttempts >= STUDIO_INFO.maxLoginAttempts) {
+                    isLockedOut = true;
+                    alert.className = 'alert-message error';
+                    alert.textContent = '🔒 অনেকবার ভুল হয়েছে! ৩০ সেকেন্ড অপেক্ষা করুন।';
+                    passInput.disabled = true;
+                    document.getElementById('loginBtn').disabled = true;
+                    setTimeout(() => {
+                        isLockedOut = false;
+                        loginAttempts = 0;
+                        passInput.disabled = false;
+                        document.getElementById('loginBtn').disabled = false;
+                        alert.className = 'alert-message';
+                    }, 30000);
                 } else {
-                    sections[type].style.display = 'block';
+                    alert.className = 'alert-message error';
+                    alert.textContent = `❌ ভুল পাসওয়ার্ড! (${remaining}টি চেষ্টা বাকি)`;
                 }
             }
+        }
 
-            // Find the clicked button to make it active
-            const btnMap = { 'photo': 0, 'video': 1, 'class': 2, 'new': 3 };
-            if (tabBtns[btnMap[type]]) {
-                tabBtns[btnMap[type]].classList.add('active');
+        /* =====================================================
+           💾 Save Product
+           ===================================================== */
+        async function uploadProduct() {
+            const alert = document.getElementById('uploadAlert');
+            alert.className = 'alert-message';
+
+            const image = document.getElementById('productImgInput').value.trim();
+            const name = document.getElementById('productNameInput').value.trim();
+            const description = document.getElementById('productDescInput').value.trim();
+            const mrp = parseFloat(document.getElementById('productMrpInput').value) || 0;
+            const discount = parseFloat(document.getElementById('productDiscountInput').value) || 0;
+            const price = parseFloat(document.getElementById('productPriceInput').value) || 0;
+
+            if (!image) return showAlert(alert, 'error', '⚠️ ছবির URL দিন');
+            if (!name) return showAlert(alert, 'error', '⚠️ প্রোডাক্টের নাম দিন');
+            if (!description) return showAlert(alert, 'error', '⚠️ ডেসক্রিপশন দিন');
+            if (!price || price <= 0) return showAlert(alert, 'error', '⚠️ ডিসকাউন্ট প্রাইস দিন');
+
+            if (!image.startsWith('http://') && !image.startsWith('https://')) {
+                return showAlert(alert, 'error', '⚠️ ছবির URL http:// বা https:// দিয়ে শুরু হতে হবে');
+            }
+
+            if (discount < 0 || discount > 100) {
+                return showAlert(alert, 'error', '⚠️ ডিসকাউন্ট 0-100 এর মধ্যে হতে হবে');
+            }
+
+            const uploadBtn = document.getElementById('uploadBtn');
+            uploadBtn.disabled = true;
+            uploadBtn.innerHTML = '<span>⏳</span> সেভ হচ্ছে...';
+
+            try {
+                await addDoc(collection(db, 'rubber_stamp_products'), {
+                    image, name, description, mrp, discount, price,
+                    createdAt: serverTimestamp()
+                });
+
+                showAlert(alert, 'success', '✅ প্রোডাক্ট সেভ হয়েছে!');
+
+                ['productImgInput','productNameInput','productDescInput','productMrpInput','productPriceInput'].forEach(id => {
+                    document.getElementById(id).value = '';
+                });
+                document.getElementById('productDiscountInput').value = '0';
+
+                uploadBtn.disabled = false;
+                uploadBtn.innerHTML = '<span>💾</span> সেভ করুন';
+
+                await loadProducts();
+                renderAdminList();
+            } catch (err) {
+                console.error(err);
+                showAlert(alert, 'error', '❌ ব্যর্থ: ' + err.message);
+                uploadBtn.disabled = false;
+                uploadBtn.innerHTML = '<span>💾</span> সেভ করুন';
             }
         }
 
-        // Copy to Clipboard Function
-        function copyPrompt(btnElement, text) {
-            navigator.clipboard.writeText(text).then(() => {
-                showCopiedState(btnElement);
-            }).catch(err => {
-                // Fallback if clipboard API fails
-                const textarea = document.createElement('textarea');
-                textarea.value = text;
-                document.body.appendChild(textarea);
-                textarea.select();
-                document.execCommand('copy');
-                document.body.removeChild(textarea);
-                showCopiedState(btnElement);
-            });
+        function showAlert(el, type, msg) {
+            el.className = 'alert-message ' + type;
+            el.textContent = msg;
+            if (type === 'success') {
+                setTimeout(() => { el.className = 'alert-message'; }, 4500);
+            }
         }
 
-        // Button State after Copying
-        function showCopiedState(btnElement) {
-            const originalHTML = btnElement.innerHTML;
-            btnElement.innerHTML = '<i class="fa-solid fa-check"></i> Copied!';
-            btnElement.classList.add('copied');
-            
-            setTimeout(() => {
-                btnElement.innerHTML = originalHTML;
-                btnElement.classList.remove('copied');
-            }, 2000);
-        }
+        /* =====================================================
+           📋 Admin List
+           ===================================================== */
+        function renderAdminList() {
+            const container = document.getElementById('adminProductList');
+            document.getElementById('adminCount').textContent = allProducts.length;
 
-        // Render Photos
-        function renderPhotos() {
-            const container = document.getElementById('photoSection');
-            if(!container) return;
-            container.innerHTML = ''; 
+            if (allProducts.length === 0) {
+                container.innerHTML = '<p style="text-align:center; color:#1e4b7a; padding:20px; font-size:0.78rem;">এখনো কোনো প্রোডাক্ট যোগ করা হয়নি।</p>';
+                return;
+            }
 
-            photoData.forEach((item, index) => {
-                const safePrompt = item.prompt.replace(/'/g, "\\'").replace(/"/g, '&quot;');
-                
-                const card = document.createElement('div');
-                card.className = 'gallery-item';
-                card.innerHTML = `
-                    <div class="media-wrapper">
-                        <img src="${item.image}" alt="AI Photo Prompt ${index + 1}" loading="lazy">
-                    </div>
-                    <div class="content-wrapper">
-                        <div class="prompt-label"><i class="fa-solid fa-quote-left"></i> Prompt</div>
-                        <div class="prompt-text">${item.prompt}</div>
-                        <button class="copy-btn" onclick="copyPrompt(this, '${safePrompt}')">
-                            <i class="fa-regular fa-copy"></i> Copy Prompt
-                        </button>
-                    </div>
-                `;
-                container.appendChild(card);
-            });
-        }
+            container.innerHTML = allProducts.map(p => {
+                const prices = calculatePrices(p);
+                const imgHtml = p.image
+                    ? `<img src="${escapeHtml(p.image)}" class="admin-product-thumb" alt="" onerror="this.style.display='none';">`
+                    : `<div class="admin-product-thumb"></div>`;
 
-        // Render Videos
-        function renderVideos() {
-            const container = document.getElementById('videoSection');
-            if(!container) return;
-            container.innerHTML = '';
-
-            videoData.forEach((item, index) => {
-                const safePrompt = item.prompt.replace(/'/g, "\\'").replace(/"/g, '&quot;');
-                
-                const thumbnailUrl = `https://img.youtube.com/vi/${item.videoId}/maxresdefault.jpg`;
-                const videoLink = `https://www.youtube.com/watch?v=${item.videoId}`;
-
-                const card = document.createElement('div');
-                card.className = 'gallery-item';
-                card.innerHTML = `
-                    <a href="${videoLink}" target="_blank" class="media-wrapper">
-                        <img src="${thumbnailUrl}" alt="AI Video Prompt ${index + 1}" loading="lazy" onerror="this.src='https://img.youtube.com/vi/${item.videoId}/hqdefault.jpg'">
-                        <div class="play-overlay">
-                            <div class="play-icon"><i class="fa-solid fa-play"></i></div>
+                return `
+                    <div class="admin-product-item">
+                        ${imgHtml}
+                        <div class="admin-product-info">
+                            <h5>${escapeHtml(p.name || '—')}</h5>
+                            <p>₹ ${prices.finalPrice} ${prices.mrp > 0 ? `(MRP ₹${prices.mrp})` : ''}</p>
                         </div>
-                    </a>
-                    <div class="content-wrapper">
-                        <div class="prompt-label"><i class="fa-solid fa-quote-left"></i> Prompt</div>
-                        <div class="prompt-text">${item.prompt}</div>
-                        <button class="copy-btn" onclick="copyPrompt(this, '${safePrompt}')">
-                            <i class="fa-regular fa-copy"></i> Copy Prompt
-                        </button>
+                        <button class="btn-delete" data-doc-id="${p.id}">🗑️</button>
                     </div>
                 `;
-                container.appendChild(card);
+            }).join('');
+
+            document.querySelectorAll('.btn-delete').forEach(btn => {
+                btn.addEventListener('click', function () {
+                    deleteProduct(this.dataset.docId);
+                });
             });
         }
 
-        // Initialize on Page Load
-        document.addEventListener('DOMContentLoaded', () => {
-            renderPhotos();
-            renderVideos();
+        async function deleteProduct(docId) {
+            if (!confirm('এই প্রোডাক্টটি ডিলিট করতে চান?')) return;
+
+            try {
+                await deleteDoc(doc(db, 'rubber_stamp_products', docId));
+                showToast('✅ ডিলিট হয়েছে');
+                await loadProducts();
+                renderAdminList();
+            } catch (err) {
+                showToast('❌ ডিলিট করা যায়নি');
+            }
+        }
+
+        function switchAdminTab(tab) {
+            document.querySelectorAll('.admin-tab').forEach(t => t.classList.remove('active'));
+            document.querySelector(`.admin-tab[data-tab="${tab}"]`).classList.add('active');
+
+            if (tab === 'upload') {
+                document.getElementById('adminUploadTab').style.display = 'block';
+                document.getElementById('adminListTab').style.display = 'none';
+            } else {
+                document.getElementById('adminUploadTab').style.display = 'none';
+                document.getElementById('adminListTab').style.display = 'block';
+                renderAdminList();
+            }
+        }
+
+        /* =====================================================
+           🛠️ Utility
+           ===================================================== */
+        function escapeHtml(str) {
+            if (!str) return '';
+            return String(str).replace(/[&<>"']/g, m => ({
+                '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'
+            })[m]);
+        }
+
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            toast.textContent = msg;
+            toast.classList.add('show');
+            clearTimeout(window.__toastTimer);
+            window.__toastTimer = setTimeout(() => toast.classList.remove('show'), 2200);
+        }
+
+        /* =====================================================
+           🎯 Event Listeners
+           ===================================================== */
+        document.getElementById('adminBtn').addEventListener('click', openAdminModal);
+        document.getElementById('closeAdminBtn').addEventListener('click', closeAdminModal);
+        document.getElementById('loginBtn').addEventListener('click', verifyPassword);
+        document.getElementById('adminPassword').addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') verifyPassword();
         });
+        document.getElementById('uploadBtn').addEventListener('click', uploadProduct);
+
+        document.getElementById('closeOrderBtn').addEventListener('click', closeOrderModal);
+        document.getElementById('submitOrderBtn').addEventListener('click', submitOrder);
+
+        document.querySelectorAll('.admin-tab').forEach(tab => {
+            tab.addEventListener('click', function () {
+                switchAdminTab(this.dataset.tab);
+            });
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                closeAdminModal();
+                closeOrderModal();
+            }
+        });
+
+        document.getElementById('adminModal').addEventListener('click', function (e) {
+            if (e.target === this) closeAdminModal();
+        });
+        document.getElementById('orderModal').addEventListener('click', function (e) {
+            if (e.target === this) closeOrderModal();
+        });
+
+        /* =====================================================
+           🚀 Init
+           ===================================================== */
+        loadBannerImage();
+        loadProducts();
     </script>
+
 </body>
 </html>

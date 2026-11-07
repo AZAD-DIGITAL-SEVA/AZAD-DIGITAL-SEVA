@@ -3,305 +3,360 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vehicle Insurance - Azad Digital Seva</title>
+    <title>Insurance Services - Azad Digital Seva</title>
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body {
             font-family: 'Segoe UI', Arial, 'Noto Sans Bengali', sans-serif;
-            background: #fef7ed;
+            background: #f4f7fb;
             color: #1e2b3c;
             line-height: 1.5;
         }
 
         header {
-            background: linear-gradient(135deg, #92400e, #d97706);
-            color: #fff; height: 38px; padding: 0 10px;
+            background: linear-gradient(135deg, #0f2b46, #1e4b7a);
+            color: #fff; height: 42px; padding: 0 12px;
             border-bottom: 2px solid #fbbf24;
             display: flex; align-items: center;
-            justify-content: space-between; gap: 6px;
+            justify-content: space-between; gap: 8px;
             position: sticky; top: 0; z-index: 1000;
-            box-shadow: 0 2px 8px rgba(146, 64, 14, 0.3);
+            box-shadow: 0 2px 10px rgba(15, 43, 70, 0.3);
         }
-        .header-left { display: flex; align-items: center; gap: 6px; flex: 1; min-width: 0; position: relative; }
+        .header-left { display: flex; align-items: center; gap: 8px; flex: 1; min-width: 0; position: relative; }
         .menu-toggle {
-            width: 22px; height: 22px; border-radius: 5px;
-            background: rgba(255,255,255,0.15);
-            border: 1px solid rgba(255,255,255,0.35);
+            width: 24px; height: 24px; border-radius: 6px;
+            background: rgba(255,255,255,0.12);
+            border: 1px solid rgba(255,255,255,0.3);
             cursor: pointer; display: flex; flex-direction: column;
-            align-items: center; justify-content: center;
-            gap: 2px; flex-shrink: 0; padding: 0;
+            align-items: center; justify-content: center; gap: 2.5px;
+            flex-shrink: 0; padding: 0;
         }
-        .menu-toggle span { width: 2.5px; height: 2.5px; border-radius: 50%; background: #fff; }
-        .header-brand { display: flex; align-items: baseline; gap: 5px; min-width: 0; overflow: hidden; flex-wrap: nowrap; }
-        .header-logo-icon { font-size: 0.95rem; flex-shrink: 0; align-self: center; }
-        .brand-name { font-size: 0.78rem; font-weight: 700; white-space: nowrap; flex-shrink: 0; }
+        .menu-toggle span { width: 3px; height: 3px; border-radius: 50%; background: #fff; }
+        .header-brand { display: flex; align-items: baseline; gap: 6px; min-width: 0; overflow: hidden; }
+        .header-logo-icon { font-size: 1rem; flex-shrink: 0; align-self: center; }
+        .brand-name { font-size: 0.82rem; font-weight: 700; white-space: nowrap; flex-shrink: 0; }
         .brand-name span { color: #fbbf24; }
         .brand-sub {
-            font-size: 0.58rem; color: #fde68a; opacity: 0.85;
+            font-size: 0.6rem; color: #cfe3f7; opacity: 0.85;
             white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
-            border-left: 1px solid rgba(255,255,255,0.3); padding-left: 6px;
+            border-left: 1px solid rgba(255,255,255,0.25); padding-left: 8px;
         }
-        .header-actions { display: flex; align-items: center; gap: 4px; flex-shrink: 0; }
-        .btn-donate, .btn-subscribe {
-            border: 1px solid rgba(255,255,255,0.65);
-            background: transparent; color: #fff;
-            font-size: 0.62rem; font-weight: 600;
-            padding: 3px 8px; border-radius: 14px;
-            cursor: pointer; font-family: inherit;
-        }
-        .btn-subscribe { background: #e74c3c; border-color: #e74c3c; }
+        .header-actions { display: flex; align-items: center; gap: 5px; flex-shrink: 0; }
         .btn-login {
-            background: #fff; color: #92400e; border: none;
-            font-size: 0.64rem; font-weight: 700;
-            padding: 4px 10px; border-radius: 14px;
+            background: #fbbf24; color: #0f2b46; border: none;
+            font-size: 0.68rem; font-weight: 700;
+            padding: 5px 12px; border-radius: 16px;
             cursor: pointer; font-family: inherit;
             box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+            transition: 0.2s;
         }
+        .btn-login:hover { background: #fcd34d; }
+
         .header-dropdown {
-            position: absolute; top: calc(100% + 8px); left: 0;
-            background: #fff; border-radius: 10px;
-            box-shadow: 0 12px 32px rgba(0,0,0,0.25);
+            position: absolute; top: calc(100% + 10px); left: 0;
+            background: #fff; border-radius: 12px;
+            box-shadow: 0 12px 36px rgba(0,0,0,0.22);
             padding: 6px; display: none; flex-direction: column;
-            min-width: 180px; z-index: 1002;
-            border-top: 3px solid #d97706;
+            min-width: 190px; z-index: 1002;
+            border-top: 3px solid #1e4b7a;
         }
         .header-dropdown.open { display: flex; }
         .header-dropdown a {
             color: #1e2b3c; text-decoration: none;
-            padding: 7px 11px; border-radius: 6px;
-            font-size: 0.8rem; display: flex; gap: 7px; align-items: center;
+            padding: 8px 12px; border-radius: 8px;
+            font-size: 0.82rem; display: flex; gap: 8px; align-items: center;
+            transition: 0.15s;
         }
-        .header-dropdown a:hover { background: #fef3c7; color: #92400e; }
+        .header-dropdown a:hover { background: #e8f0fe; color: #1e4b7a; }
 
-        /* হিরো — ওয়ার্ম অ্যাম্বার */
         .page-hero {
-            background: linear-gradient(135deg, #92400e, #d97706);
+            background: linear-gradient(135deg, #0f2b46, #1e4b7a);
             color: white;
-            padding: 45px 18px 80px;
+            padding: 40px 18px 75px;
             position: relative;
             overflow: hidden;
         }
         .page-hero::before {
             content: '🛡️';
             position: absolute;
-            font-size: 20rem;
-            right: -50px; top: -50px;
-            opacity: 0.06;
-            transform: rotate(-15deg);
+            font-size: 18rem;
+            right: -40px; top: -60px;
+            opacity: 0.05;
+            transform: rotate(-12deg);
         }
         .hero-content {
-            max-width: 1100px;
-            margin: 0 auto;
-            display: flex;
-            align-items: center;
-            gap: 25px;
-            position: relative;
-            z-index: 1;
+            max-width: 1000px; margin: 0 auto;
+            display: flex; align-items: center; gap: 22px;
+            position: relative; z-index: 1;
         }
         .hero-icon-box {
-            width: 90px; height: 90px;
+            width: 80px; height: 80px;
             border-radius: 20px;
-            background: rgba(255,255,255,0.15);
-            border: 2px solid rgba(255,255,255,0.3);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 3rem;
+            background: rgba(255,255,255,0.1);
+            border: 2px solid rgba(251, 191, 36, 0.4);
+            display: flex; align-items: center;
+            justify-content: center; font-size: 2.6rem;
             flex-shrink: 0;
             backdrop-filter: blur(8px);
         }
-        .hero-text h1 {
-            font-size: 1.9rem; font-weight: 700;
-            margin-bottom: 6px;
-            letter-spacing: 0.3px;
-        }
-        .hero-text p {
-            font-size: 0.92rem; opacity: 0.9;
-            max-width: 500px;
-        }
+        .hero-text h1 { font-size: 1.8rem; font-weight: 700; margin-bottom: 6px; }
+        .hero-text p { font-size: 0.9rem; opacity: 0.85; max-width: 500px; }
         .breadcrumb {
             position: relative; z-index: 1;
-            max-width: 1100px; margin: 18px auto 0;
-            font-size: 0.75rem; opacity: 0.85;
+            max-width: 1000px; margin: 16px auto 0;
+            font-size: 0.75rem; opacity: 0.8;
         }
-        .breadcrumb a { color: #fde68a; text-decoration: none; }
+        .breadcrumb a { color: #fbbf24; text-decoration: none; }
 
-        /* টাইমলাইন */
         .inner-container {
-            max-width: 900px;
-            margin: -50px auto 0;
-            padding: 0 18px 45px;
+            max-width: 1000px;
+            margin: -48px auto 0;
+            padding: 0 16px 50px;
             position: relative; z-index: 5;
         }
 
-        .timeline-card {
-            background: #fff;
-            border-radius: 20px;
-            padding: 30px 25px;
-            box-shadow: 0 15px 50px -15px rgba(146, 64, 14, 0.2);
-            border-top: 4px solid #d97706;
+        .category-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+            gap: 18px;
+            margin-bottom: 20px;
         }
-        .timeline-card h2 {
-            font-size: 1.2rem; color: #92400e;
-            margin-bottom: 20px; padding-bottom: 10px;
-            border-bottom: 2px solid #fef3c7;
+        .category-card {
+            background: #fff;
+            border-radius: 18px;
+            padding: 22px 20px;
+            box-shadow: 0 8px 30px -12px rgba(15, 43, 70, 0.15);
+            border: 1px solid #e6edf5;
+            cursor: pointer;
+            transition: all 0.28s;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            position: relative;
+            overflow: hidden;
+        }
+        .category-card::after {
+            content: '';
+            position: absolute;
+            left: 0; top: 0; bottom: 0;
+            width: 4px;
+            background: #1e4b7a;
+            transform: scaleY(0);
+            transform-origin: bottom;
+            transition: transform 0.28s;
+        }
+        .category-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 16px 40px -12px rgba(30, 75, 122, 0.28);
+            border-color: #c5d9ee;
+        }
+        .category-card:hover::after { transform: scaleY(1); }
+        .cat-icon {
+            width: 56px; height: 56px;
+            border-radius: 14px;
+            background: #e8f0fe;
+            display: flex; align-items: center;
+            justify-content: center; font-size: 1.8rem;
+            flex-shrink: 0;
+        }
+        .cat-info { flex: 1; min-width: 0; }
+        .cat-info strong { display: block; font-size: 1rem; color: #0f2b46; margin-bottom: 3px; }
+        .cat-info span { font-size: 0.78rem; color: #5a7391; }
+        .cat-arrow {
+            font-size: 1.2rem; color: #1e4b7a;
+            transition: transform 0.25s;
+            flex-shrink: 0;
+        }
+        .category-card:hover .cat-arrow { transform: translateX(5px); }
+
+        .section-title {
+            font-size: 1rem; font-weight: 700;
+            color: #0f2b46;
+            margin: 28px 0 14px;
             display: flex; align-items: center; gap: 8px;
         }
-
-        .timeline {
-            position: relative;
-            padding-left: 40px;
-        }
-        .timeline::before {
-            content: '';
-            position: absolute;
-            left: 15px; top: 10px; bottom: 10px;
-            width: 3px;
-            background: linear-gradient(180deg, #fbbf24, #d97706, #fbbf24);
-            border-radius: 3px;
+        .section-title::after {
+            content: ''; flex: 1; height: 1px;
+            background: linear-gradient(90deg, #c5d9ee, transparent);
         }
 
-        .timeline-item {
-            position: relative;
-            margin-bottom: 16px;
+        .form-section { display: none; animation: fadeUp 0.35s ease; }
+        .form-section.active { display: block; }
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(16px); }
+            to { opacity: 1; transform: translateY(0); }
         }
-        .timeline-item:last-child { margin-bottom: 0; }
-
-        .timeline-item::before {
-            content: '';
-            position: absolute;
-            left: -32px; top: 50%;
-            transform: translateY(-50%);
-            width: 15px; height: 15px;
-            border-radius: 50%;
+        .form-card {
             background: #fff;
-            border: 3px solid #d97706;
-            box-shadow: 0 0 0 4px #fef7ed, 0 0 0 6px #fde68a;
-            transition: all 0.3s;
-            z-index: 2;
+            border-radius: 20px;
+            padding: 28px 26px;
+            box-shadow: 0 16px 50px -15px rgba(15, 43, 70, 0.2);
+            border-top: 4px solid #1e4b7a;
         }
-        .timeline-item:hover::before {
-            background: #d97706;
-            border-color: #fbbf24;
-            box-shadow: 0 0 0 4px #fef7ed, 0 0 0 8px #fbbf24;
-            transform: translateY(-50%) scale(1.2);
+        .form-header {
+            display: flex; align-items: center;
+            gap: 12px; margin-bottom: 24px;
+            padding-bottom: 14px;
+            border-bottom: 2px solid #eef3f9;
         }
-
-        .timeline-link {
-            display: flex;
-            align-items: center;
-            gap: 14px;
-            background: linear-gradient(135deg, #fffbeb, #fef3c7);
-            border: 1.5px solid #fcd34d;
-            border-radius: 14px;
-            padding: 14px 18px;
-            text-decoration: none;
-            color: inherit;
-            transition: all 0.25s;
-            cursor: pointer;
-        }
-        .timeline-link:hover {
-            background: linear-gradient(135deg, #fef3c7, #fde68a);
-            border-color: #d97706;
-            transform: translateX(8px);
-            box-shadow: 0 8px 20px -8px rgba(217, 119, 6, 0.4);
-        }
-        .timeline-icon {
-            font-size: 1.8rem;
-            flex-shrink: 0;
-            width: 45px; height: 45px;
+        .form-header-icon {
+            width: 48px; height: 48px;
             border-radius: 12px;
+            background: #e8f0fe;
+            display: flex; align-items: center;
+            justify-content: center; font-size: 1.5rem;
+            flex-shrink: 0;
+        }
+        .form-header-text h2 { font-size: 1.1rem; color: #0f2b46; }
+        .form-header-text p { font-size: 0.78rem; color: #5a7391; margin-top: 2px; }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+        .form-group { display: flex; flex-direction: column; gap: 5px; }
+        .form-group.full { grid-column: 1 / -1; }
+        .form-group label {
+            font-size: 0.82rem; font-weight: 600;
+            color: #3a5573;
+        }
+        .form-group label .req { color: #e74c3c; }
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 11px 14px;
+            border: 1.5px solid #d5e0ec;
+            border-radius: 10px;
+            font-size: 0.9rem;
+            font-family: inherit;
+            color: #1e2b3c;
+            background: #f9fbfd;
+            transition: all 0.2s;
+            outline: none;
+        }
+        .form-group input:focus, .form-group select:focus {
+            border-color: #1e4b7a;
             background: #fff;
-            display: flex;
+            box-shadow: 0 0 0 3px rgba(30, 75, 122, 0.1);
+        }
+        .form-group input::placeholder { color: #9bafc4; }
+
+        .form-actions {
+            margin-top: 24px;
+            display: flex; align-items: center;
+            gap: 12px; flex-wrap: wrap;
+        }
+        .btn-send {
+            display: inline-flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 3px 8px rgba(146, 64, 14, 0.15);
+            gap: 8px;
+            background: linear-gradient(135deg, #0f9d58, #0b8043);
+            color: #fff; border: none;
+            padding: 13px 36px;
+            border-radius: 30px;
+            font-size: 0.92rem; font-weight: 700;
+            font-family: inherit;
+            cursor: pointer;
+            box-shadow: 0 6px 20px rgba(15, 157, 88, 0.35);
+            transition: all 0.25s;
         }
-        .timeline-text { flex: 1; min-width: 0; }
-        .timeline-text strong {
-            display: block;
-            font-size: 0.98rem;
-            color: #78350f;
-            margin-bottom: 2px;
-            font-weight: 700;
+        .btn-send:hover {
+            background: linear-gradient(135deg, #0b8043, #076b37);
+            box-shadow: 0 8px 26px rgba(15, 157, 88, 0.45);
+            transform: translateY(-1px);
         }
-        .timeline-text span {
-            font-size: 0.78rem;
-            color: #92400e;
-            opacity: 0.85;
+        .btn-send:disabled {
+            background: #c8d6e3; color: #7a8fa5;
+            cursor: not-allowed; box-shadow: none;
+            transform: none;
         }
-        .timeline-arrow {
-            font-size: 1.2rem;
-            color: #d97706;
-            flex-shrink: 0;
-            transition: transform 0.25s;
+        .btn-send .wa-icon { font-size: 1.1rem; }
+
+        .btn-cancel {
+            background: transparent; color: #5a7391;
+            border: 1.5px solid #d5e0ec;
+            padding: 12px 26px;
+            border-radius: 30px;
+            font-size: 0.88rem; font-weight: 600;
+            font-family: inherit;
+            cursor: pointer;
+            transition: 0.2s;
         }
-        .timeline-link:hover .timeline-arrow {
-            transform: translateX(4px);
+        .btn-cancel:hover { background: #f4f7fb; border-color: #b0c5da; }
+
+        .form-note {
+            font-size: 0.72rem; color: #8aa0b6;
+            margin-top: 14px;
+            display: flex; align-items: center; gap: 5px;
         }
 
-        .btn-back {
-            display: inline-flex; align-items: center; gap: 6px;
-            background: #d97706; color: white;
-            text-decoration: none; padding: 10px 25px;
-            border-radius: 30px; font-weight: 600;
-            font-size: 0.85rem; margin-top: 22px;
-            box-shadow: 0 5px 18px rgba(217, 119, 6, 0.35);
-            transition: background 0.2s;
+        .toast {
+            position: fixed;
+            bottom: 24px; left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: #0b8043; color: #fff;
+            padding: 13px 28px;
+            border-radius: 30px;
+            font-size: 0.85rem; font-weight: 600;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+            z-index: 2000;
+            opacity: 0;
+            transition: all 0.35s ease;
+            display: flex; align-items: center; gap: 8px;
         }
-        .btn-back:hover { background: #92400e; }
+        .toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
 
         footer {
-            background: #0b2e2a; color: #d4e6e3;
-            text-align: center; padding: 18px 14px;
+            background: #0b1f33; color: #b8cde3;
+            text-align: center; padding: 20px 14px;
             border-top: 3px solid #fbbf24;
         }
         footer p { font-size: 0.82rem; margin-bottom: 6px; }
         .footer-links {
             display: flex; flex-wrap: wrap;
-            justify-content: center; gap: 8px 16px;
-            margin: 8px 0 5px;
+            justify-content: center; gap: 8px 18px;
+            margin: 10px 0 6px;
         }
         .footer-links a {
-            color: #c2e5df; text-decoration: none;
-            font-size: 0.78rem;
+            color: #8fb4d9; text-decoration: none;
+            font-size: 0.78rem; transition: 0.2s;
         }
         .footer-links a:hover { color: #fbbf24; }
-        .copyright { font-size: 0.68rem; opacity: 0.75; margin-top: 8px; }
+        .copyright { font-size: 0.68rem; opacity: 0.65; margin-top: 8px; }
 
         .menu-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.4); z-index: 999; display: none; }
         .menu-overlay.show { display: block; }
 
         @media (max-width: 768px) {
-            header { height: 36px; padding: 0 8px; }
-            .brand-sub, .btn-donate, .btn-subscribe { display: none; }
-            .brand-name { font-size: 0.72rem; }
-            .btn-login { font-size: 0.58rem; padding: 3px 8px; }
+            header { height: 40px; padding: 0 10px; }
+            .brand-sub { display: none; }
+            .brand-name { font-size: 0.75rem; }
+            .btn-login { font-size: 0.62rem; padding: 4px 10px; }
 
-            .page-hero { padding: 30px 14px 60px; }
+            .page-hero { padding: 28px 14px 58px; }
             .hero-content { flex-direction: column; text-align: center; gap: 12px; }
-            .hero-icon-box { width: 70px; height: 70px; font-size: 2.3rem; }
+            .hero-icon-box { width: 64px; height: 64px; font-size: 2.1rem; }
             .hero-text h1 { font-size: 1.3rem; }
             .hero-text p { display: none; }
-            .breadcrumb { margin-top: 12px; text-align: center; }
+            .breadcrumb { text-align: center; margin-top: 12px; }
 
-            .inner-container { padding: 0 12px 35px; margin-top: -40px; }
-            .timeline-card { padding: 20px 16px; border-radius: 16px; }
-            .timeline-card h2 { font-size: 1rem; margin-bottom: 15px; }
-            .timeline { padding-left: 32px; }
-            .timeline::before { left: 11px; }
-            .timeline-item::before { left: -26px; width: 12px; height: 12px; }
-            .timeline-link { padding: 11px 13px; gap: 10px; }
-            .timeline-icon { width: 38px; height: 38px; font-size: 1.4rem; }
-            .timeline-text strong { font-size: 0.85rem; }
-            .timeline-text span { display: none; }
-            .timeline-arrow { display: none; }
+            .inner-container { padding: 0 12px 40px; margin-top: -38px; }
+            .category-grid { grid-template-columns: 1fr; gap: 14px; }
+            .category-card { padding: 18px 16px; }
+            .cat-icon { width: 48px; height: 48px; font-size: 1.5rem; }
 
-            footer { padding: 12px 10px; }
-            footer p { font-size: 0.72rem; }
-            .footer-links { gap: 5px 10px; }
-            .footer-links a { font-size: 0.7rem; }
-            .copyright { font-size: 0.6rem; }
+            .form-card { padding: 20px 16px; border-radius: 16px; }
+            .form-grid { grid-template-columns: 1fr; gap: 14px; }
+            .form-header-text h2 { font-size: 1rem; }
+            .btn-send { width: 100%; justify-content: center; }
+            .btn-cancel { width: 100%; text-align: center; }
+
+            footer { padding: 14px 10px; }
+            footer p { font-size: 0.74rem; }
+            .footer-links { gap: 6px 12px; }
+            .footer-links a { font-size: 0.72rem; }
+            .copyright { font-size: 0.62rem; }
         }
     </style>
 </head>
@@ -325,8 +380,6 @@
             </nav>
         </div>
         <div class="header-actions">
-            <button class="btn-donate" onclick="location.href='donate.html'">❤️ ডোনেশন</button>
-            <button class="btn-subscribe" onclick="location.href='subscribe.html'">🔔 সাবস্ক্রাইব</button>
             <button class="btn-login" onclick="location.href='login.html'">লগ ইন</button>
         </div>
     </header>
@@ -336,112 +389,95 @@
         <div class="hero-content">
             <div class="hero-icon-box">🛡️</div>
             <div class="hero-text">
-                <h1>Vehicle Insurance</h1>
-                <p>গাড়ি, বাইক, ট্রাক — সব বীমা সেবা এক জায়গায়। নতুন পলিসি, রিনিউ ও ক্লেইম সহায়তা।</p>
+                <h1>Insurance Services</h1>
+                <p>বাইক, কার, কমার্শিয়াল, লাইফ ও হেলথ — সব বীমা সেবা এক জায়গায়। ফর্ম পূরণ করুন, সরাসরি WhatsApp-এ পাঠান।</p>
             </div>
         </div>
-        <div class="breadcrumb"><a href="index.html">Home</a> › <span>Vehicle Insurance</span></div>
+        <div class="breadcrumb"><a href="index.html">Home</a> › <span>Insurance Services</span></div>
     </section>
 
     <main class="inner-container">
 
-        <div class="timeline-card">
-            <h2>📋 বীমা সেবাসমূহ</h2>
-
-            <div class="timeline">
-
-                <div class="timeline-item">
-                    <a href="car-insurance.html" class="timeline-link">
-                        <div class="timeline-icon">🚗</div>
-                        <div class="timeline-text">
-                            <strong>Car Insurance</strong>
-                            <span>প্রাইভেট কার বীমা সেবা</span>
-                        </div>
-                        <span class="timeline-arrow">→</span>
-                    </a>
+        <!-- ===== Category Grid ===== -->
+        <div id="categoryView">
+            <div class="section-title">🚗 ভেহিকল ইন্সুরেন্স</div>
+            <div class="category-grid">
+                <div class="category-card" onclick="openForm('bike')">
+                    <div class="cat-icon">🏍️</div>
+                    <div class="cat-info">
+                        <strong>Bike Insurance</strong>
+                        <span>মোটরসাইকেল বীমা সেবা</span>
+                    </div>
+                    <span class="cat-arrow">→</span>
                 </div>
 
-                <div class="timeline-item">
-                    <a href="bike-insurance.html" class="timeline-link">
-                        <div class="timeline-icon">🏍️</div>
-                        <div class="timeline-text">
-                            <strong>Bike Insurance</strong>
-                            <span>মোটরসাইকেল বীমা সেবা</span>
-                        </div>
-                        <span class="timeline-arrow">→</span>
-                    </a>
+                <div class="category-card" onclick="openForm('car')">
+                    <div class="cat-icon">🚗</div>
+                    <div class="cat-info">
+                        <strong>Car Insurance</strong>
+                        <span>প্রাইভেট কার বীমা সেবা</span>
+                    </div>
+                    <span class="cat-arrow">→</span>
                 </div>
 
-                <div class="timeline-item">
-                    <a href="truck-insurance.html" class="timeline-link">
-                        <div class="timeline-icon">🚚</div>
-                        <div class="timeline-text">
-                            <strong>Truck Insurance</strong>
-                            <span>ট্রাক ও কভার্ড ভ্যান বীমা</span>
-                        </div>
-                        <span class="timeline-arrow">→</span>
-                    </a>
+                <div class="category-card" onclick="openForm('commercial')">
+                    <div class="cat-icon">🚚</div>
+                    <div class="cat-info">
+                        <strong>Commercial Insurance</strong>
+                        <span>ট্রাক, বাস, কভার্ড ভ্যান বীমা</span>
+                    </div>
+                    <span class="cat-arrow">→</span>
                 </div>
-
-                <div class="timeline-item">
-                    <a href="bus-insurance.html" class="timeline-link">
-                        <div class="timeline-icon">🚌</div>
-                        <div class="timeline-text">
-                            <strong>Bus Insurance</strong>
-                            <span>বাস ও মিনিবাস বীমা</span>
-                        </div>
-                        <span class="timeline-arrow">→</span>
-                    </a>
-                </div>
-
-                <div class="timeline-item">
-                    <a href="insurance-renewal.html" class="timeline-link">
-                        <div class="timeline-icon">🔄</div>
-                        <div class="timeline-text">
-                            <strong>Policy Renewal</strong>
-                            <span>পুরাতন বীমা রিনিউ করুন</span>
-                        </div>
-                        <span class="timeline-arrow">→</span>
-                    </a>
-                </div>
-
-                <div class="timeline-item">
-                    <a href="insurance-claim.html" class="timeline-link">
-                        <div class="timeline-icon">📝</div>
-                        <div class="timeline-text">
-                            <strong>Claim Support</strong>
-                            <span>বীমা ক্লেইম সহায়তা</span>
-                        </div>
-                        <span class="timeline-arrow">→</span>
-                    </a>
-                </div>
-
-                <div class="timeline-item">
-                    <a href="insurance-quote.html" class="timeline-link">
-                        <div class="timeline-icon">💵</div>
-                        <div class="timeline-text">
-                            <strong>Free Quote</strong>
-                            <span>বিনামূল্যে বীমা কোটেশন</span>
-                        </div>
-                        <span class="timeline-arrow">→</span>
-                    </a>
-                </div>
-
-                <div class="timeline-item">
-                    <a href="insurance-compare.html" class="timeline-link">
-                        <div class="timeline-icon">⚖️</div>
-                        <div class="timeline-text">
-                            <strong>Compare Plans</strong>
-                            <span>বিভিন্ন কোম্পানির পলিসি তুলনা</span>
-                        </div>
-                        <span class="timeline-arrow">→</span>
-                    </a>
-                </div>
-
             </div>
 
-            <div style="text-align:center;">
-                <a href="index.html" class="btn-back">← Back to Home</a>
+            <div class="section-title">🏥 অন্যান্য ইন্সুরেন্স</div>
+            <div class="category-grid">
+                <!-- ✅ Tram → Life Insurance -->
+                <div class="category-card" onclick="openForm('life')">
+                    <div class="cat-icon">💙</div>
+                    <div class="cat-info">
+                        <strong>Life Insurance</strong>
+                        <span>জীবন বীমা সেবা</span>
+                    </div>
+                    <span class="cat-arrow">→</span>
+                </div>
+
+                <div class="category-card" onclick="openForm('health')">
+                    <div class="cat-icon">🏥</div>
+                    <div class="cat-info">
+                        <strong>Health Insurance</strong>
+                        <span>স্বাস্থ্য বীমা সেবা</span>
+                    </div>
+                    <span class="cat-arrow">→</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== Dynamic Form Section ===== -->
+        <div class="form-section" id="formView">
+            <div class="form-card">
+                <div class="form-header">
+                    <div class="form-header-icon" id="formIcon">🏍️</div>
+                    <div class="form-header-text">
+                        <h2 id="formTitle">Bike Insurance</h2>
+                        <p id="formSubtitle">নিচের ফর্মটি পূরণ করুন</p>
+                    </div>
+                </div>
+
+                <form id="insuranceForm" onsubmit="return handleSubmit(event)">
+                    <div class="form-grid" id="formFields">
+                        <!-- Fields will be injected dynamically -->
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit" class="btn-send" id="sendBtn">
+                            <span class="wa-icon">📤</span> Send
+                        </button>
+                        <button type="button" class="btn-cancel" onclick="closeForm()">← ফিরে যান</button>
+                    </div>
+
+                    <p class="form-note">🔒 আপনার তথ্য সুরক্ষিত। Send করলে সরাসরি WhatsApp-এ চলে যাবে।</p>
+                </form>
             </div>
         </div>
 
@@ -459,7 +495,80 @@
         <p class="copyright">© ২০২৫ Azad Digital Seva | সর্বস্বত্ব সংরক্ষিত</p>
     </footer>
 
+    <div class="toast" id="toast">✅ WhatsApp-এ পাঠানো হচ্ছে...</div>
+
     <script>
+        /* ===== WhatsApp Number ===== */
+        const WHATSAPP_NUMBER = '917908663012';
+
+        /* ===== Category Configuration ===== */
+        const CATEGORIES = {
+            bike: {
+                icon: '🏍️',
+                title: 'Bike Insurance',
+                subtitle: 'মোটরসাইকেল বীমা সেবা',
+                fields: [
+                    { id: 'vehicleNumber', label: 'বাইক নাম্বার', type: 'text', placeholder: 'যেমন: DH-123-4567', required: true },
+                    { id: 'mobileNumber', label: 'মোবাইল নাম্বার', type: 'tel', placeholder: 'যেমন: 017XXXXXXXX', required: true },
+                    { id: 'emailId', label: 'ইমেইল আইডি', type: 'email', placeholder: 'যেমন: you@example.com', required: true },
+                    { id: 'fullName', label: 'নাম', type: 'text', placeholder: 'আপনার পুরো নাম', required: true }
+                ]
+            },
+            car: {
+                icon: '🚗',
+                title: 'Car Insurance',
+                subtitle: 'প্রাইভেট কার বীমা সেবা',
+                fields: [
+                    { id: 'vehicleNumber', label: 'গাড়ির নাম্বার', type: 'text', placeholder: 'যেমন: GA-12-3456', required: true },
+                    { id: 'mobileNumber', label: 'মোবাইল নাম্বার', type: 'tel', placeholder: 'যেমন: 017XXXXXXXX', required: true },
+                    { id: 'emailId', label: 'ইমেইল আইডি', type: 'email', placeholder: 'যেমন: you@example.com', required: true },
+                    { id: 'fullName', label: 'নাম', type: 'text', placeholder: 'আপনার পুরো নাম', required: true }
+                ]
+            },
+            commercial: {
+                icon: '🚚',
+                title: 'Commercial Insurance',
+                subtitle: 'ট্রাক, বাস, কভার্ড ভ্যান বীমা',
+                fields: [
+                    { id: 'vehicleNumber', label: 'গাড়ির নাম্বার', type: 'text', placeholder: 'যেমন: TR-12-3456', required: true },
+                    { id: 'vehicleType', label: 'গাড়ির ধরন', type: 'select', options: ['ট্রাক', 'বাস', 'কভার্ড ভ্যান', 'মিনিবাস', 'অন্যান্য'], required: true },
+                    { id: 'mobileNumber', label: 'মোবাইল নাম্বার', type: 'tel', placeholder: 'যেমন: 017XXXXXXXX', required: true },
+                    { id: 'emailId', label: 'ইমেইল আইডি', type: 'email', placeholder: 'যেমন: you@example.com', required: true },
+                    { id: 'fullName', label: 'নাম', type: 'text', placeholder: 'আপনার পুরো নাম', required: true }
+                ]
+            },
+            /* ✅ Tram → Life Insurance (সঠিক ফিল্ড) */
+            life: {
+                icon: '💙',
+                title: 'Life Insurance',
+                subtitle: 'জীবন বীমা সেবা',
+                fields: [
+                    { id: 'dateOfBirth', label: 'জন্ম তারিখ', type: 'date', required: true },
+                    { id: 'age', label: 'বয়স', type: 'number', placeholder: 'যেমন: 30', required: true },
+                    { id: 'occupation', label: 'পেশা', type: 'text', placeholder: 'যেমন: চাকরি / ব্যবসা', required: true },
+                    { id: 'familyMembers', label: 'পরিবারের সদস্য সংখ্যা', type: 'number', placeholder: 'যেমন: 4', required: true },
+                    { id: 'mobileNumber', label: 'মোবাইল নাম্বার', type: 'tel', placeholder: 'যেমন: 017XXXXXXXX', required: true },
+                    { id: 'emailId', label: 'ইমেইল আইডি', type: 'email', placeholder: 'যেমন: you@example.com', required: true },
+                    { id: 'fullName', label: 'নাম', type: 'text', placeholder: 'আপনার পুরো নাম', required: true }
+                ]
+            },
+            health: {
+                icon: '🏥',
+                title: 'Health Insurance',
+                subtitle: 'স্বাস্থ্য বীমা সেবা',
+                fields: [
+                    { id: 'age', label: 'বয়স', type: 'number', placeholder: 'যেমন: 35', required: true },
+                    { id: 'familyMembers', label: 'পরিবারের সদস্য সংখ্যা', type: 'number', placeholder: 'যেমন: 4', required: true },
+                    { id: 'mobileNumber', label: 'মোবাইল নাম্বার', type: 'tel', placeholder: 'যেমন: 017XXXXXXXX', required: true },
+                    { id: 'emailId', label: 'ইমেইল আইডি', type: 'email', placeholder: 'যেমন: you@example.com', required: true },
+                    { id: 'fullName', label: 'নাম', type: 'text', placeholder: 'আপনার পুরো নাম', required: true }
+                ]
+            }
+        };
+
+        let currentCategoryKey = '';
+
+        /* ===== Menu toggle ===== */
         (function () {
             const toggle = document.getElementById('menuToggle');
             const dropdown = document.getElementById('headerDropdown');
@@ -471,6 +580,121 @@
             document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeMenu(); });
             dropdown.addEventListener('click', (e) => e.stopPropagation());
         })();
+
+        /* ===== Open form with dynamic fields ===== */
+        function openForm(key) {
+            currentCategoryKey = key;
+            const cat = CATEGORIES[key];
+            if (!cat) return;
+
+            document.getElementById('formIcon').textContent = cat.icon;
+            document.getElementById('formTitle').textContent = cat.title;
+            document.getElementById('formSubtitle').textContent = cat.subtitle;
+
+            const container = document.getElementById('formFields');
+            container.innerHTML = '';
+
+            cat.fields.forEach(field => {
+                const group = document.createElement('div');
+                group.className = 'form-group';
+
+                const label = document.createElement('label');
+                label.setAttribute('for', field.id);
+                label.innerHTML = `${field.label}${field.required ? ' <span class="req">*</span>' : ''}`;
+
+                let input;
+                if (field.type === 'select') {
+                    input = document.createElement('select');
+                    input.id = field.id;
+                    input.required = !!field.required;
+                    const defaultOpt = document.createElement('option');
+                    defaultOpt.value = '';
+                    defaultOpt.textContent = '-- নির্বাচন করুন --';
+                    input.appendChild(defaultOpt);
+                    field.options.forEach(opt => {
+                        const o = document.createElement('option');
+                        o.value = opt;
+                        o.textContent = opt;
+                        input.appendChild(o);
+                    });
+                } else {
+                    input = document.createElement('input');
+                    input.type = field.type;
+                    input.id = field.id;
+                    input.placeholder = field.placeholder || '';
+                    input.required = !!field.required;
+                    if (field.type === 'tel') input.pattern = '[0-9+ -]{10,15}';
+                }
+
+                group.appendChild(label);
+                group.appendChild(input);
+                container.appendChild(group);
+            });
+
+            document.getElementById('categoryView').style.display = 'none';
+            document.getElementById('formView').classList.add('active');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function closeForm() {
+            document.getElementById('formView').classList.remove('active');
+            document.getElementById('categoryView').style.display = '';
+            document.getElementById('insuranceForm').reset();
+            document.getElementById('formFields').innerHTML = '';
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        /* ===== Submit → WhatsApp ===== */
+        function handleSubmit(e) {
+            e.preventDefault();
+            const cat = CATEGORIES[currentCategoryKey];
+            if (!cat) return false;
+
+            const fieldLines = [];
+            let hasEmpty = false;
+
+            cat.fields.forEach(field => {
+                const el = document.getElementById(field.id);
+                if (!el) return;
+                const val = (el.value || '').trim();
+                if (!val) hasEmpty = true;
+                fieldLines.push(`🔹 *${field.label}:* ${val || '(খালি)'}`);
+            });
+
+            if (hasEmpty) {
+                alert('দয়া করে সব ঘর পূরণ করুন।');
+                return false;
+            }
+
+            const sendBtn = document.getElementById('sendBtn');
+            sendBtn.disabled = true;
+            sendBtn.innerHTML = '⏳ পাঠানো হচ্ছে...';
+
+            const message =
+`🛡️ *Azad Digital Seva — Insurance Request*
+
+📋 *Category:* ${cat.title}
+${cat.icon} *Type:* ${cat.subtitle}
+
+${fieldLines.join('\n')}
+
+⏰ ${new Date().toLocaleString('bn-BD')}`;
+
+            const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
+
+            const toast = document.getElementById('toast');
+            toast.classList.add('show');
+
+            setTimeout(() => {
+                window.open(url, '_blank');
+                toast.classList.remove('show');
+                sendBtn.disabled = false;
+                sendBtn.innerHTML = '<span class="wa-icon">📤</span> Send';
+                document.getElementById('insuranceForm').reset();
+            }, 700);
+
+            return false;
+        }
     </script>
 
 </body>

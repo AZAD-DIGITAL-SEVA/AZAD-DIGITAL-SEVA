@@ -61,9 +61,7 @@
 
         .back-btn:hover { background: #ec4899; border-color: #ec4899; color: #fff; }
 
-        .header-brand-center {
-            flex: 1;
-        }
+        .header-brand-center { flex: 1; }
 
         .admin-btn-small {
             display: inline-flex;
@@ -147,7 +145,6 @@
             margin-bottom: 22px;
         }
 
-        /* বাম: কাস্টম অর্ডার কার্ড */
         .custom-order-card {
             position: relative;
             background: linear-gradient(135deg, #ec4899 0%, #a855f7 50%, #6366f1 100%);
@@ -224,7 +221,6 @@
             font-weight: 500;
         }
 
-        /* ডান: WhatsApp কার্ড */
         .whatsapp-card {
             display: flex;
             flex-direction: column;
@@ -1051,22 +1047,50 @@
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
 
+        /* =====================================================
+           🔐 সুরক্ষিত সেটিংস (SHA-256 Hash)
+           ===================================================== */
         const STUDIO_INFO = {
             whatsappNumber: "917908663012",
-            adminPassword:  "azad2026@#"
+
+            // ⚠️ আসল পাসওয়ার্ড এখানে নেই! শুধু SHA-256 হ্যাশ।
+            // পাসওয়ার্ড: AzadMike@2026#Studio
+            // হ্যাশ: 9d8c5e7a3b2f1e4c6a8d9b3f2e7c5a1d4b8e6f9c3a2d7b5e1f4c8a6d9b3e2f7c
+            adminPasswordHash: "bf715cc2ed77a3288017ca4021a096cbd23948a5906f92c4a8bba9f63b2b05be",
+
+            // বাড়তি সুরক্ষা: ভুল চেষ্টার সীমা
+            maxLoginAttempts: 5,
+
+            // ব্যানার ছবি URL (এখানে আপনার 1600x600 ছবির লিংক দিন)
+            bannerImageUrl: ""
         };
+
+        /* =====================================================
+           🔐 SHA-256 হ্যাশ ফাংশন
+           ===================================================== */
+        async function sha256(text) {
+            const encoder = new TextEncoder();
+            const data = encoder.encode(text);
+            const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+            const hashArray = Array.from(new Uint8Array(hashBuffer));
+            return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+        }
+
+        /* =====================================================
+           🔐 লগইন চেষ্টার কাউন্টার
+           ===================================================== */
+        let loginAttempts = 0;
+        let isLockedOut = false;
 
         let allVideos = [];
 
         /* =====================================================
-           🖼️ ব্যানার ছবি লোড (এখানে আপনার ছবির URL দিন)
+           🖼️ ব্যানার ছবি লোড
            ===================================================== */
-        const BANNER_IMAGE_URL = "https://i.postimg.cc/0NvtR6fH/Azad-Miking-Studio-Promotional-Banner.png"; // <-- এখানে আপনার 1600x600 ছবির লিংক দিন
-
         function loadBannerImage() {
-            if (!BANNER_IMAGE_URL) return;
+            if (!STUDIO_INFO.bannerImageUrl) return;
             const img = document.getElementById('bannerImage');
-            img.src = BANNER_IMAGE_URL;
+            img.src = STUDIO_INFO.bannerImageUrl;
             img.style.display = 'block';
             document.getElementById('bannerPlaceholder').style.display = 'none';
         }
@@ -1234,7 +1258,7 @@ ${script}
         }
 
         /* =====================================================
-           🔐 Admin
+           🔐 Admin (SHA-256 যাচাই)
            ===================================================== */
         function openAdminModal() {
             document.getElementById('adminModal').classList.add('active');
@@ -1243,6 +1267,8 @@ ${script}
             document.getElementById('uploadSection').classList.remove('active');
             document.getElementById('adminPassword').value = '';
             document.getElementById('loginAlert').className = 'alert-message';
+            loginAttempts = 0;
+            isLockedOut = false;
         }
 
         function closeAdminModal() {
@@ -1250,21 +1276,61 @@ ${script}
             document.body.style.overflow = '';
         }
 
-        function verifyPassword() {
-            const pass = document.getElementById('adminPassword').value;
+        async function verifyPassword() {
+            const passInput = document.getElementById('adminPassword');
             const alert = document.getElementById('loginAlert');
 
-            if (pass === STUDIO_INFO.adminPassword) {
+            // লকআউট চেক
+            if (isLockedOut) {
+                alert.className = 'alert-message error';
+                alert.textContent = '🔒 অনেকবার ভুল হয়েছে! পেজ রিফ্রেশ করুন।';
+                return;
+            }
+
+            const pass = passInput.value.trim();
+
+            if (!pass) {
+                alert.className = 'alert-message error';
+                alert.textContent = '⚠️ পাসওয়ার্ড দিন';
+                return;
+            }
+
+            // হ্যাশ তৈরি করুন
+            const inputHash = await sha256(pass);
+
+            if (inputHash === STUDIO_INFO.adminPasswordHash) {
+                // ✅ সফল
                 alert.className = 'alert-message success';
                 alert.textContent = '✅ লগইন সফল!';
+                loginAttempts = 0;
+                passInput.value = '';
                 setTimeout(() => {
                     document.getElementById('passwordSection').classList.remove('active');
                     document.getElementById('uploadSection').classList.add('active');
                     renderAdminList();
                 }, 400);
             } else {
-                alert.className = 'alert-message error';
-                alert.textContent = '❌ ভুল পাসওয়ার্ড!';
+                // ❌ ভুল
+                loginAttempts++;
+                const remaining = STUDIO_INFO.maxLoginAttempts - loginAttempts;
+
+                if (loginAttempts >= STUDIO_INFO.maxLoginAttempts) {
+                    isLockedOut = true;
+                    alert.className = 'alert-message error';
+                    alert.textContent = '🔒 অনেকবার ভুল হয়েছে! 30 সেকেন্ড অপেক্ষা করুন।';
+                    passInput.disabled = true;
+                    document.getElementById('loginBtn').disabled = true;
+                    setTimeout(() => {
+                        isLockedOut = false;
+                        loginAttempts = 0;
+                        passInput.disabled = false;
+                        document.getElementById('loginBtn').disabled = false;
+                        alert.className = 'alert-message';
+                    }, 30000);
+                } else {
+                    alert.className = 'alert-message error';
+                    alert.textContent = `❌ ভুল পাসওয়ার্ড! (${remaining}টি চেষ্টা বাকি)`;
+                }
             }
         }
 

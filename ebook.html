@@ -5,6 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Azad E-Book Store</title>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Hind+Siliguri:wght@400;500;600;700&display=swap" rel="stylesheet">
+<!-- ✨ QR Code Generator Library -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
 <style>
   * { margin:0; padding:0; box-sizing:border-box; font-family:'Poppins','Hind Siliguri', sans-serif; -webkit-tap-highlight-color: transparent; }
   body { background:#f3f4f6; color:#1e293b; overflow-x:hidden; }
@@ -57,15 +60,13 @@
     .action-btn .icon { font-size:1.6rem; }
   }
 
-  /* ================= MOBILE CATEGORY BAR (Pill Style) ================= */
+  /* ================= MOBILE CATEGORY BAR ================= */
   .mobile-cat-wrap {
     background:#fff; padding:12px 0; border-bottom:1px solid #e2e8f0;
     position:sticky; top:65px; z-index:99;
     display:block;
   }
-  @media (min-width: 768px) {
-    .mobile-cat-wrap { top:69px; }
-  }
+  @media (min-width: 768px) { .mobile-cat-wrap { top:69px; } }
   
   .mobile-cat-scroll {
     display:flex; gap:10px; overflow-x:auto; padding:0 16px;
@@ -83,10 +84,9 @@
     box-shadow:0 4px 10px rgba(234,88,12,.3);
   }
 
-  /* Hide old desktop nav bar on mobile (optional, but cleaner) */
   .nav-bar-wrap { display:none; }
   @media (min-width: 992px) {
-    .mobile-cat-wrap { display:none; } /* Hide pills on large screens */
+    .mobile-cat-wrap { display:none; }
     .nav-bar-wrap { display:block; background:#0f172a; position:sticky; top:69px; z-index:99; }
     .nav-bar {
       padding:0 20px; display:flex; align-items:center; gap:24px;
@@ -243,7 +243,26 @@
   
   .modal-box h2 { font-size:1.15rem; margin-bottom:4px; color:#0f172a; }
   .modal-book-name { color:#ea580c; font-weight:700; margin-bottom:12px; font-size:.9rem; }
-  .qr-img { width:180px; height:180px; object-fit:contain; margin:0 auto 12px; border:1px solid #e2e8f0; border-radius:8px; padding:6px; }
+  
+  /* ✨ অটোমেটিক QR কোড কন্টেইনার */
+  .qr-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 12px;
+    background: #ffffff;
+    border: 1.5px solid #e2e8f0;
+    border-radius: 12px;
+    margin: 0 auto 12px;
+    width: fit-content;
+    min-width: 200px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  }
+  .qr-container img, .qr-container canvas {
+    display: block;
+    border-radius: 8px;
+  }
+
   .verify-box { background:#fef3c7; border:1px solid #fcd34d; border-radius:8px; padding:12px; margin-bottom:14px; text-align:left; }
   .verify-box .v-title { font-size:.8rem; font-weight:700; color:#b45309; display:flex; align-items:center; gap:6px; margin-bottom:4px; }
   .verify-box .v-name { font-size:1rem; font-weight:800; color:#0f172a; background:#fff; padding:6px; border-radius:4px; margin:6px 0; border:1px dashed #f59e0b; text-align:center; }
@@ -280,18 +299,14 @@
   </div>
 </header>
 
-<!-- ================= MOBILE CATEGORY BAR (Pills) ================= -->
+<!-- ================= MOBILE CATEGORY BAR ================= -->
 <div class="mobile-cat-wrap">
-  <div class="mobile-cat-scroll" id="mobileCatScroll">
-    <!-- Pill buttons rendered via JS -->
-  </div>
+  <div class="mobile-cat-scroll" id="mobileCatScroll"></div>
 </div>
 
 <!-- ================= DESKTOP NAV BAR ================= -->
 <div class="nav-bar-wrap">
-  <nav class="nav-bar" id="navBar">
-    <!-- Links rendered via JS -->
-  </nav>
+  <nav class="nav-bar" id="navBar"></nav>
 </div>
 
 <!-- ================= MAIN CONTENT ================= -->
@@ -348,7 +363,8 @@
     <h2>Complete Payment</h2>
     <div class="modal-book-name" id="modalBookName"></div>
 
-    <img class="qr-img" src="qr.png" alt="UPI QR Code">
+    <!-- ✨ অটোমেটিক QR Code কন্টেইনার -->
+    <div class="qr-container" id="qrcode"></div>
     <p style="font-size:.8rem; color:#64748b; margin-bottom:12px;">Scan with any UPI app — <b>GPay, PhonePe, Paytm, BHIM</b></p>
 
     <div class="verify-box">
@@ -383,8 +399,14 @@
    1) DATA & CONFIG
 ===================================================== */
 const categories = ["All", "Programming", "Design", "Business", "Marketing", "Self-Help"];
-const WHATSAPP_NUMBER = "917908663012"; // <-- আপনার WhatsApp নম্বর দিন
+const WHATSAPP_NUMBER = "917908663012"; // <-- আপনার WhatsApp নম্বর
 const PAYEE_NAME = "Harun Al Rasid";
+
+/* 🔥 আপনার BharatPe UPI ID (অটোমেটিক QR তৈরির জন্য) */
+const UPI_ID = "BHARATPE.9K0K0G1X4A535991@unitype"; 
+const UPI_NAME = "Harun Al Rasid";
+
+let qrCodeInstance = null; // QR Generator Instance
 
 const books = [
   {
@@ -453,20 +475,17 @@ const navBar = document.getElementById("navBar");
 const mobileCatScroll = document.getElementById("mobileCatScroll");
 const grid = document.getElementById("bookGrid");
 
-// Render Categories for both Mobile & Desktop
 function renderCategories() {
   navBar.innerHTML = "";
   mobileCatScroll.innerHTML = "";
 
   categories.forEach(cat => {
-    // Desktop
     const link = document.createElement("a");
     link.textContent = cat;
     if (cat === activeCategory) link.classList.add("active");
     link.onclick = (e) => { e.preventDefault(); setCategory(cat); };
     navBar.appendChild(link);
 
-    // Mobile Pill
     const btn = document.createElement("button");
     btn.className = "mob-cat-btn" + (cat === activeCategory ? " active" : "");
     btn.textContent = cat;
@@ -479,7 +498,6 @@ function setCategory(cat) {
   activeCategory = cat;
   renderCategories(); 
   renderBooks();      
-  // Ensure active pill is visible when clicked
   const activeBtn = mobileCatScroll.querySelector('.mob-cat-btn.active');
   if(activeBtn) activeBtn.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
 }
@@ -686,9 +704,10 @@ function addToCartFromDetails() {
 
 function proceedToPaymentSingle() {
   checkoutMode = 'single';
-  document.getElementById("modalBookName").textContent = currentBook.name + " — ₹ " + currentBook.price;
+  let amount = currentBook.price;
+  document.getElementById("modalBookName").textContent = currentBook.name + " — ₹ " + amount;
   closeDetails();
-  showPaymentModal();
+  showPaymentModal(amount);
 }
 
 function checkout() {
@@ -697,12 +716,16 @@ function checkout() {
   let total = cart.reduce((sum, item) => sum + item.price, 0);
   document.getElementById("modalBookName").textContent = `Cart (${cart.length} items) — ₹ ${total}`;
   closeSidebars();
-  showPaymentModal();
+  showPaymentModal(total);
 }
 
-function showPaymentModal() {
+function showPaymentModal(amount) {
   document.getElementById("nameConfirm").checked = false;
   document.getElementById("successBtn").disabled = true;
+  
+  // ✨ QR কোড অটোমেটিক জেনারেট
+  generateQRCode(amount);
+
   document.getElementById("paymentModal").classList.add("active");
 }
 
@@ -714,6 +737,30 @@ function toggleSuccessBtn() {
   document.getElementById("successBtn").disabled = !document.getElementById("nameConfirm").checked;
 }
 
+/* =====================================================
+   ✨ 7) AUTOMATIC QR CODE GENERATOR
+===================================================== */
+function generateQRCode(amount) {
+  const qrContainer = document.getElementById('qrcode');
+  qrContainer.innerHTML = ''; // Clear previous QR
+
+  // Standard UPI URI Format
+  const upiUri = `upi://pay?pa=${UPI_ID}&pn=${encodeURIComponent(UPI_NAME)}&am=${amount}&cu=INR`;
+
+  // Generate New QR
+  qrCodeInstance = new QRCode(qrContainer, {
+    text: upiUri,
+    width: 200,
+    height: 200,
+    colorDark : "#000000",
+    colorLight : "#ffffff",
+    correctLevel : QRCode.CorrectLevel.H
+  });
+}
+
+/* =====================================================
+   8) ON PAYMENT SUCCESS
+===================================================== */
 function onPaymentSuccess() {
   let message = "";
   if(checkoutMode === 'single') {

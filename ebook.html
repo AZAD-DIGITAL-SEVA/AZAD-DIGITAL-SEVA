@@ -3,211 +3,338 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>E-Book Store</title>
+<title>Azad E-Book Store</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Hind+Siliguri:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
-  * { margin:0; padding:0; box-sizing:border-box; font-family:'Segoe UI', Tahoma, sans-serif; }
-  body { background:#f4f6fb; color:#1e293b; }
+  * { margin:0; padding:0; box-sizing:border-box; font-family:'Poppins','Hind Siliguri', sans-serif; }
+  body { background:#f3f4f6; color:#1e293b; }
 
-  /* Header */
-  .ebook-header { text-align:center; padding:40px 16px 20px; }
-  .ebook-header h1 { font-size:2rem; color:#0f172a; margin-bottom:8px; }
-  .ebook-header p { color:#64748b; font-size:1rem; }
-
-  /* Category Filter Bar */
-  .category-bar {
-    display:flex; flex-wrap:wrap; justify-content:center; gap:10px;
-    max-width:1300px; margin:0 auto 10px; padding:10px 20px;
+  /* ================= TOP HEADER ================= */
+  .top-header {
+    background:#fff; border-bottom:1px solid #e2e8f0;
+    padding:12px 20px; display:flex; align-items:center; gap:20px;
+    position:sticky; top:0; z-index:100;
   }
-  .cat-btn {
-    background:#fff; border:1.5px solid #cbd5e1; color:#334155;
-    padding:8px 18px; border-radius:30px; cursor:pointer;
-    font-size:.9rem; font-weight:600; transition:all .2s;
+  .logo-area { display:flex; align-items:center; gap:8px; font-size:1.5rem; font-weight:800; color:#1e293b; text-decoration:none; }
+  .logo-area span { color:#ea580c; }
+  
+  .search-bar {
+    flex:1; display:flex; max-width:600px; margin:0 auto;
+    border:2px solid #ea580c; border-radius:6px; overflow:hidden;
   }
-  .cat-btn:hover { border-color:#0d9488; color:#0d9488; }
-  .cat-btn.active { background:#0d9488; border-color:#0d9488; color:#fff; }
+  .search-bar select {
+    border:none; background:#f8fafc; padding:0 12px; font-size:.9rem;
+    border-right:1px solid #e2e8f0; outline:none; cursor:pointer;
+  }
+  .search-bar input {
+    flex:1; border:none; padding:10px 14px; font-size:.95rem; outline:none;
+  }
+  .search-bar button {
+    background:#ea580c; color:#fff; border:none; padding:0 20px;
+    cursor:pointer; font-size:1rem;
+  }
 
-  /* Book Grid */
+  /* ================= HEADER ACTIONS ================= */
+  .header-actions { display:flex; align-items:center; gap:18px; font-size:.9rem; font-weight:600; }
+  .action-btn { 
+    text-decoration:none; color:#334155; display:flex; align-items:center; gap:6px;
+    background:none; border:none; cursor:pointer; font-size:.85rem; font-weight:600;
+    padding:8px 12px; border-radius:6px; transition:background .2s;
+  }
+  .action-btn:hover { background:#f1f5f9; color:#ea580c; }
+  .action-btn .icon { font-size:1.3rem; position:relative; }
+  
+  .badge {
+    position:absolute; top:-6px; right:-8px; background:#ea580c; color:#fff;
+    font-size:.65rem; font-weight:700; width:18px; height:18px; border-radius:50%;
+    display:flex; align-items:center; justify-content:center;
+  }
+
+  /* ================= NAVIGATION BAR (Now contains categories) ================= */
+  .nav-bar {
+    background:#0f172a; color:#fff; padding:0 20px;
+    display:flex; align-items:center; gap:24px; font-size:.9rem;
+    height:48px; overflow-x:auto; white-space:nowrap;
+  }
+  /* Hide scrollbar for clean look */
+  .nav-bar::-webkit-scrollbar { display: none; }
+  .nav-bar { -ms-overflow-style: none; scrollbar-width: none; }
+
+  .nav-bar a { 
+    color:#cbd5e1; text-decoration:none; font-weight:500; 
+    transition:color .2s; cursor:pointer; padding:4px 0;
+    border-bottom:2px solid transparent;
+  }
+  .nav-bar a:hover { color:#fff; }
+  .nav-bar a.active { 
+    color:#fff; font-weight:700; border-bottom-color:#ea580c;
+  }
+
+  /* ================= MAIN LAYOUT ================= */
+  .main-container { max-width:1300px; margin:0 auto; padding:24px 20px; }
+
+  /* ================= BOOK GRID ================= */
   .book-grid {
     display:grid;
     grid-template-columns:repeat(5, 1fr);
-    gap:22px;
-    max-width:1300px;
-    margin:24px auto;
-    padding:0 20px;
+    gap:20px;
   }
   @media (max-width:1100px){ .book-grid{ grid-template-columns:repeat(4,1fr);} }
   @media (max-width:850px){ .book-grid{ grid-template-columns:repeat(3,1fr);} }
   @media (max-width:600px){ .book-grid{ grid-template-columns:repeat(2,1fr);} }
 
-  /* Book Card */
+  /* ================= BOOK CARD ================= */
   .book-card {
-    background:#fff; border-radius:14px; overflow:hidden;
-    box-shadow:0 4px 14px rgba(0,0,0,.08);
-    transition:transform .2s, box-shadow .2s;
-    display:flex; flex-direction:column;
+    background:#fff; border:1px solid #e2e8f0; border-radius:8px;
+    overflow:hidden; display:flex; flex-direction:column;
+    transition:box-shadow .2s; position:relative;
   }
-  .book-card:hover { transform:translateY(-5px); box-shadow:0 10px 24px rgba(0,0,0,.14); }
+  .book-card:hover { box-shadow:0 8px 24px rgba(0,0,0,.12); }
+
+  .book-cover-wrap { position:relative; padding:12px 12px 0; }
   .book-cover {
-    width:100%; aspect-ratio:3/4; object-fit:cover; background:#e2e8f0;
+    width:100%; aspect-ratio:3/4; object-fit:cover;
+    border-radius:4px; border:1px solid #f1f5f9;
   }
-  .book-info { padding:12px; display:flex; flex-direction:column; gap:8px; flex:1; }
-  .book-cat-tag {
-    font-size:.72rem; color:#0d9488; background:#ccfbf1;
-    padding:2px 8px; border-radius:20px; align-self:flex-start; font-weight:600;
+  .discount-badge {
+    position:absolute; top:18px; left:18px;
+    background:#ea580c; color:#fff; font-size:.7rem; font-weight:700;
+    padding:3px 8px; border-radius:3px;
   }
-  .book-title { font-size:.95rem; font-weight:600; line-height:1.3; }
-  .book-price { color:#0d9488; font-weight:700; font-size:1rem; }
-  .buy-btn {
-    margin-top:auto; background:#0d9488; color:#fff; border:none;
-    padding:9px 12px; border-radius:9px; cursor:pointer;
-    font-size:.9rem; font-weight:600; transition:background .2s;
+  .wishlist-icon {
+    position:absolute; top:18px; right:18px;
+    background:#fff; width:28px; height:28px; border-radius:50%;
+    display:flex; align-items:center; justify-content:center;
+    box-shadow:0 2px 6px rgba(0,0,0,.1); cursor:pointer;
+    color:#64748b; font-size:1.1rem; transition:all .2s;
   }
-  .buy-btn:hover { background:#0f766e; }
+  .wishlist-icon:hover { color:#ef4444; }
+  .wishlist-icon.active { color:#ef4444; background:#fee2e2; }
 
-  .empty-msg {
-    grid-column:1/-1; text-align:center; color:#94a3b8;
-    padding:40px 0; font-size:1rem; display:none;
+  .book-info { padding:12px; display:flex; flex-direction:column; gap:4px; flex:1; }
+  .book-title {
+    font-size:.95rem; font-weight:600; color:#1e293b;
+    line-height:1.4; display:-webkit-box; -webkit-line-clamp:2;
+    -webkit-box-orient:vertical; overflow:hidden; height:2.6em;
+    cursor:pointer;
   }
+  .book-title:hover { color:#ea580c; }
+  .book-author { font-size:.8rem; color:#64748b; margin-bottom:4px; }
+  .book-type { font-size:.75rem; color:#94a3b8; font-weight:600; text-transform:uppercase; margin-bottom:6px; }
+  
+  .price-row { display:flex; align-items:center; gap:8px; margin-top:auto; margin-bottom:8px; }
+  .book-price { color:#ea580c; font-weight:700; font-size:1.05rem; }
+  .book-old-price { color:#94a3b8; text-decoration:line-through; font-size:.8rem; }
 
-  /* ===== MODAL COMMON ===== */
+  .card-btns { display:flex; gap:6px; }
+  .btn-view {
+    flex:1; background:#fff; color:#ea580c; border:1px solid #ea580c;
+    padding:8px; border-radius:4px; cursor:pointer;
+    font-size:.85rem; font-weight:600; transition:all .2s;
+  }
+  .btn-view:hover { background:#ea580c; color:#fff; }
+  .btn-add-cart {
+    background:#f1f5f9; color:#0f172a; border:1px solid #cbd5e1;
+    padding:8px 10px; border-radius:4px; cursor:pointer;
+    font-size:1rem; transition:all .2s;
+  }
+  .btn-add-cart:hover { background:#0f172a; color:#fff; border-color:#0f172a; }
+
+  /* ================= SLIDING SIDEBARS (Cart & Wishlist) ================= */
+  .sidebar-overlay {
+    display:none; position:fixed; inset:0; background:rgba(15,23,42,.6);
+    z-index:1000; opacity:0; transition:opacity .3s;
+  }
+  .sidebar-overlay.active { display:block; opacity:1; }
+  
+  .sidebar {
+    position:fixed; top:0; right:-400px; width:100%; max-width:400px; height:100vh;
+    background:#fff; z-index:1001; box-shadow:-10px 0 30px rgba(0,0,0,.15);
+    display:flex; flex-direction:column; transition:right .3s ease;
+  }
+  .sidebar.active { right:0; }
+  
+  .sidebar-header {
+    padding:20px; border-bottom:1px solid #e2e8f0; display:flex;
+    justify-content:space-between; align-items:center; background:#f8fafc;
+  }
+  .sidebar-header h2 { font-size:1.2rem; color:#0f172a; }
+  .sidebar-close {
+    background:none; border:none; font-size:1.5rem; cursor:pointer; color:#64748b;
+  }
+  
+  .sidebar-content { flex:1; overflow-y:auto; padding:20px; }
+  
+  /* Cart Item */
+  .cart-item { display:flex; gap:12px; padding:12px 0; border-bottom:1px solid #f1f5f9; }
+  .cart-item img { width:60px; height:80px; object-fit:cover; border-radius:4px; border:1px solid #e2e8f0; }
+  .cart-item-info { flex:1; display:flex; flex-direction:column; }
+  .cart-item-title { font-size:.9rem; font-weight:600; color:#1e293b; line-height:1.3; margin-bottom:4px; }
+  .cart-item-price { color:#ea580c; font-weight:700; font-size:.95rem; margin-bottom:8px; }
+  .cart-item-remove { background:none; border:none; color:#ef4444; font-size:.8rem; cursor:pointer; text-align:left; font-weight:600; }
+  .cart-item-remove:hover { text-decoration:underline; }
+  
+  .empty-state { text-align:center; color:#94a3b8; padding:40px 0; display:flex; flex-direction:column; align-items:center; gap:10px; }
+  .empty-state span { font-size:3rem; opacity:.5; }
+
+  /* Cart Footer */
+  .sidebar-footer {
+    padding:20px; border-top:1px solid #e2e8f0; background:#f8fafc;
+  }
+  .cart-total { display:flex; justify-content:space-between; font-size:1.1rem; font-weight:700; color:#0f172a; margin-bottom:16px; }
+  .cart-total span { color:#ea580c; }
+  .checkout-btn {
+    width:100%; background:#16a34a; color:#fff; border:none;
+    padding:14px; border-radius:6px; font-size:1rem; font-weight:700;
+    cursor:pointer; transition:background .2s;
+  }
+  .checkout-btn:hover { background:#15803d; }
+
+  /* ================= MODALS (Details & Payment) ================= */
   .modal-overlay {
-    display:none; position:fixed; inset:0; background:rgba(15,23,42,.65);
-    z-index:1000; justify-content:center; align-items:center; padding:16px;
+    display:none; position:fixed; inset:0; background:rgba(15,23,42,.7);
+    z-index:2000; justify-content:center; align-items:center; padding:16px;
   }
   .modal-overlay.active { display:flex; }
   .modal-box {
-    background:#fff; border-radius:16px; max-width:420px; width:100%;
-    padding:26px 22px; text-align:center; position:relative;
-    animation:pop .25s ease;
-    max-height:90vh; overflow-y:auto;
+    background:#fff; border-radius:12px; max-width:420px; width:100%;
+    padding:24px; text-align:center; position:relative;
+    max-height:92vh; overflow-y:auto; box-shadow:0 25px 50px -12px rgba(0,0,0,.25);
   }
-  @keyframes pop { from{transform:scale(.9);opacity:0} to{transform:scale(1);opacity:1} }
   .modal-close {
-    position:absolute; top:12px; right:14px; background:none; border:none;
-    font-size:1.4rem; cursor:pointer; color:#64748b; z-index:2;
+    position:absolute; top:14px; right:16px; background:#f1f5f9; border:none;
+    width:30px; height:30px; border-radius:50%; cursor:pointer;
+    font-size:1.2rem; color:#64748b; display:flex; align-items:center;
+    justify-content:center; transition:all .2s; z-index:2;
   }
+  .modal-close:hover { background:#e2e8f0; }
 
-  /* ===== DETAILS MODAL ===== */
-  .details-box { max-width:760px; text-align:left; padding:0; overflow:hidden; }
-  .details-top { display:flex; gap:24px; padding:26px 24px; }
+  /* Details Modal */
+  .details-box { max-width:780px; text-align:left; padding:0; overflow:hidden; }
+  .details-top { display:flex; gap:24px; padding:24px; }
   @media (max-width:600px){ .details-top{ flex-direction:column; align-items:center; text-align:center; } }
-
-  .details-cover {
-    width:200px; min-width:200px; aspect-ratio:3/4; object-fit:cover;
-    border-radius:12px; box-shadow:0 6px 20px rgba(0,0,0,.18); background:#e2e8f0;
-  }
-  @media (max-width:600px){ .details-cover{ width:170px; min-width:170px; } }
-
-  .details-info { flex:1; display:flex; flex-direction:column; gap:10px; }
-  .details-cat {
-    font-size:.75rem; color:#0d9488; background:#ccfbf1;
-    padding:3px 10px; border-radius:20px; align-self:flex-start; font-weight:700;
-  }
-  @media (max-width:600px){ .details-cat{ align-self:center; } }
-
-  .details-title { font-size:1.45rem; font-weight:700; color:#0f172a; line-height:1.25; }
-  .details-price { font-size:1.5rem; font-weight:800; color:#0d9488; }
-  .details-meta { display:flex; flex-wrap:wrap; gap:14px; font-size:.85rem; color:#64748b; }
-  .details-meta span b { color:#0f172a; }
-  .details-desc-title { font-weight:700; font-size:.95rem; margin-top:6px; color:#0f172a; }
-  .details-desc { font-size:.9rem; color:#475569; line-height:1.65; }
-  .details-buy-btn {
-    margin-top:14px; background:#0d9488; color:#fff; border:none;
-    padding:13px 20px; border-radius:10px; font-size:1rem; font-weight:700;
-    cursor:pointer; transition:background .2s;
-  }
-  .details-buy-btn:hover { background:#0f766e; }
-
-  /* ===== PAYMENT MODAL ===== */
-  .modal-box h2 { font-size:1.2rem; margin-bottom:6px; }
-  .modal-book-name { color:#0d9488; font-weight:600; margin-bottom:14px; font-size:.95rem; }
-  .qr-img {
-    width:210px; height:210px; object-fit:contain; margin:0 auto 12px;
-    border:2px solid #e2e8f0; border-radius:12px; padding:6px; background:#fff;
-  }
-  .pay-note { font-size:.85rem; color:#64748b; margin-bottom:14px; }
-  .pay-note b { color:#0f172a; }
-
-  /* Verify Name Box */
-  .verify-box {
-    background:#fffbeb; border:1.5px solid #fcd34d; border-radius:10px;
-    padding:12px 14px; margin-bottom:14px; text-align:left;
-  }
-  .verify-box .v-title {
-    font-size:.85rem; font-weight:800; color:#b45309;
-    display:flex; align-items:center; gap:6px; margin-bottom:4px;
-  }
-  .verify-box .v-name {
-    font-size:1.05rem; font-weight:800; color:#0f172a;
-    background:#fff; padding:6px 10px; border-radius:7px; margin:6px 0;
-    border:1px dashed #f59e0b; text-align:center; letter-spacing:.3px;
-  }
+  .details-cover { width:200px; min-width:200px; aspect-ratio:3/4; object-fit:cover; border-radius:8px; border:1px solid #e2e8f0; }
+  .details-info { flex:1; display:flex; flex-direction:column; gap:8px; }
+  .details-title { font-size:1.4rem; font-weight:700; color:#0f172a; line-height:1.3; }
+  .details-meta { display:flex; flex-wrap:wrap; gap:12px; font-size:.85rem; color:#64748b; margin:8px 0; }
+  .details-meta span b { color:#1e293b; }
+  .details-desc { font-size:.9rem; color:#475569; line-height:1.7; margin-top:8px; }
+  .details-actions { display:flex; gap:10px; margin-top:20px; }
+  
+  /* Payment Modal */
+  .modal-box h2 { font-size:1.25rem; margin-bottom:6px; color:#0f172a; }
+  .modal-book-name { color:#ea580c; font-weight:700; margin-bottom:16px; font-size:.95rem; }
+  .qr-img { width:200px; height:200px; object-fit:contain; margin:0 auto 14px; border:1px solid #e2e8f0; border-radius:8px; padding:6px; }
+  .verify-box { background:#fef3c7; border:1px solid #fcd34d; border-radius:8px; padding:12px; margin-bottom:16px; text-align:left; }
+  .verify-box .v-title { font-size:.85rem; font-weight:700; color:#b45309; display:flex; align-items:center; gap:6px; margin-bottom:4px; }
+  .verify-box .v-name { font-size:1.1rem; font-weight:800; color:#0f172a; background:#fff; padding:6px; border-radius:4px; margin:6px 0; border:1px dashed #f59e0b; text-align:center; }
   .verify-box .v-text { font-size:.8rem; color:#78350f; line-height:1.5; }
-
-  .success-btn {
-    width:100%; background:#16a34a; color:#fff; border:none;
-    padding:13px; border-radius:10px; font-size:1rem; font-weight:700;
-    cursor:pointer; transition:background .2s;
-  }
-  .success-btn:hover { background:#15803d; }
+  .pay-steps { text-align:left; font-size:.85rem; color:#475569; margin:14px 0; line-height:1.6; background:#f8fafc; padding:12px; border-radius:8px; border:1px solid #e2e8f0; }
+  .confirm-row { display:flex; align-items:flex-start; gap:8px; text-align:left; font-size:.8rem; color:#334155; margin-bottom:16px; }
+  .confirm-row input { margin-top:3px; width:16px; height:16px; cursor:pointer; accent-color:#ea580c; }
+  .success-btn { width:100%; background:#16a34a; color:#fff; border:none; padding:12px; border-radius:6px; font-size:1rem; font-weight:700; cursor:pointer; transition:all .2s; }
+  .success-btn:hover:not(:disabled) { background:#15803d; }
   .success-btn:disabled { background:#cbd5e1; cursor:not-allowed; }
-  .pay-steps { text-align:left; font-size:.83rem; color:#475569; margin:12px 0; line-height:1.6; }
 
-  /* Confirm checkbox */
-  .confirm-row {
-    display:flex; align-items:flex-start; gap:8px; text-align:left;
-    font-size:.8rem; color:#334155; margin-bottom:14px; line-height:1.4;
-  }
-  .confirm-row input { margin-top:2px; width:16px; height:16px; cursor:pointer; }
-
-  .ebook-footer { text-align:center; padding:30px 16px; color:#94a3b8; font-size:.85rem; }
+  /* Footer */
+  .footer { text-align:center; padding:30px 20px; border-top:1px solid #e2e8f0; background:#fff; margin-top:40px; font-size:.85rem; color:#64748b; }
+  .footer b { color:#ea580c; }
 </style>
 </head>
 <body>
 
-<header class="ebook-header">
-  <h1>📚 E-Book Store</h1>
-  <p>Buy your favorite course e-books</p>
+<!-- ================= TOP HEADER ================= -->
+<header class="top-header">
+  <a href="#" class="logo-area">Azad<span>E-Book</span></a>
+  
+  <div class="search-bar">
+    <select>
+      <option>All Categories</option>
+    </select>
+    <input type="text" placeholder="Search for e-books, authors...">
+    <button>🔍</button>
+  </div>
+
+  <div class="header-actions">
+    <button class="action-btn" onclick="openSidebar('wishlist')">
+      <div class="icon">♡<span class="badge" id="wishlistBadge">0</span></div> Wishlist
+    </button>
+    <button class="action-btn" onclick="openSidebar('cart')">
+      <div class="icon">🛒<span class="badge" id="cartBadge">0</span></div> Cart
+    </button>
+  </div>
 </header>
 
-<!-- ====== CATEGORY FILTER BAR ====== -->
-<div class="category-bar" id="categoryBar"></div>
+<!-- ================= NAVIGATION BAR (Categories) ================= -->
+<!-- এখানে Today's Deals, New Releases সরিয়ে ক্যাটাগরি যোগ করা হয়েছে -->
+<nav class="nav-bar" id="navBar">
+  <!-- লিংকগুলো জাভাস্ক্রিপ্ট দিয়ে জেনারেট হবে -->
+</nav>
 
-<!-- ====== BOOK GRID ====== -->
-<div class="book-grid" id="bookGrid">
-  <div class="empty-msg" id="emptyMsg">No books found in this category.</div>
+<!-- ================= MAIN CONTENT ================= -->
+<div class="main-container">
+  <div class="book-grid" id="bookGrid"></div>
 </div>
 
-<!-- ====== BOOK DETAILS MODAL ====== -->
+<!-- ================= SIDEBARS (Cart & Wishlist) ================= -->
+<div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebars()"></div>
+
+<!-- Cart Sidebar -->
+<div class="sidebar" id="cartSidebar">
+  <div class="sidebar-header">
+    <h2>Your Cart</h2>
+    <button class="sidebar-close" onclick="closeSidebars()">×</button>
+  </div>
+  <div class="sidebar-content" id="cartContent">
+    <!-- Cart items rendered via JS -->
+  </div>
+  <div class="sidebar-footer" id="cartFooter">
+    <div class="cart-total">Total: <span id="cartTotalPrice">₹ 0</span></div>
+    <button class="checkout-btn" onclick="checkout()">Proceed to Checkout</button>
+  </div>
+</div>
+
+<!-- Wishlist Sidebar -->
+<div class="sidebar" id="wishlistSidebar">
+  <div class="sidebar-header">
+    <h2>Your Wishlist</h2>
+    <button class="sidebar-close" onclick="closeSidebars()">×</button>
+  </div>
+  <div class="sidebar-content" id="wishlistContent">
+    <!-- Wishlist items rendered via JS -->
+  </div>
+</div>
+
+<!-- ================= BOOK DETAILS MODAL ================= -->
 <div class="modal-overlay" id="detailsModal">
   <div class="modal-box details-box">
     <button class="modal-close" onclick="closeDetails()">×</button>
     <div class="details-top">
       <img class="details-cover" id="dCover" src="" alt="Book Cover">
       <div class="details-info">
-        <span class="details-cat" id="dCat"></span>
         <div class="details-title" id="dTitle"></div>
-        <div class="details-price" id="dPrice"></div>
         <div class="details-meta" id="dMeta"></div>
-        <div class="details-desc-title">Description</div>
         <div class="details-desc" id="dDesc"></div>
-        <button class="details-buy-btn" onclick="proceedToPayment()">💳 Proceed to Payment</button>
+        
+        <div class="details-actions">
+          <button class="btn-add-cart" style="padding:12px 20px; font-size:1rem; flex:1;" onclick="addToCartFromDetails()">Add to Cart</button>
+          <button class="btn-view" style="padding:12px; font-size:1rem; flex:2;" onclick="proceedToPaymentSingle()">💳 Buy Now</button>
+        </div>
       </div>
     </div>
   </div>
 </div>
 
-<!-- ====== PAYMENT MODAL (QR ONLY + NAME VERIFY) ====== -->
-<div class="modal-overlay" id="modal">
+<!-- ================= PAYMENT MODAL ================= -->
+<div class="modal-overlay" id="paymentModal">
   <div class="modal-box">
-    <button class="modal-close" onclick="closeModal()">×</button>
+    <button class="modal-close" onclick="closePayment()">×</button>
     <h2>Complete Payment</h2>
     <div class="modal-book-name" id="modalBookName"></div>
 
     <img class="qr-img" src="qr.png" alt="UPI QR Code">
-    <p class="pay-note">Scan the QR with any UPI app (<b>GPay, PhonePe, Paytm, BHIM</b>) to pay</p>
+    <p style="font-size:.85rem; color:#64748b; margin-bottom:14px;">Scan with any UPI app — <b>GPay, PhonePe, Paytm, BHIM</b></p>
 
-    <!-- NAME VERIFY BOX -->
     <div class="verify-box">
       <div class="v-title">⚠️ IMPORTANT — Verify the Payee Name</div>
       <div class="v-text">Before confirming, make sure the name shown in your UPI app matches:</div>
@@ -216,222 +343,308 @@
     </div>
 
     <div class="pay-steps">
-      1. Scan the QR & verify the name <b>Harun Al Rasid</b><br>
+      1. Scan the QR &amp; verify the name <b>Harun Al Rasid</b><br>
       2. Complete the payment in your UPI app<br>
       3. Tick the box below and click <b>"Payment Successful"</b><br>
       4. Send the request on WhatsApp — you'll get the download link
     </div>
 
-    <!-- CONFIRM CHECKBOX -->
     <label class="confirm-row">
       <input type="checkbox" id="nameConfirm" onchange="toggleSuccessBtn()">
-      <span>I confirm that the payee name shown in my UPI app is <b>Harun Al Rasid</b> and I have completed the payment.</span>
+      <span>I confirm that the payee name in my UPI app is <b>Harun Al Rasid</b> and I have completed the payment.</span>
     </label>
 
     <button class="success-btn" id="successBtn" onclick="onPaymentSuccess()" disabled>✅ Payment Successful</button>
   </div>
 </div>
 
-<footer class="ebook-footer">© 2025 E-Book Store — All Rights Reserved</footer>
+<footer class="footer">
+  © 2025 <b>Azad E-Book Store</b> — All Rights Reserved
+</footer>
 
 <script>
 /* =====================================================
-   1) CATEGORY LIST
+   1) DATA & CONFIG
 ===================================================== */
+// এখানে ক্যাটাগরি লিস্ট ডিফাইন করা হলো
 const categories = ["All", "Programming", "Design", "Business", "Marketing", "Self-Help"];
+const WHATSAPP_NUMBER = "91XXXXXXXXXX"; // <-- আপনার WhatsApp নম্বর
+const PAYEE_NAME = "Harun Al Rasid";
 
-/* =====================================================
-   2) BOOK DATA
-===================================================== */
 const books = [
   {
-    name: "JavaScript Mastery",
-    price: "₹ 299",
-    category: "Programming",
-    cover: "https://via.placeholder.com/300x400?text=JavaScript+Mastery",
-    author: "John Doe",
-    pages: "240",
-    language: "English",
-    format: "PDF",
-    description: "This e-book takes you from beginner to advanced JavaScript. Learn ES6+, async programming, DOM manipulation, closures, and real-world project patterns. Perfect for web developers who want to build modern, powerful web applications."
+    id: 1, name: "JavaScript Mastery", price: 299, oldPrice: 399, discount: "25% OFF",
+    category: "Programming", cover: "https://via.placeholder.com/300x400?text=JavaScript+Mastery",
+    author: "John Doe", pages: "240", language: "English", format: "PDF",
+    description: "This e-book takes you from beginner to advanced JavaScript."
   },
   {
-    name: "Python for Beginners",
-    price: "₹ 249",
-    category: "Programming",
-    cover: "https://via.placeholder.com/300x400?text=Python+Beginners",
-    author: "Jane Smith",
-    pages: "180",
-    language: "English",
-    format: "PDF",
-    description: "A complete beginner-friendly guide to Python programming. Covering variables, loops, functions, OOP, and file handling with hands-on examples. Ideal for students and self-learners starting their coding journey."
+    id: 2, name: "Python for Beginners", price: 249, oldPrice: 299, discount: "15% OFF",
+    category: "Programming", cover: "https://via.placeholder.com/300x400?text=Python+Beginners",
+    author: "Jane Smith", pages: "180", language: "English", format: "PDF",
+    description: "A complete beginner-friendly guide to Python programming."
   },
   {
-    name: "UI/UX Design Guide",
-    price: "₹ 349",
-    category: "Design",
+    id: 3, name: "UI/UX Design Guide", price: 349, category: "Design",
     cover: "https://via.placeholder.com/300x400?text=UI+UX+Design",
-    author: "Alex Kumar",
-    pages: "210",
-    language: "English",
-    format: "PDF",
-    description: "Master the principles of modern UI/UX design. Learn wireframing, prototyping, color theory, typography, and user research. Packed with real case studies and design tools walkthroughs."
+    author: "Alex Kumar", pages: "210", language: "English", format: "PDF",
+    description: "Master the principles of modern UI/UX design."
   },
   {
-    name: "Graphic Design Basics",
-    price: "₹ 199",
-    category: "Design",
+    id: 4, name: "Graphic Design Basics", price: 199, category: "Design",
     cover: "https://via.placeholder.com/300x400?text=Graphic+Design",
-    author: "Priya Sharma",
-    pages: "160",
-    language: "English",
-    format: "PDF",
-    description: "An easy-to-follow introduction to graphic design. Learn about layout, composition, branding, and Adobe tools. Perfect for aspiring designers and content creators."
+    author: "Priya Sharma", pages: "160", language: "English", format: "PDF",
+    description: "An easy-to-follow introduction to graphic design."
   },
   {
-    name: "Startup Playbook",
-    price: "₹ 399",
-    category: "Business",
-    cover: "https://via.placeholder.com/300x400?text=Startup+Playbook",
-    author: "Rahul Mehta",
-    pages: "300",
-    language: "English",
-    format: "PDF",
-    description: "A practical guide to launching and scaling your startup. Learn about idea validation, MVP building, fundraising, team building, and growth marketing from real founder experiences."
+    id: 5, name: "Startup Playbook", price: 399, oldPrice: 499, discount: "20% OFF",
+    category: "Business", cover: "https://via.placeholder.com/300x400?text=Startup+Playbook",
+    author: "Rahul Mehta", pages: "300", language: "English", format: "PDF",
+    description: "A practical guide to launching and scaling your startup."
   },
   {
-    name: "Digital Marketing 101",
-    price: "₹ 279",
-    category: "Marketing",
+    id: 6, name: "Digital Marketing 101", price: 279, category: "Marketing",
     cover: "https://via.placeholder.com/300x400?text=Digital+Marketing",
-    author: "Neha Verma",
-    pages: "220",
-    language: "English",
-    format: "PDF",
-    description: "Understand the fundamentals of digital marketing — SEO, social media, email marketing, Google Ads, and content strategy. A step-by-step guide for beginners and small business owners."
+    author: "Neha Verma", pages: "220", language: "English", format: "PDF",
+    description: "Understand the fundamentals of digital marketing."
   },
   {
-    name: "SEO Secrets",
-    price: "₹ 229",
-    category: "Marketing",
+    id: 7, name: "SEO Secrets", price: 229, category: "Marketing",
     cover: "https://via.placeholder.com/300x400?text=SEO+Secrets",
-    author: "Arjun Patel",
-    pages: "190",
-    language: "English",
-    format: "PDF",
-    description: "Learn proven SEO strategies to rank higher on Google. Covers on-page SEO, backlinks, keyword research, technical SEO, and content optimization techniques."
+    author: "Arjun Patel", pages: "190", language: "English", format: "PDF",
+    description: "Learn proven SEO strategies to rank higher on Google."
   },
   {
-    name: "Atomic Habits Summary",
-    price: "₹ 149",
-    category: "Self-Help",
+    id: 8, name: "Atomic Habits Summary", price: 149, category: "Self-Help",
     cover: "https://via.placeholder.com/300x400?text=Atomic+Habits",
-    author: "James Clear",
-    pages: "120",
-    language: "English",
-    format: "PDF",
-    description: "A concise summary of the best-selling book Atomic Habits. Learn how tiny changes create remarkable results with practical habit-building strategies."
-  },
-  {
-    name: "Mindset Mastery",
-    price: "₹ 189",
-    category: "Self-Help",
-    cover: "https://via.placeholder.com/300x400?text=Mindset+Mastery",
-    author: "Sara Ali",
-    pages: "150",
-    language: "English",
-    format: "PDF",
-    description: "Transform your thinking and build a growth mindset. This e-book teaches how to overcome limiting beliefs, build confidence, and develop daily success habits."
-  },
-  {
-    name: "Advanced JavaScript",
-    price: "₹ 329",
-    category: "Programming",
-    cover: "https://via.placeholder.com/300x400?text=Advanced+JS",
-    author: "John Doe",
-    pages: "280",
-    language: "English",
-    format: "PDF",
-    description: "Go deeper into advanced JavaScript concepts like closures, prototypes, event loop, async/await, and performance optimization. For developers ready to level up."
+    author: "James Clear", pages: "120", language: "English", format: "PDF",
+    description: "A concise summary of the best-selling book Atomic Habits."
   }
 ];
 
 /* =====================================================
-   3) CONFIG
+   2) STATE MANAGEMENT
 ===================================================== */
-const WHATSAPP_NUMBER = "91XXXXXXXXXX";        // <-- your WhatsApp number
-const PAYEE_NAME = "Harun Al Rasid";           // payee name to verify
-
-/* =====================================================
-   RENDER CATEGORY BAR
-===================================================== */
-const categoryBar = document.getElementById("categoryBar");
 let activeCategory = "All";
-
-categories.forEach(cat => {
-  const btn = document.createElement("button");
-  btn.className = "cat-btn" + (cat === "All" ? " active" : "");
-  btn.textContent = cat;
-  btn.onclick = () => {
-    activeCategory = cat;
-    document.querySelectorAll(".cat-btn").forEach(b => b.classList.remove("active"));
-    btn.classList.add("active");
-    renderBooks();
-  };
-  categoryBar.appendChild(btn);
-});
+let cart = [];
+let wishlist = [];
+let currentBook = null;
+let checkoutMode = 'single'; // 'single' or 'cart'
 
 /* =====================================================
-   RENDER BOOK GRID
+   3) RENDER UI FUNCTIONS
 ===================================================== */
+const navBar = document.getElementById("navBar");
 const grid = document.getElementById("bookGrid");
-const emptyMsg = document.getElementById("emptyMsg");
 
+// Render Categories in Nav Bar
+function renderCategories() {
+  navBar.innerHTML = "";
+  categories.forEach(cat => {
+    const link = document.createElement("a");
+    link.textContent = cat;
+    if (cat === activeCategory) link.classList.add("active");
+    
+    link.onclick = (e) => {
+      e.preventDefault();
+      activeCategory = cat;
+      renderCategories(); // Update active class
+      renderBooks();      // Filter books
+    };
+    navBar.appendChild(link);
+  });
+}
+
+// Render Books
 function renderBooks() {
-  grid.querySelectorAll(".book-card").forEach(c => c.remove());
+  grid.innerHTML = ""; 
+  const filtered = activeCategory === "All" ? books : books.filter(b => b.category === activeCategory);
 
-  const filtered = activeCategory === "All"
-    ? books
-    : books.filter(b => b.category === activeCategory);
+  if(filtered.length === 0) {
+    grid.innerHTML = `<div style="grid-column:1/-1; text-align:center; padding:40px; color:#94a3b8;">No books found in this category.</div>`;
+    return;
+  }
 
-  emptyMsg.style.display = filtered.length === 0 ? "block" : "none";
-
-  filtered.forEach((book) => {
-    const originalIndex = books.indexOf(book);
+  filtered.forEach(book => {
+    const isWishlisted = wishlist.includes(book.id);
+    const discountHtml = book.discount ? `<span class="discount-badge">${book.discount}</span>` : '';
+    
     const card = document.createElement("div");
     card.className = "book-card";
     card.innerHTML = `
-      <img class="book-cover" src="${book.cover}" alt="${book.name}"
-           onerror="this.src='https://via.placeholder.com/300x400?text=No+Cover'">
+      <div class="book-cover-wrap">
+        ${discountHtml}
+        <div class="wishlist-icon ${isWishlisted ? 'active' : ''}" onclick="toggleWishlist(${book.id}, event)">
+          ${isWishlisted ? '♥' : '♡'}
+        </div>
+        <img class="book-cover" src="${book.cover}" alt="${book.name}">
+      </div>
       <div class="book-info">
-        <span class="book-cat-tag">${book.category}</span>
-        <div class="book-title">${book.name}</div>
-        <div class="book-price">${book.price}</div>
-        <button class="buy-btn" onclick="openDetails(${originalIndex})">🛒 Buy Now</button>
-      </div>`;
+        <div class="book-title" onclick="openDetails(${book.id})">${book.name}</div>
+        <div class="book-author">${book.author}</div>
+        <div class="book-type">eBook</div>
+        <div class="price-row">
+          <span class="book-price">₹ ${book.price}</span>
+          ${book.oldPrice ? `<span class="book-old-price">₹ ${book.oldPrice}</span>` : ''}
+        </div>
+        <div class="card-btns">
+          <button class="btn-view" onclick="openDetails(${book.id})">View</button>
+          <button class="btn-add-cart" onclick="addToCart(${book.id}, event)">🛒</button>
+        </div>
+      </div>
+    `;
     grid.appendChild(card);
   });
 }
 
-renderBooks();
+// Update Badges
+function updateBadges() {
+  document.getElementById("cartBadge").textContent = cart.length;
+  document.getElementById("wishlistBadge").textContent = wishlist.length;
+}
+
+// Render Cart Sidebar
+function renderCart() {
+  const cartContent = document.getElementById("cartContent");
+  const cartFooter = document.getElementById("cartFooter");
+  const totalPriceEl = document.getElementById("cartTotalPrice");
+
+  if (cart.length === 0) {
+    cartContent.innerHTML = `<div class="empty-state"><span>🛒</span>Your cart is empty.</div>`;
+    cartFooter.style.display = "none";
+    return;
+  }
+
+  cartFooter.style.display = "block";
+  let total = 0;
+  cartContent.innerHTML = "";
+
+  cart.forEach(item => {
+    total += item.price;
+    const div = document.createElement("div");
+    div.className = "cart-item";
+    div.innerHTML = `
+      <img src="${item.cover}" alt="${item.name}">
+      <div class="cart-item-info">
+        <div class="cart-item-title">${item.name}</div>
+        <div class="cart-item-price">₹ ${item.price}</div>
+        <button class="cart-item-remove" onclick="removeFromCart(${item.id})">Remove</button>
+      </div>
+    `;
+    cartContent.appendChild(div);
+  });
+
+  totalPriceEl.textContent = `₹ ${total}`;
+}
+
+// Render Wishlist Sidebar
+function renderWishlist() {
+  const wlContent = document.getElementById("wishlistContent");
+  
+  if (wishlist.length === 0) {
+    wlContent.innerHTML = `<div class="empty-state"><span>♡</span>Your wishlist is empty.</div>`;
+    return;
+  }
+
+  wlContent.innerHTML = "";
+  wishlist.forEach(id => {
+    const book = books.find(b => b.id === id);
+    if(!book) return;
+    
+    const div = document.createElement("div");
+    div.className = "cart-item";
+    div.innerHTML = `
+      <img src="${book.cover}" alt="${book.name}">
+      <div class="cart-item-info">
+        <div class="cart-item-title">${book.name}</div>
+        <div class="cart-item-price">₹ ${book.price}</div>
+        <button class="cart-item-remove" style="color:#ea580c;" onclick="addToCartFromWishlist(${book.id})">Move to Cart</button>
+      </div>
+    `;
+    wlContent.appendChild(div);
+  });
+}
 
 /* =====================================================
-   DETAILS MODAL
+   4) CART & WISHLIST LOGIC
 ===================================================== */
-let currentBook = null;
+function addToCart(id, event) {
+  if(event) event.stopPropagation();
+  const book = books.find(b => b.id === id);
+  if(!book) return;
+  
+  if(cart.some(item => item.id === id)) {
+    alert("This book is already in your cart!");
+    return;
+  }
+  
+  cart.push(book);
+  updateBadges();
+  renderCart();
+  
+  document.getElementById("cartBadge").style.transform = "scale(1.3)";
+  setTimeout(() => document.getElementById("cartBadge").style.transform = "scale(1)", 200);
+}
 
-function openDetails(index) {
-  currentBook = books[index];
+function removeFromCart(id) {
+  cart = cart.filter(item => item.id !== id);
+  updateBadges();
+  renderCart();
+}
+
+function toggleWishlist(id, event) {
+  if(event) event.stopPropagation();
+  const index = wishlist.indexOf(id);
+  
+  if (index > -1) {
+    wishlist.splice(index, 1);
+  } else {
+    wishlist.push(id);
+  }
+  
+  updateBadges();
+  renderWishlist();
+  renderBooks();
+}
+
+function addToCartFromWishlist(id) {
+  addToCart(id);
+  toggleWishlist(id); 
+}
+
+/* =====================================================
+   5) SIDEBAR CONTROLS
+===================================================== */
+function openSidebar(type) {
+  document.getElementById("sidebarOverlay").classList.add("active");
+  if(type === 'cart') {
+    renderCart();
+    document.getElementById("cartSidebar").classList.add("active");
+  } else {
+    renderWishlist();
+    document.getElementById("wishlistSidebar").classList.add("active");
+  }
+}
+
+function closeSidebars() {
+  document.getElementById("sidebarOverlay").classList.remove("active");
+  document.getElementById("cartSidebar").classList.remove("active");
+  document.getElementById("wishlistSidebar").classList.remove("active");
+}
+
+/* =====================================================
+   6) DETAILS & PAYMENT MODALS
+===================================================== */
+function openDetails(id) {
+  currentBook = books.find(b => b.id === id);
   document.getElementById("dCover").src = currentBook.cover;
-  document.getElementById("dCat").textContent = currentBook.category;
   document.getElementById("dTitle").textContent = currentBook.name;
-  document.getElementById("dPrice").textContent = currentBook.price;
-  document.getElementById("dDesc").textContent = currentBook.description || "No description available.";
+  document.getElementById("dDesc").textContent = currentBook.description;
   document.getElementById("dMeta").innerHTML = `
-    <span><b>Author:</b> ${currentBook.author || "—"}</span>
-    <span><b>Pages:</b> ${currentBook.pages || "—"}</span>
-    <span><b>Language:</b> ${currentBook.language || "—"}</span>
-    <span><b>Format:</b> ${currentBook.format || "—"}</span>
+    <span><b>Author:</b> ${currentBook.author}</span>
+    <span><b>Pages:</b> ${currentBook.pages}</span>
+    <span><b>Format:</b> ${currentBook.format}</span>
+    <span><b>Price:</b> <span style="color:#ea580c; font-weight:700;">₹ ${currentBook.price}</span></span>
   `;
   document.getElementById("detailsModal").classList.add("active");
 }
@@ -440,47 +653,70 @@ function closeDetails() {
   document.getElementById("detailsModal").classList.remove("active");
 }
 
-function proceedToPayment() {
-  document.getElementById("modalBookName").textContent =
-    currentBook.name + " — " + currentBook.price;
+function addToCartFromDetails() {
+  addToCart(currentBook.id);
+  closeDetails();
+  openSidebar('cart');
+}
 
-  // reset the checkbox + disable success button every time
+function proceedToPaymentSingle() {
+  checkoutMode = 'single';
+  document.getElementById("modalBookName").textContent = currentBook.name + " — ₹ " + currentBook.price;
+  showPaymentModal();
+}
+
+function checkout() {
+  if(cart.length === 0) return;
+  checkoutMode = 'cart';
+  let total = cart.reduce((sum, item) => sum + item.price, 0);
+  document.getElementById("modalBookName").textContent = `Cart Checkout (${cart.length} items) — ₹ ${total}`;
+  closeSidebars();
+  showPaymentModal();
+}
+
+function showPaymentModal() {
   document.getElementById("nameConfirm").checked = false;
   document.getElementById("successBtn").disabled = true;
-
-  closeDetails();
-  document.getElementById("modal").classList.add("active");
+  document.getElementById("paymentModal").classList.add("active");
 }
 
-/* =====================================================
-   PAYMENT MODAL
-===================================================== */
-function closeModal() {
-  document.getElementById("modal").classList.remove("active");
+function closePayment() {
+  document.getElementById("paymentModal").classList.remove("active");
 }
 
-/* Enable "Payment Successful" only after user ticks the checkbox */
 function toggleSuccessBtn() {
-  document.getElementById("successBtn").disabled =
-    !document.getElementById("nameConfirm").checked;
+  document.getElementById("successBtn").disabled = !document.getElementById("nameConfirm").checked;
 }
 
 function onPaymentSuccess() {
-  const msg = encodeURIComponent(
-    `Hello,\nI have completed the payment.\n\nBook: ${currentBook.name}\nPrice: ${currentBook.price}\n\nI verified the payee name: ${PAYEE_NAME}\n\nPlease send me the download link.`
-  );
-  const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${msg}`;
+  let message = "";
+  
+  if(checkoutMode === 'single') {
+    message = `Hello,\nI have completed the payment.\n\nBook: ${currentBook.name}\nPrice: ₹ ${currentBook.price}\n\nI verified the payee name: ${PAYEE_NAME}\n\nPlease send me the download link.`;
+  } else {
+    let total = cart.reduce((sum, item) => sum + item.price, 0);
+    let bookList = cart.map((item, index) => `${index + 1}. ${item.name} (₹ ${item.price})`).join('\n');
+    message = `Hello,\nI have completed the payment for my cart.\n\nBooks:\n${bookList}\n\nTotal: ₹ ${total}\n\nI verified the payee name: ${PAYEE_NAME}\n\nPlease send me the download links.`;
+  }
+  
+  const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
   window.open(url, "_blank");
-  closeModal();
+  
+  if(checkoutMode === 'cart') {
+    cart = [];
+    updateBadges();
+    renderCart();
+  }
+  
+  closePayment();
 }
 
-/* Close modals on outside click */
-document.getElementById("detailsModal").addEventListener("click", (e) => {
-  if (e.target.id === "detailsModal") closeDetails();
-});
-document.getElementById("modal").addEventListener("click", (e) => {
-  if (e.target.id === "modal") closeModal();
-});
+/* =====================================================
+   INIT
+===================================================== */
+renderCategories();
+renderBooks();
+updateBadges();
 </script>
 </body>
 </html>

@@ -406,9 +406,7 @@
 
 <!-- ================= MAIN CONTENT ================= -->
 <div class="main-container">
-  <div class="book-grid" id="bookGrid">
-    <!-- Books load here -->
-  </div>
+  <div class="book-grid" id="bookGrid"></div>
 </div>
 
 <!-- ================= SIDEBARS ================= -->
@@ -493,7 +491,7 @@
   </div>
 </div>
 
-<!-- ================= ADMIN PANEL MODAL (with Login) ================= -->
+<!-- ================= ADMIN PANEL MODAL ================= -->
 <div class="modal-overlay" id="adminModal">
   <div class="modal-box admin-box">
     <button class="modal-close" onclick="closeAdminPanel()">×</button>
@@ -606,8 +604,8 @@
   const UPI_ID = "BHARATPE.9K0K0G1X4A535991@unitype"; 
   const UPI_NAME = "Harun Al Rasid";
 
-  // ✨ অ্যাডমিন পাসওয়ার্ড (SHA-256 Hash of 'azad2025')
-  const ADMIN_PASSWORD_HASH = "bf715cc2ed77a3288017ca4021a096cbd23948a5906f92c4a8bba9f63b2b05be";
+  // ✨ অ্যাডমিন পাসওয়ার্ড (সরাসরি প্লেইন টেক্সট - মনে রাখা সহজ)
+  const ADMIN_PASSWORD = "azad2025";
 
   const categoriesData = [
     { name: "১. AI ও আধুনিক প্রযুক্তি (AI & Technology)", subs: ["ChatGPT ও AI ব্যবহার", "AI দিয়ে ছবি তৈরি", "AI ভিডিও তৈরি", "AI ভয়েস ও অডিও তৈরি", "AI দিয়ে ইনকাম", "AI অটোমেশন", "AI দিয়ে ডিজিটাল মার্কেটিং", "AI টুলস শেখা"] },
@@ -643,7 +641,6 @@
   ===================================================== */
   window.openAdminLogin = function() {
     document.getElementById("adminModal").classList.add("active");
-    // রিসেট ভিউ
     document.getElementById("adminLoginSection").style.display = "block";
     document.getElementById("adminDashboardSection").style.display = "none";
     document.getElementById("adminPasswordInput").value = "";
@@ -654,16 +651,7 @@
     document.getElementById("adminModal").classList.remove("active");
   };
 
-  // SHA-256 Hash Function
-  async function sha256(text) {
-    const encoder = new TextEncoder();
-    const data = encoder.encode(text);
-    const hashBuffer = await crypto.subtle.digest('SHA-256', data);
-    const hashArray = Array.from(new Uint8Array(hashBuffer));
-    return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
-  }
-
-  window.verifyAdminPassword = async function() {
+  window.verifyAdminPassword = function() {
     const input = document.getElementById("adminPasswordInput").value;
     const alertEl = document.getElementById("loginAlert");
     
@@ -673,16 +661,13 @@
       return;
     }
 
-    const hashedInput = await sha256(input);
-
-    if(hashedInput === ADMIN_PASSWORD_HASH) {
-      // সফল লগইন
+    // সরাসরি পাসওয়ার্ড ম্যাচ করা হচ্ছে
+    if(input === ADMIN_PASSWORD) {
       document.getElementById("adminLoginSection").style.display = "none";
       document.getElementById("adminDashboardSection").style.display = "block";
       populateAdminDropdowns();
       renderAdminBookList();
     } else {
-      // ব্যর্থ
       alertEl.textContent = "❌ Incorrect password. Try again.";
       alertEl.style.display = "block";
       document.getElementById("adminPasswordInput").value = "";

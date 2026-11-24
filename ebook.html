@@ -25,7 +25,7 @@
   .logo-area { display:flex; align-items:center; gap:8px; font-size:1.4rem; font-weight:800; color:#1e293b; text-decoration:none; }
   .logo-area span { color:#ea580c; }
 
-  /* ✨ নতুন ক্যাটাগরি বাটন (লোগোর পাশে) */
+  /* ক্যাটাগরি ড্রপডাউন */
   .cat-dropdown-wrapper { position:relative; }
   .cat-dropdown-btn {
     display:flex; align-items:center; gap:6px;
@@ -35,7 +35,6 @@
   }
   .cat-dropdown-btn:hover { background:#c2410c; }
   
-  /* Category Dropdown List */
   .cat-dropdown-list {
     position:absolute; top:calc(100% + 8px); left:0;
     width:300px; max-height:450px; overflow-y:auto;
@@ -54,7 +53,6 @@
   .cat-item > a:hover { background:#f8fafc; color:#ea580c; }
   .cat-item > a .arrow { font-size:.7rem; transform:rotate(-90deg); transition:transform .2s; color:#94a3b8; }
   
-  /* Sub-category Hover Menu */
   .sub-cat-list {
     display:none; position:absolute; left:100%; top:0;
     width:250px; background:#fff; border-radius:8px; box-shadow:0 10px 25px rgba(0,0,0,0.1);
@@ -108,7 +106,6 @@
     .cat-dropdown-btn { padding:6px 10px; font-size:.75rem; }
   }
 
-  /* ডেস্কটপ ভিউতে ড্রপডাউনটি ৩ কলামে সাজানো */
   @media (min-width: 992px) {
     .cat-dropdown-list.active {
       display:grid; grid-template-columns:repeat(3, 1fr);
@@ -327,14 +324,56 @@
     opacity: 0; pointer-events: none; transition: all .3s; z-index: 3000;
   }
   .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+  /* ================= ADMIN PANEL STYLES ================= */
+  .admin-box { max-width: 500px; text-align:left; }
+  .admin-form-group { margin-bottom:12px; }
+  .admin-form-group label { display:block; font-size:.8rem; font-weight:600; color:#334155; margin-bottom:4px; }
+  .admin-form-group input, .admin-form-group select, .admin-form-group textarea {
+    width:100%; padding:8px 12px; border:1px solid #cbd5e1; border-radius:6px;
+    font-size:.85rem; outline:none; font-family:inherit;
+  }
+  .admin-form-group input:focus, .admin-form-group select:focus, .admin-form-group textarea:focus {
+    border-color:#ea580c;
+  }
+  .admin-form-group textarea { min-height:60px; resize:vertical; }
+  .admin-submit-btn {
+    width:100%; background:#ea580c; color:#fff; border:none;
+    padding:10px; border-radius:6px; font-size:.9rem; font-weight:700;
+    cursor:pointer; transition:background .2s; margin-top:6px;
+  }
+  .admin-submit-btn:hover { background:#c2410c; }
+  .admin-submit-btn:disabled { background:#94a3b8; cursor:wait; }
+  .admin-tabs { display:flex; gap:8px; margin-bottom:16px; border-bottom:1px solid #e2e8f0; padding-bottom:8px; }
+  .admin-tab { background:none; border:none; font-size:.9rem; font-weight:600; color:#64748b; cursor:pointer; padding:4px 8px; }
+  .admin-tab.active { color:#ea580c; border-bottom:2px solid #ea580c; }
+  .admin-list { max-height:350px; overflow-y:auto; }
+  .admin-item { display:flex; justify-content:space-between; align-items:center; padding:10px; border:1px solid #e2e8f0; border-radius:6px; margin-bottom:8px; gap:10px; }
+  .admin-item img { width:40px; height:56px; object-fit:cover; border-radius:4px; }
+  .admin-item-info { flex:1; min-width:0; }
+  .admin-item-info h5 { font-size:.85rem; font-weight:600; margin-bottom:2px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .admin-item-info p { font-size:.75rem; color:#ea580c; font-weight:700; }
+  .admin-delete-btn { background:#fee2e2; color:#dc2626; border:none; padding:6px 10px; border-radius:4px; font-size:.75rem; cursor:pointer; font-weight:700; transition:background .2s; }
+  .admin-delete-btn:hover { background:#ef4444; color:#fff; }
+
+  /* ✨ Admin Login Styles */
+  .login-input {
+    width:100%; padding:12px; border:1.5px solid #cbd5e1; border-radius:8px;
+    font-size:1rem; text-align:center; margin-bottom:12px; outline:none;
+    letter-spacing:2px; font-family:'Poppins',sans-serif;
+  }
+  .login-input:focus { border-color:#ea580c; box-shadow:0 0 0 3px rgba(234,88,12,.1); }
+  .login-alert {
+    display:none; background:#fee2e2; color:#dc2626; font-size:.8rem;
+    padding:8px; border-radius:6px; text-align:center; margin-bottom:12px;
+    font-weight:600;
+  }
 </style>
 </head>
 <body>
 
 <!-- ================= TOP HEADER ================= -->
 <header class="top-header">
-  
-  <!-- লোগোর পাশে ক্যাটাগরি ড্রপডাউন -->
   <div class="header-left">
     <a href="#" class="logo-area">Azad<span>E-Book</span></a>
     
@@ -342,9 +381,7 @@
       <button class="cat-dropdown-btn" id="catDropdownBtn">
         ☰ All Categories <span style="font-size:.8rem;">▼</span>
       </button>
-      <div class="cat-dropdown-list" id="catDropdownList">
-        <!-- Categories loaded via JS -->
-      </div>
+      <div class="cat-dropdown-list" id="catDropdownList"></div>
     </div>
   </div>
   
@@ -354,6 +391,10 @@
   </div>
 
   <div class="header-actions">
+    <!-- Admin Panel Button -->
+    <button class="action-btn" onclick="openAdminLogin()" style="color:#ea580c; border:1px solid #ea580c; padding:6px 10px;">
+      🔐 Admin
+    </button>
     <button class="action-btn" onclick="openSidebar('wishlist')">
       <div class="icon">♡<span class="badge" id="wishlistBadge">0</span></div> <span>Wishlist</span>
     </button>
@@ -365,7 +406,9 @@
 
 <!-- ================= MAIN CONTENT ================= -->
 <div class="main-container">
-  <div class="book-grid" id="bookGrid"></div>
+  <div class="book-grid" id="bookGrid">
+    <!-- Books load here -->
+  </div>
 </div>
 
 <!-- ================= SIDEBARS ================= -->
@@ -450,637 +493,654 @@
   </div>
 </div>
 
-<div class="toast" id="toast">Link Copied!</div>
+<!-- ================= ADMIN PANEL MODAL (with Login) ================= -->
+<div class="modal-overlay" id="adminModal">
+  <div class="modal-box admin-box">
+    <button class="modal-close" onclick="closeAdminPanel()">×</button>
+    
+    <!-- Login Section -->
+    <div id="adminLoginSection" style="text-align:center;">
+      <h2 style="margin-bottom:6px;">🔐 Admin Login</h2>
+      <p style="font-size:.8rem; color:#64748b; margin-bottom:16px;">Enter password to access admin panel</p>
+      
+      <input type="password" id="adminPasswordInput" class="login-input" placeholder="••••••••" onkeydown="if(event.key==='Enter') verifyAdminPassword()">
+      <div class="login-alert" id="loginAlert">❌ Wrong password!</div>
+      
+      <button class="admin-submit-btn" onclick="verifyAdminPassword()">Login</button>
+    </div>
+
+    <!-- Admin Dashboard Section (Hidden initially) -->
+    <div id="adminDashboardSection" style="display:none;">
+      <h2 style="text-align:center; margin-bottom:16px;">🔐 Admin Panel</h2>
+      
+      <div class="admin-tabs">
+        <button class="admin-tab active" onclick="switchAdminTab('add')">➕ Add Book</button>
+        <button class="admin-tab" onclick="switchAdminTab('manage')">📋 Manage Books</button>
+      </div>
+
+      <!-- Add Book Tab -->
+      <div id="adminAddTab">
+        <div class="admin-form-group">
+          <label>Book Cover Image URL *</label>
+          <input type="url" id="addCover" placeholder="https://example.com/image.jpg">
+        </div>
+        <div class="admin-form-group">
+          <label>Book Name *</label>
+          <input type="text" id="addName" placeholder="e.g. ChatGPT Mastery">
+        </div>
+        <div class="admin-form-group">
+          <label>Author</label>
+          <input type="text" id="addAuthor" placeholder="e.g. Azad" value="Azad">
+        </div>
+        <div class="admin-form-group">
+          <label>Description</label>
+          <textarea id="addDesc" placeholder="Short description of the book..."></textarea>
+        </div>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
+          <div class="admin-form-group">
+            <label>Price (₹) *</label>
+            <input type="number" id="addPrice" placeholder="199" min="0">
+          </div>
+          <div class="admin-form-group">
+            <label>Old Price (₹)</label>
+            <input type="number" id="addOldPrice" placeholder="299" min="0">
+          </div>
+        </div>
+        <div class="admin-form-group">
+          <label>Category *</label>
+          <select id="addCategory"></select>
+        </div>
+        <div class="admin-form-group">
+          <label>Sub-Category *</label>
+          <select id="addSubCategory"></select>
+        </div>
+        <div class="admin-form-group">
+          <label>Discount Tag (Optional)</label>
+          <input type="text" id="addDiscount" placeholder="e.g. 20% OFF">
+        </div>
+        <button class="admin-submit-btn" id="addBookBtn" onclick="saveBook()">💾 Save Book</button>
+      </div>
+
+      <!-- Manage Books Tab -->
+      <div id="adminManageTab" style="display:none;">
+        <div class="admin-list" id="adminBookList">
+          <!-- Books will load here -->
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast">Success!</div>
 
 <footer class="footer">
   © 2025 <b>Azad E-Book Store</b> — All Rights Reserved
 </footer>
 
-<script>
-/* =====================================================
-   1) CATEGORIES DATA (হুবহু আপনার দেওয়া লিস্ট)
-===================================================== */
-const categoriesData = [
-  {
-    name: "১. AI ও আধুনিক প্রযুক্তি (AI & Technology)",
-    subs: ["ChatGPT ও AI ব্যবহার", "AI দিয়ে ছবি তৈরি", "AI ভিডিও তৈরি", "AI ভয়েস ও অডিও তৈরি", "AI দিয়ে ইনকাম", "AI অটোমেশন", "AI দিয়ে ডিজিটাল মার্কেটিং", "AI টুলস শেখা"]
-  },
-  {
-    name: "২. ফ্রিল্যান্সিং ও অনলাইন ইনকাম",
-    subs: ["ফ্রিল্যান্সিং শেখা", "গ্রাফিক ডিজাইন", "ভিডিও এডিটিং", "ওয়েবসাইট তৈরি", "ডেটা এন্ট্রি", "কনটেন্ট রাইটিং", "অনলাইন ক্লায়েন্ট পাওয়া"]
-  },
-  {
-    name: "৩. মোবাইল ও ইলেকট্রনিক্স রিপেয়ারিং",
-    subs: ["মোবাইল রিপেয়ারিং", "মোবাইল সফটওয়্যার", "কম্পিউটার রিপেয়ারিং", "ল্যাপটপ সার্ভিসিং", "LED TV রিপেয়ারিং", "ইলেকট্রনিক্স সার্কিট"]
-  },
-  {
-    name: "৪. ইলেকট্রিক্যাল ও মেকানিক্যাল কাজ",
-    subs: ["AC ও ফ্রিজ সার্ভিসিং", "ইলেকট্রিক ওয়্যারিং", "প্লাম্বিং", "মোটর রিপেয়ারিং", "জেনারেটর সার্ভিসিং", "সোলার প্যানেল ইনস্টলেশন", "ওয়েল্ডিং"]
-  },
-  {
-    name: "৫. রান্না ও ফুড বিজনেস",
-    subs: ["হোটেল ও রেস্টুরেন্টের রান্না", "বেকারি ও কেক তৈরি", "ফাস্ট ফুড তৈরি", "বিরিয়ানি ও বিভিন্ন খাবার", "মিষ্টি তৈরি", "ফুড বিজনেস শুরু"]
-  },
-  {
-    name: "৬. ড্রাইভিং ও যানবাহন শিক্ষা",
-    subs: ["গাড়ি চালানো শেখা", "মোটরসাইকেল চালানো", "ট্রাফিক নিয়ম ও সড়ক নিরাপত্তা", "গাড়ির মেকানিক্যাল কাজ", "বাইক সার্ভিসিং", "গাড়ির ইঞ্জিন সম্পর্কে শিক্ষা"]
-  },
-  {
-    name: "৭. সেলাই ও ফ্যাশন ডিজাইন",
-    subs: ["টেইলারিং", "মহিলাদের পোশাক তৈরি", "ব্লাউজ ডিজাইন", "এমব্রয়ডারি", "ফ্যাশন ডিজাইন", "বুটিক ব্যবসা"]
-  },
-  {
-    name: "৮. ব্যবসা ও উদ্যোক্তা প্রশিক্ষণ",
-    subs: ["ছোট ব্যবসা শুরু", "অনলাইন ব্যবসা", "দোকান পরিচালনা", "ই-কমার্স", "ব্যবসার হিসাব রাখা", "পাইকারি ও খুচরা ব্যবসা", "ব্যবসার মার্কেটিং"]
-  },
-  {
-    name: "৯. ডিজাইন ও ক্রিয়েটিভ স্কিল",
-    subs: ["গ্রাফিক ডিজাইন", "লোগো ডিজাইন", "পোস্টার ও ব্যানার ডিজাইন", "ফটো এডিটিং", "ভিডিও এডিটিং", "থাম্বনেইল ডিজাইন", "3D ডিজাইন"]
-  },
-  {
-    name: "১০. কৃষি ও পশুপালন",
-    subs: ["আধুনিক কৃষিকাজ", "মাছ চাষ", "হাঁস-মুরগি পালন", "গরু ও ছাগল পালন", "মাশরুম চাষ", "নার্সারি ব্যবসা", "জৈব সার তৈরি"]
-  },
-  {
-    name: "১১. বিউটি ও পার্সোনাল কেয়ার",
-    subs: ["বিউটিশিয়ান কোর্স", "মেকআপ শেখা", "হেয়ার কাটিং", "হেয়ার স্টাইলিং", "মেহেন্দি ডিজাইন", "পার্লার ব্যবসা"]
-  },
-  {
-    name: "১২. ফটোগ্রাফি ও ভিডিওগ্রাফি",
-    subs: ["ফটোগ্রাফি শেখা", "ক্যামেরা পরিচালনা", "মোবাইল ফটোগ্রাফি", "বিয়ের ভিডিওগ্রাফি", "ভিডিও কালার গ্রেডিং", "স্টুডিও পরিচালনা"]
-  },
-  {
-    name: "১৩. কম্পিউটার ও ডিজিটাল স্কিল",
-    subs: ["MS Word ও Excel", "PowerPoint", "বাংলা ও ইংরেজি টাইপিং", "ইন্টারনেট ব্যবহার", "অফিস ম্যানেজমেন্ট", "ওয়েব ডিজাইন ও ডেভেলপমেন্ট"]
-  },
-  {
-    name: "১৪. ডিজিটাল মার্কেটিং ও সোশ্যাল মিডিয়া",
-    subs: ["Facebook Marketing", "YouTube Channel Management", "Instagram Marketing", "SEO", "Google Ads", "সোশ্যাল মিডিয়া থেকে ইনকাম", "কনটেন্ট ক্রিয়েশন"]
-  },
-  {
-    name: "১৫. হাতের কাজ ও কারিগরি শিক্ষা",
-    subs: ["কাঠের কাজ", "ফার্নিচার তৈরি", "রাজমিস্ত্রির কাজ", "টাইলস মিস্ত্রি", "পেইন্টিং", "গৃহসজ্জা ও ইন্টেরিয়র কাজ", "হ্যান্ডমেড পণ্য তৈরি"]
-  },
-  {
-    name: "১৬. ভাষা ও যোগাযোগ দক্ষতা",
-    subs: ["ইংরেজি শেখা", "স্পোকেন ইংলিশ", "হিন্দি ভাষা", "আরবি ভাষা", "পাবলিক স্পিকিং", "ইন্টারভিউ দেওয়ার কৌশল", "কাস্টমার হ্যান্ডলিং"]
+<!-- ================= FIREBASE SDK & LOGIC ================= -->
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import {
+    getFirestore, collection, addDoc, getDocs, deleteDoc, doc,
+    query, orderBy, serverTimestamp
+  } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+  // আপনার Firebase কনফিগারেশন
+  const firebaseConfig = {
+    apiKey:            "AIzaSyAdKQHpuVvmllMUmiHzJyppDCeWMO4ILtc",
+    authDomain:        "azad-digital-seva-ad7f3.firebaseapp.com",
+    projectId:         "azad-digital-seva-ad7f3",
+    storageBucket:     "azad-digital-seva-ad7f3.firebasestorage.app",
+    messagingSenderId: "915061703460",
+    appId:             "1:915061703460:web:4042a834d2895269aca9b1"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+
+  /* =====================================================
+     CONFIG & DATA
+  ===================================================== */
+  const WHATSAPP_NUMBER = "917908663012"; 
+  const PAYEE_NAME = "Harun Al Rasid";
+  const UPI_ID = "BHARATPE.9K0K0G1X4A535991@unitype"; 
+  const UPI_NAME = "Harun Al Rasid";
+
+  // ✨ অ্যাডমিন পাসওয়ার্ড (SHA-256 Hash of 'azad2025')
+  const ADMIN_PASSWORD_HASH = "bf715cc2ed77a3288017ca4021a096cbd23948a5906f92c4a8bba9f63b2b05be";
+
+  const categoriesData = [
+    { name: "১. AI ও আধুনিক প্রযুক্তি (AI & Technology)", subs: ["ChatGPT ও AI ব্যবহার", "AI দিয়ে ছবি তৈরি", "AI ভিডিও তৈরি", "AI ভয়েস ও অডিও তৈরি", "AI দিয়ে ইনকাম", "AI অটোমেশন", "AI দিয়ে ডিজিটাল মার্কেটিং", "AI টুলস শেখা"] },
+    { name: "২. ফ্রিল্যান্সিং ও অনলাইন ইনকাম", subs: ["ফ্রিল্যান্সিং শেখা", "গ্রাফিক ডিজাইন", "ভিডিও এডিটিং", "ওয়েবসাইট তৈরি", "ডেটা এন্ট্রি", "কনটেন্ট রাইটিং", "অনলাইন ক্লায়েন্ট পাওয়া"] },
+    { name: "৩. মোবাইল ও ইলেকট্রনিক্স রিপেয়ারিং", subs: ["মোবাইল রিপেয়ারিং", "মোবাইল সফটওয়্যার", "কম্পিউটার রিপেয়ারিং", "ল্যাপটপ সার্ভিসিং", "LED TV রিপেয়ারিং", "ইলেকট্রনিক্স সার্কিট"] },
+    { name: "৪. ইলেকট্রিক্যাল ও মেকানিক্যাল কাজ", subs: ["AC ও ফ্রিজ সার্ভিসিং", "ইলেকট্রিক ওয়্যারিং", "প্লাম্বিং", "মোটর রিপেয়ারিং", "জেনারেটর সার্ভিসিং", "সোলার প্যানেল ইনস্টলেশন", "ওয়েল্ডিং"] },
+    { name: "৫. রান্না ও ফুড বিজনেস", subs: ["হোটেল ও রেস্টুরেন্টের রান্না", "বেকারি ও কেক তৈরি", "ফাস্ট ফুড তৈরি", "বিরিয়ানি ও বিভিন্ন খাবার", "মিষ্টি তৈরি", "ফুড বিজনেস শুরু"] },
+    { name: "৬. ড্রাইভিং ও যানবাহন শিক্ষা", subs: ["গাড়ি চালানো শেখা", "মোটরসাইকেল চালানো", "ট্রাফিক নিয়ম ও সড়ক নিরাপত্তা", "গাড়ির মেকানিক্যাল কাজ", "বাইক সার্ভিসিং", "গাড়ির ইঞ্জিন সম্পর্কে শিক্ষা"] },
+    { name: "৭. সেলাই ও ফ্যাশন ডিজাইন", subs: ["টেইলারিং", "মহিলাদের পোশাক তৈরি", "ব্লাউজ ডিজাইন", "এমব্রয়ডারি", "ফ্যাশন ডিজাইন", "বুটিক ব্যবসা"] },
+    { name: "৮. ব্যবসা ও উদ্যোক্তা প্রশিক্ষণ", subs: ["ছোট ব্যবসা শুরু", "অনলাইন ব্যবসা", "দোকান পরিচালনা", "ই-কমার্স", "ব্যবসার হিসাব রাখা", "পাইকারি ও খুচরা ব্যবসা", "ব্যবসার মার্কেটিং"] },
+    { name: "৯. ডিজাইন ও ক্রিয়েটিভ স্কিল", subs: ["গ্রাফিক ডিজাইন", "লোগো ডিজাইন", "পোস্টার ও ব্যানার ডিজাইন", "ফটো এডিটিং", "ভিডিও এডিটিং", "থাম্বনেইল ডিজাইন", "3D ডিজাইন"] },
+    { name: "১০. কৃষি ও পশুপালন", subs: ["আধুনিক কৃষিকাজ", "মাছ চাষ", "হাঁস-মুরগি পালন", "গরু ও ছাগল পালন", "মাশরুম চাষ", "নার্সারি ব্যবসা", "জৈব সার তৈরি"] },
+    { name: "১১. বিউটি ও পার্সোনাল কেয়ার", subs: ["বিউটিশিয়ান কোর্স", "মেকআপ শেখা", "হেয়ার কাটিং", "হেয়ার স্টাইলিং", "মেহেন্দি ডিজাইন", "পার্লার ব্যবসা"] },
+    { name: "১২. ফটোগ্রাফি ও ভিডিওগ্রাফি", subs: ["ফটোগ্রাফি শেখা", "ক্যামেরা পরিচালনা", "মোবাইল ফটোগ্রাফি", "বিয়ের ভিডিওগ্রাফি", "ভিডিও কালার গ্রেডিং", "স্টুডিও পরিচালনা"] },
+    { name: "১৩. কম্পিউটার ও ডিজিটাল স্কিল", subs: ["MS Word ও Excel", "PowerPoint", "বাংলা ও ইংরেজি টাইপিং", "ইন্টারনেট ব্যবহার", "অফিস ম্যানেজমেন্ট", "ওয়েব ডিজাইন ও ডেভেলপমেন্ট"] },
+    { name: "১৪. ডিজিটাল মার্কেটিং ও সোশ্যাল মিডিয়া", subs: ["Facebook Marketing", "YouTube Channel Management", "Instagram Marketing", "SEO", "Google Ads", "সোশ্যাল মিডিয়া থেকে ইনকাম", "কনটেন্ট ক্রিয়েশন"] },
+    { name: "১৫. হাতের কাজ ও কারিগরি শিক্ষা", subs: ["কাঠের কাজ", "ফার্নিচার তৈরি", "রাজমিস্ত্রির কাজ", "টাইলস মিস্ত্রি", "পেইন্টিং", "গৃহসজ্জা ও ইন্টেরিয়র কাজ", "হ্যান্ডমেড পণ্য তৈরি"] },
+    { name: "১৬. ভাষা ও যোগাযোগ দক্ষতা", subs: ["ইংরেজি শেখা", "স্পোকেন ইংলিশ", "হিন্দি ভাষা", "আরবি ভাষা", "পাবলিক স্পিকিং", "ইন্টারভিউ দেওয়ার কৌশল", "কাস্টমার হ্যান্ডলিং"] }
+  ];
+
+  // গ্লোবাল স্টেট
+  let allBooks = []; 
+  let cart = []; 
+  let wishlist = []; 
+  let currentBook = null;
+  let checkoutMode = 'single';
+  let activeCategory = "All";
+  let activeSubCategory = "";
+  let qrCodeInstance = null;
+
+  /* =====================================================
+     ADMIN LOGIN LOGIC
+  ===================================================== */
+  window.openAdminLogin = function() {
+    document.getElementById("adminModal").classList.add("active");
+    // রিসেট ভিউ
+    document.getElementById("adminLoginSection").style.display = "block";
+    document.getElementById("adminDashboardSection").style.display = "none";
+    document.getElementById("adminPasswordInput").value = "";
+    document.getElementById("loginAlert").style.display = "none";
+  };
+
+  window.closeAdminPanel = function() {
+    document.getElementById("adminModal").classList.remove("active");
+  };
+
+  // SHA-256 Hash Function
+  async function sha256(text) {
+    const encoder = new TextEncoder();
+    const data = encoder.encode(text);
+    const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+    const hashArray = Array.from(new Uint8Array(hashBuffer));
+    return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
   }
-];
 
-/* =====================================================
-   2) BOOK DATA (এখানে বই যোগ করুন)
-   - cover: এখানে আপনার ছবির লিংক বসান
-===================================================== */
-const books = [
-  // ১. AI ও আধুনিক প্রযুক্তি
-  { id: 1, name: "ChatGPT ও AI ব্যবহার", price: 199, oldPrice: 299, discount: "33% OFF", category: "১. AI ও আধুনিক প্রযুক্তি (AI & Technology)", subcategory: "ChatGPT ও AI ব্যবহার", cover: "https://via.placeholder.com/300x400?text=ChatGPT", author: "Azad", description: "AI-এর সম্পূর্ণ ব্যবহার শিখুন।" },
-  { id: 2, name: "AI দিয়ে ছবি তৈরি", price: 150, category: "১. AI ও আধুনিক প্রযুক্তি (AI & Technology)", subcategory: "AI দিয়ে ছবি তৈরি", cover: "https://i.postimg.cc/K8cx8gyS/ba-la-sa-ya-ra-ma-ra-ka-ta-ka-ra-sa-apha-ra-cubierta.png", author: "Azad", description: "AI দিয়ে প্রফেশনাল ছবি তৈরির গাইড।" },
-  { id: 3, name: "AI ভিডিও তৈরি", price: 180, category: "১. AI ও আধুনিক প্রযুক্তি (AI & Technology)", subcategory: "AI ভিডিও তৈরি", cover: "https://via.placeholder.com/300x400?text=AI+Video", author: "Azad", description: "AI ভিডিও জেনারেটর টুলস শিখুন।" },
-  { id: 4, name: "AI ভয়েস ও অডিও তৈরি", price: 120, category: "১. AI ও আধুনিক প্রযুক্তি (AI & Technology)", subcategory: "AI ভয়েস ও অডিও তৈরি", cover: "https://via.placeholder.com/300x400?text=AI+Voice", author: "Azad", description: "AI দিয়ে ভয়েস ওভার তৈরি করুন।" },
-  { id: 5, name: "AI দিয়ে ইনকাম", price: 250, category: "১. AI ও আধুনিক প্রযুক্তি (AI & Technology)", subcategory: "AI দিয়ে ইনকাম", cover: "https://via.placeholder.com/300x400?text=AI+Income", author: "Azad", description: "AI স্কিল দিয়ে অনলাইন ইনকাম।" },
-  { id: 6, name: "AI অটোমেশন", price: 200, category: "১. AI ও আধুনিক প্রযুক্তি (AI & Technology)", subcategory: "AI অটোমেশন", cover: "https://via.placeholder.com/300x400?text=AI+Automation", author: "Azad", description: "কাজ অটোমেট করার AI টুলস।" },
-  { id: 7, name: "AI দিয়ে ডিজিটাল মার্কেটিং", price: 220, category: "১. AI ও আধুনিক প্রযুক্তি (AI & Technology)", subcategory: "AI দিয়ে ডিজিটাল মার্কেটিং", cover: "https://via.placeholder.com/300x400?text=AI+Marketing", author: "Azad", description: "মার্কেটিং-এ AI-এর ব্যবহার।" },
-  { id: 8, name: "AI টুলস শেখা", price: 190, category: "১. AI ও আধুনিক প্রযুক্তি (AI & Technology)", subcategory: "AI টুলস শেখা", cover: "https://via.placeholder.com/300x400?text=AI+Tools", author: "Azad", description: "সেরা AI টুলসগুলোর গাইড।" },
-
-  // ২. ফ্রিল্যান্সিং ও অনলাইন ইনকাম
-  { id: 9, name: "ফ্রিল্যান্সিং শেখা", price: 250, category: "২. ফ্রিল্যান্সিং ও অনলাইন ইনকাম", subcategory: "ফ্রিল্যান্সিং শেখা", cover: "https://via.placeholder.com/300x400?text=Freelancing", author: "Azad", description: "শূন্য থেকে ফ্রিল্যান্সিং শুরু।" },
-  { id: 10, name: "গ্রাফিক ডিজাইন", price: 200, category: "২. ফ্রিল্যান্সিং ও অনলাইন ইনকাম", subcategory: "গ্রাফিক ডিজাইন", cover: "https://via.placeholder.com/300x400?text=Graphic+Design", author: "Azad", description: "গ্রাফিক ডিজাইনের বেসিক ও ফ্রিল্যান্সিং।" },
-  { id: 11, name: "ভিডিও এডিটিং", price: 220, category: "২. ফ্রিল্যান্সিং ও অনলাইন ইনকাম", subcategory: "ভিডিও এডিটিং", cover: "https://via.placeholder.com/300x400?text=Video+Editing", author: "Azad", description: "প্রিমিয়ার প্রো ও ক্যাপকাট শেখা।" },
-  { id: 12, name: "ওয়েবসাইট তৈরি", price: 300, category: "২. ফ্রিল্যান্সিং ও অনলাইন ইনকাম", subcategory: "ওয়েবসাইট তৈরি", cover: "https://via.placeholder.com/300x400?text=Web+Dev", author: "Azad", description: "ওয়ার্ডপ্রেস ও কোডিং শেখা।" },
-  { id: 13, name: "ডেটা এন্ট্রি", price: 150, category: "২. ফ্রিল্যান্সিং ও অনলাইন ইনকাম", subcategory: "ডেটা এন্ট্রি", cover: "https://via.placeholder.com/300x400?text=Data+Entry", author: "Azad", description: "ডেটা এন্ট্রি কাজের গাইড।" },
-  { id: 14, name: "কনটেন্ট রাইটিং", price: 180, category: "২. ফ্রিল্যান্সিং ও অনলাইন ইনকাম", subcategory: "কনটেন্ট রাইটিং", cover: "https://via.placeholder.com/300x400?text=Content+Writing", author: "Azad", description: "কনটেন্ট লিখে ইনকাম।" },
-  { id: 15, name: "অনলাইন ক্লায়েন্ট পাওয়া", price: 200, category: "২. ফ্রিল্যান্সিং ও অনলাইন ইনকাম", subcategory: "অনলাইন ক্লায়েন্ট পাওয়া", cover: "https://via.placeholder.com/300x400?text=Online+Client", author: "Azad", description: "Fiverr ও Upwork থেকে কাজ পাওয়া।" },
-
-  // ৩. মোবাইল ও ইলেকট্রনিক্স রিপেয়ারিং
-  { id: 16, name: "মোবাইল রিপেয়ারিং", price: 250, category: "৩. মোবাইল ও ইলেকট্রনিক্স রিপেয়ারিং", subcategory: "মোবাইল রিপেয়ারিং", cover: "https://via.placeholder.com/300x400?text=Mobile+Repair", author: "Azad", description: "মোবাইল হার্ডওয়্যার রিপেয়ারিং।" },
-  { id: 17, name: "মোবাইল সফটওয়্যার", price: 200, category: "৩. মোবাইল ও ইলেকট্রনিক্স রিপেয়ারিং", subcategory: "মোবাইল সফটওয়্যার", cover: "https://via.placeholder.com/300x400?text=Mobile+Software", author: "Azad", description: "মোবাইল ফ্ল্যাশিং ও সফটওয়্যার।" },
-  { id: 18, name: "কম্পিউটার রিপেয়ারিং", price: 220, category: "৩. মোবাইল ও ইলেকট্রনিক্স রিপেয়ারিং", subcategory: "কম্পিউটার রিপেয়ারিং", cover: "https://via.placeholder.com/300x400?text=PC+Repair", author: "Azad", description: "কম্পিউটার সার্ভিসিং ও রিপেয়ারিং।" },
-  { id: 19, name: "ল্যাপটপ সার্ভিসিং", price: 220, category: "৩. মোবাইল ও ইলেকট্রনিক্স রিপেয়ারিং", subcategory: "ল্যাপটপ সার্ভিসিং", cover: "https://via.placeholder.com/300x400?text=Laptop+Service", author: "Azad", description: "ল্যাপটপ হার্ডওয়্যার সমস্যা ও সমাধান।" },
-  { id: 20, name: "LED TV রিপেয়ারিং", price: 230, category: "৩. মোবাইল ও ইলেকট্রনিক্স রিপেয়ারিং", subcategory: "LED TV রিপেয়ারিং", cover: "https://via.placeholder.com/300x400?text=TV+Repair", author: "Azad", description: "টিভি সার্কিট ও ডিসপ্লে রিপেয়ার।" },
-  { id: 21, name: "ইলেকট্রনিক্স সার্কিট", price: 180, category: "৩. মোবাইল ও ইলেকট্রনিক্স রিপেয়ারিং", subcategory: "ইলেকট্রনিক্স সার্কিট", cover: "https://via.placeholder.com/300x400?text=Circuit", author: "Azad", description: "সার্কিট ডায়াগ্রাম পড়া ও তৈরি।" },
-
-  // ৪. ইলেকট্রিক্যাল ও মেকানিক্যাল কাজ
-  { id: 22, name: "AC ও ফ্রিজ সার্ভিসিং", price: 250, category: "৪. ইলেকট্রিক্যাল ও মেকানিক্যাল কাজ", subcategory: "AC ও ফ্রিজ সার্ভিসিং", cover: "https://via.placeholder.com/300x400?text=AC+Service", author: "Azad", description: "এসি ও ফ্রিজ সার্ভিসিং শেখা।" },
-  { id: 23, name: "ইলেকট্রিক ওয়্যারিং", price: 200, category: "৪. ইলেকট্রিক্যাল ও মেকানিক্যাল কাজ", subcategory: "ইলেকট্রিক ওয়্যারিং", cover: "https://via.placeholder.com/300x400?text=Wiring", author: "Azad", description: "বাসা ও অফিসের ওয়্যারিং।" },
-  { id: 24, name: "প্লাম্বিং", price: 180, category: "৪. ইলেকট্রিক্যাল ও মেকানিক্যাল কাজ", subcategory: "প্লাম্বিং", cover: "https://via.placeholder.com/300x400?text=Plumbing", author: "Azad", description: "পানির পাইপ ও ফিটিংস কাজ।" },
-  { id: 25, name: "মোটর রিপেয়ারিং", price: 200, category: "৪. ইলেকট্রিক্যাল ও মেকানিক্যাল কাজ", subcategory: "মোটর রিপেয়ারিং", cover: "https://via.placeholder.com/300x400?text=Motor+Repair", author: "Azad", description: "মোটর ও পাম্প রিপেয়ারিং।" },
-  { id: 26, name: "জেনারেটর সার্ভিসিং", price: 250, category: "৪. ইলেকট্রিক্যাল ও মেকানিক্যাল কাজ", subcategory: "জেনারেটর সার্ভিসিং", cover: "https://via.placeholder.com/300x400?text=Generator", author: "Azad", description: "জেনারেটর সার্ভিসিং ও মেইনটেনেন্স।" },
-  { id: 27, name: "সোলার প্যানেল ইনস্টলেশন", price: 300, category: "৪. ইলেকট্রিক্যাল ও মেকানিক্যাল কাজ", subcategory: "সোলার প্যানেল ইনস্টলেশন", cover: "https://via.placeholder.com/300x400?text=Solar+Panel", author: "Azad", description: "সোলার প্যানেল বসানো শেখা।" },
-  { id: 28, name: "ওয়েল্ডিং", price: 200, category: "৪. ইলেকট্রিক্যাল ও মেকানিক্যাল কাজ", subcategory: "ওয়েল্ডিং", cover: "https://via.placeholder.com/300x400?text=Welding", author: "Azad", description: "ওয়েল্ডিং কাজের প্রশিক্ষণ।" },
-
-  // ৫. রান্না ও ফুড বিজনেস
-  { id: 29, name: "হোটেল ও রেস্টুরেন্টের রান্না", price: 250, category: "৫. রান্না ও ফুড বিজনেস", subcategory: "হোটেল ও রেস্টুরেন্টের রান্না", cover: "https://via.placeholder.com/300x400?text=Hotel+Cooking", author: "Azad", description: "প্রফেশনাল রান্নার গাইড।" },
-  { id: 30, name: "বেকারি ও কেক তৈরি", price: 200, category: "৫. রান্না ও ফুড বিজনেস", subcategory: "বেকারি ও কেক তৈরি", cover: "https://via.placeholder.com/300x400?text=Bakery", author: "Azad", description: "কেক ও বেকারি আইটেম তৈরি।" },
-  { id: 31, name: "ফাস্ট ফুড তৈরি", price: 150, category: "৫. রান্না ও ফুড বিজনেস", subcategory: "ফাস্ট ফুড তৈরি", cover: "https://via.placeholder.com/300x400?text=Fast+Food", author: "Azad", description: "বার্গার, পিজ্জা, চাউমিন তৈরি।" },
-  { id: 32, name: "বিরিয়ানি ও বিভিন্ন খাবার", price: 180, category: "৫. রান্না ও ফুড বিজনেস", subcategory: "বিরিয়ানি ও বিভিন্ন খাবার", cover: "https://via.placeholder.com/300x400?text=Biryani", author: "Azad", description: "বিরিয়ানি ও অন্যান্য খাবারের রেসিপি।" },
-  { id: 33, name: "মিষ্টি তৈরি", price: 150, category: "৫. রান্না ও ফুড বিজনেস", subcategory: "মিষ্টি তৈরি", cover: "https://via.placeholder.com/300x400?text=Sweets", author: "Azad", description: "বিভিন্ন ধরনের মিষ্টি তৈরির কৌশল।" },
-  { id: 34, name: "ফুড বিজনেস শুরু", price: 200, category: "৫. রান্না ও ফুড বিজনেস", subcategory: "ফুড বিজনেস শুরু", cover: "https://via.placeholder.com/300x400?text=Food+Business", author: "Azad", description: "ফুড বিজনেস শুরু করার গাইড।" },
-
-  // ৬. ড্রাইভিং ও যানবাহন শিক্ষা
-  { id: 35, name: "গাড়ি চালানো শেখা", price: 180, category: "৬. ড্রাইভিং ও যানবাহন শিক্ষা", subcategory: "গাড়ি চালানো শেখা", cover: "https://via.placeholder.com/300x400?text=Car+Driving", author: "Azad", description: "গাড়ি চালানোর বেসিক ও অ্যাডভান্স।" },
-  { id: 36, name: "মোটরসাইকেল চালানো", price: 150, category: "৬. ড্রাইভিং ও যানবাহন শিক্ষা", subcategory: "মোটরসাইকেল চালানো", cover: "https://via.placeholder.com/300x400?text=Bike+Driving", author: "Azad", description: "বাইক চালানোর নিয়ম ও টিপস।" },
-  { id: 37, name: "ট্রাফিক নিয়ম ও সড়ক নিরাপত্তা", price: 120, category: "৬. ড্রাইভিং ও যানবাহন শিক্ষা", subcategory: "ট্রাফিক নিয়ম ও সড়ক নিরাপত্তা", cover: "https://via.placeholder.com/300x400?text=Traffic+Rules", author: "Azad", description: "সড়ক আইন ও নিরাপদ ড্রাইভিং।" },
-  { id: 38, name: "গাড়ির মেকানিক্যাল কাজ", price: 220, category: "৬. ড্রাইভিং ও যানবাহন শিক্ষা", subcategory: "গাড়ির মেকানিক্যাল কাজ", cover: "https://via.placeholder.com/300x400?text=Car+Mechanic", author: "Azad", description: "গাড়ির ইঞ্জিন ও মেকানিক্যাল কাজ।" },
-  { id: 39, name: "বাইক সার্ভিসিং", price: 180, category: "৬. ড্রাইভিং ও যানবাহন শিক্ষা", subcategory: "বাইক সার্ভিসিং", cover: "https://via.placeholder.com/300x400?text=Bike+Service", author: "Azad", description: "মোটরসাইকেল সার্ভিসিং শেখা।" },
-  { id: 40, name: "গাড়ির ইঞ্জিন সম্পর্কে শিক্ষা", price: 200, category: "৬. ড্রাইভিং ও যানবাহন শিক্ষা", subcategory: "গাড়ির ইঞ্জিন সম্পর্কে শিক্ষা", cover: "https://via.placeholder.com/300x400?text=Car+Engine", author: "Azad", description: "ইঞ্জিনের যন্ত্রাংশ ও কার্যপ্রণালী।" },
-
-  // ৭. সেলাই ও ফ্যাশন ডিজাইন
-  { id: 41, name: "টেইলারিং", price: 200, category: "৭. সেলাই ও ফ্যাশন ডিজাইন", subcategory: "টেইলারিং", cover: "https://via.placeholder.com/300x400?text=Tailoring", author: "Azad", description: "পোশাক তৈরি ও টেইলারিং শেখা।" },
-  { id: 42, name: "মহিলাদের পোশাক তৈরি", price: 180, category: "৭. সেলাই ও ফ্যাশন ডিজাইন", subcategory: "মহিলাদের পোশাক তৈরি", cover: "https://via.placeholder.com/300x400?text=Women+Clothing", author: "Azad", description: "মহিলাদের পোশাক ডিজাইন ও তৈরি।" },
-  { id: 43, name: "ব্লাউজ ডিজাইন", price: 150, category: "৭. সেলাই ও ফ্যাশন ডিজাইন", subcategory: "ব্লাউজ ডিজাইন", cover: "https://via.placeholder.com/300x400?text=Blouse+Design", author: "Azad", description: "ব্লাউজ ডিজাইনের বিভিন্ন স্টাইল।" },
-  { id: 44, name: "এমব্রয়ডারি", price: 180, category: "৭. সেলাই ও ফ্যাশন ডিজাইন", subcategory: "এমব্রয়ডারি", cover: "https://via.placeholder.com/300x400?text=Embroidery", author: "Azad", description: "হাতের কাজ ও এমব্রয়ডারি শেখা।" },
-  { id: 45, name: "ফ্যাশন ডিজাইন", price: 250, category: "৭. সেলাই ও ফ্যাশন ডিজাইন", subcategory: "ফ্যাশন ডিজাইন", cover: "https://via.placeholder.com/300x400?text=Fashion+Design", author: "Azad", description: "ফ্যাশন ডিজাইনের বেসিক।" },
-  { id: 46, name: "বুটিক ব্যবসা", price: 200, category: "৭. সেলাই ও ফ্যাশন ডিজাইন", subcategory: "বুটিক ব্যবসা", cover: "https://via.placeholder.com/300x400?text=Boutique", author: "Azad", description: "বুটিক ব্যবসা শুরু ও পরিচালনা।" },
-
-  // ৮. ব্যবসা ও উদ্যোক্তা প্রশিক্ষণ
-  { id: 47, name: "শেয়ার মার্কেটের সম্পূর্ণ বাংলা কোর্স", price: 149, category: "৮. ব্যবসা ও উদ্যোক্তা প্রশিক্ষণ", subcategory: "ছোট ব্যবসা শুরু", cover: "https://i.postimg.cc/K8cx8gyS/ba-la-sa-ya-ra-ma-ra-ka-ta-ka-ra-sa-apha-ra-cubierta.png", author: "Azad", description: "**Stock Market Logic – শেয়ার মার্কেটের সম্পূর্ণ বাংলা কোর্স**
-
-শেয়ার মার্কেট সম্পর্কে একদম নতুন থেকে শুরু করে অ্যাডভান্স পর্যায় পর্যন্ত বিস্তারিত শিখুন সহজ বাংলা ভাষায়।
-
-এই কোর্সে থাকছে:
-- শেয়ার মার্কেটের বেসিক থেকে অ্যাডভান্স শিক্ষা
-- ট্রেডিং ও ইনভেস্টিংয়ের সম্পূর্ণ গাইড
-- লাইভ চার্ট বোঝার কৌশল
-- টেকনিক্যাল অ্যানালাইসিস
-- রিস্ক ম্যানেজমেন্ট
-- নতুনদের জন্য সহজ ও বাস্তবভিত্তিক ব্যাখ্যা
-
-যাঁরা শেয়ার মার্কেট সম্পর্কে কিছুই জানেন না, তাঁরাও ধাপে ধাপে নিজের জ্ঞান ও দক্ষতা তৈরি করতে পারবেন।
-
-**মাত্র ১৪৯ টাকায় সম্পূর্ণ বাংলা কোর্স।**
-
-আজই শেখা শুরু করুন এবং শেয়ার মার্কেট সম্পর্কে নিজের জ্ঞান বাড়িয়ে তুলুন।
-
-*মনে রাখবেন: শেয়ার মার্কেটে বিনিয়োগ ও ট্রেডিংয়ে ঝুঁকি রয়েছে। শেখা মানেই নিশ্চিত লাভ নয়।*" },
-  { id: 48, name: "অনলাইন ব্যবসা", price: 200, category: "৮. ব্যবসা ও উদ্যোক্তা প্রশিক্ষণ", subcategory: "অনলাইন ব্যবসা", cover: "https://via.placeholder.com/300x400?text=Online+Business", author: "Azad", description: "ইন্টারনেটে ব্যবসা করার কৌশল।" },
-  { id: 49, name: "দোকান পরিচালনা", price: 180, category: "৮. ব্যবসা ও উদ্যোক্তা প্রশিক্ষণ", subcategory: "দোকান পরিচালনা", cover: "https://via.placeholder.com/300x400?text=Shop+Management", author: "Azad", description: "দোকান পরিচালনার নিয়ম।" },
-  { id: 50, name: "ই-কমার্স", price: 250, category: "৮. ব্যবসা ও উদ্যোক্তা প্রশিক্ষণ", subcategory: "ই-কমার্স", cover: "https://via.placeholder.com/300x400?text=E-commerce", author: "Azad", description: "ই-কমার্স ব্যবসা শুরু।" },
-  { id: 51, name: "ব্যবসার হিসাব রাখা", price: 150, category: "৮. ব্যবসা ও উদ্যোক্তা প্রশিক্ষণ", subcategory: "ব্যবসার হিসাব রাখা", cover: "https://via.placeholder.com/300x400?text=Accounting", author: "Azad", description: "ব্যবসার হিসাব রাখার পদ্ধতি।" },
-  { id: 52, name: "পাইকারি ও খুচরা ব্যবসা", price: 200, category: "৮. ব্যবসা ও উদ্যোক্তা প্রশিক্ষণ", subcategory: "পাইকারি ও খুচরা ব্যবসা", cover: "https://via.placeholder.com/300x400?text=Wholesale", author: "Azad", description: "পাইকারি ও খুচরা ব্যবসার গাইড।" },
-  { id: 53, name: "ব্যবসার মার্কেটিং", price: 180, category: "৮. ব্যবসা ও উদ্যোক্তা প্রশিক্ষণ", subcategory: "ব্যবসার মার্কেটিং", cover: "https://via.placeholder.com/300x400?text=Business+Marketing", author: "Azad", description: "ব্যবসার মার্কেটিং কৌশল।" },
-
-  // ৯. ডিজাইন ও ক্রিয়েটিভ স্কিল
-  { id: 54, name: "গ্রাফিক ডিজাইন", price: 200, category: "৯. ডিজাইন ও ক্রিয়েটিভ স্কিল", subcategory: "গ্রাফিক ডিজাইন", cover: "https://via.placeholder.com/300x400?text=Graphic+Design", author: "Azad", description: "গ্রাফিক ডিজাইনের বেসিক।" },
-  { id: 55, name: "লোগো ডিজাইন", price: 180, category: "৯. ডিজাইন ও ক্রিয়েটিভ স্কিল", subcategory: "লোগো ডিজাইন", cover: "https://via.placeholder.com/300x400?text=Logo+Design", author: "Azad", description: "প্রফেশনাল লোগো ডিজাইন।" },
-  { id: 56, name: "পোস্টার ও ব্যানার ডিজাইন", price: 150, category: "৯. ডিজাইন ও ক্রিয়েটিভ স্কিল", subcategory: "পোস্টার ও ব্যানার ডিজাইন", cover: "https://via.placeholder.com/300x400?text=Poster+Design", author: "Azad", description: "পোস্টার ও ব্যানার ডিজাইন।" },
-  { id: 57, name: "ফটো এডিটিং", price: 180, category: "৯. ডিজাইন ও ক্রিয়েটিভ স্কিল", subcategory: "ফটো এডিটিং", cover: "https://via.placeholder.com/300x400?text=Photo+Editing", author: "Azad", description: "ফটোশপ ও ফটো এডিটিং।" },
-  { id: 58, name: "ভিডিও এডিটিং", price: 220, category: "৯. ডিজাইন ও ক্রিয়েটিভ স্কিল", subcategory: "ভিডিও এডিটিং", cover: "https://via.placeholder.com/300x400?text=Video+Editing", author: "Azad", description: "প্রফেশনাল ভিডিও এডিটিং।" },
-  { id: 59, name: "থাম্বনেইল ডিজাইন", price: 150, category: "৯. ডিজাইন ও ক্রিয়েটিভ স্কিল", subcategory: "থাম্বনেইল ডিজাইন", cover: "https://via.placeholder.com/300x400?text=Thumbnail", author: "Azad", description: "ইউটিউব থাম্বনেইল ডিজাইন।" },
-  { id: 60, name: "3D ডিজাইন", price: 250, category: "৯. ডিজাইন ও ক্রিয়েটিভ স্কিল", subcategory: "3D ডিজাইন", cover: "https://via.placeholder.com/300x400?text=3D+Design", author: "Azad", description: "3D মডেলিং ও ডিজাইন।" },
-
-  // ১০. কৃষি ও পশুপালন
-  { id: 61, name: "আধুনিক কৃষিকাজ", price: 200, category: "১০. কৃষি ও পশুপালন", subcategory: "আধুনিক কৃষিকাজ", cover: "https://via.placeholder.com/300x400?text=Modern+Farming", author: "Azad", description: "আধুনিক পদ্ধতিতে কৃষিকাজ।" },
-  { id: 62, name: "মাছ চাষ", price: 180, category: "১০. কৃষি ও পশুপালন", subcategory: "মাছ চাষ", cover: "https://via.placeholder.com/300x400?text=Fish+Farming", author: "Azad", description: "মাছ চাষের পদ্ধতি।" },
-  { id: 63, name: "হাঁস-মুরগি পালন", price: 150, category: "১০. কৃষি ও পশুপালন", subcategory: "হাঁস-মুরগি পালন", cover: "https://via.placeholder.com/300x400?text=Poultry", author: "Azad", description: "হাঁস-মুরগি পালন।" },
-  { id: 64, name: "গরু ও ছাগল পালন", price: 200, category: "১০. কৃষি ও পশুপালন", subcategory: "গরু ও ছাগল পালন", cover: "https://via.placeholder.com/300x400?text=Cow+Goat", author: "Azad", description: "গরু ও ছাগল পালন।" },
-  { id: 65, name: "মাশরুম চাষ", price: 180, category: "১০. কৃষি ও পশুপালন", subcategory: "মাশরুম চাষ", cover: "https://via.placeholder.com/300x400?text=Mushroom", author: "Azad", description: "মাশরুম চাষ পদ্ধতি।" },
-  { id: 66, name: "নার্সারি ব্যবসা", price: 200, category: "১০. কৃষি ও পশুপালন", subcategory: "নার্সারি ব্যবসা", cover: "https://via.placeholder.com/300x400?text=Nursery", author: "Azad", description: "নার্সারি ব্যবসা গাইড।" },
-  { id: 67, name: "জৈব সার তৈরি", price: 150, category: "১০. কৃষি ও পশুপালন", subcategory: "জৈব সার তৈরি", cover: "https://via.placeholder.com/300x400?text=Organic+Fertilizer", author: "Azad", description: "জৈব সার তৈরি।" },
-
-  // ১১. বিউটি ও পার্সোনাল কেয়ার
-  { id: 68, name: "বিউটিশিয়ান কোর্স", price: 250, category: "১১. বিউটি ও পার্সোনাল কেয়ার", subcategory: "বিউটিশিয়ান কোর্স", cover: "https://via.placeholder.com/300x400?text=Beautician", author: "Azad", description: "বিউটিশিয়ান কোর্স।" },
-  { id: 69, name: "মেকআপ শেখা", price: 200, category: "১১. বিউটি ও পার্সোনাল কেয়ার", subcategory: "মেকআপ শেখা", cover: "https://via.placeholder.com/300x400?text=Makeup", author: "Azad", description: "মেকআপ শেখা।" },
-  { id: 70, name: "হেয়ার কাটিং", price: 180, category: "১১. বিউটি ও পার্সোনাল কেয়ার", subcategory: "হেয়ার কাটিং", cover: "https://via.placeholder.com/300x400?text=Hair+Cutting", author: "Azad", description: "হেয়ার কাটিং শেখা।" },
-  { id: 71, name: "হেয়ার স্টাইলিং", price: 180, category: "১১. বিউটি ও পার্সোনাল কেয়ার", subcategory: "হেয়ার স্টাইলিং", cover: "https://via.placeholder.com/300x400?text=Hair+Styling", author: "Azad", description: "হেয়ার স্টাইলিং।" },
-  { id: 72, name: "মেহেন্দি ডিজাইন", price: 150, category: "১১. বিউটি ও পার্সোনাল কেয়ার", subcategory: "মেহেন্দি ডিজাইন", cover: "https://via.placeholder.com/300x400?text=Mehendi", author: "Azad", description: "মেহেন্দি ডিজাইন।" },
-  { id: 73, name: "পার্লার ব্যবসা", price: 200, category: "১১. বিউটি ও পার্সোনাল কেয়ার", subcategory: "পার্লার ব্যবসা", cover: "https://via.placeholder.com/300x400?text=Parlor", author: "Azad", description: "পার্লার ব্যবসা।" },
-
-  // ১২. ফটোগ্রাফি ও ভিডিওগ্রাফি
-  { id: 74, name: "ফটোগ্রাফি শেখা", price: 200, category: "১২. ফটোগ্রাফি ও ভিডিওগ্রাফি", subcategory: "ফটোগ্রাফি শেখা", cover: "https://via.placeholder.com/300x400?text=Photography", author: "Azad", description: "ফটোগ্রাফি শেখা।" },
-  { id: 75, name: "ক্যামেরা পরিচালনা", price: 180, category: "১২. ফটোগ্রাফি ও ভিডিওগ্রাফি", subcategory: "ক্যামেরা পরিচালনা", cover: "https://via.placeholder.com/300x400?text=Camera", author: "Azad", description: "ক্যামেরা পরিচালনা।" },
-  { id: 76, name: "মোবাইল ফটোগ্রাফি", price: 150, category: "১২. ফটোগ্রাফি ও ভিডিওগ্রাফি", subcategory: "মোবাইল ফটোগ্রাফি", cover: "https://via.placeholder.com/300x400?text=Mobile+Photography", author: "Azad", description: "মোবাইল ফটোগ্রাফি।" },
-  { id: 77, name: "বিয়ের ভিডিওগ্রাফি", price: 250, category: "১২. ফটোগ্রাফি ও ভিডিওগ্রাফি", subcategory: "বিয়ের ভিডিওগ্রাফি", cover: "https://via.placeholder.com/300x400?text=Wedding+Videography", author: "Azad", description: "বিয়ের ভিডিওগ্রাফি।" },
-  { id: 78, name: "ভিডিও কালার গ্রেডিং", price: 220, category: "১২. ফটোগ্রাফি ও ভিডিওগ্রাফি", subcategory: "ভিডিও কালার গ্রেডিং", cover: "https://via.placeholder.com/300x400?text=Color+Grading", author: "Azad", description: "ভিডিও কালার গ্রেডিং।" },
-  { id: 79, name: "স্টুডিও পরিচালনা", price: 200, category: "১২. ফটোগ্রাফি ও ভিডিওগ্রাফি", subcategory: "স্টুডিও পরিচালনা", cover: "https://via.placeholder.com/300x400?text=Studio", author: "Azad", description: "স্টুডিও পরিচালনা।" },
-
-  // ১৩. কম্পিউটার ও ডিজিটাল স্কিল
-  { id: 80, name: "MS Word ও Excel", price: 180, category: "১৩. কম্পিউটার ও ডিজিটাল স্কিল", subcategory: "MS Word ও Excel", cover: "https://via.placeholder.com/300x400?text=MS+Word+Excel", author: "Azad", description: "MS Word ও Excel।" },
-  { id: 81, name: "PowerPoint", price: 150, category: "১৩. কম্পিউটার ও ডিজিটাল স্কিল", subcategory: "PowerPoint", cover: "https://via.placeholder.com/300x400?text=PowerPoint", author: "Azad", description: "PowerPoint শেখা।" },
-  { id: 82, name: "বাংলা ও ইংরেজি টাইপিং", price: 120, category: "১৩. কম্পিউটার ও ডিজিটাল স্কিল", subcategory: "বাংলা ও ইংরেজি টাইপিং", cover: "https://via.placeholder.com/300x400?text=Typing", author: "Azad", description: "বাংলা ও ইংরেজি টাইপিং।" },
-  { id: 83, name: "ইন্টারনেট ব্যবহার", price: 100, category: "১৩. কম্পিউটার ও ডিজিটাল স্কিল", subcategory: "ইন্টারনেট ব্যবহার", cover: "https://via.placeholder.com/300x400?text=Internet", author: "Azad", description: "ইন্টারনেট ব্যবহার।" },
-  { id: 84, name: "অফিস ম্যানেজমেন্ট", price: 200, category: "১৩. কম্পিউটার ও ডিজিটাল স্কিল", subcategory: "অফিস ম্যানেজমেন্ট", cover: "https://via.placeholder.com/300x400?text=Office+Management", author: "Azad", description: "অফিস ম্যানেজমেন্ট।" },
-  { id: 85, name: "ওয়েব ডিজাইন ও ডেভেলপমেন্ট", price: 300, category: "১৩. কম্পিউটার ও ডিজিটাল স্কিল", subcategory: "ওয়েব ডিজাইন ও ডেভেলপমেন্ট", cover: "https://via.placeholder.com/300x400?text=Web+Development", author: "Azad", description: "ওয়েব ডিজাইন ও ডেভেলপমেন্ট।" },
-
-  // ১৪. ডিজিটাল মার্কেটিং ও সোশ্যাল মিডিয়া
-  { id: 86, name: "Facebook Marketing", price: 200, category: "১৪. ডিজিটাল মার্কেটিং ও সোশ্যাল মিডিয়া", subcategory: "Facebook Marketing", cover: "https://via.placeholder.com/300x400?text=Facebook+Marketing", author: "Azad", description: "Facebook Marketing।" },
-  { id: 87, name: "YouTube Channel Management", price: 220, category: "১৪. ডিজিটাল মার্কেটিং ও সোশ্যাল মিডিয়া", subcategory: "YouTube Channel Management", cover: "https://via.placeholder.com/300x400?text=YouTube+Management", author: "Azad", description: "YouTube Channel Management।" },
-  { id: 88, name: "Instagram Marketing", price: 180, category: "১৪. ডিজিটাল মার্কেটিং ও সোশ্যাল মিডিয়া", subcategory: "Instagram Marketing", cover: "https://via.placeholder.com/300x400?text=Instagram+Marketing", author: "Azad", description: "Instagram Marketing।" },
-  { id: 89, name: "SEO", price: 250, category: "১৪. ডিজিটাল মার্কেটিং ও সোশ্যাল মিডিয়া", subcategory: "SEO", cover: "https://via.placeholder.com/300x400?text=SEO", author: "Azad", description: "SEO শেখা।" },
-  { id: 90, name: "Google Ads", price: 250, category: "১৪. ডিজিটাল মার্কেটিং ও সোশ্যাল মিডিয়া", subcategory: "Google Ads", cover: "https://via.placeholder.com/300x400?text=Google+Ads", author: "Azad", description: "Google Ads।" },
-  { id: 91, name: "সোশ্যাল মিডিয়া থেকে ইনকাম", price: 200, category: "১৪. ডিজিটাল মার্কেটিং ও সোশ্যাল মিডিয়া", subcategory: "সোশ্যাল মিডিয়া থেকে ইনকাম", cover: "https://via.placeholder.com/300x400?text=Social+Media+Income", author: "Azad", description: "সোশ্যাল মিডিয়া থেকে ইনকাম।" },
-  { id: 92, name: "কনটেন্ট ক্রিয়েশন", price: 180, category: "১৪. ডিজিটাল মার্কেটিং ও সোশ্যাল মিডিয়া", subcategory: "কনটেন্ট ক্রিয়েশন", cover: "https://via.placeholder.com/300x400?text=Content+Creation", author: "Azad", description: "কনটেন্ট ক্রিয়েশন।" },
-
-  // ১৫. হাতের কাজ ও কারিগরি শিক্ষা
-  { id: 93, name: "কাঠের কাজ", price: 200, category: "১৫. হাতের কাজ ও কারিগরি শিক্ষা", subcategory: "কাঠের কাজ", cover: "https://via.placeholder.com/300x400?text=Woodwork", author: "Azad", description: "কাঠের কাজ।" },
-  { id: 94, name: "ফার্নিচার তৈরি", price: 220, category: "১৫. হাতের কাজ ও কারিগরি শিক্ষা", subcategory: "ফার্নিচার তৈরি", cover: "https://via.placeholder.com/300x400?text=Furniture", author: "Azad", description: "ফার্নিচার তৈরি।" },
-  { id: 95, name: "রাজমিস্ত্রির কাজ", price: 180, category: "১৫. হাতের কাজ ও কারিগরি শিক্ষা", subcategory: "রাজমিস্ত্রির কাজ", cover: "https://via.placeholder.com/300x400?text=Masonry", author: "Azad", description: "রাজমিস্ত্রির কাজ।" },
-  { id: 96, name: "টাইলস মিস্ত্রি", price: 180, category: "১৫. হাতের কাজ ও কারিগরি শিক্ষা", subcategory: "টাইলস মিস্ত্রি", cover: "https://via.placeholder.com/300x400?text=Tiles", author: "Azad", description: "টাইলস মিস্ত্রি।" },
-  { id: 97, name: "পেইন্টিং", price: 150, category: "১৫. হাতের কাজ ও কারিগরি শিক্ষা", subcategory: "পেইন্টিং", cover: "https://via.placeholder.com/300x400?text=Painting", author: "Azad", description: "পেইন্টিং।" },
-  { id: 98, name: "গৃহসজ্জা ও ইন্টেরিয়র কাজ", price: 250, category: "১৫. হাতের কাজ ও কারিগরি শিক্ষা", subcategory: "গৃহসজ্জা ও ইন্টেরিয়র কাজ", cover: "https://via.placeholder.com/300x400?text=Interior", author: "Azad", description: "গৃহসজ্জা ও ইন্টেরিয়র কাজ।" },
-  { id: 99, name: "হ্যান্ডমেড পণ্য তৈরি", price: 200, category: "১৫. হাতের কাজ ও কারিগরি শিক্ষা", subcategory: "হ্যান্ডমেড পণ্য তৈরি", cover: "https://via.placeholder.com/300x400?text=Handmade", author: "Azad", description: "হ্যান্ডমেড পণ্য তৈরি।" },
-
-  // ১৬. ভাষা ও যোগাযোগ দক্ষতা
-  { id: 100, name: "ইংরেজি শেখা", price: 200, category: "১৬. ভাষা ও যোগাযোগ দক্ষতা", subcategory: "ইংরেজি শেখা", cover: "https://via.placeholder.com/300x400?text=English", author: "Azad", description: "ইংরেজি শেখা।" },
-  { id: 101, name: "স্পোকেন ইংলিশ", price: 220, category: "১৬. ভাষা ও যোগাযোগ দক্ষতা", subcategory: "স্পোকেন ইংলিশ", cover: "https://via.placeholder.com/300x400?text=Spoken+English", author: "Azad", description: "স্পোকেন ইংলিশ।" },
-  { id: 102, name: "হিন্দি ভাষা", price: 180, category: "১৬. ভাষা ও যোগাযোগ দক্ষতা", subcategory: "হিন্দি ভাষা", cover: "https://via.placeholder.com/300x400?text=Hindi", author: "Azad", description: "হিন্দি ভাষা।" },
-  { id: 103, name: "আরবি ভাষা", price: 180, category: "১৬. ভাষা ও যোগাযোগ দক্ষতা", subcategory: "আরবি ভাষা", cover: "https://via.placeholder.com/300x400?text=Arabic", author: "Azad", description: "আরবি ভাষা।" },
-  { id: 104, name: "পাবলিক স্পিকিং", price: 200, category: "১৬. ভাষা ও যোগাযোগ দক্ষতা", subcategory: "পাবলিক স্পিকিং", cover: "https://via.placeholder.com/300x400?text=Public+Speaking", author: "Azad", description: "পাবলিক স্পিকিং।" },
-  { id: 105, name: "ইন্টারভিউ দেওয়ার কৌশল", price: 150, category: "১৬. ভাষা ও যোগাযোগ দক্ষতা", subcategory: "ইন্টারভিউ দেওয়ার কৌশল", cover: "https://via.placeholder.com/300x400?text=Interview", author: "Azad", description: "ইন্টারভিউ দেওয়ার কৌশল।" },
-  { id: 106, name: "কাস্টমার হ্যান্ডলিং", price: 150, category: "১৬. ভাষা ও যোগাযোগ দক্ষতা", subcategory: "কাস্টমার হ্যান্ডলিং", cover: "https://via.placeholder.com/300x400?text=Customer+Handling", author: "Azad", description: "কাস্টমার হ্যান্ডলিং।" }
-];
-
-/* =====================================================
-   3) CONFIG
-===================================================== */
-const WHATSAPP_NUMBER = "917908663012"; // <-- আপনার WhatsApp নম্বর
-const PAYEE_NAME = "Harun Al Rasid";
-const UPI_ID = "BHARATPE.9K0K0G1X4A535991@unitype"; 
-const UPI_NAME = "Harun Al Rasid";
-
-let qrCodeInstance = null;
-let activeCategory = "All";
-let activeSubCategory = "";
-let cart = [];
-let wishlist = [];
-let currentBook = null;
-let checkoutMode = 'single'; 
-
-/* =====================================================
-   4) RENDER CATEGORIES DROPDOWN
-===================================================== */
-const catDropdownBtn = document.getElementById("catDropdownBtn");
-const catDropdownList = document.getElementById("catDropdownList");
-
-function renderCategories() {
-  catDropdownList.innerHTML = "";
-  
-  // "All Books" option
-  const allDiv = document.createElement("div");
-  allDiv.className = "cat-item";
-  allDiv.innerHTML = `<a onclick="filterByCategory('All')">সব বই (All Books)</a>`;
-  catDropdownList.appendChild(allDiv);
-
-  categoriesData.forEach(cat => {
-    const catDiv = document.createElement("div");
-    catDiv.className = "cat-item";
+  window.verifyAdminPassword = async function() {
+    const input = document.getElementById("adminPasswordInput").value;
+    const alertEl = document.getElementById("loginAlert");
     
-    // Main Category Link
-    const catLink = document.createElement("a");
-    catLink.innerHTML = `${cat.name} <span class="arrow">◀</span>`;
-    catLink.onclick = () => filterByCategory(cat.name);
-    catDiv.appendChild(catLink);
+    if(!input) {
+      alertEl.textContent = "⚠️ Please enter the password.";
+      alertEl.style.display = "block";
+      return;
+    }
 
-    // Sub-category List
-    const subList = document.createElement("div");
-    subList.className = "sub-cat-list";
-    cat.subs.forEach(sub => {
-      const subLink = document.createElement("a");
-      subLink.textContent = sub;
-      subLink.onclick = () => filterBySubCategory(cat.name, sub);
-      subList.appendChild(subLink);
+    const hashedInput = await sha256(input);
+
+    if(hashedInput === ADMIN_PASSWORD_HASH) {
+      // সফল লগইন
+      document.getElementById("adminLoginSection").style.display = "none";
+      document.getElementById("adminDashboardSection").style.display = "block";
+      populateAdminDropdowns();
+      renderAdminBookList();
+    } else {
+      // ব্যর্থ
+      alertEl.textContent = "❌ Incorrect password. Try again.";
+      alertEl.style.display = "block";
+      document.getElementById("adminPasswordInput").value = "";
+    }
+  };
+
+  /* =====================================================
+     UI FUNCTIONS
+  ===================================================== */
+  const grid = document.getElementById("bookGrid");
+  const navBar = document.getElementById("catDropdownList");
+  const catDropdownBtn = document.getElementById("catDropdownBtn");
+
+  window.renderCategories = function() {
+    navBar.innerHTML = "";
+    const allDiv = document.createElement("div");
+    allDiv.className = "cat-item";
+    allDiv.innerHTML = `<a onclick="filterByCategory('All')">সব বই (All Books)</a>`;
+    navBar.appendChild(allDiv);
+
+    categoriesData.forEach(cat => {
+      const catDiv = document.createElement("div");
+      catDiv.className = "cat-item";
+      const catLink = document.createElement("a");
+      catLink.innerHTML = `${cat.name} <span class="arrow">◀</span>`;
+      catLink.onclick = () => window.filterByCategory(cat.name);
+      catDiv.appendChild(catLink);
+
+      const subList = document.createElement("div");
+      subList.className = "sub-cat-list";
+      cat.subs.forEach(sub => {
+        const subLink = document.createElement("a");
+        subLink.textContent = sub;
+        subLink.onclick = () => window.filterBySubCategory(cat.name, sub);
+        subList.appendChild(subLink);
+      });
+      catDiv.appendChild(subList);
+      navBar.appendChild(catDiv);
     });
-    catDiv.appendChild(subList);
+  };
 
-    catDropdownList.appendChild(catDiv);
-  });
-}
+  window.filterByCategory = function(catName) {
+    activeCategory = catName;
+    activeSubCategory = "";
+    window.renderBooks();
+    navBar.classList.remove("active");
+    catDropdownBtn.innerHTML = `☰ ${catName} <span style="font-size:.8rem;">▼</span>`;
+  };
 
-// Toggle Dropdown
-catDropdownBtn.addEventListener("click", (e) => {
-  e.stopPropagation();
-  catDropdownList.classList.toggle("active");
-});
+  window.filterBySubCategory = function(catName, subName) {
+    activeCategory = catName; 
+    activeSubCategory = subName;
+    window.renderBooks();
+    navBar.classList.remove("active");
+    catDropdownBtn.innerHTML = `☰ ${subName} <span style="font-size:.8rem;">▼</span>`;
+  };
 
-// Close on outside click
-document.addEventListener("click", (e) => {
-  if (!catDropdownBtn.contains(e.target) && !catDropdownList.contains(e.target)) {
-    catDropdownList.classList.remove("active");
-  }
-});
+  window.renderBooks = function() {
+    grid.innerHTML = ""; 
+    let filtered = allBooks;
+    if (activeCategory !== "All") filtered = filtered.filter(b => b.category === activeCategory);
+    if (activeSubCategory) filtered = filtered.filter(b => b.subcategory === activeSubCategory);
 
-// Filtering Functions
-function filterByCategory(catName) {
-  activeCategory = catName;
-  activeSubCategory = "";
-  renderBooks();
-  catDropdownList.classList.remove("active");
-  catDropdownBtn.innerHTML = `☰ ${catName} <span style="font-size:.8rem;">▼</span>`;
-}
+    if(filtered.length === 0) {
+      grid.innerHTML = `<div style="grid-column:1/-1; text-align:center; padding:40px; color:#94a3b8;">এই ক্যাটাগরিতে এখনো কোনো বই যোগ করা হয়নি।</div>`;
+      return;
+    }
 
-function filterBySubCategory(catName, subName) {
-  activeCategory = catName; 
-  activeSubCategory = subName;
-  renderBooks();
-  catDropdownList.classList.remove("active");
-  catDropdownBtn.innerHTML = `☰ ${subName} <span style="font-size:.8rem;">▼</span>`;
-}
-
-/* =====================================================
-   5) RENDER BOOKS
-===================================================== */
-const grid = document.getElementById("bookGrid");
-
-function renderBooks() {
-  grid.innerHTML = ""; 
-  
-  let filtered = books;
-  
-  if (activeCategory !== "All") {
-    filtered = filtered.filter(b => b.category === activeCategory);
-  }
-  
-  if (activeSubCategory) {
-    filtered = filtered.filter(b => b.subcategory === activeSubCategory);
-  }
-
-  if(filtered.length === 0) {
-    grid.innerHTML = `<div style="grid-column:1/-1; text-align:center; padding:40px; color:#94a3b8;">এই ক্যাটাগরিতে এখনো কোনো বই যোগ করা হয়নি।</div>`;
-    return;
-  }
-
-  filtered.forEach(book => {
-    const isWishlisted = wishlist.includes(book.id);
-    const discountHtml = book.discount ? `<span class="discount-badge">${book.discount}</span>` : '';
-    
-    const card = document.createElement("div");
-    card.className = "book-card";
-    card.innerHTML = `
-      <div class="book-cover-wrap">
-        ${discountHtml}
-        <div class="wishlist-icon ${isWishlisted ? 'active' : ''}" onclick="toggleWishlist(${book.id}, event)">
-          ${isWishlisted ? '♥' : '♡'}
+    filtered.forEach(book => {
+      const isWishlisted = wishlist.includes(book.id);
+      const discountHtml = book.discount ? `<span class="discount-badge">${book.discount}</span>` : '';
+      
+      const card = document.createElement("div");
+      card.className = "book-card";
+      card.innerHTML = `
+        <div class="book-cover-wrap">
+          ${discountHtml}
+          <div class="wishlist-icon ${isWishlisted ? 'active' : ''}" onclick="toggleWishlist('${book.id}', event)">
+            ${isWishlisted ? '♥' : '♡'}
+          </div>
+          <img class="book-cover" src="${book.cover}" alt="${book.name}" onerror="this.src='https://via.placeholder.com/300x400?text=No+Cover'">
         </div>
-        <img class="book-cover" src="${book.cover}" alt="${book.name}">
-      </div>
-      <div class="book-info">
-        <div class="book-title" onclick="openDetails(${book.id})">${book.name}</div>
-        <div class="book-author">${book.author || 'Azad'}</div>
-        <div class="book-type">${book.category}</div>
-        <div class="price-row">
-          <span class="book-price">₹ ${book.price}</span>
-          ${book.oldPrice ? `<span class="book-old-price">₹ ${book.oldPrice}</span>` : ''}
+        <div class="book-info">
+          <div class="book-title" onclick="openDetails('${book.id}')">${book.name}</div>
+          <div class="book-author">${book.author || 'Azad'}</div>
+          <div class="price-row">
+            <span class="book-price">₹ ${book.price}</span>
+            ${book.oldPrice ? `<span class="book-old-price">₹ ${book.oldPrice}</span>` : ''}
+          </div>
+          <div class="card-btns">
+            <button class="btn-view" onclick="openDetails('${book.id}')">View</button>
+            <button class="btn-add-cart" onclick="addToCart('${book.id}', event)">🛒</button>
+            <button class="btn-share-card" onclick="shareBook('${book.id}', event)" title="Share on WhatsApp">
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" viewBox="0 0 16 16">
+                <path d="M13.601 2.326A7.854 7.854 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.933 7.933 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.898 7.898 0 0 0 13.6 2.326zM7.994 14.521a6.573 6.573 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.557 6.557 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592zm3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.1-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34-.114-.007-.247-.007-.38-.007a.729.729 0 0 0-.529.247c-.182.198-.691.677-.691 1.654 0 .977.71 1.916.81 2.049.098.133 1.394 2.132 3.383 2.992.47.205.84.326 1.129.418.475.152.904.129 1.246.08.38-.058 1.171-.48 1.338-.943.164-.464.164-.86.114-.943-.049-.084-.182-.133-.38-.232z"/>
+              </svg>
+            </button>
+          </div>
         </div>
-        <div class="card-btns">
-          <button class="btn-view" onclick="openDetails(${book.id})">View</button>
-          <button class="btn-add-cart" onclick="addToCart(${book.id}, event)">🛒</button>
-          <button class="btn-share-card" onclick="shareBook(${book.id}, event)" title="Share on WhatsApp">
-            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" viewBox="0 0 16 16">
-              <path d="M13.601 2.326A7.854 7.854 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.933 7.933 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.898 7.898 0 0 0 13.6 2.326zM7.994 14.521a6.573 6.573 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.557 6.557 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592zm3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.1-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34-.114-.007-.247-.007-.38-.007a.729.729 0 0 0-.529.247c-.182.198-.691.677-.691 1.654 0 .977.71 1.916.81 2.049.098.133 1.394 2.132 3.383 2.992.47.205.84.326 1.129.418.475.152.904.129 1.246.08.38-.058 1.171-.48 1.338-.943.164-.464.164-.86.114-.943-.049-.084-.182-.133-.38-.232z"/>
-            </svg>
-          </button>
-        </div>
-      </div>
+      `;
+      grid.appendChild(card);
+    });
+  };
+
+  window.openDetails = function(id) {
+    currentBook = allBooks.find(b => b.id === id);
+    if(!currentBook) return;
+    document.getElementById("dCover").src = currentBook.cover;
+    document.getElementById("dTitle").textContent = currentBook.name;
+    document.getElementById("dDesc").textContent = currentBook.description || 'No description available.';
+    document.getElementById("dMeta").innerHTML = `
+      <span><b>Author:</b> ${currentBook.author || 'Azad'}</span>
+      <span><b>Price:</b> <span style="color:#ea580c; font-weight:700;">₹ ${currentBook.price}</span></span>
     `;
-    grid.appendChild(card);
-  });
-}
+    document.getElementById("detailsModal").classList.add("active");
+  };
 
-/* =====================================================
-   6) REST OF THE LOGIC (Cart, Wishlist, Details, Payment)
-===================================================== */
-function updateBadges() {
-  document.getElementById("cartBadge").textContent = cart.length;
-  document.getElementById("wishlistBadge").textContent = wishlist.length;
-}
-
-function renderCart() {
-  const cartContent = document.getElementById("cartContent");
-  const cartFooter = document.getElementById("cartFooter");
-  const totalPriceEl = document.getElementById("cartTotalPrice");
-
-  if (cart.length === 0) {
-    cartContent.innerHTML = `<div class="empty-state"><span>🛒</span>Your cart is empty.</div>`;
-    cartFooter.style.display = "none";
-    return;
-  }
-
-  cartFooter.style.display = "block";
-  let total = 0;
-  cartContent.innerHTML = "";
-
-  cart.forEach(item => {
-    total += item.price;
-    const div = document.createElement("div");
-    div.className = "cart-item";
-    div.innerHTML = `
-      <img src="${item.cover}" alt="${item.name}">
-      <div class="cart-item-info">
-        <div class="cart-item-title">${item.name}</div>
-        <div class="cart-item-price">₹ ${item.price}</div>
-        <button class="cart-item-remove" onclick="removeFromCart(${item.id})">Remove</button>
-      </div>
-    `;
-    cartContent.appendChild(div);
-  });
-
-  totalPriceEl.textContent = `₹ ${total}`;
-}
-
-function renderWishlist() {
-  const wlContent = document.getElementById("wishlistContent");
-  
-  if (wishlist.length === 0) {
-    wlContent.innerHTML = `<div class="empty-state"><span>♡</span>Your wishlist is empty.</div>`;
-    return;
-  }
-
-  wlContent.innerHTML = "";
-  wishlist.forEach(id => {
-    const book = books.find(b => b.id === id);
+  window.shareBook = function(id, event) {
+    if(event) event.stopPropagation();
+    const book = allBooks.find(b => b.id === id);
     if(!book) return;
-    
-    const div = document.createElement("div");
-    div.className = "cart-item";
-    div.innerHTML = `
-      <img src="${book.cover}" alt="${book.name}">
-      <div class="cart-item-info">
-        <div class="cart-item-title">${book.name}</div>
-        <div class="cart-item-price">₹ ${book.price}</div>
-        <button class="cart-item-remove" style="color:#ea580c;" onclick="addToCartFromWishlist(${book.id})">Move to Cart</button>
+    const shareUrl = `${window.location.href.split('?')[0]}?book=${id}`;
+    const shareText = `🔥 Check out this e-book: *${book.name}* for just *₹${book.price}*.\n\n👉 Buy here: ${shareUrl}`;
+    window.open(`https://wa.me/?text=${encodeURIComponent(shareText)}`, "_blank");
+  };
+
+  /* =====================================================
+     ADMIN PANEL LOGIC
+  ===================================================== */
+  window.switchAdminTab = function(tab) {
+    document.querySelectorAll(".admin-tab").forEach(t => t.classList.remove("active"));
+    event.target.classList.add("active");
+    if(tab === 'add') {
+      document.getElementById("adminAddTab").style.display = "block";
+      document.getElementById("adminManageTab").style.display = "none";
+    } else {
+      document.getElementById("adminAddTab").style.display = "none";
+      document.getElementById("adminManageTab").style.display = "block";
+      renderAdminBookList();
+    }
+  };
+
+  function populateAdminDropdowns() {
+    const catSelect = document.getElementById("addCategory");
+    catSelect.innerHTML = '<option value="">Select Category</option>';
+    categoriesData.forEach(cat => {
+      catSelect.innerHTML += `<option value="${cat.name}">${cat.name}</option>`;
+    });
+    catSelect.onchange = () => updateSubCategories();
+  }
+
+  function updateSubCategories() {
+    const catName = document.getElementById("addCategory").value;
+    const subSelect = document.getElementById("addSubCategory");
+    subSelect.innerHTML = '<option value="">Select Sub-Category</option>';
+    const cat = categoriesData.find(c => c.name === catName);
+    if(cat) {
+      cat.subs.forEach(sub => {
+        subSelect.innerHTML += `<option value="${sub}">${sub}</option>`;
+      });
+    }
+  }
+
+  window.saveBook = async function() {
+    const btn = document.getElementById("addBookBtn");
+    const cover = document.getElementById("addCover").value.trim();
+    const name = document.getElementById("addName").value.trim();
+    const author = document.getElementById("addAuthor").value.trim();
+    const desc = document.getElementById("addDesc").value.trim();
+    const price = parseFloat(document.getElementById("addPrice").value);
+    const oldPrice = parseFloat(document.getElementById("addOldPrice").value) || 0;
+    const category = document.getElementById("addCategory").value;
+    const subcategory = document.getElementById("addSubCategory").value;
+    const discount = document.getElementById("addDiscount").value.trim();
+
+    if(!cover || !name || !price || !category || !subcategory) {
+      alert("⚠️ Please fill all required fields (Cover, Name, Price, Category, Sub-Category).");
+      return;
+    }
+
+    btn.disabled = true;
+    btn.textContent = "Saving...";
+
+    try {
+      await addDoc(collection(db, "ebooks"), {
+        cover, name, author, description: desc, price, oldPrice, category, subcategory, discount,
+        createdAt: serverTimestamp()
+      });
+      alert("✅ Book saved successfully!");
+      
+      document.getElementById("addCover").value = "";
+      document.getElementById("addName").value = "";
+      document.getElementById("addDesc").value = "";
+      document.getElementById("addPrice").value = "";
+      document.getElementById("addOldPrice").value = "";
+      document.getElementById("addDiscount").value = "";
+      
+      btn.disabled = false;
+      btn.textContent = "💾 Save Book";
+      
+      await loadProducts();
+      renderAdminBookList();
+    } catch (err) {
+      console.error(err);
+      alert("❌ Error saving book: " + err.message);
+      btn.disabled = false;
+      btn.textContent = "💾 Save Book";
+    }
+  };
+
+  function renderAdminBookList() {
+    const container = document.getElementById("adminBookList");
+    if(allBooks.length === 0) {
+      container.innerHTML = "<p style='text-align:center; color:#64748b; font-size:.85rem;'>No books added yet.</p>";
+      return;
+    }
+    container.innerHTML = allBooks.map(book => `
+      <div class="admin-item">
+        <img src="${book.cover}" onerror="this.src='https://via.placeholder.com/40x56?text=No'">
+        <div class="admin-item-info">
+          <h5>${book.name}</h5>
+          <p>₹ ${book.price}</p>
+        </div>
+        <button class="admin-delete-btn" onclick="deleteBook('${book.id}')">Delete</button>
       </div>
+    `).join("");
+  }
+
+  window.deleteBook = async function(id) {
+    if(!confirm("Are you sure you want to delete this book?")) return;
+    try {
+      await deleteDoc(doc(db, "ebooks", id));
+      alert("✅ Book deleted!");
+      await loadProducts();
+      renderAdminBookList();
+    } catch (err) {
+      alert("❌ Error deleting: " + err.message);
+    }
+  };
+
+  /* =====================================================
+     LOAD PRODUCTS FROM FIREBASE
+  ===================================================== */
+  async function loadProducts() {
+    grid.innerHTML = `
+      <div style="grid-column:1/-1; text-align:center; padding:40px;">
+        <div style="width:30px; height:30px; border:3px solid #e2e8f0; border-top-color:#ea580c; border-radius:50%; animation:spin 1s linear infinite; margin:0 auto 10px;"></div>
+        <p style="color:#64748b; font-size:.9rem;">Loading books...</p>
+      </div>
+      <style>@keyframes spin { to { transform: rotate(360deg); } }</style>
     `;
-    wlContent.appendChild(div);
-  });
-}
-
-function addToCart(id, event) {
-  if(event) event.stopPropagation();
-  const book = books.find(b => b.id === id);
-  if(!book) return;
-  
-  if(cart.some(item => item.id === id)) {
-    alert("This book is already in your cart!");
-    return;
+    
+    try {
+      const q = query(collection(db, "ebooks"), orderBy("createdAt", "desc"));
+      const snap = await getDocs(q);
+      allBooks = [];
+      snap.forEach(d => allBooks.push({ id: d.id, ...d.data() }));
+      window.renderBooks();
+    } catch (err) {
+      console.error("Error loading:", err);
+      grid.innerHTML = `<div style="grid-column:1/-1; text-align:center; padding:40px; color:#ef4444;">⚠️ Failed to load books. Check connection.</div>`;
+    }
   }
-  
-  cart.push(book);
-  updateBadges();
-  renderCart();
-  
-  document.getElementById("cartBadge").style.transform = "scale(1.3)";
-  setTimeout(() => document.getElementById("cartBadge").style.transform = "scale(1)", 200);
-}
 
-function removeFromCart(id) {
-  cart = cart.filter(item => item.id !== id);
-  updateBadges();
-  renderCart();
-}
-
-function toggleWishlist(id, event) {
-  if(event) event.stopPropagation();
-  const index = wishlist.indexOf(id);
-  
-  if (index > -1) {
-    wishlist.splice(index, 1);
-  } else {
-    wishlist.push(id);
-  }
-  
-  updateBadges();
-  renderWishlist();
-  renderBooks();
-}
-
-function addToCartFromWishlist(id) {
-  addToCart(id);
-  toggleWishlist(id); 
-}
-
-function shareBook(id, event) {
-  if(event) event.stopPropagation();
-  
-  const book = books.find(b => b.id === id);
-  if(!book) return;
-
-  const baseUrl = window.location.href.split('?')[0];
-  const shareUrl = `${baseUrl}?book=${id}`;
-  const shareText = `🔥 Check out this awesome e-book: *${book.name}* for just *₹${book.price}*. Download instantly!\n\n👉 Buy here: ${shareUrl}`;
-  const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(shareText)}`;
-  
-  window.open(whatsappUrl, "_blank");
-}
-
-function openSidebar(type) {
-  document.getElementById("sidebarOverlay").classList.add("active");
-  if(type === 'cart') {
-    renderCart();
-    document.getElementById("cartSidebar").classList.add("active");
-  } else {
-    renderWishlist();
-    document.getElementById("wishlistSidebar").classList.add("active");
-  }
-}
-
-function closeSidebars() {
-  document.getElementById("sidebarOverlay").classList.remove("active");
-  document.getElementById("cartSidebar").classList.remove("active");
-  document.getElementById("wishlistSidebar").classList.remove("active");
-}
-
-function openDetails(id) {
-  currentBook = books.find(b => b.id === id);
-  document.getElementById("dCover").src = currentBook.cover;
-  document.getElementById("dTitle").textContent = currentBook.name;
-  document.getElementById("dDesc").textContent = currentBook.description;
-  document.getElementById("dMeta").innerHTML = `
-    <span><b>Author:</b> ${currentBook.author || 'Azad'}</span>
-    <span><b>Pages:</b> ${currentBook.pages || '—'}</span>
-    <span><b>Format:</b> ${currentBook.format || 'PDF'}</span>
-    <span><b>Price:</b> <span style="color:#ea580c; font-weight:700;">₹ ${currentBook.price}</span></span>
-  `;
-  document.getElementById("detailsModal").classList.add("active");
-}
-
-function closeDetails() {
-  document.getElementById("detailsModal").classList.remove("active");
-}
-
-function addToCartFromDetails() {
-  addToCart(currentBook.id);
-  closeDetails();
-  openSidebar('cart');
-}
-
-function proceedToPaymentSingle() {
-  checkoutMode = 'single';
-  let amount = currentBook.price;
-  document.getElementById("modalBookName").textContent = currentBook.name + " — ₹ " + amount;
-  closeDetails();
-  showPaymentModal(amount);
-}
-
-function checkout() {
-  if(cart.length === 0) return;
-  checkoutMode = 'cart';
-  let total = cart.reduce((sum, item) => sum + item.price, 0);
-  document.getElementById("modalBookName").textContent = `Cart (${cart.length} items) — ₹ ${total}`;
-  closeSidebars();
-  showPaymentModal(total);
-}
-
-function showPaymentModal(amount) {
-  document.getElementById("nameConfirm").checked = false;
-  document.getElementById("successBtn").disabled = true;
-  generateQRCode(amount);
-  document.getElementById("paymentModal").classList.add("active");
-}
-
-function closePayment() {
-  document.getElementById("paymentModal").classList.remove("active");
-}
-
-function toggleSuccessBtn() {
-  document.getElementById("successBtn").disabled = !document.getElementById("nameConfirm").checked;
-}
-
-function generateQRCode(amount) {
-  const qrContainer = document.getElementById('qrcode');
-  qrContainer.innerHTML = '';
-  const upiUri = `upi://pay?pa=${UPI_ID}&pn=${encodeURIComponent(UPI_NAME)}&am=${amount}&cu=INR`;
-  
-  qrCodeInstance = new QRCode(qrContainer, {
-    text: upiUri, width: 200, height: 200,
-    colorDark : "#000000", colorLight : "#ffffff",
-    correctLevel : QRCode.CorrectLevel.H
-  });
-}
-
-function onPaymentSuccess() {
-  let message = "";
-  if(checkoutMode === 'single') {
-    message = `Hello,\nI have completed the payment.\n\nBook: ${currentBook.name}\nPrice: ₹ ${currentBook.price}\n\nI verified the payee name: ${PAYEE_NAME}\n\nPlease send me the download link.`;
-  } else {
-    let total = cart.reduce((sum, item) => sum + item.price, 0);
-    let bookList = cart.map((item, index) => `${index + 1}. ${item.name} (₹ ${item.price})`).join('\n');
-    message = `Hello,\nI have completed the payment for my cart.\n\nBooks:\n${bookList}\n\nTotal: ₹ ${total}\n\nI verified the payee name: ${PAYEE_NAME}\n\nPlease send me the download links.`;
-  }
-  
-  const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
-  window.open(url, "_blank");
-  
-  if(checkoutMode === 'cart') {
-    cart = [];
+  /* =====================================================
+     CART & WISHLIST & PAYMENT
+  ===================================================== */
+  window.addToCart = function(id, event) {
+    if(event) event.stopPropagation();
+    const book = allBooks.find(b => b.id === id);
+    if(!book) return;
+    if(cart.some(item => item.id === id)) { alert("Already in cart!"); return; }
+    cart.push(book);
     updateBadges();
     renderCart();
-  }
-  closePayment();
-}
+  };
 
-/* =====================================================
-   INIT
-===================================================== */
-renderCategories();
-renderBooks();
-updateBadges();
+  window.removeFromCart = function(id) {
+    cart = cart.filter(item => item.id !== id);
+    updateBadges();
+    renderCart();
+  };
 
-window.addEventListener('DOMContentLoaded', () => {
-  const urlParams = new URLSearchParams(window.location.search);
-  const bookId = urlParams.get('book');
-  if(bookId) {
-    openDetails(parseInt(bookId));
+  window.toggleWishlist = function(id, event) {
+    if(event) event.stopPropagation();
+    const index = wishlist.indexOf(id);
+    if (index > -1) wishlist.splice(index, 1);
+    else wishlist.push(id);
+    updateBadges();
+    renderWishlist();
+    window.renderBooks();
+  };
+
+  window.addToCartFromWishlist = function(id) {
+    window.addToCart(id);
+    window.toggleWishlist(id); 
+  };
+
+  window.addToCartFromDetails = function() {
+    window.addToCart(currentBook.id);
+    window.closeDetails();
+    window.openSidebar('cart');
+  };
+
+  window.closeDetails = function() { document.getElementById("detailsModal").classList.remove("active"); };
+
+  function updateBadges() {
+    document.getElementById("cartBadge").textContent = cart.length;
+    document.getElementById("wishlistBadge").textContent = wishlist.length;
   }
-});
+
+  window.openSidebar = function(type) {
+    document.getElementById("sidebarOverlay").classList.add("active");
+    if(type === 'cart') {
+      renderCart();
+      document.getElementById("cartSidebar").classList.add("active");
+    } else {
+      renderWishlist();
+      document.getElementById("wishlistSidebar").classList.add("active");
+    }
+  };
+
+  window.closeSidebars = function() {
+    document.getElementById("sidebarOverlay").classList.remove("active");
+    document.getElementById("cartSidebar").classList.remove("active");
+    document.getElementById("wishlistSidebar").classList.remove("active");
+  };
+
+  function renderCart() {
+    const cartContent = document.getElementById("cartContent");
+    const cartFooter = document.getElementById("cartFooter");
+    if (cart.length === 0) {
+      cartContent.innerHTML = `<div class="empty-state"><span>🛒</span>Your cart is empty.</div>`;
+      cartFooter.style.display = "none";
+      return;
+    }
+    cartFooter.style.display = "block";
+    let total = 0;
+    cartContent.innerHTML = "";
+    cart.forEach(item => {
+      total += item.price;
+      const div = document.createElement("div");
+      div.className = "cart-item";
+      div.innerHTML = `
+        <img src="${item.cover}" alt="">
+        <div class="cart-item-info">
+          <div class="cart-item-title">${item.name}</div>
+          <div class="cart-item-price">₹ ${item.price}</div>
+          <button class="cart-item-remove" onclick="removeFromCart('${item.id}')">Remove</button>
+        </div>
+      `;
+      cartContent.appendChild(div);
+    });
+    document.getElementById("cartTotalPrice").textContent = `₹ ${total}`;
+  }
+
+  function renderWishlist() {
+    const wlContent = document.getElementById("wishlistContent");
+    if (wishlist.length === 0) {
+      wlContent.innerHTML = `<div class="empty-state"><span>♡</span>Your wishlist is empty.</div>`;
+      return;
+    }
+    wlContent.innerHTML = "";
+    wishlist.forEach(id => {
+      const book = allBooks.find(b => b.id === id);
+      if(!book) return;
+      const div = document.createElement("div");
+      div.className = "cart-item";
+      div.innerHTML = `
+        <img src="${book.cover}" alt="">
+        <div class="cart-item-info">
+          <div class="cart-item-title">${book.name}</div>
+          <div class="cart-item-price">₹ ${book.price}</div>
+          <button class="cart-item-remove" style="color:#ea580c;" onclick="addToCartFromWishlist('${book.id}')">Move to Cart</button>
+        </div>
+      `;
+      wlContent.appendChild(div);
+    });
+  }
+
+  window.proceedToPaymentSingle = function() {
+    checkoutMode = 'single';
+    document.getElementById("modalBookName").textContent = currentBook.name + " — ₹ " + currentBook.price;
+    window.closeDetails();
+    showPaymentModal(currentBook.price);
+  };
+
+  window.checkout = function() {
+    if(cart.length === 0) return;
+    checkoutMode = 'cart';
+    let total = cart.reduce((sum, item) => sum + item.price, 0);
+    document.getElementById("modalBookName").textContent = `Cart (${cart.length} items) — ₹ ${total}`;
+    window.closeSidebars();
+    showPaymentModal(total);
+  };
+
+  function showPaymentModal(amount) {
+    document.getElementById("nameConfirm").checked = false;
+    document.getElementById("successBtn").disabled = true;
+    generateQRCode(amount);
+    document.getElementById("paymentModal").classList.add("active");
+  }
+
+  window.closePayment = function() { document.getElementById("paymentModal").classList.remove("active"); };
+
+  window.toggleSuccessBtn = function() {
+    document.getElementById("successBtn").disabled = !document.getElementById("nameConfirm").checked;
+  };
+
+  function generateQRCode(amount) {
+    const qrContainer = document.getElementById('qrcode');
+    qrContainer.innerHTML = '';
+    const upiUri = `upi://pay?pa=${UPI_ID}&pn=${encodeURIComponent(UPI_NAME)}&am=${amount}&cu=INR`;
+    qrCodeInstance = new QRCode(qrContainer, {
+      text: upiUri, width: 200, height: 200,
+      colorDark : "#000000", colorLight : "#ffffff",
+      correctLevel : QRCode.CorrectLevel.H
+    });
+  }
+
+  window.onPaymentSuccess = function() {
+    let message = "";
+    if(checkoutMode === 'single') {
+      message = `Hello,\nPayment done.\nBook: ${currentBook.name}\nPrice: ₹ ${currentBook.price}\nVerified Payee: ${PAYEE_NAME}\n\nSend download link.`;
+    } else {
+      let total = cart.reduce((sum, item) => sum + item.price, 0);
+      let bookList = cart.map((item, i) => `${i + 1}. ${item.name} (₹ ${item.price})`).join('\n');
+      message = `Hello,\nCart payment done.\nBooks:\n${bookList}\nTotal: ₹ ${total}\nVerified Payee: ${PAYEE_NAME}\n\nSend download links.`;
+    }
+    window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`, "_blank");
+    if(checkoutMode === 'cart') { cart = []; updateBadges(); renderCart(); }
+    window.closePayment();
+  };
+
+  /* =====================================================
+     INIT
+  ===================================================== */
+  document.addEventListener("DOMContentLoaded", () => {
+    window.renderCategories();
+    loadProducts();
+    
+    const urlParams = new URLSearchParams(window.location.search);
+    const bookId = urlParams.get('book');
+    if(bookId) {
+      setTimeout(() => window.openDetails(bookId), 1000);
+    }
+  });
+
+  // Toggle Dropdown
+  catDropdownBtn.addEventListener("click", (e) => {
+    e.stopPropagation();
+    navBar.classList.toggle("active");
+  });
+  document.addEventListener("click", (e) => {
+    if (!catDropdownBtn.contains(e.target) && !navBar.contains(e.target)) {
+      navBar.classList.remove("active");
+    }
+  });
 </script>
 </body>
 </html>
